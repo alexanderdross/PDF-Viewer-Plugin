@@ -336,3 +336,28 @@ function pdf_embed_seo() {
 
 // Initialize the plugin.
 pdf_embed_seo();
+
+/**
+ * Load premium features if available.
+ *
+ * Premium features are loaded from the /premium/ directory.
+ * This allows the premium version to extend the free version
+ * with additional functionality.
+ */
+function pdf_embed_seo_load_premium() {
+	$premium_file = PDF_EMBED_SEO_PLUGIN_DIR . 'premium/class-pdf-embed-seo-premium.php';
+
+	if ( file_exists( $premium_file ) ) {
+		require_once $premium_file;
+	}
+}
+add_action( 'plugins_loaded', 'pdf_embed_seo_load_premium', 15 );
+
+/**
+ * Check if premium features are active.
+ *
+ * @return bool
+ */
+function pdf_embed_seo_is_premium() {
+	return defined( 'PDF_EMBED_SEO_IS_PREMIUM' ) && PDF_EMBED_SEO_IS_PREMIUM;
+}
