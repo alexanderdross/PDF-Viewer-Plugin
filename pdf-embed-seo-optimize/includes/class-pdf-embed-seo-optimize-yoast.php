@@ -2,7 +2,7 @@
 /**
  * Yoast SEO Integration and Schema Markup for PDF Viewer 2026.
  *
- * @package PDF_Viewer_2026
+ * @package PDF_Embed_SEO
  */
 
 // Prevent direct access.
@@ -11,11 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class PDF_Viewer_2026_Yoast
+ * Class PDF_Embed_SEO_Yoast
  *
  * Handles integration with Yoast SEO plugin and outputs JSON-LD schema markup.
  */
-class PDF_Viewer_2026_Yoast {
+class PDF_Embed_SEO_Yoast {
 
 	/**
 	 * Constructor.
@@ -47,14 +47,20 @@ class PDF_Viewer_2026_Yoast {
 	}
 
 	/**
-	 * Output JSON-LD DigitalDocument schema in the head.
+	 * Output JSON-LD schema in the head.
 	 *
-	 * This outputs schema markup for every PDF document, independent of Yoast SEO.
+	 * This outputs schema markup for PDF documents and archive page, independent of Yoast SEO.
 	 *
 	 * @return void
 	 */
 	public function output_json_ld_schema() {
-		// Only output on single PDF document pages.
+		// Handle archive page.
+		if ( is_post_type_archive( 'pdf_document' ) ) {
+			$this->output_archive_schema();
+			return;
+		}
+
+		// Handle single PDF document pages.
 		if ( ! is_singular( 'pdf_document' ) ) {
 			return;
 		}
@@ -73,6 +79,50 @@ class PDF_Viewer_2026_Yoast {
 
 		// Output JSON-LD.
 		echo "\n<!-- PDF Embed & SEO Optimize - DigitalDocument Schema -->\n";
+		echo '<script type="application/ld+json">' . "\n";
+		echo wp_json_encode( $schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
+		echo "\n</script>\n";
+	}
+
+	/**
+	 * Output JSON-LD schema for the PDF archive page.
+	 *
+	 * @return void
+	 */
+	public function output_archive_schema() {
+		$archive_url = get_post_type_archive_link( 'pdf_document' );
+		$site_name   = get_bloginfo( 'name' );
+
+		$schema = array(
+			'@context'    => 'https://schema.org',
+			'@type'       => 'CollectionPage',
+			'@id'         => $archive_url . '#collectionpage',
+			'name'        => __( 'PDF Documents', 'pdf-embed-seo-optimize' ),
+			'description' => __( 'Browse all available PDF documents.', 'pdf-embed-seo-optimize' ),
+			'url'         => $archive_url,
+			'isPartOf'    => array(
+				'@type' => 'WebSite',
+				'@id'   => home_url( '/' ) . '#website',
+				'name'  => $site_name,
+				'url'   => home_url( '/' ),
+			),
+			'mentions'    => array(
+				'@type'       => 'Organization',
+				'name'        => 'Dross:Media',
+				'url'         => 'https://dross.net/#media',
+				'description' => 'AI Search, GEO & SEO Strategy for the search of tomorrow – directly from the Web & Search Lead of a pharmaceutical company.',
+			),
+		);
+
+		/**
+		 * Filter the archive page schema data.
+		 *
+		 * @param array $schema The schema data.
+		 */
+		$schema = apply_filters( 'pdf_embed_seo_archive_schema_data', $schema );
+
+		// Output JSON-LD.
+		echo "\n<!-- PDF Embed & SEO Optimize - Archive Page Schema -->\n";
 		echo '<script type="application/ld+json">' . "\n";
 		echo wp_json_encode( $schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
 		echo "\n</script>\n";
@@ -175,8 +225,8 @@ class PDF_Viewer_2026_Yoast {
 		}
 
 		// Add permissions info.
-		$allow_download = PDF_Viewer_2026_Post_Type::is_download_allowed( $post_id );
-		$allow_print    = PDF_Viewer_2026_Post_Type::is_print_allowed( $post_id );
+		$allow_download = PDF_Embed_SEO_Post_Type::is_download_allowed( $post_id );
+		$allow_print    = PDF_Embed_SEO_Post_Type::is_print_allowed( $post_id );
 
 		$permissions = array();
 		if ( $allow_download ) {
@@ -210,7 +260,7 @@ class PDF_Viewer_2026_Yoast {
 		 * @param array $schema  The schema data.
 		 * @param int   $post_id The post ID.
 		 */
-		return apply_filters( 'pdf_viewer_2026_schema_data', $schema, $post_id );
+		return apply_filters( 'pdf_embed_seo_schema_data', $schema, $post_id );
 	}
 
 	/**
@@ -286,7 +336,7 @@ class PDF_Viewer_2026_Yoast {
 			return $pieces;
 		}
 
-		$pieces[] = new PDF_Viewer_2026_Schema_Piece( $context );
+		$pieces[] = new PDF_Embed_SEO_Schema_Piece( $context );
 
 		return $pieces;
 	}
@@ -360,7 +410,7 @@ class PDF_Viewer_2026_Yoast {
  *
  * Adds DigitalDocument schema when Yoast SEO is active.
  */
-class PDF_Viewer_2026_Schema_Piece {
+class PDF_Embed_SEO_Schema_Piece {
 
 	/**
 	 * The schema context.

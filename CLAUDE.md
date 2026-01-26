@@ -98,15 +98,15 @@ The plugin integrates with Yoast SEO through:
 ## File Structure
 
 ```
-pdf-viewer-2026/
-├── pdf-viewer-2026.php              # Main plugin file
+pdf-embed-seo-optimize/
+├── pdf-embed-seo-optimize.php              # Main plugin file
 ├── uninstall.php                     # Cleanup on uninstall
 ├── README.txt                        # WordPress.org readme
 ├── CLAUDE.md                         # Project documentation
 ├── LICENSE                           # GPL v2 or later
 │
 ├── includes/
-│   ├── class-pdf-viewer-2026.php           # Main plugin class
+│   ├── class-pdf-embed-seo-optimize.php           # Main plugin class
 │   ├── class-pdf-viewer-post-type.php      # Custom post type registration
 │   ├── class-pdf-viewer-admin.php          # Admin functionality
 │   ├── class-pdf-viewer-frontend.php       # Frontend rendering
@@ -139,7 +139,7 @@ pdf-viewer-2026/
 │           └── viewer.html
 │
 └── languages/
-    └── pdf-viewer-2026.pot                 # Translation template
+    └── pdf-embed-seo-optimize.pot                 # Translation template
 ```
 
 ---
@@ -171,7 +171,7 @@ pdf-viewer-2026/
 ### Internationalization
 
 - All strings wrapped in translation functions: `__()`, `_e()`, `esc_html__()`
-- Text domain: `pdf-viewer-2026`
+- Text domain: `pdf-embed-seo-optimize`
 - POT file for translations
 
 ---

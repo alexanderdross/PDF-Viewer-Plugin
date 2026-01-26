@@ -2,7 +2,7 @@
 /**
  * Custom Post Type registration for PDF Documents.
  *
- * @package PDF_Viewer_2026
+ * @package PDF_Embed_SEO
  */
 
 // Prevent direct access.
@@ -11,11 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class PDF_Viewer_2026_Post_Type
+ * Class PDF_Embed_SEO_Post_Type
  *
  * Registers and manages the pdf_document custom post type.
  */
-class PDF_Viewer_2026_Post_Type {
+class PDF_Embed_SEO_Post_Type {
 
 	/**
 	 * Post type slug.
@@ -39,30 +39,30 @@ class PDF_Viewer_2026_Post_Type {
 	 */
 	public function register_post_type() {
 		$labels = array(
-			'name'                  => _x( 'PDF Documents', 'Post type general name', 'pdf-viewer-2026' ),
-			'singular_name'         => _x( 'PDF Document', 'Post type singular name', 'pdf-viewer-2026' ),
-			'menu_name'             => _x( 'PDF Documents', 'Admin Menu text', 'pdf-viewer-2026' ),
-			'name_admin_bar'        => _x( 'PDF Document', 'Add New on Toolbar', 'pdf-viewer-2026' ),
-			'add_new'               => __( 'Add New', 'pdf-viewer-2026' ),
-			'add_new_item'          => __( 'Add New PDF Document', 'pdf-viewer-2026' ),
-			'new_item'              => __( 'New PDF Document', 'pdf-viewer-2026' ),
-			'edit_item'             => __( 'Edit PDF Document', 'pdf-viewer-2026' ),
-			'view_item'             => __( 'View PDF Document', 'pdf-viewer-2026' ),
-			'all_items'             => __( 'All PDF Documents', 'pdf-viewer-2026' ),
-			'search_items'          => __( 'Search PDF Documents', 'pdf-viewer-2026' ),
-			'parent_item_colon'     => __( 'Parent PDF Documents:', 'pdf-viewer-2026' ),
-			'not_found'             => __( 'No PDF documents found.', 'pdf-viewer-2026' ),
-			'not_found_in_trash'    => __( 'No PDF documents found in Trash.', 'pdf-viewer-2026' ),
-			'featured_image'        => _x( 'PDF Cover Image', 'Overrides the "Featured Image" phrase', 'pdf-viewer-2026' ),
-			'set_featured_image'    => _x( 'Set cover image', 'Overrides the "Set featured image" phrase', 'pdf-viewer-2026' ),
-			'remove_featured_image' => _x( 'Remove cover image', 'Overrides the "Remove featured image" phrase', 'pdf-viewer-2026' ),
-			'use_featured_image'    => _x( 'Use as cover image', 'Overrides the "Use as featured image" phrase', 'pdf-viewer-2026' ),
-			'archives'              => _x( 'PDF Document Archives', 'The post type archive label', 'pdf-viewer-2026' ),
-			'insert_into_item'      => _x( 'Insert into PDF document', 'Overrides the "Insert into post" phrase', 'pdf-viewer-2026' ),
-			'uploaded_to_this_item' => _x( 'Uploaded to this PDF document', 'Overrides the "Uploaded to this post" phrase', 'pdf-viewer-2026' ),
-			'filter_items_list'     => _x( 'Filter PDF documents list', 'Screen reader text', 'pdf-viewer-2026' ),
-			'items_list_navigation' => _x( 'PDF documents list navigation', 'Screen reader text', 'pdf-viewer-2026' ),
-			'items_list'            => _x( 'PDF documents list', 'Screen reader text', 'pdf-viewer-2026' ),
+			'name'                  => _x( 'PDF Documents', 'Post type general name', 'pdf-embed-seo-optimize' ),
+			'singular_name'         => _x( 'PDF Document', 'Post type singular name', 'pdf-embed-seo-optimize' ),
+			'menu_name'             => _x( 'PDF Documents', 'Admin Menu text', 'pdf-embed-seo-optimize' ),
+			'name_admin_bar'        => _x( 'PDF Document', 'Add New on Toolbar', 'pdf-embed-seo-optimize' ),
+			'add_new'               => __( 'Add New', 'pdf-embed-seo-optimize' ),
+			'add_new_item'          => __( 'Add New PDF Document', 'pdf-embed-seo-optimize' ),
+			'new_item'              => __( 'New PDF Document', 'pdf-embed-seo-optimize' ),
+			'edit_item'             => __( 'Edit PDF Document', 'pdf-embed-seo-optimize' ),
+			'view_item'             => __( 'View PDF Document', 'pdf-embed-seo-optimize' ),
+			'all_items'             => __( 'All PDF Documents', 'pdf-embed-seo-optimize' ),
+			'search_items'          => __( 'Search PDF Documents', 'pdf-embed-seo-optimize' ),
+			'parent_item_colon'     => __( 'Parent PDF Documents:', 'pdf-embed-seo-optimize' ),
+			'not_found'             => __( 'No PDF documents found.', 'pdf-embed-seo-optimize' ),
+			'not_found_in_trash'    => __( 'No PDF documents found in Trash.', 'pdf-embed-seo-optimize' ),
+			'featured_image'        => _x( 'PDF Cover Image', 'Overrides the "Featured Image" phrase', 'pdf-embed-seo-optimize' ),
+			'set_featured_image'    => _x( 'Set cover image', 'Overrides the "Set featured image" phrase', 'pdf-embed-seo-optimize' ),
+			'remove_featured_image' => _x( 'Remove cover image', 'Overrides the "Remove featured image" phrase', 'pdf-embed-seo-optimize' ),
+			'use_featured_image'    => _x( 'Use as cover image', 'Overrides the "Use as featured image" phrase', 'pdf-embed-seo-optimize' ),
+			'archives'              => _x( 'PDF Document Archives', 'The post type archive label', 'pdf-embed-seo-optimize' ),
+			'insert_into_item'      => _x( 'Insert into PDF document', 'Overrides the "Insert into post" phrase', 'pdf-embed-seo-optimize' ),
+			'uploaded_to_this_item' => _x( 'Uploaded to this PDF document', 'Overrides the "Uploaded to this post" phrase', 'pdf-embed-seo-optimize' ),
+			'filter_items_list'     => _x( 'Filter PDF documents list', 'Screen reader text', 'pdf-embed-seo-optimize' ),
+			'items_list_navigation' => _x( 'PDF documents list navigation', 'Screen reader text', 'pdf-embed-seo-optimize' ),
+			'items_list'            => _x( 'PDF documents list', 'Screen reader text', 'pdf-embed-seo-optimize' ),
 		);
 
 		$args = array(
@@ -97,7 +97,7 @@ class PDF_Viewer_2026_Post_Type {
 		 *
 		 * @param array $args Post type arguments.
 		 */
-		$args = apply_filters( 'pdf_viewer_2026_post_type_args', $args );
+		$args = apply_filters( 'pdf_embed_seo_post_type_args', $args );
 
 		register_post_type( self::POST_TYPE, $args );
 	}
@@ -114,7 +114,7 @@ class PDF_Viewer_2026_Post_Type {
 			'_pdf_file_id',
 			array(
 				'type'              => 'integer',
-				'description'       => __( 'The attachment ID of the PDF file.', 'pdf-viewer-2026' ),
+				'description'       => __( 'The attachment ID of the PDF file.', 'pdf-embed-seo-optimize' ),
 				'single'            => true,
 				'sanitize_callback' => 'absint',
 				'auth_callback'     => array( $this, 'auth_callback' ),
@@ -128,7 +128,7 @@ class PDF_Viewer_2026_Post_Type {
 			'_pdf_file_url',
 			array(
 				'type'              => 'string',
-				'description'       => __( 'The URL of the PDF file.', 'pdf-viewer-2026' ),
+				'description'       => __( 'The URL of the PDF file.', 'pdf-embed-seo-optimize' ),
 				'single'            => true,
 				'sanitize_callback' => 'esc_url_raw',
 				'auth_callback'     => array( $this, 'auth_callback' ),
@@ -142,7 +142,7 @@ class PDF_Viewer_2026_Post_Type {
 			'_pdf_allow_download',
 			array(
 				'type'              => 'boolean',
-				'description'       => __( 'Whether users can download the PDF.', 'pdf-viewer-2026' ),
+				'description'       => __( 'Whether users can download the PDF.', 'pdf-embed-seo-optimize' ),
 				'single'            => true,
 				'default'           => false,
 				'sanitize_callback' => 'rest_sanitize_boolean',
@@ -157,7 +157,7 @@ class PDF_Viewer_2026_Post_Type {
 			'_pdf_allow_print',
 			array(
 				'type'              => 'boolean',
-				'description'       => __( 'Whether users can print the PDF.', 'pdf-viewer-2026' ),
+				'description'       => __( 'Whether users can print the PDF.', 'pdf-embed-seo-optimize' ),
 				'single'            => true,
 				'default'           => false,
 				'sanitize_callback' => 'rest_sanitize_boolean',
@@ -172,7 +172,7 @@ class PDF_Viewer_2026_Post_Type {
 			'_pdf_view_count',
 			array(
 				'type'              => 'integer',
-				'description'       => __( 'Number of times the PDF has been viewed.', 'pdf-viewer-2026' ),
+				'description'       => __( 'Number of times the PDF has been viewed.', 'pdf-embed-seo-optimize' ),
 				'single'            => true,
 				'default'           => 0,
 				'sanitize_callback' => 'absint',
@@ -265,7 +265,7 @@ class PDF_Viewer_2026_Post_Type {
 		 * @param int $post_id   The post ID.
 		 * @param int $count     The new view count.
 		 */
-		do_action( 'pdf_viewer_2026_pdf_viewed', $post_id, $count );
+		do_action( 'pdf_embed_seo_pdf_viewed', $post_id, $count );
 
 		return $count;
 	}

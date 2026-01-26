@@ -5,7 +5,7 @@
  * This file is executed when the plugin is deleted from WordPress.
  * It removes all plugin data from the database.
  *
- * @package PDF_Viewer_2026
+ * @package PDF_Embed_SEO
  */
 
 // Exit if not called by WordPress.
@@ -16,12 +16,12 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 /**
  * Clean up plugin data on uninstall.
  */
-function pdf_viewer_2026_uninstall() {
+function pdf_embed_seo_uninstall() {
 	global $wpdb;
 
 	// Delete plugin options.
-	delete_option( 'pdf_viewer_2026_settings' );
-	delete_option( 'pdf_viewer_2026_version' );
+	delete_option( 'pdf_embed_seo_settings' );
+	delete_option( 'pdf_embed_seo_version' );
 
 	// Delete all PDF document posts and their meta.
 	$pdf_posts = get_posts(
@@ -61,4 +61,4 @@ function pdf_viewer_2026_uninstall() {
 }
 
 // Run uninstall.
-pdf_viewer_2026_uninstall();
+pdf_embed_seo_uninstall();

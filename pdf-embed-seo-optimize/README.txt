@@ -50,7 +50,7 @@ A powerful WordPress plugin that integrates Mozilla's PDF.js viewer to serve PDF
 
 == Installation ==
 
-1. Upload the `pdf-viewer-2026` folder to the `/wp-content/plugins/` directory
+1. Upload the `pdf-embed-seo-optimize` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Go to 'PDF Documents' in the admin menu to start adding PDFs
 4. Configure settings under 'PDF Documents' > 'Settings'

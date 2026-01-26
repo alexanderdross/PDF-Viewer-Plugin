@@ -2,7 +2,7 @@
 /**
  * Admin functionality for PDF Viewer 2026.
  *
- * @package PDF_Viewer_2026
+ * @package PDF_Embed_SEO
  */
 
 // Prevent direct access.
@@ -11,11 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class PDF_Viewer_2026_Admin
+ * Class PDF_Embed_SEO_Admin
  *
  * Handles all admin functionality including meta boxes and settings.
  */
-class PDF_Viewer_2026_Admin {
+class PDF_Embed_SEO_Admin {
 
 	/**
 	 * Constructor.
@@ -37,8 +37,8 @@ class PDF_Viewer_2026_Admin {
 	 */
 	public function add_meta_boxes() {
 		add_meta_box(
-			'pdf_viewer_2026_file',
-			__( 'PDF File', 'pdf-viewer-2026' ),
+			'pdf_embed_seo_file',
+			__( 'PDF File', 'pdf-embed-seo-optimize' ),
 			array( $this, 'render_file_meta_box' ),
 			'pdf_document',
 			'normal',
@@ -46,8 +46,8 @@ class PDF_Viewer_2026_Admin {
 		);
 
 		add_meta_box(
-			'pdf_viewer_2026_settings',
-			__( 'PDF Settings', 'pdf-viewer-2026' ),
+			'pdf_embed_seo_settings',
+			__( 'PDF Settings', 'pdf-embed-seo-optimize' ),
 			array( $this, 'render_settings_meta_box' ),
 			'pdf_document',
 			'side',
@@ -55,8 +55,8 @@ class PDF_Viewer_2026_Admin {
 		);
 
 		add_meta_box(
-			'pdf_viewer_2026_stats',
-			__( 'View Statistics', 'pdf-viewer-2026' ),
+			'pdf_embed_seo_stats',
+			__( 'View Statistics', 'pdf-embed-seo-optimize' ),
 			array( $this, 'render_stats_meta_box' ),
 			'pdf_document',
 			'side',
@@ -71,12 +71,12 @@ class PDF_Viewer_2026_Admin {
 	 * @return void
 	 */
 	public function render_file_meta_box( $post ) {
-		wp_nonce_field( 'pdf_viewer_2026_save_meta', 'pdf_viewer_2026_meta_nonce' );
+		wp_nonce_field( 'pdf_embed_seo_save_meta', 'pdf_embed_seo_meta_nonce' );
 
 		$file_id  = get_post_meta( $post->ID, '_pdf_file_id', true );
 		$file_url = get_post_meta( $post->ID, '_pdf_file_url', true );
 
-		include PDF_VIEWER_2026_PLUGIN_DIR . 'admin/views/meta-box-pdf-file.php';
+		include PDF_EMBED_SEO_PLUGIN_DIR . 'admin/views/meta-box-pdf-file.php';
 	}
 
 	/**
@@ -90,7 +90,7 @@ class PDF_Viewer_2026_Admin {
 		$allow_print    = get_post_meta( $post->ID, '_pdf_allow_print', true );
 
 		// Get defaults from settings.
-		$defaults = PDF_Viewer_2026::get_setting();
+		$defaults = PDF_Embed_SEO::get_setting();
 
 		// If no value set, use defaults.
 		if ( '' === $allow_download && isset( $defaults['default_allow_download'] ) ) {
@@ -100,7 +100,7 @@ class PDF_Viewer_2026_Admin {
 			$allow_print = $defaults['default_allow_print'];
 		}
 
-		include PDF_VIEWER_2026_PLUGIN_DIR . 'admin/views/meta-box-pdf-settings.php';
+		include PDF_EMBED_SEO_PLUGIN_DIR . 'admin/views/meta-box-pdf-settings.php';
 	}
 
 	/**
@@ -110,9 +110,9 @@ class PDF_Viewer_2026_Admin {
 	 * @return void
 	 */
 	public function render_stats_meta_box( $post ) {
-		$view_count = PDF_Viewer_2026_Post_Type::get_view_count( $post->ID );
+		$view_count = PDF_Embed_SEO_Post_Type::get_view_count( $post->ID );
 
-		include PDF_VIEWER_2026_PLUGIN_DIR . 'admin/views/meta-box-pdf-stats.php';
+		include PDF_EMBED_SEO_PLUGIN_DIR . 'admin/views/meta-box-pdf-stats.php';
 	}
 
 	/**
@@ -124,8 +124,8 @@ class PDF_Viewer_2026_Admin {
 	 */
 	public function save_meta_box_data( $post_id, $post ) {
 		// Check nonce.
-		if ( ! isset( $_POST['pdf_viewer_2026_meta_nonce'] ) ||
-			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['pdf_viewer_2026_meta_nonce'] ) ), 'pdf_viewer_2026_save_meta' ) ) {
+		if ( ! isset( $_POST['pdf_embed_seo_meta_nonce'] ) ||
+			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['pdf_embed_seo_meta_nonce'] ) ), 'pdf_embed_seo_save_meta' ) ) {
 			return;
 		}
 
@@ -168,7 +168,7 @@ class PDF_Viewer_2026_Admin {
 		 * @param array $settings The saved settings.
 		 */
 		do_action(
-			'pdf_viewer_2026_settings_saved',
+			'pdf_embed_seo_settings_saved',
 			$post_id,
 			array(
 				'allow_download' => $allow_download,
@@ -191,39 +191,39 @@ class PDF_Viewer_2026_Admin {
 			wp_enqueue_media();
 
 			wp_enqueue_style(
-				'pdf-viewer-2026-admin',
-				PDF_VIEWER_2026_PLUGIN_URL . 'admin/css/admin-styles.css',
+				'pdf-embed-seo-optimize-admin',
+				PDF_EMBED_SEO_PLUGIN_URL . 'admin/css/admin-styles.css',
 				array(),
-				PDF_VIEWER_2026_VERSION
+				PDF_EMBED_SEO_VERSION
 			);
 
 			wp_enqueue_script(
-				'pdf-viewer-2026-admin',
-				PDF_VIEWER_2026_PLUGIN_URL . 'admin/js/admin-scripts.js',
+				'pdf-embed-seo-optimize-admin',
+				PDF_EMBED_SEO_PLUGIN_URL . 'admin/js/admin-scripts.js',
 				array( 'jquery', 'media-upload' ),
-				PDF_VIEWER_2026_VERSION,
+				PDF_EMBED_SEO_VERSION,
 				true
 			);
 
 			wp_localize_script(
-				'pdf-viewer-2026-admin',
-				'pdfViewer2026Admin',
+				'pdf-embed-seo-optimize-admin',
+				'pdfEmbedSeoAdmin',
 				array(
-					'selectPdf'   => __( 'Select PDF File', 'pdf-viewer-2026' ),
-					'usePdf'      => __( 'Use this PDF', 'pdf-viewer-2026' ),
-					'removePdf'   => __( 'Remove PDF', 'pdf-viewer-2026' ),
-					'noPdfSelect' => __( 'No PDF selected', 'pdf-viewer-2026' ),
+					'selectPdf'   => __( 'Select PDF File', 'pdf-embed-seo-optimize' ),
+					'usePdf'      => __( 'Use this PDF', 'pdf-embed-seo-optimize' ),
+					'removePdf'   => __( 'Remove PDF', 'pdf-embed-seo-optimize' ),
+					'noPdfSelect' => __( 'No PDF selected', 'pdf-embed-seo-optimize' ),
 				)
 			);
 		}
 
 		// Load on settings page.
-		if ( 'pdf_document_page_pdf-viewer-2026-settings' === $hook ) {
+		if ( 'pdf_document_page_pdf-embed-seo-optimize-settings' === $hook ) {
 			wp_enqueue_style(
-				'pdf-viewer-2026-admin',
-				PDF_VIEWER_2026_PLUGIN_URL . 'admin/css/admin-styles.css',
+				'pdf-embed-seo-optimize-admin',
+				PDF_EMBED_SEO_PLUGIN_URL . 'admin/css/admin-styles.css',
 				array(),
-				PDF_VIEWER_2026_VERSION
+				PDF_EMBED_SEO_VERSION
 			);
 		}
 	}
@@ -237,20 +237,20 @@ class PDF_Viewer_2026_Admin {
 		// Add Docs page.
 		add_submenu_page(
 			'edit.php?post_type=pdf_document',
-			__( 'Docs & Usage', 'pdf-viewer-2026' ),
-			__( 'Docs', 'pdf-viewer-2026' ),
+			__( 'Docs & Usage', 'pdf-embed-seo-optimize' ),
+			__( 'Docs', 'pdf-embed-seo-optimize' ),
 			'edit_posts',
-			'pdf-viewer-2026-docs',
+			'pdf-embed-seo-optimize-docs',
 			array( $this, 'render_docs_page' )
 		);
 
 		// Add Settings page.
 		add_submenu_page(
 			'edit.php?post_type=pdf_document',
-			__( 'PDF Viewer Settings', 'pdf-viewer-2026' ),
-			__( 'Settings', 'pdf-viewer-2026' ),
+			__( 'PDF Viewer Settings', 'pdf-embed-seo-optimize' ),
+			__( 'Settings', 'pdf-embed-seo-optimize' ),
 			'manage_options',
-			'pdf-viewer-2026-settings',
+			'pdf-embed-seo-optimize-settings',
 			array( $this, 'render_settings_page' )
 		);
 	}
@@ -261,7 +261,7 @@ class PDF_Viewer_2026_Admin {
 	 * @return void
 	 */
 	public function render_docs_page() {
-		include PDF_VIEWER_2026_PLUGIN_DIR . 'admin/views/docs-page.php';
+		include PDF_EMBED_SEO_PLUGIN_DIR . 'admin/views/docs-page.php';
 	}
 
 	/**
@@ -271,8 +271,8 @@ class PDF_Viewer_2026_Admin {
 	 */
 	public function register_settings() {
 		register_setting(
-			'pdf_viewer_2026_settings_group',
-			'pdf_viewer_2026_settings',
+			'pdf_embed_seo_settings_group',
+			'pdf_embed_seo_settings',
 			array(
 				'type'              => 'array',
 				'sanitize_callback' => array( $this, 'sanitize_settings' ),
@@ -281,18 +281,18 @@ class PDF_Viewer_2026_Admin {
 
 		// Default Settings Section.
 		add_settings_section(
-			'pdf_viewer_2026_defaults',
-			__( 'Default Settings', 'pdf-viewer-2026' ),
+			'pdf_embed_seo_defaults',
+			__( 'Default Settings', 'pdf-embed-seo-optimize' ),
 			array( $this, 'render_defaults_section' ),
-			'pdf-viewer-2026-settings'
+			'pdf-embed-seo-optimize-settings'
 		);
 
 		add_settings_field(
 			'default_allow_download',
-			__( 'Allow Download by Default', 'pdf-viewer-2026' ),
+			__( 'Allow Download by Default', 'pdf-embed-seo-optimize' ),
 			array( $this, 'render_checkbox_field' ),
-			'pdf-viewer-2026-settings',
-			'pdf_viewer_2026_defaults',
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_defaults',
 			array(
 				'label_for' => 'default_allow_download',
 				'key'       => 'default_allow_download',
@@ -301,10 +301,10 @@ class PDF_Viewer_2026_Admin {
 
 		add_settings_field(
 			'default_allow_print',
-			__( 'Allow Print by Default', 'pdf-viewer-2026' ),
+			__( 'Allow Print by Default', 'pdf-embed-seo-optimize' ),
 			array( $this, 'render_checkbox_field' ),
-			'pdf-viewer-2026-settings',
-			'pdf_viewer_2026_defaults',
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_defaults',
 			array(
 				'label_for' => 'default_allow_print',
 				'key'       => 'default_allow_print',
@@ -313,42 +313,42 @@ class PDF_Viewer_2026_Admin {
 
 		// Viewer Settings Section.
 		add_settings_section(
-			'pdf_viewer_2026_viewer',
-			__( 'Viewer Settings', 'pdf-viewer-2026' ),
+			'pdf_embed_seo_viewer',
+			__( 'Viewer Settings', 'pdf-embed-seo-optimize' ),
 			array( $this, 'render_viewer_section' ),
-			'pdf-viewer-2026-settings'
+			'pdf-embed-seo-optimize-settings'
 		);
 
 		add_settings_field(
 			'viewer_theme',
-			__( 'Viewer Theme', 'pdf-viewer-2026' ),
+			__( 'Viewer Theme', 'pdf-embed-seo-optimize' ),
 			array( $this, 'render_select_field' ),
-			'pdf-viewer-2026-settings',
-			'pdf_viewer_2026_viewer',
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_viewer',
 			array(
 				'label_for' => 'viewer_theme',
 				'key'       => 'viewer_theme',
 				'options'   => array(
-					'light' => __( 'Light', 'pdf-viewer-2026' ),
-					'dark'  => __( 'Dark', 'pdf-viewer-2026' ),
+					'light' => __( 'Light', 'pdf-embed-seo-optimize' ),
+					'dark'  => __( 'Dark', 'pdf-embed-seo-optimize' ),
 				),
 			)
 		);
 
 		// Archive Settings Section.
 		add_settings_section(
-			'pdf_viewer_2026_archive',
-			__( 'Archive Settings', 'pdf-viewer-2026' ),
+			'pdf_embed_seo_archive',
+			__( 'Archive Settings', 'pdf-embed-seo-optimize' ),
 			array( $this, 'render_archive_section' ),
-			'pdf-viewer-2026-settings'
+			'pdf-embed-seo-optimize-settings'
 		);
 
 		add_settings_field(
 			'archive_posts_per_page',
-			__( 'PDFs per Page', 'pdf-viewer-2026' ),
+			__( 'PDFs per Page', 'pdf-embed-seo-optimize' ),
 			array( $this, 'render_number_field' ),
-			'pdf-viewer-2026-settings',
-			'pdf_viewer_2026_archive',
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_archive',
 			array(
 				'label_for' => 'archive_posts_per_page',
 				'key'       => 'archive_posts_per_page',
@@ -389,7 +389,7 @@ class PDF_Viewer_2026_Admin {
 			return;
 		}
 
-		include PDF_VIEWER_2026_PLUGIN_DIR . 'admin/views/settings-page.php';
+		include PDF_EMBED_SEO_PLUGIN_DIR . 'admin/views/settings-page.php';
 	}
 
 	/**
@@ -398,7 +398,7 @@ class PDF_Viewer_2026_Admin {
 	 * @return void
 	 */
 	public function render_defaults_section() {
-		echo '<p>' . esc_html__( 'Set default permissions for new PDF documents.', 'pdf-viewer-2026' ) . '</p>';
+		echo '<p>' . esc_html__( 'Set default permissions for new PDF documents.', 'pdf-embed-seo-optimize' ) . '</p>';
 	}
 
 	/**
@@ -407,7 +407,7 @@ class PDF_Viewer_2026_Admin {
 	 * @return void
 	 */
 	public function render_viewer_section() {
-		echo '<p>' . esc_html__( 'Customize the PDF viewer appearance.', 'pdf-viewer-2026' ) . '</p>';
+		echo '<p>' . esc_html__( 'Customize the PDF viewer appearance.', 'pdf-embed-seo-optimize' ) . '</p>';
 	}
 
 	/**
@@ -416,7 +416,7 @@ class PDF_Viewer_2026_Admin {
 	 * @return void
 	 */
 	public function render_archive_section() {
-		echo '<p>' . esc_html__( 'Configure the PDF archive page.', 'pdf-viewer-2026' ) . '</p>';
+		echo '<p>' . esc_html__( 'Configure the PDF archive page.', 'pdf-embed-seo-optimize' ) . '</p>';
 	}
 
 	/**
@@ -426,13 +426,13 @@ class PDF_Viewer_2026_Admin {
 	 * @return void
 	 */
 	public function render_checkbox_field( $args ) {
-		$settings = PDF_Viewer_2026::get_setting();
+		$settings = PDF_Embed_SEO::get_setting();
 		$value    = isset( $settings[ $args['key'] ] ) ? $settings[ $args['key'] ] : false;
 		?>
 		<input
 			type="checkbox"
 			id="<?php echo esc_attr( $args['key'] ); ?>"
-			name="pdf_viewer_2026_settings[<?php echo esc_attr( $args['key'] ); ?>]"
+			name="pdf_embed_seo_settings[<?php echo esc_attr( $args['key'] ); ?>]"
 			value="1"
 			<?php checked( $value, true ); ?>
 		/>
@@ -446,12 +446,12 @@ class PDF_Viewer_2026_Admin {
 	 * @return void
 	 */
 	public function render_select_field( $args ) {
-		$settings = PDF_Viewer_2026::get_setting();
+		$settings = PDF_Embed_SEO::get_setting();
 		$value    = isset( $settings[ $args['key'] ] ) ? $settings[ $args['key'] ] : '';
 		?>
 		<select
 			id="<?php echo esc_attr( $args['key'] ); ?>"
-			name="pdf_viewer_2026_settings[<?php echo esc_attr( $args['key'] ); ?>]"
+			name="pdf_embed_seo_settings[<?php echo esc_attr( $args['key'] ); ?>]"
 		>
 			<?php foreach ( $args['options'] as $option_value => $option_label ) : ?>
 				<option value="<?php echo esc_attr( $option_value ); ?>" <?php selected( $value, $option_value ); ?>>
@@ -469,13 +469,13 @@ class PDF_Viewer_2026_Admin {
 	 * @return void
 	 */
 	public function render_number_field( $args ) {
-		$settings = PDF_Viewer_2026::get_setting();
+		$settings = PDF_Embed_SEO::get_setting();
 		$value    = isset( $settings[ $args['key'] ] ) ? $settings[ $args['key'] ] : 12;
 		?>
 		<input
 			type="number"
 			id="<?php echo esc_attr( $args['key'] ); ?>"
-			name="pdf_viewer_2026_settings[<?php echo esc_attr( $args['key'] ); ?>]"
+			name="pdf_embed_seo_settings[<?php echo esc_attr( $args['key'] ); ?>]"
 			value="<?php echo esc_attr( $value ); ?>"
 			min="<?php echo esc_attr( $args['min'] ); ?>"
 			max="<?php echo esc_attr( $args['max'] ); ?>"
@@ -498,9 +498,9 @@ class PDF_Viewer_2026_Admin {
 
 			// Add our columns after the title.
 			if ( 'title' === $key ) {
-				$new_columns['pdf_file']    = __( 'PDF File', 'pdf-viewer-2026' );
-				$new_columns['permissions'] = __( 'Permissions', 'pdf-viewer-2026' );
-				$new_columns['views']       = __( 'Views', 'pdf-viewer-2026' );
+				$new_columns['pdf_file']    = __( 'PDF File', 'pdf-embed-seo-optimize' );
+				$new_columns['permissions'] = __( 'Permissions', 'pdf-embed-seo-optimize' );
+				$new_columns['views']       = __( 'Views', 'pdf-embed-seo-optimize' );
 			}
 		}
 
@@ -523,31 +523,31 @@ class PDF_Viewer_2026_Admin {
 					echo '<span class="dashicons dashicons-pdf"></span> ';
 					echo esc_html( $file_name );
 				} else {
-					echo '<em>' . esc_html__( 'No file attached', 'pdf-viewer-2026' ) . '</em>';
+					echo '<em>' . esc_html__( 'No file attached', 'pdf-embed-seo-optimize' ) . '</em>';
 				}
 				break;
 
 			case 'permissions':
-				$allow_download = PDF_Viewer_2026_Post_Type::is_download_allowed( $post_id );
-				$allow_print    = PDF_Viewer_2026_Post_Type::is_print_allowed( $post_id );
+				$allow_download = PDF_Embed_SEO_Post_Type::is_download_allowed( $post_id );
+				$allow_print    = PDF_Embed_SEO_Post_Type::is_print_allowed( $post_id );
 
 				$permissions = array();
 				if ( $allow_download ) {
-					$permissions[] = __( 'Download', 'pdf-viewer-2026' );
+					$permissions[] = __( 'Download', 'pdf-embed-seo-optimize' );
 				}
 				if ( $allow_print ) {
-					$permissions[] = __( 'Print', 'pdf-viewer-2026' );
+					$permissions[] = __( 'Print', 'pdf-embed-seo-optimize' );
 				}
 
 				if ( empty( $permissions ) ) {
-					echo '<em>' . esc_html__( 'View only', 'pdf-viewer-2026' ) . '</em>';
+					echo '<em>' . esc_html__( 'View only', 'pdf-embed-seo-optimize' ) . '</em>';
 				} else {
 					echo esc_html( implode( ', ', $permissions ) );
 				}
 				break;
 
 			case 'views':
-				$view_count = PDF_Viewer_2026_Post_Type::get_view_count( $post_id );
+				$view_count = PDF_Embed_SEO_Post_Type::get_view_count( $post_id );
 				echo esc_html( number_format_i18n( $view_count ) );
 				break;
 		}

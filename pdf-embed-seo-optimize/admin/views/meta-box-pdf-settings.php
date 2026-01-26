@@ -2,7 +2,7 @@
 /**
  * Meta box view for PDF settings (permissions).
  *
- * @package PDF_Viewer_2026
+ * @package PDF_Embed_SEO
  */
 
 // Prevent direct access.
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<div class="pdf-viewer-2026-settings">
+<div class="pdf-embed-seo-optimize-settings">
 	<p>
 		<label>
 			<input
@@ -20,11 +20,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 				value="1"
 				<?php checked( $allow_download, true ); ?>
 			>
-			<?php esc_html_e( 'Allow Download', 'pdf-viewer-2026' ); ?>
+			<?php esc_html_e( 'Allow Download', 'pdf-embed-seo-optimize' ); ?>
 		</label>
 	</p>
 	<p class="description">
-		<?php esc_html_e( 'Allow users to download the PDF file.', 'pdf-viewer-2026' ); ?>
+		<?php esc_html_e( 'Allow users to download the PDF file.', 'pdf-embed-seo-optimize' ); ?>
 	</p>
 
 	<p>
@@ -35,10 +35,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 				value="1"
 				<?php checked( $allow_print, true ); ?>
 			>
-			<?php esc_html_e( 'Allow Print', 'pdf-viewer-2026' ); ?>
+			<?php esc_html_e( 'Allow Print', 'pdf-embed-seo-optimize' ); ?>
 		</label>
 	</p>
 	<p class="description">
-		<?php esc_html_e( 'Allow users to print the PDF document.', 'pdf-viewer-2026' ); ?>
+		<?php esc_html_e( 'Allow users to print the PDF document.', 'pdf-embed-seo-optimize' ); ?>
 	</p>
 </div>
