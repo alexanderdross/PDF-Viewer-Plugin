@@ -1,10 +1,10 @@
-# Copyright (C) 2024 Dross:Media
+# Copyright (C) 2026 Dross:Media - https://drossmedia.de
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
 "Project-Id-Version: PDF Embed & SEO Optimize 1.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/alexanderdross/PDF-Viewer-2026/issues\n"
-"POT-Creation-Date: 2024-01-26 00:00:00+00:00\n"
+"POT-Creation-Date: 2026-01-26 00:00:00+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
