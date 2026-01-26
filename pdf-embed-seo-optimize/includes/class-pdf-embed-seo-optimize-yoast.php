@@ -47,14 +47,20 @@ class PDF_Embed_SEO_Yoast {
 	}
 
 	/**
-	 * Output JSON-LD DigitalDocument schema in the head.
+	 * Output JSON-LD schema in the head.
 	 *
-	 * This outputs schema markup for every PDF document, independent of Yoast SEO.
+	 * This outputs schema markup for PDF documents and archive page, independent of Yoast SEO.
 	 *
 	 * @return void
 	 */
 	public function output_json_ld_schema() {
-		// Only output on single PDF document pages.
+		// Handle archive page.
+		if ( is_post_type_archive( 'pdf_document' ) ) {
+			$this->output_archive_schema();
+			return;
+		}
+
+		// Handle single PDF document pages.
 		if ( ! is_singular( 'pdf_document' ) ) {
 			return;
 		}
@@ -73,6 +79,50 @@ class PDF_Embed_SEO_Yoast {
 
 		// Output JSON-LD.
 		echo "\n<!-- PDF Embed & SEO Optimize - DigitalDocument Schema -->\n";
+		echo '<script type="application/ld+json">' . "\n";
+		echo wp_json_encode( $schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
+		echo "\n</script>\n";
+	}
+
+	/**
+	 * Output JSON-LD schema for the PDF archive page.
+	 *
+	 * @return void
+	 */
+	public function output_archive_schema() {
+		$archive_url = get_post_type_archive_link( 'pdf_document' );
+		$site_name   = get_bloginfo( 'name' );
+
+		$schema = array(
+			'@context'    => 'https://schema.org',
+			'@type'       => 'CollectionPage',
+			'@id'         => $archive_url . '#collectionpage',
+			'name'        => __( 'PDF Documents', 'pdf-embed-seo-optimize' ),
+			'description' => __( 'Browse all available PDF documents.', 'pdf-embed-seo-optimize' ),
+			'url'         => $archive_url,
+			'isPartOf'    => array(
+				'@type' => 'WebSite',
+				'@id'   => home_url( '/' ) . '#website',
+				'name'  => $site_name,
+				'url'   => home_url( '/' ),
+			),
+			'mentions'    => array(
+				'@type'       => 'Organization',
+				'name'        => 'Dross:Media',
+				'url'         => 'https://dross.net/#media',
+				'description' => 'AI Search, GEO & SEO Strategy for the search of tomorrow – directly from the Web & Search Lead of a pharmaceutical company.',
+			),
+		);
+
+		/**
+		 * Filter the archive page schema data.
+		 *
+		 * @param array $schema The schema data.
+		 */
+		$schema = apply_filters( 'pdf_embed_seo_archive_schema_data', $schema );
+
+		// Output JSON-LD.
+		echo "\n<!-- PDF Embed & SEO Optimize - Archive Page Schema -->\n";
 		echo '<script type="application/ld+json">' . "\n";
 		echo wp_json_encode( $schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
 		echo "\n</script>\n";
