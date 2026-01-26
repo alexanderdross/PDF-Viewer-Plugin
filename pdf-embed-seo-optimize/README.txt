@@ -17,7 +17,9 @@ A powerful WordPress plugin that integrates Mozilla's PDF.js viewer to serve PDF
 = Key Features =
 
 * **Clean URL Structure** - No more `.pdf` extensions in URLs. Each PDF gets its own SEO-optimized page.
-* **Mozilla PDF.js Integration** - Industry-standard PDF rendering right in the browser.
+* **Mozilla PDF.js Integration** - Industry-standard PDF rendering right in the browser (bundled locally, no external dependencies).
+* **Gutenberg Block** - Native block editor support for embedding PDFs in posts and pages.
+* **Auto-Generate Thumbnails** - Automatically create thumbnails from PDF first pages using ImageMagick or Ghostscript.
 * **Yoast SEO Compatible** - Full control over SEO title, meta description, slug, OpenGraph tags, and Twitter Cards.
 * **Print/Download Control** - Allow or restrict printing and downloading on a per-PDF basis.
 * **PDF Archive Page** - Automatically generate an archive page listing all your PDFs at `/pdf/`.
@@ -30,6 +32,14 @@ A powerful WordPress plugin that integrates Mozilla's PDF.js viewer to serve PDF
 
 * **Archive Page:** `yoursite.com/pdf/` - Lists all published PDF documents
 * **Single PDF:** `yoursite.com/pdf/your-document-slug/` - Individual PDF viewer page
+
+= Gutenberg Block =
+
+The easiest way to embed PDFs in the block editor:
+
+1. Add a new block and search for "PDF Viewer"
+2. Select your PDF document from the dropdown
+3. Adjust width and height in the block settings
 
 = Shortcodes =
 
@@ -95,14 +105,16 @@ Yes, you can choose between light and dark themes in the plugin settings. You ca
 = 1.0.0 =
 * Initial release
 * Custom post type for PDF documents
-* Mozilla PDF.js viewer integration
+* Mozilla PDF.js viewer integration (bundled locally - no external CDN)
+* Gutenberg block for embedding PDFs in the block editor
+* Auto-generate thumbnails from PDF first pages (requires ImageMagick or Ghostscript)
 * Yoast SEO compatibility
 * Print/download permission controls
 * View statistics tracking
 * Shortcode support
 * Archive page with grid layout
 * Light and dark viewer themes
-* Schema markup for rich results
+* Schema markup for rich results (DigitalDocument and CollectionPage)
 
 == Upgrade Notice ==
 
@@ -115,4 +127,4 @@ This plugin does not collect any personal data. It stores:
 * PDF view counts (anonymous)
 * Plugin settings
 
-No data is sent to external servers except for loading the PDF.js library from CDNJS.
+**No external services are used.** The PDF.js library is bundled locally with the plugin - no data is sent to any external servers.

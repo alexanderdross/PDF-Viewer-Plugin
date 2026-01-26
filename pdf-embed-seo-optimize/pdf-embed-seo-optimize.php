@@ -99,6 +99,20 @@ final class PDF_Embed_SEO {
 	public $shortcodes = null;
 
 	/**
+	 * Block instance.
+	 *
+	 * @var PDF_Embed_SEO_Block|null
+	 */
+	public $block = null;
+
+	/**
+	 * Thumbnail instance.
+	 *
+	 * @var PDF_Embed_SEO_Thumbnail|null
+	 */
+	public $thumbnail = null;
+
+	/**
 	 * Get the single instance of the class.
 	 *
 	 * @return PDF_Embed_SEO
@@ -129,6 +143,8 @@ final class PDF_Embed_SEO {
 		require_once PDF_EMBED_SEO_PLUGIN_DIR . 'includes/class-pdf-embed-seo-optimize-frontend.php';
 		require_once PDF_EMBED_SEO_PLUGIN_DIR . 'includes/class-pdf-embed-seo-optimize-yoast.php';
 		require_once PDF_EMBED_SEO_PLUGIN_DIR . 'includes/class-pdf-embed-seo-optimize-shortcodes.php';
+		require_once PDF_EMBED_SEO_PLUGIN_DIR . 'includes/class-pdf-embed-seo-optimize-block.php';
+		require_once PDF_EMBED_SEO_PLUGIN_DIR . 'includes/class-pdf-embed-seo-optimize-thumbnail.php';
 
 		// Admin classes (only in admin context).
 		if ( is_admin() ) {
@@ -186,6 +202,12 @@ final class PDF_Embed_SEO {
 		// Initialize shortcodes.
 		$this->shortcodes = new PDF_Embed_SEO_Shortcodes();
 
+		// Initialize Gutenberg block.
+		$this->block = new PDF_Embed_SEO_Block();
+
+		// Initialize thumbnail generator.
+		$this->thumbnail = new PDF_Embed_SEO_Thumbnail();
+
 		// Initialize admin (only in admin context).
 		if ( is_admin() ) {
 			$this->admin = new PDF_Embed_SEO_Admin();
@@ -228,10 +250,11 @@ final class PDF_Embed_SEO {
 
 		// Set default options.
 		$default_options = array(
-			'default_allow_download' => false,
-			'default_allow_print'    => false,
-			'archive_posts_per_page' => 12,
-			'viewer_theme'           => 'light',
+			'default_allow_download'   => false,
+			'default_allow_print'      => false,
+			'auto_generate_thumbnails' => true,
+			'archive_posts_per_page'   => 12,
+			'viewer_theme'             => 'light',
 		);
 
 		if ( false === get_option( 'pdf_embed_seo_settings' ) ) {

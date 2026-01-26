@@ -174,21 +174,21 @@ class PDF_Embed_SEO_Shortcodes {
 		$allow_print    = PDF_Embed_SEO_Post_Type::is_print_allowed( $post_id );
 		$viewer_theme   = PDF_Embed_SEO::get_setting( 'viewer_theme', 'light' );
 
-		// PDF.js library from Mozilla CDN.
+		// PDF.js library - bundled locally.
 		$pdfjs_version = '4.0.379';
 
 		wp_enqueue_script(
 			'pdfjs',
-			'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/' . $pdfjs_version . '/pdf.min.js',
+			PDF_EMBED_SEO_PLUGIN_URL . 'assets/pdfjs/pdf.min.js',
 			array(),
 			$pdfjs_version,
 			true
 		);
 
-		// Set the worker source from CDN.
+		// Set the worker source from local assets.
 		wp_add_inline_script(
 			'pdfjs',
-			'pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/' . $pdfjs_version . '/pdf.worker.min.js";'
+			'pdfjsLib.GlobalWorkerOptions.workerSrc = "' . esc_js( PDF_EMBED_SEO_PLUGIN_URL . 'assets/pdfjs/pdf.worker.min.js' ) . '";'
 		);
 
 		// Viewer styles.

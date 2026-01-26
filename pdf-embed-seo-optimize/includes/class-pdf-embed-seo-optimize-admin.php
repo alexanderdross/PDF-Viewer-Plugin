@@ -311,6 +311,18 @@ class PDF_Embed_SEO_Admin {
 			)
 		);
 
+		add_settings_field(
+			'auto_generate_thumbnails',
+			__( 'Auto-generate Thumbnails', 'pdf-embed-seo-optimize' ),
+			array( $this, 'render_thumbnail_field' ),
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_defaults',
+			array(
+				'label_for' => 'auto_generate_thumbnails',
+				'key'       => 'auto_generate_thumbnails',
+			)
+		);
+
 		// Viewer Settings Section.
 		add_settings_section(
 			'pdf_embed_seo_viewer',
@@ -367,12 +379,13 @@ class PDF_Embed_SEO_Admin {
 	public function sanitize_settings( $input ) {
 		$sanitized = array();
 
-		$sanitized['default_allow_download'] = ! empty( $input['default_allow_download'] );
-		$sanitized['default_allow_print']    = ! empty( $input['default_allow_print'] );
-		$sanitized['viewer_theme']           = isset( $input['viewer_theme'] ) && in_array( $input['viewer_theme'], array( 'light', 'dark' ), true )
+		$sanitized['default_allow_download']    = ! empty( $input['default_allow_download'] );
+		$sanitized['default_allow_print']       = ! empty( $input['default_allow_print'] );
+		$sanitized['auto_generate_thumbnails']  = ! empty( $input['auto_generate_thumbnails'] );
+		$sanitized['viewer_theme']              = isset( $input['viewer_theme'] ) && in_array( $input['viewer_theme'], array( 'light', 'dark' ), true )
 			? $input['viewer_theme']
 			: 'light';
-		$sanitized['archive_posts_per_page'] = isset( $input['archive_posts_per_page'] )
+		$sanitized['archive_posts_per_page']    = isset( $input['archive_posts_per_page'] )
 			? absint( $input['archive_posts_per_page'] )
 			: 12;
 
@@ -481,6 +494,41 @@ class PDF_Embed_SEO_Admin {
 			max="<?php echo esc_attr( $args['max'] ); ?>"
 			class="small-text"
 		/>
+		<?php
+	}
+
+	/**
+	 * Render the thumbnail settings field.
+	 *
+	 * @param array $args Field arguments.
+	 * @return void
+	 */
+	public function render_thumbnail_field( $args ) {
+		$settings    = PDF_Embed_SEO::get_setting();
+		$value       = isset( $settings[ $args['key'] ] ) ? $settings[ $args['key'] ] : true;
+		$availability = PDF_Embed_SEO_Thumbnail::check_availability();
+		?>
+		<input
+			type="checkbox"
+			id="<?php echo esc_attr( $args['key'] ); ?>"
+			name="pdf_embed_seo_settings[<?php echo esc_attr( $args['key'] ); ?>]"
+			value="1"
+			<?php checked( $value, true ); ?>
+			<?php disabled( ! $availability['available'] ); ?>
+		/>
+		<p class="description">
+			<?php if ( $availability['available'] ) : ?>
+				<?php esc_html_e( 'Automatically generate a thumbnail from the first page of the PDF when no featured image is set.', 'pdf-embed-seo-optimize' ); ?>
+				<br>
+				<span style="color: #00a32a;">
+					<?php echo esc_html( $availability['message'] ); ?>
+				</span>
+			<?php else : ?>
+				<span style="color: #d63638;">
+					<?php echo esc_html( $availability['message'] ); ?>
+				</span>
+			<?php endif; ?>
+		</p>
 		<?php
 	}
 

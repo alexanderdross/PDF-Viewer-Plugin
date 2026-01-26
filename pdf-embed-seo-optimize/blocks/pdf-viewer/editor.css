@@ -1,0 +1,125 @@
+/**
+ * PDF Viewer Block - Editor Styles
+ *
+ * @package PDF_Embed_SEO
+ */
+
+/* Block placeholder */
+.wp-block-pdf-embed-seo-pdf-viewer .components-placeholder {
+	min-height: 200px;
+}
+
+.wp-block-pdf-embed-seo-pdf-viewer .components-placeholder__instructions {
+	margin-bottom: 1em;
+}
+
+/* PDF selection dropdown */
+.pdf-embed-seo-block-select {
+	min-width: 300px;
+}
+
+/* Preview container */
+.pdf-embed-seo-block-preview {
+	background: #f0f0f0;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	overflow: hidden;
+}
+
+.pdf-embed-seo-block-preview-inner {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 30px;
+	min-height: 200px;
+	text-align: center;
+}
+
+/* Thumbnail */
+.pdf-embed-seo-block-thumbnail {
+	max-width: 150px;
+	max-height: 150px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	margin-bottom: 15px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* PDF icon fallback */
+.pdf-embed-seo-block-icon {
+	width: 80px;
+	height: 80px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #fff;
+	border-radius: 8px;
+	margin-bottom: 15px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pdf-embed-seo-block-icon svg {
+	width: 48px;
+	height: 48px;
+}
+
+/* Info section */
+.pdf-embed-seo-block-info {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.pdf-embed-seo-block-info strong {
+	font-size: 16px;
+	color: #1e1e1e;
+}
+
+.pdf-embed-seo-block-dimensions {
+	font-size: 12px;
+	color: #757575;
+}
+
+.pdf-embed-seo-block-link {
+	font-size: 13px;
+	color: #0073aa;
+	text-decoration: none;
+	margin-top: 5px;
+}
+
+.pdf-embed-seo-block-link:hover {
+	text-decoration: underline;
+}
+
+/* Inspector controls */
+.editor-styles-wrapper .pdf-embed-seo-block-preview {
+	margin: 0;
+}
+
+/* Alignment support */
+.wp-block-pdf-embed-seo-pdf-viewer.alignwide {
+	width: 100%;
+	max-width: none;
+}
+
+.wp-block-pdf-embed-seo-pdf-viewer.alignfull {
+	width: 100vw;
+	max-width: 100vw;
+	margin-left: calc(-50vw + 50%);
+	margin-right: calc(-50vw + 50%);
+}
+
+/* Dark theme support */
+.is-dark-theme .pdf-embed-seo-block-preview {
+	background: #2e2e2e;
+	border-color: #444;
+}
+
+.is-dark-theme .pdf-embed-seo-block-info strong {
+	color: #f0f0f0;
+}
+
+.is-dark-theme .pdf-embed-seo-block-icon {
+	background: #3c3c3c;
+}

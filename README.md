@@ -5,7 +5,9 @@ A powerful WordPress plugin that integrates Mozilla's PDF.js viewer to serve PDF
 ## Features
 
 - **Clean URL Structure** - Display PDFs at `/pdf/document-name/` instead of exposing `.pdf` file URLs
-- **Mozilla PDF.js Integration** - Industry-standard PDF rendering in the browser
+- **Mozilla PDF.js Integration** - Industry-standard PDF rendering in the browser (bundled locally - no external CDN)
+- **Gutenberg Block** - Native block editor support for embedding PDFs in posts and pages
+- **Auto-Generate Thumbnails** - Automatically create thumbnails from PDF first pages using ImageMagick or Ghostscript
 - **Yoast SEO Compatible** - Full control over SEO title, meta description, slug, OpenGraph tags, and Twitter Cards
 - **Print/Download Control** - Allow or restrict printing and downloading on a per-PDF basis
 - **PDF Archive Page** - Automatically generated archive page at `/pdf/` listing all PDFs
@@ -32,6 +34,13 @@ A powerful WordPress plugin that integrates Mozilla's PDF.js viewer to serve PDF
 5. Set SEO settings via Yoast SEO meta box (if installed)
 6. Publish
 
+### Gutenberg Block (Recommended)
+
+1. In the block editor, click "+" to add a new block
+2. Search for "PDF Viewer" or find it under "Embed"
+3. Select your PDF document from the dropdown
+4. Adjust width and height in the block settings panel
+
 ### Shortcodes
 
 ```
@@ -55,11 +64,11 @@ A powerful WordPress plugin that integrates Mozilla's PDF.js viewer to serve PDF
 
 ## External Services
 
-This plugin uses the following external service:
+**None.** All resources are bundled locally with the plugin.
 
-- **PDF.js** from [CDNJS](https://cdnjs.cloudflare.com/) - Mozilla's PDF rendering library
+- **PDF.js** - Mozilla's PDF rendering library (bundled locally)
   - Used for: Rendering PDF documents in the browser
-  - Privacy: No user data is sent to CDNJS
+  - Privacy: No external requests are made; all assets served from your domain
 
 ## Screenshots
 
@@ -86,11 +95,21 @@ pdf-embed-seo-optimize/
 │   ├── class-pdf-embed-seo-optimize-admin.php
 │   ├── class-pdf-embed-seo-optimize-frontend.php
 │   ├── class-pdf-embed-seo-optimize-shortcodes.php
-│   └── class-pdf-embed-seo-optimize-yoast.php
+│   ├── class-pdf-embed-seo-optimize-yoast.php
+│   ├── class-pdf-embed-seo-optimize-block.php        # Gutenberg block
+│   └── class-pdf-embed-seo-optimize-thumbnail.php    # Thumbnail generator
 ├── admin/
 │   ├── css/admin-styles.css
 │   ├── js/admin-scripts.js
 │   └── views/
+├── assets/
+│   └── pdfjs/                     # Bundled PDF.js library
+│       ├── pdf.min.js
+│       └── pdf.worker.min.js
+├── blocks/
+│   └── pdf-viewer/                # Gutenberg block assets
+│       ├── editor.js
+│       └── editor.css
 ├── public/
 │   ├── css/viewer-styles.css
 │   ├── js/viewer-scripts.js
@@ -121,8 +140,11 @@ GPL v2 or later - https://www.gnu.org/licenses/gpl-2.0.html
 ### 1.0.0
 - Initial release
 - Custom post type for PDF documents
-- Mozilla PDF.js viewer integration
+- Mozilla PDF.js viewer integration (bundled locally - no external CDN)
+- Gutenberg block for embedding PDFs in the block editor
+- Auto-generate thumbnails from PDF first pages (requires ImageMagick or Ghostscript)
 - Yoast SEO compatibility
 - Print/download permission controls
 - View statistics tracking
 - Shortcode support
+- Schema markup (DigitalDocument and CollectionPage)
