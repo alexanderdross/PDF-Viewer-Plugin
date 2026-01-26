@@ -1,6 +1,6 @@
 <?php
 /**
- * Yoast SEO Integration for PDF Viewer 2026.
+ * Yoast SEO Integration and Schema Markup for PDF Viewer 2026.
  *
  * @package PDF_Viewer_2026
  */
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class PDF_Viewer_2026_Yoast
  *
- * Handles integration with Yoast SEO plugin for enhanced SEO control.
+ * Handles integration with Yoast SEO plugin and outputs JSON-LD schema markup.
  */
 class PDF_Viewer_2026_Yoast {
 
@@ -21,28 +21,20 @@ class PDF_Viewer_2026_Yoast {
 	 * Constructor.
 	 */
 	public function __construct() {
-		// Check if Yoast SEO is active.
-		if ( ! $this->is_yoast_active() ) {
-			return;
+		// Always output JSON-LD schema for PDF documents (independent of Yoast).
+		add_action( 'wp_head', array( $this, 'output_json_ld_schema' ), 1 );
+
+		// Yoast-specific integrations (only if Yoast is active).
+		if ( $this->is_yoast_active() ) {
+			add_filter( 'wpseo_accessible_post_types', array( $this, 'add_post_type_support' ) );
+			add_filter( 'wpseo_opengraph_image', array( $this, 'customize_og_image' ) );
+			add_filter( 'wpseo_twitter_image', array( $this, 'customize_twitter_image' ) );
+			add_filter( 'wpseo_sitemap_post_type_archive_link', array( $this, 'sitemap_archive_link' ), 10, 2 );
+			add_filter( 'wpseo_robots', array( $this, 'modify_robots' ) );
+
+			// Prevent duplicate schema when Yoast is active.
+			add_filter( 'wpseo_schema_graph_pieces', array( $this, 'add_schema_pieces' ), 10, 2 );
 		}
-
-		// Add Yoast support for our post type.
-		add_filter( 'wpseo_accessible_post_types', array( $this, 'add_post_type_support' ) );
-
-		// Customize the OpenGraph image.
-		add_filter( 'wpseo_opengraph_image', array( $this, 'customize_og_image' ) );
-
-		// Add custom schema for PDF documents.
-		add_filter( 'wpseo_schema_graph_pieces', array( $this, 'add_schema_pieces' ), 10, 2 );
-
-		// Customize Twitter card.
-		add_filter( 'wpseo_twitter_image', array( $this, 'customize_twitter_image' ) );
-
-		// Add sitemap support.
-		add_filter( 'wpseo_sitemap_post_type_archive_link', array( $this, 'sitemap_archive_link' ), 10, 2 );
-
-		// Custom meta robots.
-		add_filter( 'wpseo_robots', array( $this, 'modify_robots' ) );
 	}
 
 	/**
@@ -52,6 +44,203 @@ class PDF_Viewer_2026_Yoast {
 	 */
 	public function is_yoast_active() {
 		return defined( 'WPSEO_VERSION' ) || class_exists( 'WPSEO_Options' );
+	}
+
+	/**
+	 * Output JSON-LD DigitalDocument schema in the head.
+	 *
+	 * This outputs schema markup for every PDF document, independent of Yoast SEO.
+	 *
+	 * @return void
+	 */
+	public function output_json_ld_schema() {
+		// Only output on single PDF document pages.
+		if ( ! is_singular( 'pdf_document' ) ) {
+			return;
+		}
+
+		// If Yoast is active, it will handle schema output via its own system.
+		if ( $this->is_yoast_active() ) {
+			return;
+		}
+
+		$post_id = get_the_ID();
+		$schema  = $this->generate_digital_document_schema( $post_id );
+
+		if ( empty( $schema ) ) {
+			return;
+		}
+
+		// Output JSON-LD.
+		echo "\n<!-- PDF Embed & SEO Optimize - DigitalDocument Schema -->\n";
+		echo '<script type="application/ld+json">' . "\n";
+		echo wp_json_encode( $schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
+		echo "\n</script>\n";
+	}
+
+	/**
+	 * Generate DigitalDocument schema for a PDF.
+	 *
+	 * @param int $post_id The post ID.
+	 * @return array The schema data.
+	 */
+	public function generate_digital_document_schema( $post_id ) {
+		$post = get_post( $post_id );
+
+		if ( ! $post || 'pdf_document' !== $post->post_type ) {
+			return array();
+		}
+
+		$file_id   = get_post_meta( $post_id, '_pdf_file_id', true );
+		$file_url  = get_post_meta( $post_id, '_pdf_file_url', true );
+		$site_name = get_bloginfo( 'name' );
+		$site_url  = home_url( '/' );
+
+		// Build the main schema.
+		$schema = array(
+			'@context'        => 'https://schema.org',
+			'@type'           => 'DigitalDocument',
+			'@id'             => get_permalink( $post_id ) . '#digitaldocument',
+			'name'            => get_the_title( $post_id ),
+			'headline'        => get_the_title( $post_id ),
+			'url'             => get_permalink( $post_id ),
+			'encodingFormat'  => 'application/pdf',
+			'fileFormat'      => 'application/pdf',
+			'datePublished'   => get_the_date( 'c', $post_id ),
+			'dateModified'    => get_the_modified_date( 'c', $post_id ),
+			'inLanguage'      => get_bloginfo( 'language' ),
+		);
+
+		// Add description if available.
+		$excerpt = get_the_excerpt( $post_id );
+		if ( ! empty( $excerpt ) ) {
+			$schema['description'] = wp_strip_all_tags( $excerpt );
+			$schema['abstract']    = wp_strip_all_tags( $excerpt );
+		}
+
+		// Add author information.
+		$author_id = $post->post_author;
+		if ( $author_id ) {
+			$author_name = get_the_author_meta( 'display_name', $author_id );
+			$author_url  = get_author_posts_url( $author_id );
+
+			$schema['author'] = array(
+				'@type' => 'Person',
+				'@id'   => $author_url . '#author',
+				'name'  => $author_name,
+				'url'   => $author_url,
+			);
+
+			$schema['creator'] = array(
+				'@type' => 'Person',
+				'name'  => $author_name,
+			);
+		}
+
+		// Add publisher (the website).
+		$schema['publisher'] = array(
+			'@type' => 'Organization',
+			'@id'   => $site_url . '#organization',
+			'name'  => $site_name,
+			'url'   => $site_url,
+		);
+
+		// Add logo if site has one.
+		$custom_logo_id = get_theme_mod( 'custom_logo' );
+		if ( $custom_logo_id ) {
+			$logo_url = wp_get_attachment_image_url( $custom_logo_id, 'full' );
+			if ( $logo_url ) {
+				$schema['publisher']['logo'] = array(
+					'@type' => 'ImageObject',
+					'url'   => $logo_url,
+				);
+			}
+		}
+
+		// Add featured image / thumbnail.
+		if ( has_post_thumbnail( $post_id ) ) {
+			$thumbnail_id   = get_post_thumbnail_id( $post_id );
+			$thumbnail_data = wp_get_attachment_image_src( $thumbnail_id, 'large' );
+
+			if ( $thumbnail_data ) {
+				$schema['thumbnailUrl'] = $thumbnail_data[0];
+				$schema['image']        = array(
+					'@type'  => 'ImageObject',
+					'@id'    => get_permalink( $post_id ) . '#primaryimage',
+					'url'    => $thumbnail_data[0],
+					'width'  => $thumbnail_data[1],
+					'height' => $thumbnail_data[2],
+				);
+			}
+		}
+
+		// Add file information.
+		if ( $file_id ) {
+			$file_path = get_attached_file( $file_id );
+
+			if ( $file_path && file_exists( $file_path ) ) {
+				$file_size = filesize( $file_path );
+				$schema['contentSize'] = size_format( $file_size );
+
+				// Add associatedMedia for the actual PDF file.
+				$schema['associatedMedia'] = array(
+					'@type'           => 'MediaObject',
+					'contentUrl'      => $file_url,
+					'encodingFormat'  => 'application/pdf',
+					'contentSize'     => size_format( $file_size ),
+				);
+			}
+		}
+
+		// Add view count as interaction statistics.
+		$view_count = PDF_Viewer_2026_Post_Type::get_view_count( $post_id );
+		if ( $view_count > 0 ) {
+			$schema['interactionStatistic'] = array(
+				'@type'                => 'InteractionCounter',
+				'interactionType'      => array(
+					'@type' => 'ReadAction',
+				),
+				'userInteractionCount' => $view_count,
+			);
+		}
+
+		// Add permissions info.
+		$allow_download = PDF_Viewer_2026_Post_Type::is_download_allowed( $post_id );
+		$allow_print    = PDF_Viewer_2026_Post_Type::is_print_allowed( $post_id );
+
+		$permissions = array();
+		if ( $allow_download ) {
+			$permissions[] = 'Download';
+		}
+		if ( $allow_print ) {
+			$permissions[] = 'Print';
+		}
+
+		if ( ! empty( $permissions ) ) {
+			$schema['usageInfo'] = implode( ', ', $permissions ) . ' allowed';
+		}
+
+		// Add breadcrumb reference.
+		$schema['isPartOf'] = array(
+			'@type' => 'WebPage',
+			'@id'   => get_permalink( $post_id ) . '#webpage',
+			'url'   => get_permalink( $post_id ),
+			'name'  => get_the_title( $post_id ),
+		);
+
+		// Add main entity of page.
+		$schema['mainEntityOfPage'] = array(
+			'@type' => 'WebPage',
+			'@id'   => get_permalink( $post_id ),
+		);
+
+		/**
+		 * Filter the DigitalDocument schema data.
+		 *
+		 * @param array $schema  The schema data.
+		 * @param int   $post_id The post ID.
+		 */
+		return apply_filters( 'pdf_viewer_2026_schema_data', $schema, $post_id );
 	}
 
 	/**
@@ -78,7 +267,6 @@ class PDF_Viewer_2026_Yoast {
 
 		$post_id = get_the_ID();
 
-		// Use featured image if available.
 		if ( has_post_thumbnail( $post_id ) ) {
 			$thumbnail_id  = get_post_thumbnail_id( $post_id );
 			$thumbnail_url = wp_get_attachment_image_url( $thumbnail_id, 'large' );
@@ -104,7 +292,6 @@ class PDF_Viewer_2026_Yoast {
 
 		$post_id = get_the_ID();
 
-		// Use featured image if available.
 		if ( has_post_thumbnail( $post_id ) ) {
 			$thumbnail_id  = get_post_thumbnail_id( $post_id );
 			$thumbnail_url = wp_get_attachment_image_url( $thumbnail_id, 'large' );
@@ -118,10 +305,10 @@ class PDF_Viewer_2026_Yoast {
 	}
 
 	/**
-	 * Add custom schema pieces for PDF documents.
+	 * Add custom schema pieces for PDF documents (Yoast integration).
 	 *
-	 * @param array                 $pieces  The current schema pieces.
-	 * @param WPSEO_Schema_Context  $context The schema context.
+	 * @param array $pieces  The current schema pieces.
+	 * @param mixed $context The schema context.
 	 * @return array
 	 */
 	public function add_schema_pieces( $pieces, $context ) {
@@ -129,7 +316,6 @@ class PDF_Viewer_2026_Yoast {
 			return $pieces;
 		}
 
-		// Add our custom schema piece.
 		$pieces[] = new PDF_Viewer_2026_Schema_Piece( $context );
 
 		return $pieces;
@@ -157,8 +343,6 @@ class PDF_Viewer_2026_Yoast {
 	 * @return string
 	 */
 	public function modify_robots( $robots ) {
-		// Allow all PDF documents to be indexed by default.
-		// Individual pages can still be set to noindex via Yoast.
 		return $robots;
 	}
 
@@ -178,20 +362,17 @@ class PDF_Viewer_2026_Yoast {
 		);
 
 		if ( ! class_exists( 'WPSEO_Meta' ) ) {
-			// Yoast not active, use default values.
 			$data['title']       = get_the_title( $post_id );
 			$data['description'] = get_the_excerpt( $post_id );
 			return $data;
 		}
 
-		// Get Yoast meta values.
 		$data['title']       = WPSEO_Meta::get_value( 'title', $post_id );
 		$data['description'] = WPSEO_Meta::get_value( 'metadesc', $post_id );
 		$data['og_title']    = WPSEO_Meta::get_value( 'opengraph-title', $post_id );
 		$data['og_desc']     = WPSEO_Meta::get_value( 'opengraph-description', $post_id );
 		$data['og_image']    = WPSEO_Meta::get_value( 'opengraph-image', $post_id );
 
-		// Fallback to default values if Yoast values are empty.
 		if ( empty( $data['title'] ) ) {
 			$data['title'] = get_the_title( $post_id );
 		}
@@ -205,9 +386,9 @@ class PDF_Viewer_2026_Yoast {
 }
 
 /**
- * Custom Schema piece for PDF Documents.
+ * Custom Schema piece for PDF Documents (Yoast integration).
  *
- * Adds DigitalDocument schema for PDF files.
+ * Adds DigitalDocument schema when Yoast SEO is active.
  */
 class PDF_Viewer_2026_Schema_Piece {
 
@@ -249,18 +430,21 @@ class PDF_Viewer_2026_Schema_Piece {
 			return array();
 		}
 
-		$file_id = get_post_meta( $post_id, '_pdf_file_id', true );
+		$file_id  = get_post_meta( $post_id, '_pdf_file_id', true );
+		$file_url = get_post_meta( $post_id, '_pdf_file_url', true );
 
 		$schema = array(
-			'@type'           => 'DigitalDocument',
-			'@id'             => get_permalink( $post_id ) . '#digitaldocument',
-			'name'            => get_the_title( $post_id ),
-			'description'     => get_the_excerpt( $post_id ),
-			'url'             => get_permalink( $post_id ),
-			'encodingFormat'  => 'application/pdf',
-			'datePublished'   => get_the_date( 'c', $post_id ),
-			'dateModified'    => get_the_modified_date( 'c', $post_id ),
-			'inLanguage'      => get_bloginfo( 'language' ),
+			'@type'          => 'DigitalDocument',
+			'@id'            => get_permalink( $post_id ) . '#digitaldocument',
+			'name'           => get_the_title( $post_id ),
+			'headline'       => get_the_title( $post_id ),
+			'description'    => wp_strip_all_tags( get_the_excerpt( $post_id ) ),
+			'url'            => get_permalink( $post_id ),
+			'encodingFormat' => 'application/pdf',
+			'fileFormat'     => 'application/pdf',
+			'datePublished'  => get_the_date( 'c', $post_id ),
+			'dateModified'   => get_the_modified_date( 'c', $post_id ),
+			'inLanguage'     => get_bloginfo( 'language' ),
 		);
 
 		// Add author.
@@ -268,21 +452,28 @@ class PDF_Viewer_2026_Schema_Piece {
 		if ( $author_id ) {
 			$schema['author'] = array(
 				'@type' => 'Person',
+				'@id'   => get_author_posts_url( $author_id ) . '#author',
 				'name'  => get_the_author_meta( 'display_name', $author_id ),
 			);
 		}
 
-		// Add featured image as thumbnail.
+		// Add featured image.
 		if ( has_post_thumbnail( $post_id ) ) {
-			$thumbnail_id  = get_post_thumbnail_id( $post_id );
-			$thumbnail_url = wp_get_attachment_image_url( $thumbnail_id, 'large' );
+			$thumbnail_id   = get_post_thumbnail_id( $post_id );
+			$thumbnail_data = wp_get_attachment_image_src( $thumbnail_id, 'large' );
 
-			if ( $thumbnail_url ) {
-				$schema['thumbnailUrl'] = $thumbnail_url;
+			if ( $thumbnail_data ) {
+				$schema['thumbnailUrl'] = $thumbnail_data[0];
+				$schema['image']        = array(
+					'@type'  => 'ImageObject',
+					'url'    => $thumbnail_data[0],
+					'width'  => $thumbnail_data[1],
+					'height' => $thumbnail_data[2],
+				);
 			}
 		}
 
-		// Add file information if available.
+		// Add file info.
 		if ( $file_id ) {
 			$file_path = get_attached_file( $file_id );
 
@@ -296,10 +487,17 @@ class PDF_Viewer_2026_Schema_Piece {
 		if ( $view_count > 0 ) {
 			$schema['interactionStatistic'] = array(
 				'@type'                => 'InteractionCounter',
-				'interactionType'      => 'https://schema.org/ReadAction',
+				'interactionType'      => array(
+					'@type' => 'ReadAction',
+				),
 				'userInteractionCount' => $view_count,
 			);
 		}
+
+		// Main entity reference.
+		$schema['mainEntityOfPage'] = array(
+			'@id' => get_permalink( $post_id ),
+		);
 
 		return $schema;
 	}
