@@ -22,8 +22,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<h2><?php esc_html_e( 'Table of Contents', 'pdf-embed-seo-optimize' ); ?></h2>
 		<ol>
 			<li><a href="#print-download"><?php esc_html_e( 'Print & Download Permissions', 'pdf-embed-seo-optimize' ); ?></a></li>
-			<li><a href="#pdf-viewer-sitemap"><?php esc_html_e( '[pdf_viewer_sitemap]', 'pdf-embed-seo-optimize' ); ?></a></li>
-			<li><a href="#pdf-viewer"><?php esc_html_e( '[pdf_viewer]', 'pdf-embed-seo-optimize' ); ?></a></li>
+			<li><a href="#gutenberg-block"><?php esc_html_e( 'Gutenberg Block', 'pdf-embed-seo-optimize' ); ?></a></li>
+			<li><a href="#thumbnails"><?php esc_html_e( 'PDF Thumbnails', 'pdf-embed-seo-optimize' ); ?></a></li>
+			<li><a href="#pdf-viewer-sitemap"><?php esc_html_e( '[pdf_viewer_sitemap] Shortcode', 'pdf-embed-seo-optimize' ); ?></a></li>
+			<li><a href="#pdf-viewer"><?php esc_html_e( '[pdf_viewer] Shortcode', 'pdf-embed-seo-optimize' ); ?></a></li>
 			<li><a href="#custom-templates"><?php esc_html_e( 'Using [pdf_viewer] in Custom Template Files', 'pdf-embed-seo-optimize' ); ?></a></li>
 			<li><a href="#url-structure"><?php esc_html_e( 'URL Structure', 'pdf-embed-seo-optimize' ); ?></a></li>
 			<li><a href="#yoast-seo"><?php esc_html_e( 'Yoast SEO Integration', 'pdf-embed-seo-optimize' ); ?></a></li>
@@ -72,8 +74,122 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<hr>
 
+	<div class="pdf-embed-seo-optimize-docs-section" id="gutenberg-block">
+		<h2><?php esc_html_e( '2. Gutenberg Block', 'pdf-embed-seo-optimize' ); ?></h2>
+
+		<p>
+			<strong><?php esc_html_e( 'Purpose:', 'pdf-embed-seo-optimize' ); ?></strong>
+			<?php esc_html_e( 'The PDF Viewer block allows you to embed PDF documents directly in the WordPress block editor (Gutenberg). This is the recommended method for embedding PDFs in posts and pages.', 'pdf-embed-seo-optimize' ); ?>
+		</p>
+
+		<h3><?php esc_html_e( 'How to Use:', 'pdf-embed-seo-optimize' ); ?></h3>
+		<ol>
+			<li><?php esc_html_e( 'In the block editor, click the "+" button to add a new block', 'pdf-embed-seo-optimize' ); ?></li>
+			<li><?php esc_html_e( 'Search for "PDF Viewer" or find it under the "Embed" category', 'pdf-embed-seo-optimize' ); ?></li>
+			<li><?php esc_html_e( 'Select the PDF document you want to embed from the dropdown', 'pdf-embed-seo-optimize' ); ?></li>
+			<li><?php esc_html_e( 'Optionally adjust width and height in the block settings panel', 'pdf-embed-seo-optimize' ); ?></li>
+		</ol>
+
+		<h3><?php esc_html_e( 'Block Settings:', 'pdf-embed-seo-optimize' ); ?></h3>
+		<table class="widefat">
+			<thead>
+				<tr>
+					<th><?php esc_html_e( 'Setting', 'pdf-embed-seo-optimize' ); ?></th>
+					<th><?php esc_html_e( 'Default', 'pdf-embed-seo-optimize' ); ?></th>
+					<th><?php esc_html_e( 'Description', 'pdf-embed-seo-optimize' ); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><strong><?php esc_html_e( 'PDF Document', 'pdf-embed-seo-optimize' ); ?></strong></td>
+					<td>-</td>
+					<td><?php esc_html_e( 'Select which PDF to display', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><strong><?php esc_html_e( 'Width', 'pdf-embed-seo-optimize' ); ?></strong></td>
+					<td>100%</td>
+					<td><?php esc_html_e( 'Width of the viewer (e.g., 100%, 800px)', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><strong><?php esc_html_e( 'Height', 'pdf-embed-seo-optimize' ); ?></strong></td>
+					<td>600px</td>
+					<td><?php esc_html_e( 'Height of the viewer (e.g., 600px, 80vh)', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><strong><?php esc_html_e( 'Alignment', 'pdf-embed-seo-optimize' ); ?></strong></td>
+					<td>None</td>
+					<td><?php esc_html_e( 'Supports Wide and Full width alignments', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="notice notice-info inline" style="padding: 10px; margin: 10px 0;">
+			<span class="dashicons dashicons-info" style="color: #0073aa;"></span>
+			<?php esc_html_e( 'Tip: The block shows a preview in the editor with the PDF title and thumbnail. Use the sidebar settings to customize dimensions.', 'pdf-embed-seo-optimize' ); ?>
+		</div>
+	</div>
+
+	<hr>
+
+	<div class="pdf-embed-seo-optimize-docs-section" id="thumbnails">
+		<h2><?php esc_html_e( '3. PDF Thumbnails', 'pdf-embed-seo-optimize' ); ?></h2>
+
+		<p>
+			<strong><?php esc_html_e( 'Purpose:', 'pdf-embed-seo-optimize' ); ?></strong>
+			<?php esc_html_e( 'Thumbnails improve the visual appearance of your PDF archive pages and social sharing. You can either upload thumbnails manually or let the plugin generate them automatically from the first page of each PDF.', 'pdf-embed-seo-optimize' ); ?>
+		</p>
+
+		<h3><?php esc_html_e( 'Automatic Thumbnail Generation', 'pdf-embed-seo-optimize' ); ?></h3>
+		<?php
+		$availability = PDF_Embed_SEO_Thumbnail::check_availability();
+		if ( $availability['available'] ) :
+			?>
+			<div class="notice notice-success inline" style="padding: 10px; margin: 10px 0;">
+				<span class="dashicons dashicons-yes-alt" style="color: #46b450;"></span>
+				<strong><?php esc_html_e( 'Auto-generation is available!', 'pdf-embed-seo-optimize' ); ?></strong>
+				<?php echo esc_html( $availability['message'] ); ?>
+			</div>
+		<?php else : ?>
+			<div class="notice notice-warning inline" style="padding: 10px; margin: 10px 0;">
+				<span class="dashicons dashicons-warning" style="color: #ffb900;"></span>
+				<?php echo esc_html( $availability['message'] ); ?>
+			</div>
+		<?php endif; ?>
+
+		<p><?php esc_html_e( 'When auto-generation is enabled and available:', 'pdf-embed-seo-optimize' ); ?></p>
+		<ul>
+			<li><?php esc_html_e( 'A thumbnail is automatically created from the first page of the PDF when you save', 'pdf-embed-seo-optimize' ); ?></li>
+			<li><?php esc_html_e( 'The thumbnail is set as the featured image if none exists', 'pdf-embed-seo-optimize' ); ?></li>
+			<li><?php esc_html_e( 'Requires ImageMagick with PDF support or Ghostscript on your server', 'pdf-embed-seo-optimize' ); ?></li>
+		</ul>
+
+		<h3><?php esc_html_e( 'Manual Thumbnail Generation', 'pdf-embed-seo-optimize' ); ?></h3>
+		<p><?php esc_html_e( 'You can also manually generate thumbnails at any time:', 'pdf-embed-seo-optimize' ); ?></p>
+		<ol>
+			<li><?php esc_html_e( 'Edit any PDF document', 'pdf-embed-seo-optimize' ); ?></li>
+			<li><?php esc_html_e( 'Look for the "Featured Image" meta box', 'pdf-embed-seo-optimize' ); ?></li>
+			<li><?php esc_html_e( 'Click the "Generate from PDF" button', 'pdf-embed-seo-optimize' ); ?></li>
+		</ol>
+
+		<h3><?php esc_html_e( 'Manual Upload', 'pdf-embed-seo-optimize' ); ?></h3>
+		<p><?php esc_html_e( 'If you prefer custom thumbnails, simply use WordPress\'s standard "Set featured image" feature to upload any image from your Media Library.', 'pdf-embed-seo-optimize' ); ?></p>
+
+		<h3><?php esc_html_e( 'Settings', 'pdf-embed-seo-optimize' ); ?></h3>
+		<p>
+			<?php
+			printf(
+				/* translators: %s: Settings page link */
+				esc_html__( 'Configure auto-generation in %s:', 'pdf-embed-seo-optimize' ),
+				'<a href="' . esc_url( admin_url( 'edit.php?post_type=pdf_document&page=pdf-embed-seo-optimize-settings' ) ) . '">' . esc_html__( 'PDF Documents > Settings', 'pdf-embed-seo-optimize' ) . '</a>'
+			);
+			?>
+		</p>
+	</div>
+
+	<hr>
+
 	<div class="pdf-embed-seo-optimize-docs-section" id="pdf-viewer-sitemap">
-		<h2><?php esc_html_e( '2. [pdf_viewer_sitemap]', 'pdf-embed-seo-optimize' ); ?></h2>
+		<h2><?php esc_html_e( '4. [pdf_viewer_sitemap]', 'pdf-embed-seo-optimize' ); ?></h2>
 
 		<p>
 			<strong><?php esc_html_e( 'Purpose:', 'pdf-embed-seo-optimize' ); ?></strong>
@@ -122,7 +238,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<hr>
 
 	<div class="pdf-embed-seo-optimize-docs-section" id="pdf-viewer">
-		<h2><?php esc_html_e( '3. [pdf_viewer]', 'pdf-embed-seo-optimize' ); ?></h2>
+		<h2><?php esc_html_e( '5. [pdf_viewer]', 'pdf-embed-seo-optimize' ); ?></h2>
 
 		<p>
 			<strong><?php esc_html_e( 'Purpose:', 'pdf-embed-seo-optimize' ); ?></strong>
@@ -177,7 +293,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<hr>
 
 	<div class="pdf-embed-seo-optimize-docs-section" id="custom-templates">
-		<h2><?php esc_html_e( '4. Using [pdf_viewer] in Custom Template Files', 'pdf-embed-seo-optimize' ); ?></h2>
+		<h2><?php esc_html_e( '6. Using [pdf_viewer] in Custom Template Files', 'pdf-embed-seo-optimize' ); ?></h2>
 
 		<p>
 			<strong><?php esc_html_e( 'Purpose:', 'pdf-embed-seo-optimize' ); ?></strong>
@@ -215,7 +331,7 @@ if ( function_exists( 'do_shortcode' ) ) {
 	<hr>
 
 	<div class="pdf-embed-seo-optimize-docs-section" id="url-structure">
-		<h2><?php esc_html_e( '5. URL Structure', 'pdf-embed-seo-optimize' ); ?></h2>
+		<h2><?php esc_html_e( '7. URL Structure', 'pdf-embed-seo-optimize' ); ?></h2>
 
 		<p><?php esc_html_e( 'PDF Embed & SEO Optimize uses clean, SEO-friendly URLs:', 'pdf-embed-seo-optimize' ); ?></p>
 
@@ -247,7 +363,7 @@ if ( function_exists( 'do_shortcode' ) ) {
 	<hr>
 
 	<div class="pdf-embed-seo-optimize-docs-section" id="yoast-seo">
-		<h2><?php esc_html_e( '6. Yoast SEO Integration', 'pdf-embed-seo-optimize' ); ?></h2>
+		<h2><?php esc_html_e( '8. Yoast SEO Integration', 'pdf-embed-seo-optimize' ); ?></h2>
 
 		<?php if ( defined( 'WPSEO_VERSION' ) ) : ?>
 			<div class="notice notice-success inline" style="padding: 10px; margin: 10px 0;">
