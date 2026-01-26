@@ -174,36 +174,6 @@ class PDF_Viewer_2026_Yoast {
 			}
 		}
 
-		// Add file information.
-		if ( $file_id ) {
-			$file_path = get_attached_file( $file_id );
-
-			if ( $file_path && file_exists( $file_path ) ) {
-				$file_size = filesize( $file_path );
-				$schema['contentSize'] = size_format( $file_size );
-
-				// Add associatedMedia for the actual PDF file.
-				$schema['associatedMedia'] = array(
-					'@type'           => 'MediaObject',
-					'contentUrl'      => $file_url,
-					'encodingFormat'  => 'application/pdf',
-					'contentSize'     => size_format( $file_size ),
-				);
-			}
-		}
-
-		// Add view count as interaction statistics.
-		$view_count = PDF_Viewer_2026_Post_Type::get_view_count( $post_id );
-		if ( $view_count > 0 ) {
-			$schema['interactionStatistic'] = array(
-				'@type'                => 'InteractionCounter',
-				'interactionType'      => array(
-					'@type' => 'ReadAction',
-				),
-				'userInteractionCount' => $view_count,
-			);
-		}
-
 		// Add permissions info.
 		$allow_download = PDF_Viewer_2026_Post_Type::is_download_allowed( $post_id );
 		$allow_print    = PDF_Viewer_2026_Post_Type::is_print_allowed( $post_id );
@@ -471,27 +441,6 @@ class PDF_Viewer_2026_Schema_Piece {
 					'height' => $thumbnail_data[2],
 				);
 			}
-		}
-
-		// Add file info.
-		if ( $file_id ) {
-			$file_path = get_attached_file( $file_id );
-
-			if ( $file_path && file_exists( $file_path ) ) {
-				$schema['contentSize'] = size_format( filesize( $file_path ) );
-			}
-		}
-
-		// Add view count.
-		$view_count = PDF_Viewer_2026_Post_Type::get_view_count( $post_id );
-		if ( $view_count > 0 ) {
-			$schema['interactionStatistic'] = array(
-				'@type'                => 'InteractionCounter',
-				'interactionType'      => array(
-					'@type' => 'ReadAction',
-				),
-				'userInteractionCount' => $view_count,
-			);
 		}
 
 		// Main entity reference.
