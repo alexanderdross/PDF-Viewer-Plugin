@@ -12,15 +12,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <div class="wrap pdf-embed-seo-optimize-docs">
-	<h1><?php esc_html_e( 'PDF Viewer 2026: Docs & Usage', 'pdf-embed-seo-optimize' ); ?></h1>
+	<h1><?php esc_html_e( 'PDF Embed & SEO Optimize: Docs & Usage', 'pdf-embed-seo-optimize' ); ?></h1>
 
 	<p class="pdf-embed-seo-optimize-docs-intro">
-		<?php esc_html_e( 'Welcome to the documentation for PDF Viewer 2026. Below you will find details on how to use the shortcodes included with this plugin and how to integrate them into your theme or custom templates for the best user experience.', 'pdf-embed-seo-optimize' ); ?>
+		<?php esc_html_e( 'Welcome to the documentation for PDF Embed & SEO Optimize. Below you will find details on how to control print/download permissions, use the shortcodes included with this plugin, and how to integrate them into your theme or custom templates for the best user experience.', 'pdf-embed-seo-optimize' ); ?>
 	</p>
 
 	<div class="pdf-embed-seo-optimize-docs-toc">
 		<h2><?php esc_html_e( 'Table of Contents', 'pdf-embed-seo-optimize' ); ?></h2>
 		<ol>
+			<li><a href="#print-download"><?php esc_html_e( 'Print & Download Permissions', 'pdf-embed-seo-optimize' ); ?></a></li>
 			<li><a href="#pdf-viewer-sitemap"><?php esc_html_e( '[pdf_viewer_sitemap]', 'pdf-embed-seo-optimize' ); ?></a></li>
 			<li><a href="#pdf-viewer"><?php esc_html_e( '[pdf_viewer]', 'pdf-embed-seo-optimize' ); ?></a></li>
 			<li><a href="#custom-templates"><?php esc_html_e( 'Using [pdf_viewer] in Custom Template Files', 'pdf-embed-seo-optimize' ); ?></a></li>
@@ -31,8 +32,48 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<hr>
 
+	<div class="pdf-embed-seo-optimize-docs-section" id="print-download">
+		<h2><?php esc_html_e( '1. Print & Download Permissions', 'pdf-embed-seo-optimize' ); ?></h2>
+
+		<p>
+			<strong><?php esc_html_e( 'Purpose:', 'pdf-embed-seo-optimize' ); ?></strong>
+			<?php esc_html_e( 'Control whether visitors can print or download each PDF document. When disabled, the print/download buttons will not appear in the PDF viewer toolbar.', 'pdf-embed-seo-optimize' ); ?>
+		</p>
+
+		<h3><?php esc_html_e( 'Per-PDF Settings', 'pdf-embed-seo-optimize' ); ?></h3>
+		<p>
+			<?php esc_html_e( 'When editing any PDF document, look for the "PDF Settings" meta box in the right sidebar:', 'pdf-embed-seo-optimize' ); ?>
+		</p>
+		<ul>
+			<li><strong><?php esc_html_e( 'Allow Download', 'pdf-embed-seo-optimize' ); ?></strong> - <?php esc_html_e( 'Check to show the download button in the viewer', 'pdf-embed-seo-optimize' ); ?></li>
+			<li><strong><?php esc_html_e( 'Allow Print', 'pdf-embed-seo-optimize' ); ?></strong> - <?php esc_html_e( 'Check to show the print button in the viewer', 'pdf-embed-seo-optimize' ); ?></li>
+		</ul>
+
+		<h3><?php esc_html_e( 'Default Settings', 'pdf-embed-seo-optimize' ); ?></h3>
+		<p>
+			<?php
+			printf(
+				/* translators: %s: Settings page link */
+				esc_html__( 'You can set default permissions for all new PDFs in %s:', 'pdf-embed-seo-optimize' ),
+				'<a href="' . esc_url( admin_url( 'edit.php?post_type=pdf_document&page=pdf-embed-seo-settings' ) ) . '">' . esc_html__( 'PDF Documents > Settings', 'pdf-embed-seo-optimize' ) . '</a>'
+			);
+			?>
+		</p>
+		<ul>
+			<li><strong><?php esc_html_e( 'Allow Download by Default', 'pdf-embed-seo-optimize' ); ?></strong> - <?php esc_html_e( 'New PDFs will have download enabled', 'pdf-embed-seo-optimize' ); ?></li>
+			<li><strong><?php esc_html_e( 'Allow Print by Default', 'pdf-embed-seo-optimize' ); ?></strong> - <?php esc_html_e( 'New PDFs will have print enabled', 'pdf-embed-seo-optimize' ); ?></li>
+		</ul>
+
+		<div class="notice notice-info inline" style="padding: 10px; margin: 10px 0;">
+			<span class="dashicons dashicons-info" style="color: #0073aa;"></span>
+			<?php esc_html_e( 'Note: These settings only control the visibility of buttons in the viewer. The PDF file URL is loaded via AJAX to provide an additional layer of protection.', 'pdf-embed-seo-optimize' ); ?>
+		</div>
+	</div>
+
+	<hr>
+
 	<div class="pdf-embed-seo-optimize-docs-section" id="pdf-viewer-sitemap">
-		<h2><?php esc_html_e( '1. [pdf_viewer_sitemap]', 'pdf-embed-seo-optimize' ); ?></h2>
+		<h2><?php esc_html_e( '2. [pdf_viewer_sitemap]', 'pdf-embed-seo-optimize' ); ?></h2>
 
 		<p>
 			<strong><?php esc_html_e( 'Purpose:', 'pdf-embed-seo-optimize' ); ?></strong>
@@ -81,7 +122,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<hr>
 
 	<div class="pdf-embed-seo-optimize-docs-section" id="pdf-viewer">
-		<h2><?php esc_html_e( '2. [pdf_viewer]', 'pdf-embed-seo-optimize' ); ?></h2>
+		<h2><?php esc_html_e( '3. [pdf_viewer]', 'pdf-embed-seo-optimize' ); ?></h2>
 
 		<p>
 			<strong><?php esc_html_e( 'Purpose:', 'pdf-embed-seo-optimize' ); ?></strong>
@@ -136,7 +177,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<hr>
 
 	<div class="pdf-embed-seo-optimize-docs-section" id="custom-templates">
-		<h2><?php esc_html_e( '3. Using [pdf_viewer] in Custom Template Files', 'pdf-embed-seo-optimize' ); ?></h2>
+		<h2><?php esc_html_e( '4. Using [pdf_viewer] in Custom Template Files', 'pdf-embed-seo-optimize' ); ?></h2>
 
 		<p>
 			<strong><?php esc_html_e( 'Purpose:', 'pdf-embed-seo-optimize' ); ?></strong>
@@ -174,9 +215,9 @@ if ( function_exists( 'do_shortcode' ) ) {
 	<hr>
 
 	<div class="pdf-embed-seo-optimize-docs-section" id="url-structure">
-		<h2><?php esc_html_e( '4. URL Structure', 'pdf-embed-seo-optimize' ); ?></h2>
+		<h2><?php esc_html_e( '5. URL Structure', 'pdf-embed-seo-optimize' ); ?></h2>
 
-		<p><?php esc_html_e( 'PDF Viewer 2026 uses clean, SEO-friendly URLs:', 'pdf-embed-seo-optimize' ); ?></p>
+		<p><?php esc_html_e( 'PDF Embed & SEO Optimize uses clean, SEO-friendly URLs:', 'pdf-embed-seo-optimize' ); ?></p>
 
 		<table class="widefat">
 			<thead>
@@ -206,7 +247,7 @@ if ( function_exists( 'do_shortcode' ) ) {
 	<hr>
 
 	<div class="pdf-embed-seo-optimize-docs-section" id="yoast-seo">
-		<h2><?php esc_html_e( '5. Yoast SEO Integration', 'pdf-embed-seo-optimize' ); ?></h2>
+		<h2><?php esc_html_e( '6. Yoast SEO Integration', 'pdf-embed-seo-optimize' ); ?></h2>
 
 		<?php if ( defined( 'WPSEO_VERSION' ) ) : ?>
 			<div class="notice notice-success inline" style="padding: 10px; margin: 10px 0;">
@@ -242,7 +283,7 @@ if ( function_exists( 'do_shortcode' ) ) {
 			printf(
 				/* translators: %s: Plugin name */
 				esc_html__( 'That\'s it! We hope this documentation helps you quickly set up and use our %s plugin. If you have any questions or run into issues, please refer to our support resources.', 'pdf-embed-seo-optimize' ),
-				'<strong>PDF Viewer 2026</strong>'
+				'<strong>PDF Embed & SEO Optimize</strong>'
 			);
 			?>
 		</em>
