@@ -5,7 +5,7 @@
  * This template can be overridden by copying it to your theme:
  * yourtheme/single-pdf_document.php
  *
- * @package PDF_Viewer_2026
+ * @package PDF_Embed_SEO
  */
 
 // Prevent direct access.
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header();
 ?>
 
-<div id="primary" class="content-area pdf-viewer-2026-single">
+<div id="primary" class="content-area pdf-embed-seo-optimize-single">
 	<main id="main" class="site-main">
 
 		<?php
@@ -24,25 +24,25 @@ get_header();
 			the_post();
 
 			$post_id        = get_the_ID();
-			$allow_download = PDF_Viewer_2026_Post_Type::is_download_allowed( $post_id );
-			$allow_print    = PDF_Viewer_2026_Post_Type::is_print_allowed( $post_id );
+			$allow_download = PDF_Embed_SEO_Post_Type::is_download_allowed( $post_id );
+			$allow_print    = PDF_Embed_SEO_Post_Type::is_print_allowed( $post_id );
 			?>
 
-			<article id="post-<?php the_ID(); ?>" <?php post_class( 'pdf-viewer-2026-article' ); ?>>
-				<header class="entry-header pdf-viewer-2026-header">
-					<?php the_title( '<h1 class="entry-title pdf-viewer-2026-title">', '</h1>' ); ?>
+			<article id="post-<?php the_ID(); ?>" <?php post_class( 'pdf-embed-seo-optimize-article' ); ?>>
+				<header class="entry-header pdf-embed-seo-optimize-header">
+					<?php the_title( '<h1 class="entry-title pdf-embed-seo-optimize-title">', '</h1>' ); ?>
 
 					<?php if ( has_excerpt() ) : ?>
-						<div class="pdf-viewer-2026-excerpt">
+						<div class="pdf-embed-seo-optimize-excerpt">
 							<?php the_excerpt(); ?>
 						</div>
 					<?php endif; ?>
 				</header>
 
-				<div class="entry-content pdf-viewer-2026-content">
+				<div class="entry-content pdf-embed-seo-optimize-content">
 					<?php
 					// Output the PDF viewer.
-					echo PDF_Viewer_2026_Frontend::get_viewer_html( $post_id );
+					echo PDF_Embed_SEO_Frontend::get_viewer_html( $post_id );
 					?>
 
 					<?php
@@ -50,35 +50,35 @@ get_header();
 					$content = get_the_content();
 					if ( ! empty( $content ) ) :
 						?>
-						<div class="pdf-viewer-2026-description">
+						<div class="pdf-embed-seo-optimize-description">
 							<?php the_content(); ?>
 						</div>
 					<?php endif; ?>
 				</div>
 
-				<footer class="entry-footer pdf-viewer-2026-footer">
+				<footer class="entry-footer pdf-embed-seo-optimize-footer">
 					<?php
 					// Show post meta.
 					$published_date = get_the_date();
 					$modified_date  = get_the_modified_date();
 					?>
-					<div class="pdf-viewer-2026-meta">
-						<span class="pdf-viewer-2026-published">
+					<div class="pdf-embed-seo-optimize-meta">
+						<span class="pdf-embed-seo-optimize-published">
 							<?php
 							printf(
 								/* translators: %s: Published date */
-								esc_html__( 'Published: %s', 'pdf-viewer-2026' ),
+								esc_html__( 'Published: %s', 'pdf-embed-seo-optimize' ),
 								esc_html( $published_date )
 							);
 							?>
 						</span>
 
 						<?php if ( $published_date !== $modified_date ) : ?>
-							<span class="pdf-viewer-2026-modified">
+							<span class="pdf-embed-seo-optimize-modified">
 								<?php
 								printf(
 									/* translators: %s: Modified date */
-									esc_html__( 'Updated: %s', 'pdf-viewer-2026' ),
+									esc_html__( 'Updated: %s', 'pdf-embed-seo-optimize' ),
 									esc_html( $modified_date )
 								);
 								?>

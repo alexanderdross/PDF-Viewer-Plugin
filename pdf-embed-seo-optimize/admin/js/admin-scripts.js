@@ -18,8 +18,8 @@
         },
 
         bindEvents: function() {
-            $(document).on('click', '.pdf-viewer-2026-upload-btn, .pdf-viewer-2026-change-btn', this.openMediaFrame.bind(this));
-            $(document).on('click', '.pdf-viewer-2026-remove-btn', this.removeFile.bind(this));
+            $(document).on('click', '.pdf-embed-seo-optimize-upload-btn, .pdf-embed-seo-optimize-change-btn', this.openMediaFrame.bind(this));
+            $(document).on('click', '.pdf-embed-seo-optimize-remove-btn', this.removeFile.bind(this));
         },
 
         openMediaFrame: function(e) {
@@ -33,9 +33,9 @@
 
             // Create media frame
             this.frame = wp.media({
-                title: pdfViewer2026Admin.selectPdf,
+                title: pdfEmbedSeoAdmin.selectPdf,
                 button: {
-                    text: pdfViewer2026Admin.usePdf
+                    text: pdfEmbedSeoAdmin.usePdf
                 },
                 library: {
                     type: 'application/pdf'
@@ -64,21 +64,21 @@
 
             // Update preview
             var fileName = attachment.filename || attachment.title;
-            $('.pdf-viewer-2026-file-name').text(fileName);
-            $('.pdf-viewer-2026-file-preview').show();
+            $('.pdf-embed-seo-optimize-file-name').text(fileName);
+            $('.pdf-embed-seo-optimize-file-preview').show();
 
             // Update view PDF link
-            var viewLink = $('.pdf-viewer-2026-file-preview .button');
+            var viewLink = $('.pdf-embed-seo-optimize-file-preview .button');
             if (viewLink.length) {
                 viewLink.attr('href', attachment.url);
             } else {
                 var newLink = $('<a href="' + attachment.url + '" target="_blank" class="button button-small">View PDF</a>');
-                $('.pdf-viewer-2026-file-info').after(newLink);
+                $('.pdf-embed-seo-optimize-file-info').after(newLink);
             }
 
             // Toggle buttons
-            $('.pdf-viewer-2026-upload-btn').hide();
-            $('.pdf-viewer-2026-change-btn, .pdf-viewer-2026-remove-btn').show();
+            $('.pdf-embed-seo-optimize-upload-btn').hide();
+            $('.pdf-embed-seo-optimize-change-btn, .pdf-embed-seo-optimize-remove-btn').show();
         },
 
         removeFile: function(e) {
@@ -88,12 +88,12 @@
             $('#pdf_file_id').val('');
 
             // Hide preview
-            $('.pdf-viewer-2026-file-preview').hide();
-            $('.pdf-viewer-2026-file-name').text('');
+            $('.pdf-embed-seo-optimize-file-preview').hide();
+            $('.pdf-embed-seo-optimize-file-name').text('');
 
             // Toggle buttons
-            $('.pdf-viewer-2026-upload-btn').show();
-            $('.pdf-viewer-2026-change-btn, .pdf-viewer-2026-remove-btn').hide();
+            $('.pdf-embed-seo-optimize-upload-btn').show();
+            $('.pdf-embed-seo-optimize-change-btn, .pdf-embed-seo-optimize-remove-btn').hide();
         }
     };
 

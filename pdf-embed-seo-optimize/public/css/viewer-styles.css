@@ -8,18 +8,18 @@
    PDF Viewer Container
    ========================================================================== */
 
-.pdf-viewer-2026-container {
+.pdf-embed-seo-optimize-container {
     background: #525659;
     border-radius: 4px;
     overflow: hidden;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
-.pdf-viewer-2026-container[data-theme="light"] {
+.pdf-embed-seo-optimize-container[data-theme="light"] {
     background: #f0f0f0;
 }
 
-.pdf-viewer-2026-container[data-theme="dark"] {
+.pdf-embed-seo-optimize-container[data-theme="dark"] {
     background: #2d2d2d;
 }
 
@@ -27,7 +27,7 @@
    Toolbar
    ========================================================================== */
 
-.pdf-viewer-2026-toolbar {
+.pdf-embed-seo-optimize-toolbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -38,21 +38,21 @@
     gap: 10px;
 }
 
-.pdf-viewer-2026-container[data-theme="light"] .pdf-viewer-2026-toolbar {
+.pdf-embed-seo-optimize-container[data-theme="light"] .pdf-embed-seo-optimize-toolbar {
     background: #e0e0e0;
     border-bottom-color: #ccc;
 }
 
-.pdf-viewer-2026-toolbar-left,
-.pdf-viewer-2026-toolbar-center,
-.pdf-viewer-2026-toolbar-right {
+.pdf-embed-seo-optimize-toolbar-left,
+.pdf-embed-seo-optimize-toolbar-center,
+.pdf-embed-seo-optimize-toolbar-right {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
 /* Toolbar Buttons */
-.pdf-viewer-2026-btn {
+.pdf-embed-seo-optimize-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -67,33 +67,33 @@
     transition: background-color 0.2s, color 0.2s;
 }
 
-.pdf-viewer-2026-container[data-theme="light"] .pdf-viewer-2026-btn {
+.pdf-embed-seo-optimize-container[data-theme="light"] .pdf-embed-seo-optimize-btn {
     color: #333;
 }
 
-.pdf-viewer-2026-btn:hover {
+.pdf-embed-seo-optimize-btn:hover {
     background: rgba(255, 255, 255, 0.1);
     color: #fff;
 }
 
-.pdf-viewer-2026-container[data-theme="light"] .pdf-viewer-2026-btn:hover {
+.pdf-embed-seo-optimize-container[data-theme="light"] .pdf-embed-seo-optimize-btn:hover {
     background: rgba(0, 0, 0, 0.1);
     color: #000;
 }
 
-.pdf-viewer-2026-btn:disabled {
+.pdf-embed-seo-optimize-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
-.pdf-viewer-2026-btn .dashicons {
+.pdf-embed-seo-optimize-btn .dashicons {
     font-size: 20px;
     width: 20px;
     height: 20px;
 }
 
 /* Page Navigation */
-.pdf-viewer-2026-page-info {
+.pdf-embed-seo-optimize-page-info {
     display: flex;
     align-items: center;
     gap: 5px;
@@ -101,11 +101,11 @@
     font-size: 13px;
 }
 
-.pdf-viewer-2026-container[data-theme="light"] .pdf-viewer-2026-page-info {
+.pdf-embed-seo-optimize-container[data-theme="light"] .pdf-embed-seo-optimize-page-info {
     color: #333;
 }
 
-.pdf-viewer-2026-page-input {
+.pdf-embed-seo-optimize-page-input {
     width: 50px;
     height: 28px;
     padding: 2px 8px;
@@ -117,30 +117,30 @@
     font-size: 13px;
 }
 
-.pdf-viewer-2026-container[data-theme="light"] .pdf-viewer-2026-page-input {
+.pdf-embed-seo-optimize-container[data-theme="light"] .pdf-embed-seo-optimize-page-input {
     background: #fff;
     border-color: #ccc;
     color: #333;
 }
 
-.pdf-viewer-2026-page-input:focus {
+.pdf-embed-seo-optimize-page-input:focus {
     outline: none;
     border-color: #0073aa;
 }
 
-.pdf-viewer-2026-total-pages {
+.pdf-embed-seo-optimize-total-pages {
     min-width: 30px;
 }
 
 /* Zoom Controls */
-.pdf-viewer-2026-zoom-level {
+.pdf-embed-seo-optimize-zoom-level {
     min-width: 50px;
     text-align: center;
     color: #d9d9d9;
     font-size: 13px;
 }
 
-.pdf-viewer-2026-container[data-theme="light"] .pdf-viewer-2026-zoom-level {
+.pdf-embed-seo-optimize-container[data-theme="light"] .pdf-embed-seo-optimize-zoom-level {
     color: #333;
 }
 
@@ -148,7 +148,7 @@
    Viewer Area
    ========================================================================== */
 
-.pdf-viewer-2026-viewer {
+.pdf-embed-seo-optimize-viewer {
     position: relative;
     min-height: 600px;
     max-height: 800px;
@@ -160,23 +160,23 @@
     background: #525659;
 }
 
-.pdf-viewer-2026-container[data-theme="light"] .pdf-viewer-2026-viewer {
+.pdf-embed-seo-optimize-container[data-theme="light"] .pdf-embed-seo-optimize-viewer {
     background: #808080;
 }
 
-.pdf-viewer-2026-container[data-theme="dark"] .pdf-viewer-2026-viewer {
+.pdf-embed-seo-optimize-container[data-theme="dark"] .pdf-embed-seo-optimize-viewer {
     background: #1a1a1a;
 }
 
 /* Canvas */
-.pdf-viewer-2026-canvas {
+.pdf-embed-seo-optimize-canvas {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     max-width: 100%;
     height: auto;
 }
 
 /* Loading State */
-.pdf-viewer-2026-loading {
+.pdf-embed-seo-optimize-loading {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -188,11 +188,11 @@
     color: #fff;
 }
 
-.pdf-viewer-2026-container[data-theme="light"] .pdf-viewer-2026-loading {
+.pdf-embed-seo-optimize-container[data-theme="light"] .pdf-embed-seo-optimize-loading {
     color: #333;
 }
 
-.pdf-viewer-2026-loading .spinner {
+.pdf-embed-seo-optimize-loading .spinner {
     width: 40px;
     height: 40px;
     border: 3px solid rgba(255, 255, 255, 0.3);
@@ -201,7 +201,7 @@
     animation: pdf-viewer-spin 1s linear infinite;
 }
 
-.pdf-viewer-2026-container[data-theme="light"] .pdf-viewer-2026-loading .spinner {
+.pdf-embed-seo-optimize-container[data-theme="light"] .pdf-embed-seo-optimize-loading .spinner {
     border-color: rgba(0, 0, 0, 0.3);
     border-top-color: #333;
 }
@@ -212,12 +212,12 @@
     }
 }
 
-.pdf-viewer-2026-loading-text {
+.pdf-embed-seo-optimize-loading-text {
     font-size: 14px;
 }
 
 /* Error State */
-.pdf-viewer-2026-error {
+.pdf-embed-seo-optimize-error {
     padding: 20px;
     text-align: center;
     color: #e74c3c;
@@ -231,7 +231,7 @@
    Fullscreen Mode
    ========================================================================== */
 
-.pdf-viewer-2026-container.is-fullscreen {
+.pdf-embed-seo-optimize-container.is-fullscreen {
     position: fixed;
     top: 0;
     left: 0;
@@ -241,7 +241,7 @@
     border-radius: 0;
 }
 
-.pdf-viewer-2026-container.is-fullscreen .pdf-viewer-2026-viewer {
+.pdf-embed-seo-optimize-container.is-fullscreen .pdf-embed-seo-optimize-viewer {
     max-height: none;
     height: calc(100vh - 50px);
 }
@@ -250,48 +250,48 @@
    Single PDF Page
    ========================================================================== */
 
-.pdf-viewer-2026-single {
+.pdf-embed-seo-optimize-single {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
 
-.pdf-viewer-2026-article {
+.pdf-embed-seo-optimize-article {
     background: #fff;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.pdf-viewer-2026-header {
+.pdf-embed-seo-optimize-header {
     margin-bottom: 20px;
 }
 
-.pdf-viewer-2026-title {
+.pdf-embed-seo-optimize-title {
     margin: 0 0 10px;
     font-size: 28px;
     line-height: 1.3;
 }
 
-.pdf-viewer-2026-excerpt {
+.pdf-embed-seo-optimize-excerpt {
     color: #666;
     font-size: 16px;
     line-height: 1.6;
 }
 
-.pdf-viewer-2026-description {
+.pdf-embed-seo-optimize-description {
     margin-top: 30px;
     padding-top: 20px;
     border-top: 1px solid #eee;
 }
 
-.pdf-viewer-2026-footer {
+.pdf-embed-seo-optimize-footer {
     margin-top: 20px;
     padding-top: 15px;
     border-top: 1px solid #eee;
 }
 
-.pdf-viewer-2026-meta {
+.pdf-embed-seo-optimize-meta {
     display: flex;
     gap: 20px;
     color: #666;
@@ -302,36 +302,36 @@
    Archive Page
    ========================================================================== */
 
-.pdf-viewer-2026-archive {
+.pdf-embed-seo-optimize-archive {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
 
-.pdf-viewer-2026-archive-header {
+.pdf-embed-seo-optimize-archive-header {
     margin-bottom: 30px;
     text-align: center;
 }
 
-.pdf-viewer-2026-archive-title {
+.pdf-embed-seo-optimize-archive-title {
     margin: 0 0 10px;
     font-size: 32px;
 }
 
-.pdf-viewer-2026-archive-description {
+.pdf-embed-seo-optimize-archive-description {
     color: #666;
     font-size: 16px;
 }
 
 /* Grid Layout */
-.pdf-viewer-2026-grid {
+.pdf-embed-seo-optimize-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 25px;
 }
 
 /* Card */
-.pdf-viewer-2026-card {
+.pdf-embed-seo-optimize-card {
     background: #fff;
     border-radius: 8px;
     overflow: hidden;
@@ -339,69 +339,69 @@
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.pdf-viewer-2026-card:hover {
+.pdf-embed-seo-optimize-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
 }
 
-.pdf-viewer-2026-card-thumbnail {
+.pdf-embed-seo-optimize-card-thumbnail {
     height: 180px;
     overflow: hidden;
     background: #f5f5f5;
 }
 
-.pdf-viewer-2026-card-thumbnail a {
+.pdf-embed-seo-optimize-card-thumbnail a {
     display: block;
     height: 100%;
 }
 
-.pdf-viewer-2026-card-thumbnail img {
+.pdf-embed-seo-optimize-card-thumbnail img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.pdf-viewer-2026-card-thumbnail-placeholder {
+.pdf-embed-seo-optimize-card-thumbnail-placeholder {
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
 }
 
-.pdf-viewer-2026-card-thumbnail-placeholder .dashicons {
+.pdf-embed-seo-optimize-card-thumbnail-placeholder .dashicons {
     font-size: 60px;
     width: 60px;
     height: 60px;
     color: #fff;
 }
 
-.pdf-viewer-2026-card-content {
+.pdf-embed-seo-optimize-card-content {
     padding: 20px;
 }
 
-.pdf-viewer-2026-card-title {
+.pdf-embed-seo-optimize-card-title {
     margin: 0 0 10px;
     font-size: 18px;
     line-height: 1.4;
 }
 
-.pdf-viewer-2026-card-title a {
+.pdf-embed-seo-optimize-card-title a {
     color: #333;
     text-decoration: none;
 }
 
-.pdf-viewer-2026-card-title a:hover {
+.pdf-embed-seo-optimize-card-title a:hover {
     color: #0073aa;
 }
 
-.pdf-viewer-2026-card-excerpt {
+.pdf-embed-seo-optimize-card-excerpt {
     color: #666;
     font-size: 14px;
     line-height: 1.5;
     margin-bottom: 15px;
 }
 
-.pdf-viewer-2026-card-meta {
+.pdf-embed-seo-optimize-card-meta {
     display: flex;
     gap: 15px;
     color: #999;
@@ -409,7 +409,7 @@
     margin-bottom: 15px;
 }
 
-.pdf-viewer-2026-card-link {
+.pdf-embed-seo-optimize-card-link {
     display: inline-block;
     padding: 8px 16px;
     background: #0073aa;
@@ -420,19 +420,19 @@
     transition: background 0.2s;
 }
 
-.pdf-viewer-2026-card-link:hover {
+.pdf-embed-seo-optimize-card-link:hover {
     background: #005a87;
     color: #fff;
 }
 
 /* Pagination */
-.pdf-viewer-2026-pagination {
+.pdf-embed-seo-optimize-pagination {
     margin-top: 40px;
     text-align: center;
 }
 
 /* No Results */
-.pdf-viewer-2026-no-results {
+.pdf-embed-seo-optimize-no-results {
     text-align: center;
     padding: 60px 20px;
     color: #666;
@@ -442,13 +442,13 @@
    Sitemap Shortcode
    ========================================================================== */
 
-.pdf-viewer-2026-sitemap {
+.pdf-embed-seo-optimize-sitemap {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.pdf-viewer-2026-sitemap-item {
+.pdf-embed-seo-optimize-sitemap-item {
     display: flex;
     align-items: center;
     gap: 15px;
@@ -456,23 +456,23 @@
     border-bottom: 1px solid #eee;
 }
 
-.pdf-viewer-2026-sitemap-item:last-child {
+.pdf-embed-seo-optimize-sitemap-item:last-child {
     border-bottom: none;
 }
 
-.pdf-viewer-2026-sitemap-thumb {
+.pdf-embed-seo-optimize-sitemap-thumb {
     width: 50px;
     height: 50px;
     object-fit: cover;
     border-radius: 4px;
 }
 
-.pdf-viewer-2026-sitemap-item a {
+.pdf-embed-seo-optimize-sitemap-item a {
     color: #0073aa;
     text-decoration: none;
 }
 
-.pdf-viewer-2026-sitemap-item a:hover {
+.pdf-embed-seo-optimize-sitemap-item a:hover {
     text-decoration: underline;
 }
 
@@ -480,15 +480,15 @@
    Shortcode Container
    ========================================================================== */
 
-.pdf-viewer-2026-shortcode {
+.pdf-embed-seo-optimize-shortcode {
     margin: 20px 0;
 }
 
-.pdf-viewer-2026-shortcode .pdf-viewer-2026-container {
+.pdf-embed-seo-optimize-shortcode .pdf-embed-seo-optimize-container {
     height: 100%;
 }
 
-.pdf-viewer-2026-shortcode .pdf-viewer-2026-viewer {
+.pdf-embed-seo-optimize-shortcode .pdf-embed-seo-optimize-viewer {
     height: calc(100% - 50px);
     max-height: none;
 }
@@ -498,36 +498,36 @@
    ========================================================================== */
 
 @media screen and (max-width: 768px) {
-    .pdf-viewer-2026-toolbar {
+    .pdf-embed-seo-optimize-toolbar {
         padding: 10px;
     }
 
-    .pdf-viewer-2026-toolbar-left,
-    .pdf-viewer-2026-toolbar-center,
-    .pdf-viewer-2026-toolbar-right {
+    .pdf-embed-seo-optimize-toolbar-left,
+    .pdf-embed-seo-optimize-toolbar-center,
+    .pdf-embed-seo-optimize-toolbar-right {
         flex-wrap: wrap;
         justify-content: center;
     }
 
-    .pdf-viewer-2026-viewer {
+    .pdf-embed-seo-optimize-viewer {
         min-height: 400px;
         padding: 10px;
     }
 
-    .pdf-viewer-2026-grid {
+    .pdf-embed-seo-optimize-grid {
         grid-template-columns: 1fr;
     }
 
-    .pdf-viewer-2026-single,
-    .pdf-viewer-2026-archive {
+    .pdf-embed-seo-optimize-single,
+    .pdf-embed-seo-optimize-archive {
         padding: 10px;
     }
 
-    .pdf-viewer-2026-article {
+    .pdf-embed-seo-optimize-article {
         padding: 15px;
     }
 
-    .pdf-viewer-2026-title {
+    .pdf-embed-seo-optimize-title {
         font-size: 22px;
     }
 }
@@ -537,12 +537,12 @@
    ========================================================================== */
 
 @media print {
-    .pdf-viewer-2026-toolbar,
-    .pdf-viewer-2026-btn {
+    .pdf-embed-seo-optimize-toolbar,
+    .pdf-embed-seo-optimize-btn {
         display: none !important;
     }
 
-    .pdf-viewer-2026-container {
+    .pdf-embed-seo-optimize-container {
         box-shadow: none;
     }
 }

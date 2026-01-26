@@ -10,10 +10,10 @@
  * Author URI:        https://github.com/alexanderdross
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       pdf-viewer-2026
+ * Text Domain:       pdf-embed-seo-optimize
  * Domain Path:       /languages
  *
- * @package PDF_Viewer_2026
+ * @package PDF_Embed_SEO
  */
 
 // Prevent direct access.
@@ -24,84 +24,84 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Plugin version.
  */
-define( 'PDF_VIEWER_2026_VERSION', '1.0.0' );
+define( 'PDF_EMBED_SEO_VERSION', '1.0.0' );
 
 /**
  * Plugin directory path.
  */
-define( 'PDF_VIEWER_2026_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'PDF_EMBED_SEO_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 /**
  * Plugin directory URL.
  */
-define( 'PDF_VIEWER_2026_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'PDF_EMBED_SEO_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 /**
  * Plugin basename.
  */
-define( 'PDF_VIEWER_2026_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+define( 'PDF_EMBED_SEO_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
 /**
  * Minimum required WordPress version.
  */
-define( 'PDF_VIEWER_2026_MIN_WP_VERSION', '5.8' );
+define( 'PDF_EMBED_SEO_MIN_WP_VERSION', '5.8' );
 
 /**
  * Minimum required PHP version.
  */
-define( 'PDF_VIEWER_2026_MIN_PHP_VERSION', '7.4' );
+define( 'PDF_EMBED_SEO_MIN_PHP_VERSION', '7.4' );
 
 /**
  * Main plugin class.
  */
-final class PDF_Viewer_2026 {
+final class PDF_Embed_SEO {
 
 	/**
 	 * Single instance of the class.
 	 *
-	 * @var PDF_Viewer_2026|null
+	 * @var PDF_Embed_SEO|null
 	 */
 	private static $instance = null;
 
 	/**
 	 * Post type instance.
 	 *
-	 * @var PDF_Viewer_2026_Post_Type|null
+	 * @var PDF_Embed_SEO_Post_Type|null
 	 */
 	public $post_type = null;
 
 	/**
 	 * Admin instance.
 	 *
-	 * @var PDF_Viewer_2026_Admin|null
+	 * @var PDF_Embed_SEO_Admin|null
 	 */
 	public $admin = null;
 
 	/**
 	 * Frontend instance.
 	 *
-	 * @var PDF_Viewer_2026_Frontend|null
+	 * @var PDF_Embed_SEO_Frontend|null
 	 */
 	public $frontend = null;
 
 	/**
 	 * Yoast integration instance.
 	 *
-	 * @var PDF_Viewer_2026_Yoast|null
+	 * @var PDF_Embed_SEO_Yoast|null
 	 */
 	public $yoast = null;
 
 	/**
 	 * Shortcodes instance.
 	 *
-	 * @var PDF_Viewer_2026_Shortcodes|null
+	 * @var PDF_Embed_SEO_Shortcodes|null
 	 */
 	public $shortcodes = null;
 
 	/**
 	 * Get the single instance of the class.
 	 *
-	 * @return PDF_Viewer_2026
+	 * @return PDF_Embed_SEO
 	 */
 	public static function get_instance() {
 		if ( null === self::$instance ) {
@@ -125,14 +125,14 @@ final class PDF_Viewer_2026 {
 	 */
 	private function includes() {
 		// Core classes.
-		require_once PDF_VIEWER_2026_PLUGIN_DIR . 'includes/class-pdf-viewer-2026-post-type.php';
-		require_once PDF_VIEWER_2026_PLUGIN_DIR . 'includes/class-pdf-viewer-2026-frontend.php';
-		require_once PDF_VIEWER_2026_PLUGIN_DIR . 'includes/class-pdf-viewer-2026-yoast.php';
-		require_once PDF_VIEWER_2026_PLUGIN_DIR . 'includes/class-pdf-viewer-2026-shortcodes.php';
+		require_once PDF_EMBED_SEO_PLUGIN_DIR . 'includes/class-pdf-embed-seo-optimize-post-type.php';
+		require_once PDF_EMBED_SEO_PLUGIN_DIR . 'includes/class-pdf-embed-seo-optimize-frontend.php';
+		require_once PDF_EMBED_SEO_PLUGIN_DIR . 'includes/class-pdf-embed-seo-optimize-yoast.php';
+		require_once PDF_EMBED_SEO_PLUGIN_DIR . 'includes/class-pdf-embed-seo-optimize-shortcodes.php';
 
 		// Admin classes (only in admin context).
 		if ( is_admin() ) {
-			require_once PDF_VIEWER_2026_PLUGIN_DIR . 'includes/class-pdf-viewer-2026-admin.php';
+			require_once PDF_EMBED_SEO_PLUGIN_DIR . 'includes/class-pdf-embed-seo-optimize-admin.php';
 		}
 	}
 
@@ -162,9 +162,9 @@ final class PDF_Viewer_2026 {
 	 */
 	public function load_textdomain() {
 		load_plugin_textdomain(
-			'pdf-viewer-2026',
+			'pdf-embed-seo-optimize',
 			false,
-			dirname( PDF_VIEWER_2026_PLUGIN_BASENAME ) . '/languages'
+			dirname( PDF_EMBED_SEO_PLUGIN_BASENAME ) . '/languages'
 		);
 	}
 
@@ -175,20 +175,20 @@ final class PDF_Viewer_2026 {
 	 */
 	public function init() {
 		// Initialize post type.
-		$this->post_type = new PDF_Viewer_2026_Post_Type();
+		$this->post_type = new PDF_Embed_SEO_Post_Type();
 
 		// Initialize frontend.
-		$this->frontend = new PDF_Viewer_2026_Frontend();
+		$this->frontend = new PDF_Embed_SEO_Frontend();
 
 		// Initialize Yoast integration.
-		$this->yoast = new PDF_Viewer_2026_Yoast();
+		$this->yoast = new PDF_Embed_SEO_Yoast();
 
 		// Initialize shortcodes.
-		$this->shortcodes = new PDF_Viewer_2026_Shortcodes();
+		$this->shortcodes = new PDF_Embed_SEO_Shortcodes();
 
 		// Initialize admin (only in admin context).
 		if ( is_admin() ) {
-			$this->admin = new PDF_Viewer_2026_Admin();
+			$this->admin = new PDF_Embed_SEO_Admin();
 		}
 	}
 
@@ -199,31 +199,31 @@ final class PDF_Viewer_2026 {
 	 */
 	public function activate() {
 		// Check WordPress version.
-		if ( version_compare( get_bloginfo( 'version' ), PDF_VIEWER_2026_MIN_WP_VERSION, '<' ) ) {
-			deactivate_plugins( PDF_VIEWER_2026_PLUGIN_BASENAME );
+		if ( version_compare( get_bloginfo( 'version' ), PDF_EMBED_SEO_MIN_WP_VERSION, '<' ) ) {
+			deactivate_plugins( PDF_EMBED_SEO_PLUGIN_BASENAME );
 			wp_die(
 				sprintf(
 					/* translators: %s: Minimum WordPress version required. */
-					esc_html__( 'PDF Viewer 2026 requires WordPress %s or higher.', 'pdf-viewer-2026' ),
-					esc_html( PDF_VIEWER_2026_MIN_WP_VERSION )
+					esc_html__( 'PDF Viewer 2026 requires WordPress %s or higher.', 'pdf-embed-seo-optimize' ),
+					esc_html( PDF_EMBED_SEO_MIN_WP_VERSION )
 				)
 			);
 		}
 
 		// Check PHP version.
-		if ( version_compare( PHP_VERSION, PDF_VIEWER_2026_MIN_PHP_VERSION, '<' ) ) {
-			deactivate_plugins( PDF_VIEWER_2026_PLUGIN_BASENAME );
+		if ( version_compare( PHP_VERSION, PDF_EMBED_SEO_MIN_PHP_VERSION, '<' ) ) {
+			deactivate_plugins( PDF_EMBED_SEO_PLUGIN_BASENAME );
 			wp_die(
 				sprintf(
 					/* translators: %s: Minimum PHP version required. */
-					esc_html__( 'PDF Viewer 2026 requires PHP %s or higher.', 'pdf-viewer-2026' ),
-					esc_html( PDF_VIEWER_2026_MIN_PHP_VERSION )
+					esc_html__( 'PDF Viewer 2026 requires PHP %s or higher.', 'pdf-embed-seo-optimize' ),
+					esc_html( PDF_EMBED_SEO_MIN_PHP_VERSION )
 				)
 			);
 		}
 
 		// Register post type to flush rewrite rules.
-		$post_type = new PDF_Viewer_2026_Post_Type();
+		$post_type = new PDF_Embed_SEO_Post_Type();
 		$post_type->register_post_type();
 
 		// Set default options.
@@ -234,12 +234,12 @@ final class PDF_Viewer_2026 {
 			'viewer_theme'           => 'light',
 		);
 
-		if ( false === get_option( 'pdf_viewer_2026_settings' ) ) {
-			add_option( 'pdf_viewer_2026_settings', $default_options );
+		if ( false === get_option( 'pdf_embed_seo_settings' ) ) {
+			add_option( 'pdf_embed_seo_settings', $default_options );
 		}
 
 		// Store version for upgrade routines.
-		update_option( 'pdf_viewer_2026_version', PDF_VIEWER_2026_VERSION );
+		update_option( 'pdf_embed_seo_version', PDF_EMBED_SEO_VERSION );
 
 		// Flush rewrite rules.
 		flush_rewrite_rules();
@@ -263,7 +263,7 @@ final class PDF_Viewer_2026 {
 	 * @return mixed
 	 */
 	public static function get_setting( $key = '', $default = null ) {
-		$settings = get_option( 'pdf_viewer_2026_settings', array() );
+		$settings = get_option( 'pdf_embed_seo_settings', array() );
 
 		if ( empty( $key ) ) {
 			return $settings;
@@ -280,9 +280,9 @@ final class PDF_Viewer_2026 {
 	 * @return bool
 	 */
 	public static function update_setting( $key, $value ) {
-		$settings         = get_option( 'pdf_viewer_2026_settings', array() );
+		$settings         = get_option( 'pdf_embed_seo_settings', array() );
 		$settings[ $key ] = $value;
-		return update_option( 'pdf_viewer_2026_settings', $settings );
+		return update_option( 'pdf_embed_seo_settings', $settings );
 	}
 
 	/**
@@ -305,11 +305,11 @@ final class PDF_Viewer_2026 {
 /**
  * Returns the main instance of the plugin.
  *
- * @return PDF_Viewer_2026
+ * @return PDF_Embed_SEO
  */
-function pdf_viewer_2026() {
-	return PDF_Viewer_2026::get_instance();
+function pdf_embed_seo() {
+	return PDF_Embed_SEO::get_instance();
 }
 
 // Initialize the plugin.
-pdf_viewer_2026();
+pdf_embed_seo();

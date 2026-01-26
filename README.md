@@ -17,7 +17,7 @@ A powerful WordPress plugin that integrates Mozilla's PDF.js viewer to serve PDF
 ## Installation
 
 1. Download or clone this repository
-2. Copy the `pdf-viewer-2026` folder to `/wp-content/plugins/`
+2. Copy the `pdf-embed-seo-optimize` folder to `/wp-content/plugins/`
 3. Activate the plugin through the 'Plugins' menu in WordPress
 4. Go to 'PDF Documents' in the admin menu to start adding PDFs
 
@@ -77,16 +77,16 @@ Clean, responsive PDF viewer with navigation, zoom, and optional print/download 
 ### File Structure
 
 ```
-pdf-viewer-2026/
-├── pdf-viewer-2026.php           # Main plugin file
+pdf-embed-seo-optimize/
+├── pdf-embed-seo-optimize.php           # Main plugin file
 ├── uninstall.php                  # Cleanup on uninstall
 ├── README.txt                     # WordPress.org readme
 ├── includes/
-│   ├── class-pdf-viewer-2026-post-type.php
-│   ├── class-pdf-viewer-2026-admin.php
-│   ├── class-pdf-viewer-2026-frontend.php
-│   ├── class-pdf-viewer-2026-shortcodes.php
-│   └── class-pdf-viewer-2026-yoast.php
+│   ├── class-pdf-embed-seo-optimize-post-type.php
+│   ├── class-pdf-embed-seo-optimize-admin.php
+│   ├── class-pdf-embed-seo-optimize-frontend.php
+│   ├── class-pdf-embed-seo-optimize-shortcodes.php
+│   └── class-pdf-embed-seo-optimize-yoast.php
 ├── admin/
 │   ├── css/admin-styles.css
 │   ├── js/admin-scripts.js
@@ -106,7 +106,7 @@ This plugin follows [WordPress Coding Standards](https://developer.wordpress.org
 - Nonce verification for all form submissions
 - Capability checks for admin functions
 - Prepared statements for database queries
-- Internationalization ready with text domain `pdf-viewer-2026`
+- Internationalization ready with text domain `pdf-embed-seo-optimize`
 
 ## License
 

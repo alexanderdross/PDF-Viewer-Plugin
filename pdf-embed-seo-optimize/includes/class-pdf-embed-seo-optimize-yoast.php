@@ -2,7 +2,7 @@
 /**
  * Yoast SEO Integration and Schema Markup for PDF Viewer 2026.
  *
- * @package PDF_Viewer_2026
+ * @package PDF_Embed_SEO
  */
 
 // Prevent direct access.
@@ -11,11 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class PDF_Viewer_2026_Yoast
+ * Class PDF_Embed_SEO_Yoast
  *
  * Handles integration with Yoast SEO plugin and outputs JSON-LD schema markup.
  */
-class PDF_Viewer_2026_Yoast {
+class PDF_Embed_SEO_Yoast {
 
 	/**
 	 * Constructor.
@@ -175,8 +175,8 @@ class PDF_Viewer_2026_Yoast {
 		}
 
 		// Add permissions info.
-		$allow_download = PDF_Viewer_2026_Post_Type::is_download_allowed( $post_id );
-		$allow_print    = PDF_Viewer_2026_Post_Type::is_print_allowed( $post_id );
+		$allow_download = PDF_Embed_SEO_Post_Type::is_download_allowed( $post_id );
+		$allow_print    = PDF_Embed_SEO_Post_Type::is_print_allowed( $post_id );
 
 		$permissions = array();
 		if ( $allow_download ) {
@@ -210,7 +210,7 @@ class PDF_Viewer_2026_Yoast {
 		 * @param array $schema  The schema data.
 		 * @param int   $post_id The post ID.
 		 */
-		return apply_filters( 'pdf_viewer_2026_schema_data', $schema, $post_id );
+		return apply_filters( 'pdf_embed_seo_schema_data', $schema, $post_id );
 	}
 
 	/**
@@ -286,7 +286,7 @@ class PDF_Viewer_2026_Yoast {
 			return $pieces;
 		}
 
-		$pieces[] = new PDF_Viewer_2026_Schema_Piece( $context );
+		$pieces[] = new PDF_Embed_SEO_Schema_Piece( $context );
 
 		return $pieces;
 	}
@@ -360,7 +360,7 @@ class PDF_Viewer_2026_Yoast {
  *
  * Adds DigitalDocument schema when Yoast SEO is active.
  */
-class PDF_Viewer_2026_Schema_Piece {
+class PDF_Embed_SEO_Schema_Piece {
 
 	/**
 	 * The schema context.

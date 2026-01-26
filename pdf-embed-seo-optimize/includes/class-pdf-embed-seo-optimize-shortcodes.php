@@ -2,7 +2,7 @@
 /**
  * Shortcodes for PDF Viewer 2026.
  *
- * @package PDF_Viewer_2026
+ * @package PDF_Embed_SEO
  */
 
 // Prevent direct access.
@@ -11,11 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class PDF_Viewer_2026_Shortcodes
+ * Class PDF_Embed_SEO_Shortcodes
  *
  * Handles all shortcode functionality.
  */
-class PDF_Viewer_2026_Shortcodes {
+class PDF_Embed_SEO_Shortcodes {
 
 	/**
 	 * Constructor.
@@ -56,28 +56,28 @@ class PDF_Viewer_2026_Shortcodes {
 		$post = get_post( $post_id );
 
 		if ( ! $post || 'pdf_document' !== $post->post_type || 'publish' !== $post->post_status ) {
-			return '<p class="pdf-viewer-2026-error">' . esc_html__( 'PDF document not found.', 'pdf-viewer-2026' ) . '</p>';
+			return '<p class="pdf-embed-seo-optimize-error">' . esc_html__( 'PDF document not found.', 'pdf-embed-seo-optimize' ) . '</p>';
 		}
 
 		// Check if PDF file exists.
-		$pdf_url = PDF_Viewer_2026_Post_Type::get_pdf_url( $post_id );
+		$pdf_url = PDF_Embed_SEO_Post_Type::get_pdf_url( $post_id );
 
 		if ( ! $pdf_url ) {
-			return '<p class="pdf-viewer-2026-error">' . esc_html__( 'No PDF file attached to this document.', 'pdf-viewer-2026' ) . '</p>';
+			return '<p class="pdf-embed-seo-optimize-error">' . esc_html__( 'No PDF file attached to this document.', 'pdf-embed-seo-optimize' ) . '</p>';
 		}
 
 		// Enqueue scripts.
 		$this->enqueue_viewer_scripts( $post_id );
 
 		// Get viewer HTML.
-		$viewer_html = PDF_Viewer_2026_Frontend::get_viewer_html( $post_id );
+		$viewer_html = PDF_Embed_SEO_Frontend::get_viewer_html( $post_id );
 
 		// Wrap with custom dimensions.
 		$width  = esc_attr( $atts['width'] );
 		$height = esc_attr( $atts['height'] );
 
 		return sprintf(
-			'<div class="pdf-viewer-2026-shortcode" data-post-id="%d" style="width: %s; height: %s;">%s</div>',
+			'<div class="pdf-embed-seo-optimize-shortcode" data-post-id="%d" style="width: %s; height: %s;">%s</div>',
 			esc_attr( $post_id ),
 			$width,
 			$height,
@@ -125,16 +125,16 @@ class PDF_Viewer_2026_Shortcodes {
 		 * @param array $query_args The query arguments.
 		 * @param array $atts       The shortcode attributes.
 		 */
-		$query_args = apply_filters( 'pdf_viewer_2026_sitemap_query_args', $query_args, $atts );
+		$query_args = apply_filters( 'pdf_embed_seo_sitemap_query_args', $query_args, $atts );
 
 		$pdfs = new WP_Query( $query_args );
 
 		if ( ! $pdfs->have_posts() ) {
-			return '<p class="pdf-viewer-2026-no-pdfs">' . esc_html__( 'No PDF documents found.', 'pdf-viewer-2026' ) . '</p>';
+			return '<p class="pdf-embed-seo-optimize-no-pdfs">' . esc_html__( 'No PDF documents found.', 'pdf-embed-seo-optimize' ) . '</p>';
 		}
 
 		// Build output.
-		$output = '<ul class="pdf-viewer-2026-sitemap">';
+		$output = '<ul class="pdf-embed-seo-optimize-sitemap">';
 
 		while ( $pdfs->have_posts() ) {
 			$pdfs->the_post();
@@ -145,11 +145,11 @@ class PDF_Viewer_2026_Shortcodes {
 
 			// Get thumbnail if available.
 			if ( has_post_thumbnail() ) {
-				$thumbnail = get_the_post_thumbnail( get_the_ID(), 'thumbnail', array( 'class' => 'pdf-viewer-2026-sitemap-thumb' ) );
+				$thumbnail = get_the_post_thumbnail( get_the_ID(), 'thumbnail', array( 'class' => 'pdf-embed-seo-optimize-sitemap-thumb' ) );
 			}
 
 			$output .= sprintf(
-				'<li class="pdf-viewer-2026-sitemap-item">%s<a href="%s">%s</a></li>',
+				'<li class="pdf-embed-seo-optimize-sitemap-item">%s<a href="%s">%s</a></li>',
 				$thumbnail,
 				esc_url( $permalink ),
 				esc_html( $title )
@@ -170,9 +170,9 @@ class PDF_Viewer_2026_Shortcodes {
 	 * @return void
 	 */
 	private function enqueue_viewer_scripts( $post_id ) {
-		$allow_download = PDF_Viewer_2026_Post_Type::is_download_allowed( $post_id );
-		$allow_print    = PDF_Viewer_2026_Post_Type::is_print_allowed( $post_id );
-		$viewer_theme   = PDF_Viewer_2026::get_setting( 'viewer_theme', 'light' );
+		$allow_download = PDF_Embed_SEO_Post_Type::is_download_allowed( $post_id );
+		$allow_print    = PDF_Embed_SEO_Post_Type::is_print_allowed( $post_id );
+		$viewer_theme   = PDF_Embed_SEO::get_setting( 'viewer_theme', 'light' );
 
 		// PDF.js library from Mozilla CDN.
 		$pdfjs_version = '4.0.379';
@@ -193,10 +193,10 @@ class PDF_Viewer_2026_Shortcodes {
 
 		// Viewer styles.
 		wp_enqueue_style(
-			'pdf-viewer-2026-viewer',
-			PDF_VIEWER_2026_PLUGIN_URL . 'public/css/viewer-styles.css',
+			'pdf-embed-seo-optimize-viewer',
+			PDF_EMBED_SEO_PLUGIN_URL . 'public/css/viewer-styles.css',
 			array(),
-			PDF_VIEWER_2026_VERSION
+			PDF_EMBED_SEO_VERSION
 		);
 
 		// Enqueue dashicons for the toolbar buttons.
@@ -204,35 +204,35 @@ class PDF_Viewer_2026_Shortcodes {
 
 		// Viewer scripts.
 		wp_enqueue_script(
-			'pdf-viewer-2026-viewer',
-			PDF_VIEWER_2026_PLUGIN_URL . 'public/js/viewer-scripts.js',
+			'pdf-embed-seo-optimize-viewer',
+			PDF_EMBED_SEO_PLUGIN_URL . 'public/js/viewer-scripts.js',
 			array( 'jquery', 'pdfjs' ),
-			PDF_VIEWER_2026_VERSION,
+			PDF_EMBED_SEO_VERSION,
 			true
 		);
 
 		wp_localize_script(
-			'pdf-viewer-2026-viewer',
-			'pdfViewer2026',
+			'pdf-embed-seo-optimize-viewer',
+			'pdfEmbedSeo',
 			array(
 				'ajaxUrl'       => admin_url( 'admin-ajax.php' ),
-				'nonce'         => wp_create_nonce( 'pdf_viewer_2026_get_pdf' ),
+				'nonce'         => wp_create_nonce( 'pdf_embed_seo_get_pdf' ),
 				'postId'        => $post_id,
 				'allowDownload' => $allow_download,
 				'allowPrint'    => $allow_print,
 				'viewerTheme'   => $viewer_theme,
 				'strings'       => array(
-					'loading'    => __( 'Loading PDF...', 'pdf-viewer-2026' ),
-					'error'      => __( 'Error loading PDF', 'pdf-viewer-2026' ),
-					'page'       => __( 'Page', 'pdf-viewer-2026' ),
-					'of'         => __( 'of', 'pdf-viewer-2026' ),
-					'zoomIn'     => __( 'Zoom In', 'pdf-viewer-2026' ),
-					'zoomOut'    => __( 'Zoom Out', 'pdf-viewer-2026' ),
-					'download'   => __( 'Download', 'pdf-viewer-2026' ),
-					'print'      => __( 'Print', 'pdf-viewer-2026' ),
-					'prevPage'   => __( 'Previous Page', 'pdf-viewer-2026' ),
-					'nextPage'   => __( 'Next Page', 'pdf-viewer-2026' ),
-					'fullscreen' => __( 'Fullscreen', 'pdf-viewer-2026' ),
+					'loading'    => __( 'Loading PDF...', 'pdf-embed-seo-optimize' ),
+					'error'      => __( 'Error loading PDF', 'pdf-embed-seo-optimize' ),
+					'page'       => __( 'Page', 'pdf-embed-seo-optimize' ),
+					'of'         => __( 'of', 'pdf-embed-seo-optimize' ),
+					'zoomIn'     => __( 'Zoom In', 'pdf-embed-seo-optimize' ),
+					'zoomOut'    => __( 'Zoom Out', 'pdf-embed-seo-optimize' ),
+					'download'   => __( 'Download', 'pdf-embed-seo-optimize' ),
+					'print'      => __( 'Print', 'pdf-embed-seo-optimize' ),
+					'prevPage'   => __( 'Previous Page', 'pdf-embed-seo-optimize' ),
+					'nextPage'   => __( 'Next Page', 'pdf-embed-seo-optimize' ),
+					'fullscreen' => __( 'Fullscreen', 'pdf-embed-seo-optimize' ),
 				),
 			)
 		);

@@ -14,12 +14,12 @@
      */
     var PDFViewer = function(container) {
         this.container = $(container);
-        this.canvas = this.container.find('.pdf-viewer-2026-canvas')[0];
+        this.canvas = this.container.find('.pdf-embed-seo-optimize-canvas')[0];
         this.ctx = this.canvas.getContext('2d');
-        this.loading = this.container.find('.pdf-viewer-2026-loading');
-        this.pageInput = this.container.find('.pdf-viewer-2026-page-input');
-        this.totalPages = this.container.find('.pdf-viewer-2026-total-pages');
-        this.zoomLevel = this.container.find('.pdf-viewer-2026-zoom-level');
+        this.loading = this.container.find('.pdf-embed-seo-optimize-loading');
+        this.pageInput = this.container.find('.pdf-embed-seo-optimize-page-input');
+        this.totalPages = this.container.find('.pdf-embed-seo-optimize-total-pages');
+        this.zoomLevel = this.container.find('.pdf-embed-seo-optimize-zoom-level');
 
         this.pdfDoc = null;
         this.currentPage = 1;
@@ -51,11 +51,11 @@
             var self = this;
 
             // Navigation buttons
-            this.container.on('click', '.pdf-viewer-2026-prev', function() {
+            this.container.on('click', '.pdf-embed-seo-optimize-prev', function() {
                 self.prevPage();
             });
 
-            this.container.on('click', '.pdf-viewer-2026-next', function() {
+            this.container.on('click', '.pdf-embed-seo-optimize-next', function() {
                 self.nextPage();
             });
 
@@ -70,26 +70,26 @@
             });
 
             // Zoom buttons
-            this.container.on('click', '.pdf-viewer-2026-zoom-in', function() {
+            this.container.on('click', '.pdf-embed-seo-optimize-zoom-in', function() {
                 self.zoomIn();
             });
 
-            this.container.on('click', '.pdf-viewer-2026-zoom-out', function() {
+            this.container.on('click', '.pdf-embed-seo-optimize-zoom-out', function() {
                 self.zoomOut();
             });
 
             // Download button
-            this.container.on('click', '.pdf-viewer-2026-download', function() {
+            this.container.on('click', '.pdf-embed-seo-optimize-download', function() {
                 self.download();
             });
 
             // Print button
-            this.container.on('click', '.pdf-viewer-2026-print', function() {
+            this.container.on('click', '.pdf-embed-seo-optimize-print', function() {
                 self.print();
             });
 
             // Fullscreen button
-            this.container.on('click', '.pdf-viewer-2026-fullscreen', function() {
+            this.container.on('click', '.pdf-embed-seo-optimize-fullscreen', function() {
                 self.toggleFullscreen();
             });
 
@@ -137,14 +137,14 @@
             var self = this;
 
             // Get post ID from shortcode container or use global
-            var postId = this.container.closest('.pdf-viewer-2026-shortcode').data('post-id') || pdfViewer2026.postId;
+            var postId = this.container.closest('.pdf-embed-seo-optimize-shortcode').data('post-id') || pdfEmbedSeo.postId;
 
             $.ajax({
-                url: pdfViewer2026.ajaxUrl,
+                url: pdfEmbedSeo.ajaxUrl,
                 type: 'POST',
                 data: {
                     action: 'pdf_viewer_2026_get_pdf',
-                    nonce: pdfViewer2026.nonce,
+                    nonce: pdfEmbedSeo.nonce,
                     post_id: postId
                 },
                 success: function(response) {
@@ -153,11 +153,11 @@
                         self.pdfTitle = response.data.title;
                         self.initPDF();
                     } else {
-                        self.showError(response.data.message || pdfViewer2026.strings.error);
+                        self.showError(response.data.message || pdfEmbedSeo.strings.error);
                     }
                 },
                 error: function() {
-                    self.showError(pdfViewer2026.strings.error);
+                    self.showError(pdfEmbedSeo.strings.error);
                 }
             });
         },
@@ -185,7 +185,7 @@
 
             }).catch(function(error) {
                 console.error('PDF loading error:', error);
-                self.showError(pdfViewer2026.strings.error);
+                self.showError(pdfEmbedSeo.strings.error);
             });
         },
 
@@ -205,7 +205,7 @@
 
             this.pdfDoc.getPage(num).then(function(page) {
                 // Calculate scale to fit container width
-                var containerWidth = self.container.find('.pdf-viewer-2026-viewer').width() - 40;
+                var containerWidth = self.container.find('.pdf-embed-seo-optimize-viewer').width() - 40;
                 var viewport = page.getViewport({ scale: 1 });
                 var defaultScale = containerWidth / viewport.width;
 
@@ -244,7 +244,7 @@
             }).catch(function(error) {
                 console.error('Page render error:', error);
                 self.rendering = false;
-                self.showError(pdfViewer2026.strings.error);
+                self.showError(pdfEmbedSeo.strings.error);
             });
         },
 
@@ -279,8 +279,8 @@
          * Update navigation button states
          */
         updateNavigation: function() {
-            var prevBtn = this.container.find('.pdf-viewer-2026-prev');
-            var nextBtn = this.container.find('.pdf-viewer-2026-next');
+            var prevBtn = this.container.find('.pdf-embed-seo-optimize-prev');
+            var nextBtn = this.container.find('.pdf-embed-seo-optimize-next');
 
             prevBtn.prop('disabled', this.currentPage <= 1);
             nextBtn.prop('disabled', this.currentPage >= this.numPages);
@@ -319,7 +319,7 @@
          * Download PDF
          */
         download: function() {
-            if (!pdfViewer2026.allowDownload) {
+            if (!pdfEmbedSeo.allowDownload) {
                 return;
             }
 
@@ -336,7 +336,7 @@
          * Print PDF
          */
         print: function() {
-            if (!pdfViewer2026.allowPrint) {
+            if (!pdfEmbedSeo.allowPrint) {
                 return;
             }
 
@@ -355,7 +355,7 @@
         toggleFullscreen: function() {
             this.container.toggleClass('is-fullscreen');
 
-            var icon = this.container.find('.pdf-viewer-2026-fullscreen .dashicons');
+            var icon = this.container.find('.pdf-embed-seo-optimize-fullscreen .dashicons');
 
             if (this.container.hasClass('is-fullscreen')) {
                 icon.removeClass('dashicons-fullscreen-alt').addClass('dashicons-fullscreen-exit-alt');
@@ -379,8 +379,8 @@
          */
         showError: function(message) {
             this.loading.hide();
-            this.container.find('.pdf-viewer-2026-viewer').html(
-                '<div class="pdf-viewer-2026-error">' + message + '</div>'
+            this.container.find('.pdf-embed-seo-optimize-viewer').html(
+                '<div class="pdf-embed-seo-optimize-error">' + message + '</div>'
             );
         }
     };
@@ -389,7 +389,7 @@
      * Initialize all PDF viewers on page load
      */
     $(document).ready(function() {
-        $('.pdf-viewer-2026-container').each(function() {
+        $('.pdf-embed-seo-optimize-container').each(function() {
             new PDFViewer(this);
         });
     });
