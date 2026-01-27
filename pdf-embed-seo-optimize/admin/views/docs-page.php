@@ -404,6 +404,17 @@ if ( function_exists( 'do_shortcode' ) ) {
 			?>
 		</em>
 	</p>
+
+	<p class="pdf-embed-seo-optimize-docs-credit">
+		<?php
+		printf(
+			/* translators: %s: Dross:Media link */
+			esc_html__( 'made with %1$s by %2$s', 'pdf-embed-seo-optimize' ),
+			'<span style="color: #e25555;">♥</span>',
+			'<a href="https://dross.net/media/" target="_blank" rel="noopener noreferrer">Dross:Media</a>'
+		);
+		?>
+	</p>
 </div>
 
 <style>
@@ -449,5 +460,18 @@ if ( function_exists( 'do_shortcode' ) ) {
 	padding: 15px;
 	border-left: 4px solid #ffb900;
 	margin-top: 30px;
+}
+.pdf-embed-seo-optimize-docs-credit {
+	text-align: center;
+	margin-top: 30px;
+	color: #666;
+	font-size: 13px;
+}
+.pdf-embed-seo-optimize-docs-credit a {
+	color: #0073aa;
+	text-decoration: none;
+}
+.pdf-embed-seo-optimize-docs-credit a:hover {
+	text-decoration: underline;
 }
 </style>

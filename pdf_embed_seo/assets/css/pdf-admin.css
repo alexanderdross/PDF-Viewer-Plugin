@@ -1,0 +1,84 @@
+/**
+ * @file
+ * Admin styles for PDF Embed & SEO Optimize.
+ */
+
+/* Settings form */
+.pdf-embed-seo-settings details {
+  margin-bottom: 20px;
+}
+
+.pdf-embed-seo-settings details summary {
+  font-weight: 600;
+  padding: 10px 0;
+}
+
+/* PDF document form */
+.pdf-document-form .field--name-pdf-file {
+  margin-bottom: 20px;
+}
+
+.pdf-document-form .field--name-thumbnail {
+  margin-bottom: 20px;
+}
+
+.pdf-document-form .form-item-allow-download,
+.pdf-document-form .form-item-allow-print {
+  margin-bottom: 10px;
+}
+
+/* Document list */
+.view-pdf-documents .views-table {
+  width: 100%;
+}
+
+.view-pdf-documents .views-field-title {
+  min-width: 200px;
+}
+
+.view-pdf-documents .views-field-view-count {
+  text-align: center;
+}
+
+/* Premium badge */
+.pdf-premium-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+/* Premium settings */
+.pdf-premium-settings {
+  position: relative;
+}
+
+.pdf-premium-settings::before {
+  content: 'Premium Feature';
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  padding: 2px 8px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+/* Help text */
+.pdf-help-text {
+  background: #f0f6fc;
+  border-left: 4px solid #0073aa;
+  padding: 15px;
+  margin: 20px 0;
+}
+
+.pdf-help-text p {
+  margin: 0;
+}

@@ -1,0 +1,176 @@
+/**
+ * @file
+ * Styles for PDF archive page.
+ */
+
+.pdf-archive {
+  padding: 20px 0;
+}
+
+/* Filters */
+.pdf-archive-filters-wrapper {
+  margin-bottom: 30px;
+  padding: 15px;
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+
+.pdf-archive-filters form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: flex-end;
+}
+
+.pdf-archive-filters select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Grid layout */
+.pdf-archive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+/* List layout */
+.pdf-archive--list .pdf-archive-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pdf-archive--list .pdf-archive-item {
+  display: flex;
+  flex-direction: row;
+}
+
+.pdf-archive--list .pdf-archive-item-thumbnail {
+  width: 150px;
+  flex-shrink: 0;
+}
+
+/* Archive item */
+.pdf-archive-item {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.pdf-archive-item:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.pdf-archive-item-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Thumbnail */
+.pdf-archive-item-thumbnail {
+  position: relative;
+  padding-top: 130%;
+  background: #f0f0f0;
+  overflow: hidden;
+}
+
+.pdf-archive-item-thumbnail img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pdf-archive-item-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.pdf-archive-item-icon {
+  font-size: 48px;
+  opacity: 0.8;
+}
+
+/* Content */
+.pdf-archive-item-content {
+  padding: 15px;
+}
+
+.pdf-archive-item-title {
+  margin: 0 0 10px;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #333;
+}
+
+.pdf-archive-item-description {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* Meta */
+.pdf-archive-item-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #999;
+}
+
+.pdf-archive-item-views,
+.pdf-archive-item-date {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Pager */
+.pdf-archive-pager {
+  margin-top: 40px;
+}
+
+/* Empty state */
+.pdf-archive-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+.pdf-archive-empty p {
+  font-size: 18px;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .pdf-archive-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+  }
+
+  .pdf-archive--list .pdf-archive-item {
+    flex-direction: column;
+  }
+
+  .pdf-archive--list .pdf-archive-item-thumbnail {
+    width: 100%;
+  }
+}

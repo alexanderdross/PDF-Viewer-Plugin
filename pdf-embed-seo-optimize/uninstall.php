@@ -46,6 +46,7 @@ function pdf_embed_seo_uninstall() {
 	}
 
 	// Clean up any orphaned post meta.
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One-time uninstall cleanup, caching not needed.
 	$wpdb->query(
 		"DELETE FROM {$wpdb->postmeta} WHERE meta_key IN (
 			'_pdf_file_id',

@@ -1,10 +1,10 @@
 === PDF Embed & SEO Optimize ===
 Contributors: drossmedia
-Tags: pdf, pdf viewer, pdf.js, seo, yoast, embed pdf, document viewer
+Tags: pdf, pdf viewer, seo, embed, document
 Requires at least: 5.8
-Tested up to: 6.4
+Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -102,6 +102,13 @@ Yes, you can choose between light and dark themes in the plugin settings. You ca
 
 == Changelog ==
 
+= 1.1.0 =
+* Added comprehensive UAT/QA test documentation
+* Added Dross:Media credit links with accessibility attributes to admin pages
+* Made search engine ping optional for PDF sitemap (disabled by default for privacy)
+* Security: All external requests are now opt-in
+* Improved accessibility across admin interface
+
 = 1.0.0 =
 * Initial release
 * Custom post type for PDF documents
@@ -117,6 +124,9 @@ Yes, you can choose between light and dark themes in the plugin settings. You ca
 * Schema markup for rich results (DigitalDocument and CollectionPage)
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+Improved privacy and accessibility. Search engine pings are now opt-in. Added UAT documentation.
 
 = 1.0.0 =
 Initial release of PDF Embed & SEO Optimize.

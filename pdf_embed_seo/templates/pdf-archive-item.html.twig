@@ -1,0 +1,40 @@
+{#
+/**
+ * @file
+ * Template for a single PDF archive item.
+ *
+ * Available variables:
+ * - document: The PDF document entity.
+ * - thumbnail: Rendered thumbnail image.
+ * - url: URL to the PDF document.
+ */
+#}
+<article class="pdf-archive-item">
+  <a href="{{ url }}" class="pdf-archive-item-link">
+    <div class="pdf-archive-item-thumbnail">
+      {% if thumbnail %}
+        {{ thumbnail }}
+      {% else %}
+        <div class="pdf-archive-item-placeholder">
+          <span class="pdf-archive-item-icon">📄</span>
+        </div>
+      {% endif %}
+    </div>
+    <div class="pdf-archive-item-content">
+      <h3 class="pdf-archive-item-title">{{ document.title.value }}</h3>
+      {% if document.description.value %}
+        <p class="pdf-archive-item-description">
+          {{ document.description.value|striptags|slice(0, 150) }}{% if document.description.value|length > 150 %}...{% endif %}
+        </p>
+      {% endif %}
+      <div class="pdf-archive-item-meta">
+        <span class="pdf-archive-item-views">
+          {{ 'Views: @count'|t({'@count': document.view_count.value|default(0)}) }}
+        </span>
+        <span class="pdf-archive-item-date">
+          {{ document.created.value|date('M j, Y') }}
+        </span>
+      </div>
+    </div>
+  </a>
+</article>

@@ -3,7 +3,7 @@
  * Plugin Name:       PDF Embed & SEO Optimize
  * Plugin URI:        https://github.com/alexanderdross/PDF-Viewer-2026
  * Description:       A powerful WordPress plugin that integrates Mozilla's PDF.js viewer to serve PDFs through a viewer URL, enhancing SEO with Schema Data, Open Graph Tags, Twitter Cards, and other Meta Tags. Control print/download permissions per PDF. Full Yoast SEO integration for title, slug, and meta description control.
- * Version:           1.0.0
+ * Version:           1.1.0
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Author:            Dross:Media
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Plugin version.
  */
-define( 'PDF_EMBED_SEO_VERSION', '1.0.0' );
+define( 'PDF_EMBED_SEO_VERSION', '1.1.0' );
 
 /**
  * Plugin directory path.
@@ -158,9 +158,6 @@ final class PDF_Embed_SEO {
 	 * @return void
 	 */
 	private function init_hooks() {
-		// Load plugin textdomain.
-		add_action( 'init', array( $this, 'load_textdomain' ) );
-
 		// Initialize components.
 		add_action( 'init', array( $this, 'init' ), 0 );
 
@@ -169,19 +166,6 @@ final class PDF_Embed_SEO {
 
 		// Deactivation hook.
 		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
-	}
-
-	/**
-	 * Load plugin textdomain.
-	 *
-	 * @return void
-	 */
-	public function load_textdomain() {
-		load_plugin_textdomain(
-			'pdf-embed-seo-optimize',
-			false,
-			dirname( PDF_EMBED_SEO_PLUGIN_BASENAME ) . '/languages'
-		);
 	}
 
 	/**
@@ -336,3 +320,28 @@ function pdf_embed_seo() {
 
 // Initialize the plugin.
 pdf_embed_seo();
+
+/**
+ * Load premium features if available.
+ *
+ * Premium features are loaded from the /premium/ directory.
+ * This allows the premium version to extend the free version
+ * with additional functionality.
+ */
+function pdf_embed_seo_load_premium() {
+	$premium_file = PDF_EMBED_SEO_PLUGIN_DIR . 'premium/class-pdf-embed-seo-premium.php';
+
+	if ( file_exists( $premium_file ) ) {
+		require_once $premium_file;
+	}
+}
+add_action( 'plugins_loaded', 'pdf_embed_seo_load_premium', 15 );
+
+/**
+ * Check if premium features are active.
+ *
+ * @return bool
+ */
+function pdf_embed_seo_is_premium() {
+	return defined( 'PDF_EMBED_SEO_IS_PREMIUM' ) && PDF_EMBED_SEO_IS_PREMIUM;
+}

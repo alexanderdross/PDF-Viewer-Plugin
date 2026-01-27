@@ -1,0 +1,124 @@
+{#
+/**
+ * @file
+ * Template for displaying the PDF.js viewer.
+ *
+ * Available variables:
+ * - pdf_document: The PDF document entity.
+ * - pdf_url: The URL to fetch PDF data.
+ * - allow_download: Whether downloads are allowed.
+ * - allow_print: Whether printing is allowed.
+ * - viewer_theme: The viewer theme (light/dark).
+ * - width: The viewer width.
+ * - height: The viewer height.
+ * - attributes: HTML attributes for the container.
+ */
+#}
+<div{{ attributes.addClass('pdf-viewer-wrapper', 'pdf-viewer-theme-' ~ viewer_theme) }}>
+  {# Toolbar #}
+  <div class="pdf-viewer-toolbar">
+    <div class="pdf-viewer-toolbar-left">
+      {# Page navigation #}
+      <button type="button" class="pdf-viewer-btn pdf-viewer-prev" title="{{ 'Previous page'|t }}" disabled>
+        <span class="visually-hidden">{{ 'Previous page'|t }}</span>
+        ‹
+      </button>
+      <span class="pdf-viewer-page-info">
+        <input type="number" class="pdf-viewer-page-input" value="1" min="1">
+        <span class="pdf-viewer-page-separator">/</span>
+        <span class="pdf-viewer-page-count">0</span>
+      </span>
+      <button type="button" class="pdf-viewer-btn pdf-viewer-next" title="{{ 'Next page'|t }}">
+        <span class="visually-hidden">{{ 'Next page'|t }}</span>
+        ›
+      </button>
+    </div>
+
+    <div class="pdf-viewer-toolbar-center">
+      {# Zoom controls #}
+      <button type="button" class="pdf-viewer-btn pdf-viewer-zoom-out" title="{{ 'Zoom out'|t }}">
+        <span class="visually-hidden">{{ 'Zoom out'|t }}</span>
+        −
+      </button>
+      <span class="pdf-viewer-zoom-level">100%</span>
+      <button type="button" class="pdf-viewer-btn pdf-viewer-zoom-in" title="{{ 'Zoom in'|t }}">
+        <span class="visually-hidden">{{ 'Zoom in'|t }}</span>
+        +
+      </button>
+      <select class="pdf-viewer-zoom-select" title="{{ 'Zoom level'|t }}">
+        <option value="0.5">50%</option>
+        <option value="0.75">75%</option>
+        <option value="1" selected>100%</option>
+        <option value="1.25">125%</option>
+        <option value="1.5">150%</option>
+        <option value="2">200%</option>
+        <option value="page-fit">{{ 'Page Fit'|t }}</option>
+        <option value="page-width">{{ 'Page Width'|t }}</option>
+      </select>
+    </div>
+
+    <div class="pdf-viewer-toolbar-right">
+      {# Premium: Search button (shown only if premium is active) #}
+      <button type="button" class="pdf-viewer-btn pdf-viewer-search-toggle" title="{{ 'Search'|t }}" style="display: none;">
+        <span class="visually-hidden">{{ 'Search'|t }}</span>
+        🔍
+      </button>
+
+      {% if allow_print %}
+        <button type="button" class="pdf-viewer-btn pdf-viewer-print" title="{{ 'Print'|t }}">
+          <span class="visually-hidden">{{ 'Print'|t }}</span>
+          🖨
+        </button>
+      {% endif %}
+
+      {% if allow_download %}
+        <button type="button" class="pdf-viewer-btn pdf-viewer-download" title="{{ 'Download'|t }}">
+          <span class="visually-hidden">{{ 'Download'|t }}</span>
+          ⬇
+        </button>
+      {% endif %}
+
+      <button type="button" class="pdf-viewer-btn pdf-viewer-fullscreen" title="{{ 'Fullscreen'|t }}">
+        <span class="visually-hidden">{{ 'Fullscreen'|t }}</span>
+        ⛶
+      </button>
+    </div>
+  </div>
+
+  {# Premium: Search panel #}
+  <div class="pdf-viewer-search-panel" style="display: none;">
+    <input type="text" class="pdf-viewer-search-input" placeholder="{{ 'Search in document...'|t }}">
+    <span class="pdf-viewer-search-results"></span>
+    <button type="button" class="pdf-viewer-btn pdf-viewer-search-prev" disabled>‹</button>
+    <button type="button" class="pdf-viewer-btn pdf-viewer-search-next" disabled>›</button>
+    <button type="button" class="pdf-viewer-btn pdf-viewer-search-close">✕</button>
+  </div>
+
+  {# PDF canvas container #}
+  <div class="pdf-viewer-container" style="height: {{ height }};">
+    <div class="pdf-viewer-canvas-wrapper">
+      <canvas class="pdf-viewer-canvas"></canvas>
+    </div>
+    <div class="pdf-viewer-loading">
+      <div class="pdf-viewer-loading-spinner"></div>
+      <p>{{ 'Loading PDF...'|t }}</p>
+    </div>
+    <div class="pdf-viewer-error" style="display: none;">
+      <p>{{ 'Error loading PDF. Please try again.'|t }}</p>
+    </div>
+  </div>
+
+  {# Premium: Reading progress bar #}
+  <div class="pdf-viewer-progress-bar" style="display: none;">
+    <div class="pdf-viewer-progress-fill" style="width: 0%;"></div>
+  </div>
+
+  {# Hidden data attributes for JavaScript #}
+  <div class="pdf-viewer-data"
+       data-pdf-url="{{ pdf_url }}"
+       data-allow-download="{{ allow_download ? 'true' : 'false' }}"
+       data-allow-print="{{ allow_print ? 'true' : 'false' }}"
+       data-document-id="{{ pdf_document.id }}"
+       style="display: none;">
+  </div>
+</div>

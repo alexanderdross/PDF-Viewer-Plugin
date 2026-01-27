@@ -1,0 +1,55 @@
+# Schema for PDF Embed & SEO Optimize configuration.
+
+pdf_embed_seo.settings:
+  type: config_object
+  label: 'PDF Embed & SEO settings'
+  mapping:
+    default_allow_download:
+      type: boolean
+      label: 'Allow downloads by default'
+    default_allow_print:
+      type: boolean
+      label: 'Allow printing by default'
+    auto_generate_thumbnails:
+      type: boolean
+      label: 'Auto-generate thumbnails'
+    thumbnail_width:
+      type: integer
+      label: 'Thumbnail width'
+    thumbnail_height:
+      type: integer
+      label: 'Thumbnail height'
+    archive_posts_per_page:
+      type: integer
+      label: 'Documents per page on archive'
+    archive_display:
+      type: string
+      label: 'Archive display mode'
+    viewer_theme:
+      type: string
+      label: 'Viewer theme'
+    viewer_height:
+      type: string
+      label: 'Viewer height'
+    enable_schema:
+      type: boolean
+      label: 'Enable Schema.org markup'
+    archive_title:
+      type: label
+      label: 'Archive page title'
+    archive_description:
+      type: text
+      label: 'Archive page meta description'
+    # Premium settings.
+    enable_analytics:
+      type: boolean
+      label: 'Enable analytics'
+    enable_search:
+      type: boolean
+      label: 'Enable PDF search'
+    enable_bookmarks:
+      type: boolean
+      label: 'Enable bookmarks'
+    enable_progress:
+      type: boolean
+      label: 'Enable reading progress'
