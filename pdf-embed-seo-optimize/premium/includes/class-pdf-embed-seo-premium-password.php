@@ -166,7 +166,8 @@ class PDF_Embed_SEO_Premium_Password {
 			session_start();
 		}
 
-		$unlocked = isset( $_SESSION['pdf_unlocked'] ) ? $_SESSION['pdf_unlocked'] : array();
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Session data set by this plugin, sanitized with array_map.
+		$unlocked = isset( $_SESSION['pdf_unlocked'] ) ? array_map( 'absint', (array) $_SESSION['pdf_unlocked'] ) : array();
 		return in_array( $post_id, $unlocked, true );
 	}
 

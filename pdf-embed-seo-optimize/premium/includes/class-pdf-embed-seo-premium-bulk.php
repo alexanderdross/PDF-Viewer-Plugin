@@ -103,17 +103,24 @@ class PDF_Embed_SEO_Premium_Bulk {
 	 * @return void
 	 */
 	public function bulk_action_notices() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Display only, nonce verified during action.
 		if ( ! isset( $_GET['pdf_bulk_updated'] ) || ! isset( $_GET['pdf_bulk_action'] ) ) {
 			return;
 		}
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Display only, nonce verified during action.
 		$updated = absint( $_GET['pdf_bulk_updated'] );
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Display only, nonce verified during action.
 		$action  = sanitize_key( $_GET['pdf_bulk_action'] );
 
 		$messages = array(
+			/* translators: %d: Number of PDFs updated */
 			'pdf_enable_download'  => __( 'Download enabled for %d PDF(s).', 'pdf-embed-seo-optimize' ),
+			/* translators: %d: Number of PDFs updated */
 			'pdf_disable_download' => __( 'Download disabled for %d PDF(s).', 'pdf-embed-seo-optimize' ),
+			/* translators: %d: Number of PDFs updated */
 			'pdf_enable_print'     => __( 'Print enabled for %d PDF(s).', 'pdf-embed-seo-optimize' ),
+			/* translators: %d: Number of PDFs updated */
 			'pdf_disable_print'    => __( 'Print disabled for %d PDF(s).', 'pdf-embed-seo-optimize' ),
 		);
 
@@ -407,6 +414,7 @@ class PDF_Embed_SEO_Premium_Bulk {
 		$imported = 0;
 		$errors   = array();
 
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- File data validated below and passed to media_handle_sideload.
 		$files = $_FILES['pdf_files'];
 
 		for ( $i = 0; $i < count( $files['name'] ); $i++ ) {

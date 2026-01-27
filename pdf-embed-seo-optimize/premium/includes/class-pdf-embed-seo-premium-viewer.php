@@ -80,9 +80,11 @@ class PDF_Embed_SEO_Premium_Viewer {
 					'search'           => __( 'Search in document', 'pdf-embed-seo-optimize' ),
 					'searchPlaceholder' => __( 'Enter search term...', 'pdf-embed-seo-optimize' ),
 					'noResults'        => __( 'No results found', 'pdf-embed-seo-optimize' ),
+					/* translators: %d: Number of search matches found */
 					'matchesFound'     => __( '%d matches found', 'pdf-embed-seo-optimize' ),
 					'bookmarks'        => __( 'Bookmarks', 'pdf-embed-seo-optimize' ),
 					'noBookmarks'      => __( 'No bookmarks in this document', 'pdf-embed-seo-optimize' ),
+					/* translators: %d: Page number to resume reading from */
 					'resumeReading'    => __( 'Resume from page %d?', 'pdf-embed-seo-optimize' ),
 					'resume'           => __( 'Resume', 'pdf-embed-seo-optimize' ),
 					'startOver'        => __( 'Start Over', 'pdf-embed-seo-optimize' ),

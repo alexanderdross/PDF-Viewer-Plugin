@@ -286,10 +286,10 @@ class PDF_Embed_SEO_Premium_Analytics {
 		$week_ago  = gmdate( 'Y-m-d', strtotime( '-7 days' ) );
 		$month_ago = gmdate( 'Y-m-d', strtotime( '-30 days' ) );
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is safe class property.
 		$total = $wpdb->get_var( "SELECT COUNT(*) FROM {$this->table_name}" );
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is safe class property.
 		$today_views = $wpdb->get_var(
 			$wpdb->prepare(
 				"SELECT COUNT(*) FROM {$this->table_name} WHERE DATE(view_date) = %s",
@@ -297,7 +297,7 @@ class PDF_Embed_SEO_Premium_Analytics {
 			)
 		);
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is safe class property.
 		$week_views = $wpdb->get_var(
 			$wpdb->prepare(
 				"SELECT COUNT(*) FROM {$this->table_name} WHERE DATE(view_date) >= %s",
@@ -305,7 +305,7 @@ class PDF_Embed_SEO_Premium_Analytics {
 			)
 		);
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is safe class property.
 		$month_views = $wpdb->get_var(
 			$wpdb->prepare(
 				"SELECT COUNT(*) FROM {$this->table_name} WHERE DATE(view_date) >= %s",
@@ -333,7 +333,7 @@ class PDF_Embed_SEO_Premium_Analytics {
 
 		$date_from = gmdate( 'Y-m-d', strtotime( "-{$days} days" ) );
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is safe class property.
 		return $wpdb->get_results(
 			$wpdb->prepare(
 				"SELECT post_id, COUNT(*) as views
@@ -365,7 +365,7 @@ class PDF_Embed_SEO_Premium_Analytics {
 			$where .= $wpdb->prepare( ' AND post_id = %d', $post_id );
 		}
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name and where clause are safely constructed.
 		return $wpdb->get_results(
 			"SELECT DATE(view_date) as date, COUNT(*) as views
 			FROM {$this->table_name}
@@ -578,6 +578,7 @@ class PDF_Embed_SEO_Premium_Analytics {
 			);
 		}
 
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Using php://output for CSV export, not file system.
 		fclose( $output );
 		exit;
 	}

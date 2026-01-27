@@ -115,22 +115,22 @@ class PDF_Embed_SEO_Premium_Taxonomies {
 	 * @return array
 	 */
 	public function filter_archive_by_taxonomy( $query_args ) {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Archive filter, no action taken.
 		if ( isset( $_GET['pdf_category'] ) && ! empty( $_GET['pdf_category'] ) ) {
 			$query_args['tax_query'][] = array(
 				'taxonomy' => 'pdf_category',
-				// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				'field'    => 'slug',
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Archive filter, no action taken.
 				'terms'    => sanitize_text_field( wp_unslash( $_GET['pdf_category'] ) ),
 			);
 		}
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Archive filter, no action taken.
 		if ( isset( $_GET['pdf_tag'] ) && ! empty( $_GET['pdf_tag'] ) ) {
 			$query_args['tax_query'][] = array(
 				'taxonomy' => 'pdf_tag',
-				// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				'field'    => 'slug',
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Archive filter, no action taken.
 				'terms'    => sanitize_text_field( wp_unslash( $_GET['pdf_tag'] ) ),
 			);
 		}
