@@ -1,0 +1,21 @@
+# Menu links for PDF Embed & SEO Optimize.
+
+pdf_embed_seo.admin:
+  title: 'PDF Documents'
+  route_name: entity.pdf_document.collection
+  parent: system.admin_content
+  weight: 10
+
+pdf_embed_seo.settings:
+  title: 'PDF Embed & SEO'
+  route_name: pdf_embed_seo.settings
+  parent: system.admin_config_content
+  description: 'Configure PDF Embed & SEO Optimize settings.'
+  weight: 100
+
+pdf_embed_seo.analytics:
+  title: 'PDF Analytics'
+  route_name: pdf_embed_seo.analytics
+  parent: system.admin_reports
+  description: 'View PDF document analytics and statistics.'
+  weight: 50

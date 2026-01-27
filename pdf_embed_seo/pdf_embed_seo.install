@@ -1,0 +1,164 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for PDF Embed & SEO Optimize.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function pdf_embed_seo_schema() {
+  $schema = [];
+
+  // Analytics table for tracking PDF views (premium feature).
+  $schema['pdf_embed_seo_analytics'] = [
+    'description' => 'Stores PDF view analytics data.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary key.',
+      ],
+      'pdf_document_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'The PDF document entity ID.',
+      ],
+      'user_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The user ID (0 for anonymous).',
+      ],
+      'ip_address' => [
+        'type' => 'varchar',
+        'length' => 45,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The visitor IP address.',
+      ],
+      'user_agent' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The visitor user agent.',
+      ],
+      'referer' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The referrer URL.',
+      ],
+      'timestamp' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'The Unix timestamp of the view.',
+      ],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'pdf_document_id' => ['pdf_document_id'],
+      'user_id' => ['user_id'],
+      'timestamp' => ['timestamp'],
+    ],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_install().
+ */
+function pdf_embed_seo_install() {
+  // Set default configuration.
+  $config = \Drupal::configFactory()->getEditable('pdf_embed_seo.settings');
+
+  $config->set('default_allow_download', FALSE);
+  $config->set('default_allow_print', FALSE);
+  $config->set('auto_generate_thumbnails', TRUE);
+  $config->set('thumbnail_width', 300);
+  $config->set('thumbnail_height', 400);
+  $config->set('archive_posts_per_page', 12);
+  $config->set('archive_display', 'grid');
+  $config->set('viewer_theme', 'light');
+  $config->set('viewer_height', '800px');
+  $config->set('enable_schema', TRUE);
+  $config->set('archive_title', 'PDF Documents');
+  $config->set('archive_description', '');
+
+  // Premium defaults.
+  $config->set('enable_analytics', TRUE);
+  $config->set('enable_search', TRUE);
+  $config->set('enable_bookmarks', TRUE);
+  $config->set('enable_progress', TRUE);
+
+  $config->save();
+
+  // Create the PDF thumbnails directory.
+  $file_system = \Drupal::service('file_system');
+  $directory = 'public://pdf_thumbnails';
+  $file_system->prepareDirectory($directory, \Drupal\Core\File\FileSystemInterface::CREATE_DIRECTORY);
+
+  // Create the PDF documents directory.
+  $directory = 'public://pdf_documents';
+  $file_system->prepareDirectory($directory, \Drupal\Core\File\FileSystemInterface::CREATE_DIRECTORY);
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function pdf_embed_seo_uninstall() {
+  // Delete configuration.
+  \Drupal::configFactory()->getEditable('pdf_embed_seo.settings')->delete();
+
+  // Delete all PDF document entities.
+  $storage = \Drupal::entityTypeManager()->getStorage('pdf_document');
+  $entities = $storage->loadMultiple();
+  $storage->delete($entities);
+
+  // Note: The analytics table is dropped automatically due to hook_schema().
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function pdf_embed_seo_requirements($phase) {
+  $requirements = [];
+
+  if ($phase === 'runtime') {
+    // Check for ImageMagick or Ghostscript for thumbnail generation.
+    $has_imagemagick = FALSE;
+    $has_ghostscript = FALSE;
+
+    exec('which convert 2>/dev/null', $output, $return_var);
+    $has_imagemagick = ($return_var === 0);
+
+    exec('which gs 2>/dev/null', $output, $return_var);
+    $has_ghostscript = ($return_var === 0);
+
+    if ($has_imagemagick || $has_ghostscript) {
+      $requirements['pdf_embed_seo_thumbnail'] = [
+        'title' => t('PDF Thumbnail Generation'),
+        'value' => $has_imagemagick ? t('ImageMagick available') : t('Ghostscript available'),
+        'severity' => REQUIREMENT_OK,
+      ];
+    }
+    else {
+      $requirements['pdf_embed_seo_thumbnail'] = [
+        'title' => t('PDF Thumbnail Generation'),
+        'value' => t('Neither ImageMagick nor Ghostscript found'),
+        'description' => t('Install ImageMagick or Ghostscript to enable automatic PDF thumbnail generation.'),
+        'severity' => REQUIREMENT_WARNING,
+      ];
+    }
+  }
+
+  return $requirements;
+}

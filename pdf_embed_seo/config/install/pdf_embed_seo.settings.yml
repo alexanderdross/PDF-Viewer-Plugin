@@ -1,0 +1,20 @@
+# Default settings for PDF Embed & SEO Optimize.
+
+default_allow_download: false
+default_allow_print: false
+auto_generate_thumbnails: true
+thumbnail_width: 300
+thumbnail_height: 400
+archive_posts_per_page: 12
+archive_display: 'grid'
+viewer_theme: 'light'
+viewer_height: '800px'
+enable_schema: true
+archive_title: 'PDF Documents'
+archive_description: ''
+
+# Premium settings.
+enable_analytics: true
+enable_search: true
+enable_bookmarks: true
+enable_progress: true
