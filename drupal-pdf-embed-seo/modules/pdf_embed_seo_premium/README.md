@@ -1,12 +1,15 @@
 # PDF Embed & SEO Optimize Premium for Drupal
 
+<p align="center">
+  <img src="https://pdfviewer.drossmedia.de/wp-content/uploads/2025/03/wp-pdf-embed-and-seo-optimized.png" alt="PDF Embed & SEO Optimize Premium" width="100">
+</p>
+
 Premium features submodule for PDF Embed & SEO Optimize.
 
 **Current Version:** 1.2.1
 **Platforms:** Drupal 10, Drupal 11
 **License:** GPL v2 or later
-
-Purchase at: **https://pdfviewer.drossmedia.de**
+**Purchase:** [pdfviewer.drossmedia.de](https://pdfviewer.drossmedia.de)
 
 ---
 

@@ -1,5 +1,22 @@
 # PDF Embed & SEO Optimize
 
+<p align="center">
+  <img src="https://pdfviewer.drossmedia.de/wp-content/uploads/2025/03/wp-pdf-embed-and-seo-optimized.png" alt="PDF Embed & SEO Optimize" width="128">
+</p>
+
+<p align="center">
+  <strong>A powerful PDF management solution for WordPress and Drupal</strong><br>
+  Display PDFs with Mozilla's PDF.js viewer, SEO optimization, and full control over print/download permissions.
+</p>
+
+<p align="center">
+  <a href="https://pdfviewer.drossmedia.de">Website</a> •
+  <a href="https://pdfviewer.drossmedia.de/documentation/">Documentation</a> •
+  <a href="https://pdfviewer.drossmedia.de/pro/">Get Premium</a>
+</p>
+
+---
+
 A powerful WordPress plugin that integrates Mozilla's PDF.js viewer to serve PDFs through a viewer URL, enhancing SEO with Schema Data, Open Graph Tags, Twitter Cards, and other Meta Tags.
 
 ## Features

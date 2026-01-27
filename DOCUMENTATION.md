@@ -1,6 +1,12 @@
 # PDF Embed & SEO Optimize - Documentation
 
+<p align="center">
+  <img src="https://pdfviewer.drossmedia.de/wp-content/uploads/2025/03/wp-pdf-embed-and-seo-optimized.png" alt="PDF Embed & SEO Optimize" width="100">
+</p>
+
 Complete guide for installing, configuring, and using the PDF Embed & SEO Optimize plugin.
+
+**Website:** [pdfviewer.drossmedia.de](https://pdfviewer.drossmedia.de) | **Version:** 1.2.1
 
 ---
 

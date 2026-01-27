@@ -1,5 +1,9 @@
 # Changelog - PDF Embed & SEO Optimize
 
+<p align="center">
+  <img src="https://pdfviewer.drossmedia.de/wp-content/uploads/2025/03/wp-pdf-embed-and-seo-optimized.png" alt="PDF Embed & SEO Optimize" width="80">
+</p>
+
 All notable changes to this project will be documented in this file.
 
 ---
