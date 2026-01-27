@@ -2,7 +2,7 @@
 
 A comprehensive PDF management solution available for WordPress and Drupal that uses Mozilla's PDF.js library to securely display PDFs with SEO optimization.
 
-**Current Version:** 1.2.0
+**Current Version:** 1.2.1
 **Platforms:** WordPress (Free & Premium), Drupal 10/11
 **License:** GPL v2 or later
 
@@ -14,10 +14,10 @@ This project provides four modules:
 
 | Module | Directory | Platform | Features |
 |--------|-----------|----------|----------|
-| WordPress Free | `pdf-embed-seo-optimize/` | WordPress 5.8+ | Core PDF viewer, SEO, REST API |
-| WordPress Premium | `pdf-embed-seo-optimize/premium/` | WordPress 5.8+ | Analytics, passwords, progress tracking |
+| WP Free | `pdf-embed-seo-optimize/` | WordPress 5.8+ | Core PDF viewer, SEO, REST API |
+| WP Premium | `pdf-embed-seo-optimize/premium/` | WordPress 5.8+ | Analytics, passwords, progress, sitemap |
 | Drupal Free | `pdf_embed_seo/` | Drupal 10/11 | Core PDF viewer, SEO, REST API |
-| Drupal Premium | `pdf_embed_seo/modules/pdf_embed_seo_premium/` | Drupal 10/11 | Analytics, passwords, progress tracking |
+| Drupal Premium | `pdf_embed_seo/modules/pdf_embed_seo_premium/` | Drupal 10/11 | Analytics, passwords, progress, sitemap |
 
 ---
 
@@ -614,7 +614,11 @@ pdf_embed_seo/modules/pdf_embed_seo_premium/
 
 ## Changelog
 
-### 1.2.0 (Current)
+### 1.2.1 (Current)
+- Version bump for release
+- Documentation improvements
+
+### 1.2.0
 - Added REST API endpoints for all platforms
 - Added reading progress tracking (Premium)
 - Added password verification endpoint (Premium)

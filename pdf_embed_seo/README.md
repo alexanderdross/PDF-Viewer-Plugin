@@ -2,7 +2,7 @@
 
 A powerful Drupal module that integrates Mozilla's PDF.js viewer to display PDFs with clean URLs, SEO optimization, and access controls.
 
-**Current Version:** 1.2.0
+**Current Version:** 1.2.1
 **Platforms:** Drupal 10, Drupal 11
 **License:** GPL v2 or later
 
@@ -327,6 +327,10 @@ The PDF viewer triggers these JavaScript events:
 ---
 
 ## Changelog
+
+### 1.2.1
+- Version bump for release
+- Documentation improvements
 
 ### 1.2.0
 - Added REST API endpoints for external integrations

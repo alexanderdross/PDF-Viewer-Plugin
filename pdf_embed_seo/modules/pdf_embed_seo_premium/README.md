@@ -2,7 +2,7 @@
 
 Premium features submodule for PDF Embed & SEO Optimize.
 
-**Current Version:** 1.2.0
+**Current Version:** 1.2.1
 **Platforms:** Drupal 10, Drupal 11
 **License:** GPL v2 or later
 
@@ -404,6 +404,10 @@ Override these templates in your theme:
 ---
 
 ## Changelog
+
+### 1.2.1
+- Version bump for release
+- Documentation improvements
 
 ### 1.2.0
 - Initial premium submodule release
