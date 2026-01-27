@@ -27,6 +27,27 @@ pdf_embed_seo_premium.analytics_export:
     _permission: 'export pdf analytics'
 
 # ==========================================
+# XML Sitemap (Premium)
+# ==========================================
+
+# PDF XML Sitemap.
+pdf_embed_seo_premium.sitemap:
+  path: '/pdf/sitemap.xml'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfSitemapController::sitemap'
+    _title: 'PDF Sitemap'
+  requirements:
+    _access: 'TRUE'
+
+# Sitemap XSL stylesheet.
+pdf_embed_seo_premium.sitemap_style:
+  path: '/pdf/sitemap-style.xsl'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfSitemapController::sitemapStyle'
+  requirements:
+    _access: 'TRUE'
+
+# ==========================================
 # Premium REST API Endpoints
 # ==========================================
 

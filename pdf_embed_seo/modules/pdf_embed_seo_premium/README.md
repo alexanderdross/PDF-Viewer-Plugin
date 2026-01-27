@@ -36,6 +36,14 @@ Premium features submodule for PDF Embed & SEO Optimize.
 - Works for both authenticated and anonymous users
 - Database-based storage for persistence
 
+### XML Sitemap
+- Dedicated PDF sitemap at `/pdf/sitemap.xml`
+- Schema.org compliant XML format
+- Beautiful XSL-styled browser view
+- Includes all published PDF documents
+- Auto-updates when documents change
+- PDF-specific metadata (title, description, thumbnail)
+
 ### Premium REST API Endpoints
 
 | Method | Endpoint | Description |
@@ -87,6 +95,7 @@ Stores reading progress data for users and sessions.
 - Analytics dashboard with CSV export
 - Password protection
 - Reading progress tracking
+- XML Sitemap at /pdf/sitemap.xml
 - Premium REST API endpoints
 
 ## License

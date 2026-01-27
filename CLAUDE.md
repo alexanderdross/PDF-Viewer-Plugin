@@ -428,6 +428,7 @@ pdf_embed_seo/modules/pdf_embed_seo_premium/
 |------|-----------|--------|
 | Archive | `/pdf/` | `/pdf` |
 | Single PDF | `/pdf/{slug}/` | `/pdf/{slug}` |
+| XML Sitemap (Premium) | `/pdf/sitemap.xml` | `/pdf/sitemap.xml` |
 | Admin List | `/wp-admin/edit.php?post_type=pdf_document` | `/admin/content/pdf-documents` |
 | Settings | `/wp-admin/edit.php?post_type=pdf_document&page=pdf-embed-seo-settings` | `/admin/config/content/pdf-embed-seo` |
 | Analytics | `/wp-admin/edit.php?post_type=pdf_document&page=pdf-analytics` | `/admin/reports/pdf-analytics` |
