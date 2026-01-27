@@ -60,7 +60,7 @@ class PDF_Embed_SEO_REST_API {
 				'permission_callback' => array( $this, 'get_document_permissions_check' ),
 				'args'                => array(
 					'id' => array(
-						'description'       => __( 'Unique identifier for the PDF document.', 'pdf-embed-seo-optimize' ),
+						'description'       => __( 'Unique identifier for the PDF document.', 'wp-pdf-embed-seo-optimize' ),
 						'type'              => 'integer',
 						'required'          => true,
 						'sanitize_callback' => 'absint',
@@ -79,7 +79,7 @@ class PDF_Embed_SEO_REST_API {
 				'permission_callback' => array( $this, 'get_document_permissions_check' ),
 				'args'                => array(
 					'id' => array(
-						'description'       => __( 'Unique identifier for the PDF document.', 'pdf-embed-seo-optimize' ),
+						'description'       => __( 'Unique identifier for the PDF document.', 'wp-pdf-embed-seo-optimize' ),
 						'type'              => 'integer',
 						'required'          => true,
 						'sanitize_callback' => 'absint',
@@ -98,7 +98,7 @@ class PDF_Embed_SEO_REST_API {
 				'permission_callback' => '__return_true',
 				'args'                => array(
 					'id' => array(
-						'description'       => __( 'Unique identifier for the PDF document.', 'pdf-embed-seo-optimize' ),
+						'description'       => __( 'Unique identifier for the PDF document.', 'wp-pdf-embed-seo-optimize' ),
 						'type'              => 'integer',
 						'required'          => true,
 						'sanitize_callback' => 'absint',
@@ -127,14 +127,14 @@ class PDF_Embed_SEO_REST_API {
 	public function get_collection_params() {
 		return array(
 			'page'     => array(
-				'description'       => __( 'Current page of the collection.', 'pdf-embed-seo-optimize' ),
+				'description'       => __( 'Current page of the collection.', 'wp-pdf-embed-seo-optimize' ),
 				'type'              => 'integer',
 				'default'           => 1,
 				'minimum'           => 1,
 				'sanitize_callback' => 'absint',
 			),
 			'per_page' => array(
-				'description'       => __( 'Maximum number of items per page.', 'pdf-embed-seo-optimize' ),
+				'description'       => __( 'Maximum number of items per page.', 'wp-pdf-embed-seo-optimize' ),
 				'type'              => 'integer',
 				'default'           => 10,
 				'minimum'           => 1,
@@ -142,19 +142,19 @@ class PDF_Embed_SEO_REST_API {
 				'sanitize_callback' => 'absint',
 			),
 			'search'   => array(
-				'description'       => __( 'Search term to filter documents.', 'pdf-embed-seo-optimize' ),
+				'description'       => __( 'Search term to filter documents.', 'wp-pdf-embed-seo-optimize' ),
 				'type'              => 'string',
 				'sanitize_callback' => 'sanitize_text_field',
 			),
 			'orderby'  => array(
-				'description'       => __( 'Sort collection by attribute.', 'pdf-embed-seo-optimize' ),
+				'description'       => __( 'Sort collection by attribute.', 'wp-pdf-embed-seo-optimize' ),
 				'type'              => 'string',
 				'default'           => 'date',
 				'enum'              => array( 'date', 'title', 'modified', 'views' ),
 				'sanitize_callback' => 'sanitize_text_field',
 			),
 			'order'    => array(
-				'description'       => __( 'Order sort attribute ascending or descending.', 'pdf-embed-seo-optimize' ),
+				'description'       => __( 'Order sort attribute ascending or descending.', 'wp-pdf-embed-seo-optimize' ),
 				'type'              => 'string',
 				'default'           => 'desc',
 				'enum'              => array( 'asc', 'desc' ),
@@ -186,7 +186,7 @@ class PDF_Embed_SEO_REST_API {
 		if ( ! $post || 'pdf_document' !== $post->post_type ) {
 			return new WP_Error(
 				'rest_post_invalid_id',
-				__( 'Invalid PDF document ID.', 'pdf-embed-seo-optimize' ),
+				__( 'Invalid PDF document ID.', 'wp-pdf-embed-seo-optimize' ),
 				array( 'status' => 404 )
 			);
 		}
@@ -195,7 +195,7 @@ class PDF_Embed_SEO_REST_API {
 		if ( 'publish' !== $post->post_status && ! current_user_can( 'edit_post', $post->ID ) ) {
 			return new WP_Error(
 				'rest_forbidden',
-				__( 'You do not have permission to view this PDF document.', 'pdf-embed-seo-optimize' ),
+				__( 'You do not have permission to view this PDF document.', 'wp-pdf-embed-seo-optimize' ),
 				array( 'status' => 403 )
 			);
 		}
@@ -264,7 +264,7 @@ class PDF_Embed_SEO_REST_API {
 		if ( ! $post || 'pdf_document' !== $post->post_type ) {
 			return new WP_Error(
 				'rest_post_invalid_id',
-				__( 'Invalid PDF document ID.', 'pdf-embed-seo-optimize' ),
+				__( 'Invalid PDF document ID.', 'wp-pdf-embed-seo-optimize' ),
 				array( 'status' => 404 )
 			);
 		}
@@ -285,7 +285,7 @@ class PDF_Embed_SEO_REST_API {
 		if ( ! $post || 'pdf_document' !== $post->post_type ) {
 			return new WP_Error(
 				'rest_post_invalid_id',
-				__( 'Invalid PDF document ID.', 'pdf-embed-seo-optimize' ),
+				__( 'Invalid PDF document ID.', 'wp-pdf-embed-seo-optimize' ),
 				array( 'status' => 404 )
 			);
 		}
@@ -295,7 +295,7 @@ class PDF_Embed_SEO_REST_API {
 		if ( ! $pdf_file_id ) {
 			return new WP_Error(
 				'rest_no_pdf_file',
-				__( 'No PDF file attached to this document.', 'pdf-embed-seo-optimize' ),
+				__( 'No PDF file attached to this document.', 'wp-pdf-embed-seo-optimize' ),
 				array( 'status' => 404 )
 			);
 		}
@@ -305,7 +305,7 @@ class PDF_Embed_SEO_REST_API {
 		if ( ! $pdf_url ) {
 			return new WP_Error(
 				'rest_pdf_not_found',
-				__( 'PDF file not found.', 'pdf-embed-seo-optimize' ),
+				__( 'PDF file not found.', 'wp-pdf-embed-seo-optimize' ),
 				array( 'status' => 404 )
 			);
 		}
@@ -348,7 +348,7 @@ class PDF_Embed_SEO_REST_API {
 		if ( ! $post || 'pdf_document' !== $post->post_type ) {
 			return new WP_Error(
 				'rest_post_invalid_id',
-				__( 'Invalid PDF document ID.', 'pdf-embed-seo-optimize' ),
+				__( 'Invalid PDF document ID.', 'wp-pdf-embed-seo-optimize' ),
 				array( 'status' => 404 )
 			);
 		}

@@ -60,7 +60,7 @@ class PDF_Embed_SEO_Premium_Roles {
 	public function add_meta_box() {
 		add_meta_box(
 			'pdf_role_settings',
-			__( 'Access Restrictions', 'pdf-embed-seo-optimize' ),
+			__( 'Access Restrictions', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_meta_box' ),
 			'pdf_document',
 			'side',
@@ -90,19 +90,19 @@ class PDF_Embed_SEO_Premium_Roles {
 		<p>
 			<label>
 				<input type="checkbox" name="pdf_require_login" value="1" <?php checked( $require_login, '1' ); ?> />
-				<?php esc_html_e( 'Require login to view', 'pdf-embed-seo-optimize' ); ?>
+				<?php esc_html_e( 'Require login to view', 'wp-pdf-embed-seo-optimize' ); ?>
 			</label>
 		</p>
 
 		<p>
 			<label>
 				<input type="checkbox" name="pdf_role_restriction_enabled" value="1" <?php checked( $enabled, '1' ); ?> class="pdf-role-restriction-toggle" />
-				<?php esc_html_e( 'Restrict to specific roles', 'pdf-embed-seo-optimize' ); ?>
+				<?php esc_html_e( 'Restrict to specific roles', 'wp-pdf-embed-seo-optimize' ); ?>
 			</label>
 		</p>
 
 		<div class="pdf-role-selection" style="<?php echo $enabled ? '' : 'display:none;'; ?>">
-			<p><strong><?php esc_html_e( 'Allowed Roles:', 'pdf-embed-seo-optimize' ); ?></strong></p>
+			<p><strong><?php esc_html_e( 'Allowed Roles:', 'wp-pdf-embed-seo-optimize' ); ?></strong></p>
 			<?php foreach ( $all_roles as $role_key => $role_name ) : ?>
 				<p>
 					<label>
@@ -282,12 +282,12 @@ class PDF_Embed_SEO_Premium_Roles {
 		ob_start();
 		?>
 		<div class="pdf-access-denied">
-			<h3><?php esc_html_e( 'Access Restricted', 'pdf-embed-seo-optimize' ); ?></h3>
+			<h3><?php esc_html_e( 'Access Restricted', 'wp-pdf-embed-seo-optimize' ); ?></h3>
 			<?php if ( $require_login && ! is_user_logged_in() ) : ?>
-				<p><?php esc_html_e( 'You must be logged in to view this document.', 'pdf-embed-seo-optimize' ); ?></p>
-				<p><a href="<?php echo esc_url( wp_login_url( get_permalink( $post_id ) ) ); ?>" class="button"><?php esc_html_e( 'Log In', 'pdf-embed-seo-optimize' ); ?></a></p>
+				<p><?php esc_html_e( 'You must be logged in to view this document.', 'wp-pdf-embed-seo-optimize' ); ?></p>
+				<p><a href="<?php echo esc_url( wp_login_url( get_permalink( $post_id ) ) ); ?>" class="button"><?php esc_html_e( 'Log In', 'wp-pdf-embed-seo-optimize' ); ?></a></p>
 			<?php elseif ( $has_restrictions ) : ?>
-				<p><?php esc_html_e( 'You do not have permission to view this document.', 'pdf-embed-seo-optimize' ); ?></p>
+				<p><?php esc_html_e( 'You do not have permission to view this document.', 'wp-pdf-embed-seo-optimize' ); ?></p>
 			<?php endif; ?>
 		</div>
 		<?php

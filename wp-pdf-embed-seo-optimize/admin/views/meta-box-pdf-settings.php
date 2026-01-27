@@ -20,11 +20,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 				value="1"
 				<?php checked( $allow_download, true ); ?>
 			>
-			<?php esc_html_e( 'Allow Download', 'pdf-embed-seo-optimize' ); ?>
+			<?php esc_html_e( 'Allow Download', 'wp-pdf-embed-seo-optimize' ); ?>
 		</label>
 	</p>
 	<p class="description">
-		<?php esc_html_e( 'Allow users to download the PDF file.', 'pdf-embed-seo-optimize' ); ?>
+		<?php esc_html_e( 'Allow users to download the PDF file.', 'wp-pdf-embed-seo-optimize' ); ?>
 	</p>
 
 	<p>
@@ -35,10 +35,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 				value="1"
 				<?php checked( $allow_print, true ); ?>
 			>
-			<?php esc_html_e( 'Allow Print', 'pdf-embed-seo-optimize' ); ?>
+			<?php esc_html_e( 'Allow Print', 'wp-pdf-embed-seo-optimize' ); ?>
 		</label>
 	</p>
 	<p class="description">
-		<?php esc_html_e( 'Allow users to print the PDF document.', 'pdf-embed-seo-optimize' ); ?>
+		<?php esc_html_e( 'Allow users to print the PDF document.', 'wp-pdf-embed-seo-optimize' ); ?>
 	</p>
 </div>

@@ -90,16 +90,16 @@ class PDF_Embed_SEO_Block {
 				'pdfs'   => $this->get_pdf_options(),
 				'nonce'  => wp_create_nonce( 'pdf_embed_seo_block' ),
 				'i18n'   => array(
-					'blockTitle'       => __( 'PDF Viewer', 'pdf-embed-seo-optimize' ),
-					'blockDescription' => __( 'Embed a PDF document from your library.', 'pdf-embed-seo-optimize' ),
-					'selectPdf'        => __( 'Select a PDF Document', 'pdf-embed-seo-optimize' ),
-					'noPdfSelected'    => __( 'No PDF selected. Choose a PDF document from the dropdown.', 'pdf-embed-seo-optimize' ),
-					'noPdfsAvailable'  => __( 'No PDF documents available. Create one first.', 'pdf-embed-seo-optimize' ),
-					'width'            => __( 'Width', 'pdf-embed-seo-optimize' ),
-					'height'           => __( 'Height', 'pdf-embed-seo-optimize' ),
-					'dimensions'       => __( 'Dimensions', 'pdf-embed-seo-optimize' ),
-					'preview'          => __( 'Preview', 'pdf-embed-seo-optimize' ),
-					'viewPdf'          => __( 'View PDF', 'pdf-embed-seo-optimize' ),
+					'blockTitle'       => __( 'PDF Viewer', 'wp-pdf-embed-seo-optimize' ),
+					'blockDescription' => __( 'Embed a PDF document from your library.', 'wp-pdf-embed-seo-optimize' ),
+					'selectPdf'        => __( 'Select a PDF Document', 'wp-pdf-embed-seo-optimize' ),
+					'noPdfSelected'    => __( 'No PDF selected. Choose a PDF document from the dropdown.', 'wp-pdf-embed-seo-optimize' ),
+					'noPdfsAvailable'  => __( 'No PDF documents available. Create one first.', 'wp-pdf-embed-seo-optimize' ),
+					'width'            => __( 'Width', 'wp-pdf-embed-seo-optimize' ),
+					'height'           => __( 'Height', 'wp-pdf-embed-seo-optimize' ),
+					'dimensions'       => __( 'Dimensions', 'wp-pdf-embed-seo-optimize' ),
+					'preview'          => __( 'Preview', 'wp-pdf-embed-seo-optimize' ),
+					'viewPdf'          => __( 'View PDF', 'wp-pdf-embed-seo-optimize' ),
 				),
 			)
 		);
@@ -163,7 +163,7 @@ class PDF_Embed_SEO_Block {
 		// Validate post exists and is a PDF document.
 		$post = get_post( $pdf_id );
 		if ( ! $post || 'pdf_document' !== $post->post_type || 'publish' !== $post->post_status ) {
-			return '<p class="pdf-embed-seo-error">' . esc_html__( 'PDF document not found.', 'pdf-embed-seo-optimize' ) . '</p>';
+			return '<p class="pdf-embed-seo-error">' . esc_html__( 'PDF document not found.', 'wp-pdf-embed-seo-optimize' ) . '</p>';
 		}
 
 		// Use the shortcode to render the PDF viewer.

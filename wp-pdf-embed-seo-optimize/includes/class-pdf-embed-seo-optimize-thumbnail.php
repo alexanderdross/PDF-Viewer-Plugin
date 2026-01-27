@@ -54,7 +54,7 @@ class PDF_Embed_SEO_Thumbnail {
 				if ( ! empty( $formats ) ) {
 					$result['available'] = true;
 					$result['method']    = 'imagick';
-					$result['message']   = __( 'ImageMagick with PDF support available.', 'pdf-embed-seo-optimize' );
+					$result['message']   = __( 'ImageMagick with PDF support available.', 'wp-pdf-embed-seo-optimize' );
 					return $result;
 				}
 			} catch ( Exception $e ) {
@@ -75,14 +75,14 @@ class PDF_Embed_SEO_Thumbnail {
 				$result['gs_path']   = $gs_path;
 				$result['message']   = sprintf(
 					/* translators: %s: Ghostscript version */
-					__( 'Ghostscript %s available.', 'pdf-embed-seo-optimize' ),
+					__( 'Ghostscript %s available.', 'wp-pdf-embed-seo-optimize' ),
 					$output[0]
 				);
 				return $result;
 			}
 		}
 
-		$result['message'] = __( 'Neither ImageMagick with PDF support nor Ghostscript is available. Thumbnails must be uploaded manually.', 'pdf-embed-seo-optimize' );
+		$result['message'] = __( 'Neither ImageMagick with PDF support nor Ghostscript is available. Thumbnails must be uploaded manually.', 'wp-pdf-embed-seo-optimize' );
 		return $result;
 	}
 
@@ -130,7 +130,7 @@ class PDF_Embed_SEO_Thumbnail {
 
 		$pdf_path = get_attached_file( $pdf_file_id );
 		if ( ! $pdf_path || ! file_exists( $pdf_path ) ) {
-			return new WP_Error( 'file_not_found', __( 'PDF file not found.', 'pdf-embed-seo-optimize' ) );
+			return new WP_Error( 'file_not_found', __( 'PDF file not found.', 'wp-pdf-embed-seo-optimize' ) );
 		}
 
 		// Create temp directory for thumbnail.
@@ -161,7 +161,7 @@ class PDF_Embed_SEO_Thumbnail {
 
 		// Verify thumbnail was created.
 		if ( ! file_exists( $temp_path ) ) {
-			return new WP_Error( 'generation_failed', __( 'Failed to generate thumbnail.', 'pdf-embed-seo-optimize' ) );
+			return new WP_Error( 'generation_failed', __( 'Failed to generate thumbnail.', 'wp-pdf-embed-seo-optimize' ) );
 		}
 
 		// Import thumbnail into WordPress media library.
@@ -249,7 +249,7 @@ class PDF_Embed_SEO_Thumbnail {
 				'ghostscript_error',
 				sprintf(
 					/* translators: %s: Error message */
-					__( 'Ghostscript error: %s', 'pdf-embed-seo-optimize' ),
+					__( 'Ghostscript error: %s', 'wp-pdf-embed-seo-optimize' ),
 					implode( "\n", $output )
 				)
 			);
@@ -282,7 +282,7 @@ class PDF_Embed_SEO_Thumbnail {
 		// Copy file to uploads directory.
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_copy
 		if ( ! copy( $file_path, $dest_path ) ) {
-			return new WP_Error( 'copy_failed', __( 'Failed to copy thumbnail to uploads directory.', 'pdf-embed-seo-optimize' ) );
+			return new WP_Error( 'copy_failed', __( 'Failed to copy thumbnail to uploads directory.', 'wp-pdf-embed-seo-optimize' ) );
 		}
 
 		// Get file type.
@@ -294,7 +294,7 @@ class PDF_Embed_SEO_Thumbnail {
 			'post_mime_type' => $filetype['type'],
 			'post_title'     => sprintf(
 				/* translators: %s: PDF document title */
-				__( '%s - Thumbnail', 'pdf-embed-seo-optimize' ),
+				__( '%s - Thumbnail', 'wp-pdf-embed-seo-optimize' ),
 				$post_title
 			),
 			'post_content'   => '',
@@ -327,13 +327,13 @@ class PDF_Embed_SEO_Thumbnail {
 		// Check permissions.
 		$post_id = isset( $_POST['post_id'] ) ? absint( $_POST['post_id'] ) : 0;
 		if ( ! $post_id || ! current_user_can( 'edit_post', $post_id ) ) {
-			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'pdf-embed-seo-optimize' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'wp-pdf-embed-seo-optimize' ) ) );
 		}
 
 		// Get PDF file ID.
 		$pdf_file_id = get_post_meta( $post_id, '_pdf_file_id', true );
 		if ( ! $pdf_file_id ) {
-			wp_send_json_error( array( 'message' => __( 'No PDF file attached.', 'pdf-embed-seo-optimize' ) ) );
+			wp_send_json_error( array( 'message' => __( 'No PDF file attached.', 'wp-pdf-embed-seo-optimize' ) ) );
 		}
 
 		// Generate thumbnail.
@@ -348,7 +348,7 @@ class PDF_Embed_SEO_Thumbnail {
 
 		wp_send_json_success(
 			array(
-				'message'       => __( 'Thumbnail generated successfully!', 'pdf-embed-seo-optimize' ),
+				'message'       => __( 'Thumbnail generated successfully!', 'wp-pdf-embed-seo-optimize' ),
 				'attachment_id' => $result,
 				'thumbnail_url' => $thumbnail_url,
 			)
@@ -385,13 +385,13 @@ class PDF_Embed_SEO_Thumbnail {
 
 			if (availability.available) {
 				buttonHtml += '<button type="button" class="button pdf-generate-thumbnail-btn">';
-				buttonHtml += '<?php echo esc_js( __( 'Generate from PDF', 'pdf-embed-seo-optimize' ) ); ?>';
+				buttonHtml += '<?php echo esc_js( __( 'Generate from PDF', 'wp-pdf-embed-seo-optimize' ) ); ?>';
 				buttonHtml += '</button>';
 				buttonHtml += '<span class="spinner" style="float: none; margin-top: 0;"></span>';
 				buttonHtml += '<span class="pdf-thumbnail-status" style="display: block; margin-top: 5px; font-style: italic; color: #666;"></span>';
 			} else {
 				buttonHtml += '<em style="color: #999; font-size: 12px;">';
-				buttonHtml += '<?php echo esc_js( __( 'Auto-generation unavailable. Upload thumbnail manually.', 'pdf-embed-seo-optimize' ) ); ?>';
+				buttonHtml += '<?php echo esc_js( __( 'Auto-generation unavailable. Upload thumbnail manually.', 'wp-pdf-embed-seo-optimize' ) ); ?>';
 				buttonHtml += '</em>';
 			}
 
@@ -410,13 +410,13 @@ class PDF_Embed_SEO_Thumbnail {
 				// Check if PDF is selected.
 				var pdfFileId = $('#pdf_file_id').val();
 				if (!pdfFileId || pdfFileId === '0') {
-					$status.text('<?php echo esc_js( __( 'Please select a PDF file first.', 'pdf-embed-seo-optimize' ) ); ?>').css('color', '#d63638');
+					$status.text('<?php echo esc_js( __( 'Please select a PDF file first.', 'wp-pdf-embed-seo-optimize' ) ); ?>').css('color', '#d63638');
 					return;
 				}
 
 				$button.prop('disabled', true);
 				$spinner.addClass('is-active');
-				$status.text('<?php echo esc_js( __( 'Generating thumbnail...', 'pdf-embed-seo-optimize' ) ); ?>').css('color', '#666');
+				$status.text('<?php echo esc_js( __( 'Generating thumbnail...', 'wp-pdf-embed-seo-optimize' ) ); ?>').css('color', '#666');
 
 				$.ajax({
 					url: ajaxurl,
@@ -442,7 +442,7 @@ class PDF_Embed_SEO_Thumbnail {
 					error: function() {
 						$button.prop('disabled', false);
 						$spinner.removeClass('is-active');
-						$status.text('<?php echo esc_js( __( 'An error occurred. Please try again.', 'pdf-embed-seo-optimize' ) ); ?>').css('color', '#d63638');
+						$status.text('<?php echo esc_js( __( 'An error occurred. Please try again.', 'wp-pdf-embed-seo-optimize' ) ); ?>').css('color', '#d63638');
 					}
 				});
 			});

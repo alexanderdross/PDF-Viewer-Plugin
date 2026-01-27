@@ -68,7 +68,7 @@ get_header();
 							<?php
 							printf(
 								/* translators: %s: Published date */
-								esc_html__( 'Published: %s', 'pdf-embed-seo-optimize' ),
+								esc_html__( 'Published: %s', 'wp-pdf-embed-seo-optimize' ),
 								esc_html( $published_date )
 							);
 							?>
@@ -79,7 +79,7 @@ get_header();
 								<?php
 								printf(
 									/* translators: %s: Modified date */
-									esc_html__( 'Updated: %s', 'pdf-embed-seo-optimize' ),
+									esc_html__( 'Updated: %s', 'wp-pdf-embed-seo-optimize' ),
 									esc_html( $modified_date )
 								);
 								?>

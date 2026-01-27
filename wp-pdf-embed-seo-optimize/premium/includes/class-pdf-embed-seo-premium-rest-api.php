@@ -53,7 +53,7 @@ class PDF_Embed_SEO_Premium_REST_API {
 				'permission_callback' => array( $this, 'analytics_permissions_check' ),
 				'args'                => array(
 					'period' => array(
-						'description'       => __( 'Time period for analytics.', 'pdf-embed-seo-optimize' ),
+						'description'       => __( 'Time period for analytics.', 'wp-pdf-embed-seo-optimize' ),
 						'type'              => 'string',
 						'default'           => '30days',
 						'enum'              => array( '7days', '30days', '90days', '12months', 'all' ),
@@ -73,21 +73,21 @@ class PDF_Embed_SEO_Premium_REST_API {
 				'permission_callback' => array( $this, 'analytics_permissions_check' ),
 				'args'                => array(
 					'period'   => array(
-						'description'       => __( 'Time period for analytics.', 'pdf-embed-seo-optimize' ),
+						'description'       => __( 'Time period for analytics.', 'wp-pdf-embed-seo-optimize' ),
 						'type'              => 'string',
 						'default'           => '30days',
 						'enum'              => array( '7days', '30days', '90days', '12months', 'all' ),
 						'sanitize_callback' => 'sanitize_text_field',
 					),
 					'orderby'  => array(
-						'description'       => __( 'Sort by field.', 'pdf-embed-seo-optimize' ),
+						'description'       => __( 'Sort by field.', 'wp-pdf-embed-seo-optimize' ),
 						'type'              => 'string',
 						'default'           => 'views',
 						'enum'              => array( 'views', 'downloads', 'avg_time' ),
 						'sanitize_callback' => 'sanitize_text_field',
 					),
 					'limit'    => array(
-						'description'       => __( 'Number of documents to return.', 'pdf-embed-seo-optimize' ),
+						'description'       => __( 'Number of documents to return.', 'wp-pdf-embed-seo-optimize' ),
 						'type'              => 'integer',
 						'default'           => 10,
 						'minimum'           => 1,
@@ -108,14 +108,14 @@ class PDF_Embed_SEO_Premium_REST_API {
 				'permission_callback' => array( $this, 'analytics_permissions_check' ),
 				'args'                => array(
 					'format' => array(
-						'description'       => __( 'Export format.', 'pdf-embed-seo-optimize' ),
+						'description'       => __( 'Export format.', 'wp-pdf-embed-seo-optimize' ),
 						'type'              => 'string',
 						'default'           => 'csv',
 						'enum'              => array( 'csv', 'json' ),
 						'sanitize_callback' => 'sanitize_text_field',
 					),
 					'period' => array(
-						'description'       => __( 'Time period for export.', 'pdf-embed-seo-optimize' ),
+						'description'       => __( 'Time period for export.', 'wp-pdf-embed-seo-optimize' ),
 						'type'              => 'string',
 						'default'           => 'all',
 						'enum'              => array( '7days', '30days', '90days', '12months', 'all' ),
@@ -139,7 +139,7 @@ class PDF_Embed_SEO_Premium_REST_API {
 				'permission_callback' => '__return_true',
 				'args'                => array(
 					'id' => array(
-						'description'       => __( 'PDF document ID.', 'pdf-embed-seo-optimize' ),
+						'description'       => __( 'PDF document ID.', 'wp-pdf-embed-seo-optimize' ),
 						'type'              => 'integer',
 						'required'          => true,
 						'sanitize_callback' => 'absint',
@@ -158,20 +158,20 @@ class PDF_Embed_SEO_Premium_REST_API {
 				'permission_callback' => '__return_true',
 				'args'                => array(
 					'id'      => array(
-						'description'       => __( 'PDF document ID.', 'pdf-embed-seo-optimize' ),
+						'description'       => __( 'PDF document ID.', 'wp-pdf-embed-seo-optimize' ),
 						'type'              => 'integer',
 						'required'          => true,
 						'sanitize_callback' => 'absint',
 					),
 					'page'    => array(
-						'description'       => __( 'Current page number.', 'pdf-embed-seo-optimize' ),
+						'description'       => __( 'Current page number.', 'wp-pdf-embed-seo-optimize' ),
 						'type'              => 'integer',
 						'required'          => true,
 						'minimum'           => 1,
 						'sanitize_callback' => 'absint',
 					),
 					'scroll'  => array(
-						'description'       => __( 'Scroll position (0-1).', 'pdf-embed-seo-optimize' ),
+						'description'       => __( 'Scroll position (0-1).', 'wp-pdf-embed-seo-optimize' ),
 						'type'              => 'number',
 						'default'           => 0,
 						'minimum'           => 0,
@@ -179,7 +179,7 @@ class PDF_Embed_SEO_Premium_REST_API {
 						'sanitize_callback' => 'floatval',
 					),
 					'zoom'    => array(
-						'description'       => __( 'Zoom level.', 'pdf-embed-seo-optimize' ),
+						'description'       => __( 'Zoom level.', 'wp-pdf-embed-seo-optimize' ),
 						'type'              => 'number',
 						'default'           => 1,
 						'minimum'           => 0.1,
@@ -204,13 +204,13 @@ class PDF_Embed_SEO_Premium_REST_API {
 				'permission_callback' => '__return_true',
 				'args'                => array(
 					'id'       => array(
-						'description'       => __( 'PDF document ID.', 'pdf-embed-seo-optimize' ),
+						'description'       => __( 'PDF document ID.', 'wp-pdf-embed-seo-optimize' ),
 						'type'              => 'integer',
 						'required'          => true,
 						'sanitize_callback' => 'absint',
 					),
 					'password' => array(
-						'description'       => __( 'Password to verify.', 'pdf-embed-seo-optimize' ),
+						'description'       => __( 'Password to verify.', 'wp-pdf-embed-seo-optimize' ),
 						'type'              => 'string',
 						'required'          => true,
 						'sanitize_callback' => 'sanitize_text_field',
@@ -233,14 +233,14 @@ class PDF_Embed_SEO_Premium_REST_API {
 				'permission_callback' => array( $this, 'admin_permissions_check' ),
 				'args'                => array(
 					'source' => array(
-						'description'       => __( 'Import source.', 'pdf-embed-seo-optimize' ),
+						'description'       => __( 'Import source.', 'wp-pdf-embed-seo-optimize' ),
 						'type'              => 'string',
 						'required'          => true,
 						'enum'              => array( 'media_library', 'folder', 'url' ),
 						'sanitize_callback' => 'sanitize_text_field',
 					),
 					'path'   => array(
-						'description'       => __( 'Path or URL for import source.', 'pdf-embed-seo-optimize' ),
+						'description'       => __( 'Path or URL for import source.', 'wp-pdf-embed-seo-optimize' ),
 						'type'              => 'string',
 						'sanitize_callback' => 'sanitize_text_field',
 					),
@@ -538,7 +538,7 @@ class PDF_Embed_SEO_Premium_REST_API {
 		if ( ! $post || 'pdf_document' !== $post->post_type ) {
 			return new WP_Error(
 				'invalid_document',
-				__( 'Invalid PDF document.', 'pdf-embed-seo-optimize' ),
+				__( 'Invalid PDF document.', 'wp-pdf-embed-seo-optimize' ),
 				array( 'status' => 404 )
 			);
 		}
@@ -552,7 +552,7 @@ class PDF_Embed_SEO_Premium_REST_API {
 				array(
 					'success'   => true,
 					'protected' => false,
-					'message'   => __( 'This document is not password protected.', 'pdf-embed-seo-optimize' ),
+					'message'   => __( 'This document is not password protected.', 'wp-pdf-embed-seo-optimize' ),
 				)
 			);
 		}
@@ -587,7 +587,7 @@ class PDF_Embed_SEO_Premium_REST_API {
 
 		return new WP_Error(
 			'invalid_password',
-			__( 'Incorrect password.', 'pdf-embed-seo-optimize' ),
+			__( 'Incorrect password.', 'wp-pdf-embed-seo-optimize' ),
 			array( 'status' => 403 )
 		);
 	}
@@ -628,7 +628,7 @@ class PDF_Embed_SEO_Premium_REST_API {
 				'success'   => true,
 				'import_id' => $import_id,
 				'status'    => 'pending',
-				'message'   => __( 'Import started. Check status endpoint for progress.', 'pdf-embed-seo-optimize' ),
+				'message'   => __( 'Import started. Check status endpoint for progress.', 'wp-pdf-embed-seo-optimize' ),
 			)
 		);
 	}
@@ -647,7 +647,7 @@ class PDF_Embed_SEO_Premium_REST_API {
 			return rest_ensure_response(
 				array(
 					'status'  => 'none',
-					'message' => __( 'No recent imports found.', 'pdf-embed-seo-optimize' ),
+					'message' => __( 'No recent imports found.', 'wp-pdf-embed-seo-optimize' ),
 				)
 			);
 		}
@@ -658,7 +658,7 @@ class PDF_Embed_SEO_Premium_REST_API {
 			return rest_ensure_response(
 				array(
 					'status'  => 'expired',
-					'message' => __( 'Import status has expired.', 'pdf-embed-seo-optimize' ),
+					'message' => __( 'Import status has expired.', 'wp-pdf-embed-seo-optimize' ),
 				)
 			);
 		}

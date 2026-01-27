@@ -10,7 +10,7 @@
  * Author URI:        https://dross.net/media/
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       pdf-embed-seo-optimize
+ * Text Domain:       wp-pdf-embed-seo-optimize
  * Domain Path:       /languages
  *
  * @package PDF_Embed_SEO
@@ -193,7 +193,7 @@ final class PDF_Embed_SEO {
 			$custom_links['premium'] = sprintf(
 				'<a href="%s" target="_blank" style="color: #00a32a; font-weight: bold;">%s</a>',
 				'https://pdfviewer.drossmedia.de',
-				esc_html__( 'Get Premium', 'pdf-embed-seo-optimize' )
+				esc_html__( 'Get Premium', 'wp-pdf-embed-seo-optimize' )
 			);
 		}
 
@@ -201,7 +201,7 @@ final class PDF_Embed_SEO {
 		$custom_links['settings'] = sprintf(
 			'<a href="%s">%s</a>',
 			admin_url( 'edit.php?post_type=pdf_document&page=pdf-embed-seo-settings' ),
-			esc_html__( 'Settings', 'pdf-embed-seo-optimize' )
+			esc_html__( 'Settings', 'wp-pdf-embed-seo-optimize' )
 		);
 
 		return array_merge( $custom_links, $links );
@@ -252,7 +252,7 @@ final class PDF_Embed_SEO {
 			wp_die(
 				sprintf(
 					/* translators: %s: Minimum WordPress version required. */
-					esc_html__( 'PDF Viewer 2026 requires WordPress %s or higher.', 'pdf-embed-seo-optimize' ),
+					esc_html__( 'PDF Viewer 2026 requires WordPress %s or higher.', 'wp-pdf-embed-seo-optimize' ),
 					esc_html( PDF_EMBED_SEO_MIN_WP_VERSION )
 				)
 			);
@@ -264,7 +264,7 @@ final class PDF_Embed_SEO {
 			wp_die(
 				sprintf(
 					/* translators: %s: Minimum PHP version required. */
-					esc_html__( 'PDF Viewer 2026 requires PHP %s or higher.', 'pdf-embed-seo-optimize' ),
+					esc_html__( 'PDF Viewer 2026 requires PHP %s or higher.', 'wp-pdf-embed-seo-optimize' ),
 					esc_html( PDF_EMBED_SEO_MIN_PHP_VERSION )
 				)
 			);

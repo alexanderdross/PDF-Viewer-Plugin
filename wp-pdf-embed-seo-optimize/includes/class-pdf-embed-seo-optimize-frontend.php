@@ -123,17 +123,17 @@ class PDF_Embed_SEO_Frontend {
 					'allowPrint'    => $allow_print,
 					'viewerTheme'   => $viewer_theme,
 					'strings'       => array(
-						'loading'     => __( 'Loading PDF...', 'pdf-embed-seo-optimize' ),
-						'error'       => __( 'Error loading PDF', 'pdf-embed-seo-optimize' ),
-						'page'        => __( 'Page', 'pdf-embed-seo-optimize' ),
-						'of'          => __( 'of', 'pdf-embed-seo-optimize' ),
-						'zoomIn'      => __( 'Zoom In', 'pdf-embed-seo-optimize' ),
-						'zoomOut'     => __( 'Zoom Out', 'pdf-embed-seo-optimize' ),
-						'download'    => __( 'Download', 'pdf-embed-seo-optimize' ),
-						'print'       => __( 'Print', 'pdf-embed-seo-optimize' ),
-						'prevPage'    => __( 'Previous Page', 'pdf-embed-seo-optimize' ),
-						'nextPage'    => __( 'Next Page', 'pdf-embed-seo-optimize' ),
-						'fullscreen'  => __( 'Fullscreen', 'pdf-embed-seo-optimize' ),
+						'loading'     => __( 'Loading PDF...', 'wp-pdf-embed-seo-optimize' ),
+						'error'       => __( 'Error loading PDF', 'wp-pdf-embed-seo-optimize' ),
+						'page'        => __( 'Page', 'wp-pdf-embed-seo-optimize' ),
+						'of'          => __( 'of', 'wp-pdf-embed-seo-optimize' ),
+						'zoomIn'      => __( 'Zoom In', 'wp-pdf-embed-seo-optimize' ),
+						'zoomOut'     => __( 'Zoom Out', 'wp-pdf-embed-seo-optimize' ),
+						'download'    => __( 'Download', 'wp-pdf-embed-seo-optimize' ),
+						'print'       => __( 'Print', 'wp-pdf-embed-seo-optimize' ),
+						'prevPage'    => __( 'Previous Page', 'wp-pdf-embed-seo-optimize' ),
+						'nextPage'    => __( 'Next Page', 'wp-pdf-embed-seo-optimize' ),
+						'fullscreen'  => __( 'Fullscreen', 'wp-pdf-embed-seo-optimize' ),
 					),
 				)
 			);
@@ -191,28 +191,28 @@ class PDF_Embed_SEO_Frontend {
 	public function ajax_get_pdf() {
 		// Verify nonce.
 		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'pdf_embed_seo_get_pdf' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Security check failed.', 'pdf-embed-seo-optimize' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Security check failed.', 'wp-pdf-embed-seo-optimize' ) ) );
 		}
 
 		// Get post ID.
 		$post_id = isset( $_POST['post_id'] ) ? absint( $_POST['post_id'] ) : 0;
 
 		if ( ! $post_id ) {
-			wp_send_json_error( array( 'message' => __( 'Invalid request.', 'pdf-embed-seo-optimize' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Invalid request.', 'wp-pdf-embed-seo-optimize' ) ) );
 		}
 
 		// Check if post exists and is published.
 		$post = get_post( $post_id );
 
 		if ( ! $post || 'pdf_document' !== $post->post_type || 'publish' !== $post->post_status ) {
-			wp_send_json_error( array( 'message' => __( 'PDF not found.', 'pdf-embed-seo-optimize' ) ) );
+			wp_send_json_error( array( 'message' => __( 'PDF not found.', 'wp-pdf-embed-seo-optimize' ) ) );
 		}
 
 		// Get PDF URL.
 		$pdf_url = PDF_Embed_SEO_Post_Type::get_pdf_url( $post_id );
 
 		if ( ! $pdf_url ) {
-			wp_send_json_error( array( 'message' => __( 'No PDF file attached.', 'pdf-embed-seo-optimize' ) ) );
+			wp_send_json_error( array( 'message' => __( 'No PDF file attached.', 'wp-pdf-embed-seo-optimize' ) ) );
 		}
 
 		// Get permissions.
@@ -245,43 +245,43 @@ class PDF_Embed_SEO_Frontend {
 		<div class="pdf-embed-seo-optimize-container" data-theme="<?php echo esc_attr( $viewer_theme ); ?>">
 			<div class="pdf-embed-seo-optimize-toolbar">
 				<div class="pdf-embed-seo-optimize-toolbar-left">
-					<button type="button" class="pdf-embed-seo-optimize-btn pdf-embed-seo-optimize-prev" aria-label="<?php esc_attr_e( 'Previous Page', 'pdf-embed-seo-optimize' ); ?>">
+					<button type="button" class="pdf-embed-seo-optimize-btn pdf-embed-seo-optimize-prev" aria-label="<?php esc_attr_e( 'Previous Page', 'wp-pdf-embed-seo-optimize' ); ?>">
 						<span class="dashicons dashicons-arrow-left-alt2"></span>
 					</button>
 					<span class="pdf-embed-seo-optimize-page-info">
-						<input type="number" class="pdf-embed-seo-optimize-page-input" min="1" value="1" aria-label="<?php esc_attr_e( 'Current Page', 'pdf-embed-seo-optimize' ); ?>">
+						<input type="number" class="pdf-embed-seo-optimize-page-input" min="1" value="1" aria-label="<?php esc_attr_e( 'Current Page', 'wp-pdf-embed-seo-optimize' ); ?>">
 						<span class="pdf-embed-seo-optimize-page-separator">/</span>
 						<span class="pdf-embed-seo-optimize-total-pages">0</span>
 					</span>
-					<button type="button" class="pdf-embed-seo-optimize-btn pdf-embed-seo-optimize-next" aria-label="<?php esc_attr_e( 'Next Page', 'pdf-embed-seo-optimize' ); ?>">
+					<button type="button" class="pdf-embed-seo-optimize-btn pdf-embed-seo-optimize-next" aria-label="<?php esc_attr_e( 'Next Page', 'wp-pdf-embed-seo-optimize' ); ?>">
 						<span class="dashicons dashicons-arrow-right-alt2"></span>
 					</button>
 				</div>
 
 				<div class="pdf-embed-seo-optimize-toolbar-center">
-					<button type="button" class="pdf-embed-seo-optimize-btn pdf-embed-seo-optimize-zoom-out" aria-label="<?php esc_attr_e( 'Zoom Out', 'pdf-embed-seo-optimize' ); ?>">
+					<button type="button" class="pdf-embed-seo-optimize-btn pdf-embed-seo-optimize-zoom-out" aria-label="<?php esc_attr_e( 'Zoom Out', 'wp-pdf-embed-seo-optimize' ); ?>">
 						<span class="dashicons dashicons-minus"></span>
 					</button>
 					<span class="pdf-embed-seo-optimize-zoom-level">100%</span>
-					<button type="button" class="pdf-embed-seo-optimize-btn pdf-embed-seo-optimize-zoom-in" aria-label="<?php esc_attr_e( 'Zoom In', 'pdf-embed-seo-optimize' ); ?>">
+					<button type="button" class="pdf-embed-seo-optimize-btn pdf-embed-seo-optimize-zoom-in" aria-label="<?php esc_attr_e( 'Zoom In', 'wp-pdf-embed-seo-optimize' ); ?>">
 						<span class="dashicons dashicons-plus"></span>
 					</button>
 				</div>
 
 				<div class="pdf-embed-seo-optimize-toolbar-right">
 					<?php if ( $allow_print ) : ?>
-						<button type="button" class="pdf-embed-seo-optimize-btn pdf-embed-seo-optimize-print" aria-label="<?php esc_attr_e( 'Print', 'pdf-embed-seo-optimize' ); ?>">
+						<button type="button" class="pdf-embed-seo-optimize-btn pdf-embed-seo-optimize-print" aria-label="<?php esc_attr_e( 'Print', 'wp-pdf-embed-seo-optimize' ); ?>">
 							<span class="dashicons dashicons-printer"></span>
 						</button>
 					<?php endif; ?>
 
 					<?php if ( $allow_download ) : ?>
-						<button type="button" class="pdf-embed-seo-optimize-btn pdf-embed-seo-optimize-download" aria-label="<?php esc_attr_e( 'Download', 'pdf-embed-seo-optimize' ); ?>">
+						<button type="button" class="pdf-embed-seo-optimize-btn pdf-embed-seo-optimize-download" aria-label="<?php esc_attr_e( 'Download', 'wp-pdf-embed-seo-optimize' ); ?>">
 							<span class="dashicons dashicons-download"></span>
 						</button>
 					<?php endif; ?>
 
-					<button type="button" class="pdf-embed-seo-optimize-btn pdf-embed-seo-optimize-fullscreen" aria-label="<?php esc_attr_e( 'Fullscreen', 'pdf-embed-seo-optimize' ); ?>">
+					<button type="button" class="pdf-embed-seo-optimize-btn pdf-embed-seo-optimize-fullscreen" aria-label="<?php esc_attr_e( 'Fullscreen', 'wp-pdf-embed-seo-optimize' ); ?>">
 						<span class="dashicons dashicons-fullscreen-alt"></span>
 					</button>
 				</div>
@@ -290,7 +290,7 @@ class PDF_Embed_SEO_Frontend {
 			<div class="pdf-embed-seo-optimize-viewer">
 				<div class="pdf-embed-seo-optimize-loading">
 					<span class="spinner"></span>
-					<span class="pdf-embed-seo-optimize-loading-text"><?php esc_html_e( 'Loading PDF...', 'pdf-embed-seo-optimize' ); ?></span>
+					<span class="pdf-embed-seo-optimize-loading-text"><?php esc_html_e( 'Loading PDF...', 'wp-pdf-embed-seo-optimize' ); ?></span>
 				</div>
 				<canvas class="pdf-embed-seo-optimize-canvas"></canvas>
 			</div>

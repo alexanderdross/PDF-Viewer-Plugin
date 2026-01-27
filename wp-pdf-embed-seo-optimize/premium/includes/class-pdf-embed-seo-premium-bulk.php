@@ -49,10 +49,10 @@ class PDF_Embed_SEO_Premium_Bulk {
 	 * @return array
 	 */
 	public function register_bulk_actions( $actions ) {
-		$actions['pdf_enable_download']  = __( 'Enable Download', 'pdf-embed-seo-optimize' );
-		$actions['pdf_disable_download'] = __( 'Disable Download', 'pdf-embed-seo-optimize' );
-		$actions['pdf_enable_print']     = __( 'Enable Print', 'pdf-embed-seo-optimize' );
-		$actions['pdf_disable_print']    = __( 'Disable Print', 'pdf-embed-seo-optimize' );
+		$actions['pdf_enable_download']  = __( 'Enable Download', 'wp-pdf-embed-seo-optimize' );
+		$actions['pdf_disable_download'] = __( 'Disable Download', 'wp-pdf-embed-seo-optimize' );
+		$actions['pdf_enable_print']     = __( 'Enable Print', 'wp-pdf-embed-seo-optimize' );
+		$actions['pdf_disable_print']    = __( 'Disable Print', 'wp-pdf-embed-seo-optimize' );
 
 		return $actions;
 	}
@@ -115,13 +115,13 @@ class PDF_Embed_SEO_Premium_Bulk {
 
 		$messages = array(
 			/* translators: %d: Number of PDFs updated */
-			'pdf_enable_download'  => __( 'Download enabled for %d PDF(s).', 'pdf-embed-seo-optimize' ),
+			'pdf_enable_download'  => __( 'Download enabled for %d PDF(s).', 'wp-pdf-embed-seo-optimize' ),
 			/* translators: %d: Number of PDFs updated */
-			'pdf_disable_download' => __( 'Download disabled for %d PDF(s).', 'pdf-embed-seo-optimize' ),
+			'pdf_disable_download' => __( 'Download disabled for %d PDF(s).', 'wp-pdf-embed-seo-optimize' ),
 			/* translators: %d: Number of PDFs updated */
-			'pdf_enable_print'     => __( 'Print enabled for %d PDF(s).', 'pdf-embed-seo-optimize' ),
+			'pdf_enable_print'     => __( 'Print enabled for %d PDF(s).', 'wp-pdf-embed-seo-optimize' ),
 			/* translators: %d: Number of PDFs updated */
-			'pdf_disable_print'    => __( 'Print disabled for %d PDF(s).', 'pdf-embed-seo-optimize' ),
+			'pdf_disable_print'    => __( 'Print disabled for %d PDF(s).', 'wp-pdf-embed-seo-optimize' ),
 		);
 
 		if ( isset( $messages[ $action ] ) ) {
@@ -148,14 +148,14 @@ class PDF_Embed_SEO_Premium_Bulk {
 		?>
 		<fieldset class="inline-edit-col-right">
 			<div class="inline-edit-col">
-				<span class="title"><?php esc_html_e( 'PDF Settings', 'pdf-embed-seo-optimize' ); ?></span>
+				<span class="title"><?php esc_html_e( 'PDF Settings', 'wp-pdf-embed-seo-optimize' ); ?></span>
 				<label class="alignleft">
 					<input type="checkbox" name="pdf_allow_download" value="1" />
-					<span class="checkbox-title"><?php esc_html_e( 'Allow Download', 'pdf-embed-seo-optimize' ); ?></span>
+					<span class="checkbox-title"><?php esc_html_e( 'Allow Download', 'wp-pdf-embed-seo-optimize' ); ?></span>
 				</label>
 				<label class="alignleft">
 					<input type="checkbox" name="pdf_allow_print" value="1" />
-					<span class="checkbox-title"><?php esc_html_e( 'Allow Print', 'pdf-embed-seo-optimize' ); ?></span>
+					<span class="checkbox-title"><?php esc_html_e( 'Allow Print', 'wp-pdf-embed-seo-optimize' ); ?></span>
 				</label>
 			</div>
 		</fieldset>
@@ -223,8 +223,8 @@ class PDF_Embed_SEO_Premium_Bulk {
 
 				if (postId > 0) {
 					var $row = $('#post-' + postId);
-					var allowDownload = $row.find('.column-pdf_download').text().trim() === '<?php esc_html_e( 'Yes', 'pdf-embed-seo-optimize' ); ?>';
-					var allowPrint = $row.find('.column-pdf_print').text().trim() === '<?php esc_html_e( 'Yes', 'pdf-embed-seo-optimize' ); ?>';
+					var allowDownload = $row.find('.column-pdf_download').text().trim() === '<?php esc_html_e( 'Yes', 'wp-pdf-embed-seo-optimize' ); ?>';
+					var allowPrint = $row.find('.column-pdf_print').text().trim() === '<?php esc_html_e( 'Yes', 'wp-pdf-embed-seo-optimize' ); ?>';
 
 					$('input[name="pdf_allow_download"]', '.inline-edit-row').prop('checked', allowDownload);
 					$('input[name="pdf_allow_print"]', '.inline-edit-row').prop('checked', allowPrint);
@@ -243,8 +243,8 @@ class PDF_Embed_SEO_Premium_Bulk {
 	public function add_import_page() {
 		add_submenu_page(
 			'edit.php?post_type=pdf_document',
-			__( 'Bulk Import PDFs', 'pdf-embed-seo-optimize' ),
-			__( 'Bulk Import', 'pdf-embed-seo-optimize' ),
+			__( 'Bulk Import PDFs', 'wp-pdf-embed-seo-optimize' ),
+			__( 'Bulk Import', 'wp-pdf-embed-seo-optimize' ),
 			'edit_posts',
 			'pdf-bulk-import',
 			array( $this, 'render_import_page' )
@@ -259,15 +259,15 @@ class PDF_Embed_SEO_Premium_Bulk {
 	public function render_import_page() {
 		?>
 		<div class="wrap">
-			<h1><?php esc_html_e( 'Bulk Import PDFs', 'pdf-embed-seo-optimize' ); ?></h1>
+			<h1><?php esc_html_e( 'Bulk Import PDFs', 'wp-pdf-embed-seo-optimize' ); ?></h1>
 
 			<div class="pdf-import-instructions">
-				<h2><?php esc_html_e( 'Instructions', 'pdf-embed-seo-optimize' ); ?></h2>
+				<h2><?php esc_html_e( 'Instructions', 'wp-pdf-embed-seo-optimize' ); ?></h2>
 				<ol>
-					<li><?php esc_html_e( 'Select multiple PDF files from your computer.', 'pdf-embed-seo-optimize' ); ?></li>
-					<li><?php esc_html_e( 'Configure default settings for all imported PDFs.', 'pdf-embed-seo-optimize' ); ?></li>
-					<li><?php esc_html_e( 'Click "Import" to create PDF documents for each file.', 'pdf-embed-seo-optimize' ); ?></li>
-					<li><?php esc_html_e( 'Edit individual PDFs after import to customize settings.', 'pdf-embed-seo-optimize' ); ?></li>
+					<li><?php esc_html_e( 'Select multiple PDF files from your computer.', 'wp-pdf-embed-seo-optimize' ); ?></li>
+					<li><?php esc_html_e( 'Configure default settings for all imported PDFs.', 'wp-pdf-embed-seo-optimize' ); ?></li>
+					<li><?php esc_html_e( 'Click "Import" to create PDF documents for each file.', 'wp-pdf-embed-seo-optimize' ); ?></li>
+					<li><?php esc_html_e( 'Edit individual PDFs after import to customize settings.', 'wp-pdf-embed-seo-optimize' ); ?></li>
 				</ol>
 			</div>
 
@@ -277,41 +277,41 @@ class PDF_Embed_SEO_Premium_Bulk {
 				<table class="form-table">
 					<tr>
 						<th scope="row">
-							<label for="pdf_files"><?php esc_html_e( 'PDF Files', 'pdf-embed-seo-optimize' ); ?></label>
+							<label for="pdf_files"><?php esc_html_e( 'PDF Files', 'wp-pdf-embed-seo-optimize' ); ?></label>
 						</th>
 						<td>
 							<input type="file" name="pdf_files[]" id="pdf_files" multiple accept=".pdf,application/pdf" required />
-							<p class="description"><?php esc_html_e( 'Select one or more PDF files to import.', 'pdf-embed-seo-optimize' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Select one or more PDF files to import.', 'wp-pdf-embed-seo-optimize' ); ?></p>
 						</td>
 					</tr>
 					<tr>
-						<th scope="row"><?php esc_html_e( 'Default Status', 'pdf-embed-seo-optimize' ); ?></th>
+						<th scope="row"><?php esc_html_e( 'Default Status', 'wp-pdf-embed-seo-optimize' ); ?></th>
 						<td>
 							<select name="import_status">
-								<option value="draft"><?php esc_html_e( 'Draft', 'pdf-embed-seo-optimize' ); ?></option>
-								<option value="publish"><?php esc_html_e( 'Published', 'pdf-embed-seo-optimize' ); ?></option>
-								<option value="pending"><?php esc_html_e( 'Pending Review', 'pdf-embed-seo-optimize' ); ?></option>
+								<option value="draft"><?php esc_html_e( 'Draft', 'wp-pdf-embed-seo-optimize' ); ?></option>
+								<option value="publish"><?php esc_html_e( 'Published', 'wp-pdf-embed-seo-optimize' ); ?></option>
+								<option value="pending"><?php esc_html_e( 'Pending Review', 'wp-pdf-embed-seo-optimize' ); ?></option>
 							</select>
 						</td>
 					</tr>
 					<tr>
-						<th scope="row"><?php esc_html_e( 'Default Permissions', 'pdf-embed-seo-optimize' ); ?></th>
+						<th scope="row"><?php esc_html_e( 'Default Permissions', 'wp-pdf-embed-seo-optimize' ); ?></th>
 						<td>
 							<label>
 								<input type="checkbox" name="import_allow_download" value="1" />
-								<?php esc_html_e( 'Allow Download', 'pdf-embed-seo-optimize' ); ?>
+								<?php esc_html_e( 'Allow Download', 'wp-pdf-embed-seo-optimize' ); ?>
 							</label>
 							<br />
 							<label>
 								<input type="checkbox" name="import_allow_print" value="1" />
-								<?php esc_html_e( 'Allow Print', 'pdf-embed-seo-optimize' ); ?>
+								<?php esc_html_e( 'Allow Print', 'wp-pdf-embed-seo-optimize' ); ?>
 							</label>
 						</td>
 					</tr>
 					<?php if ( taxonomy_exists( 'pdf_category' ) ) : ?>
 					<tr>
 						<th scope="row">
-							<label for="import_category"><?php esc_html_e( 'Category', 'pdf-embed-seo-optimize' ); ?></label>
+							<label for="import_category"><?php esc_html_e( 'Category', 'wp-pdf-embed-seo-optimize' ); ?></label>
 						</th>
 						<td>
 							<?php
@@ -320,7 +320,7 @@ class PDF_Embed_SEO_Premium_Bulk {
 									'taxonomy'         => 'pdf_category',
 									'name'             => 'import_category',
 									'id'               => 'import_category',
-									'show_option_none' => __( '-- Select Category --', 'pdf-embed-seo-optimize' ),
+									'show_option_none' => __( '-- Select Category --', 'wp-pdf-embed-seo-optimize' ),
 									'hide_empty'       => false,
 								)
 							);
@@ -329,21 +329,21 @@ class PDF_Embed_SEO_Premium_Bulk {
 					</tr>
 					<?php endif; ?>
 					<tr>
-						<th scope="row"><?php esc_html_e( 'Auto-generate Thumbnails', 'pdf-embed-seo-optimize' ); ?></th>
+						<th scope="row"><?php esc_html_e( 'Auto-generate Thumbnails', 'wp-pdf-embed-seo-optimize' ); ?></th>
 						<td>
 							<label>
 								<input type="checkbox" name="import_generate_thumbnails" value="1" checked />
-								<?php esc_html_e( 'Generate thumbnails from first page', 'pdf-embed-seo-optimize' ); ?>
+								<?php esc_html_e( 'Generate thumbnails from first page', 'wp-pdf-embed-seo-optimize' ); ?>
 							</label>
 						</td>
 					</tr>
 				</table>
 
-				<?php submit_button( __( 'Import PDFs', 'pdf-embed-seo-optimize' ), 'primary', 'pdf_bulk_import_submit' ); ?>
+				<?php submit_button( __( 'Import PDFs', 'wp-pdf-embed-seo-optimize' ), 'primary', 'pdf_bulk_import_submit' ); ?>
 			</form>
 
 			<div class="pdf-import-progress" style="display: none;">
-				<h3><?php esc_html_e( 'Import Progress', 'pdf-embed-seo-optimize' ); ?></h3>
+				<h3><?php esc_html_e( 'Import Progress', 'wp-pdf-embed-seo-optimize' ); ?></h3>
 				<div class="pdf-progress-bar">
 					<div class="pdf-progress-fill"></div>
 				</div>
@@ -354,9 +354,9 @@ class PDF_Embed_SEO_Premium_Bulk {
 				<?php
 				printf(
 					/* translators: %1$s: heart symbol, %2$s: Dross:Media link */
-					esc_html__( 'made with %1$s by %2$s', 'pdf-embed-seo-optimize' ),
-					'<span style="color: #e25555;" aria-hidden="true">♥</span><span class="screen-reader-text">' . esc_html__( 'love', 'pdf-embed-seo-optimize' ) . '</span>',
-					'<a href="https://dross.net/media/" target="_blank" rel="noopener noreferrer" aria-label="' . esc_attr__( 'Visit Dross:Media website (opens in new tab)', 'pdf-embed-seo-optimize' ) . '" title="' . esc_attr__( 'Visit Dross:Media website', 'pdf-embed-seo-optimize' ) . '">Dross:Media</a>'
+					esc_html__( 'made with %1$s by %2$s', 'wp-pdf-embed-seo-optimize' ),
+					'<span style="color: #e25555;" aria-hidden="true">♥</span><span class="screen-reader-text">' . esc_html__( 'love', 'wp-pdf-embed-seo-optimize' ) . '</span>',
+					'<a href="https://dross.net/media/" target="_blank" rel="noopener noreferrer" aria-label="' . esc_attr__( 'Visit Dross:Media website (opens in new tab)', 'wp-pdf-embed-seo-optimize' ) . '" title="' . esc_attr__( 'Visit Dross:Media website', 'wp-pdf-embed-seo-optimize' ) . '">Dross:Media</a>'
 				);
 				?>
 			</p>
@@ -412,7 +412,7 @@ class PDF_Embed_SEO_Premium_Bulk {
 		}
 
 		if ( empty( $_FILES['pdf_files']['name'][0] ) ) {
-			add_settings_error( 'pdf_import', 'no_files', __( 'Please select at least one PDF file.', 'pdf-embed-seo-optimize' ), 'error' );
+			add_settings_error( 'pdf_import', 'no_files', __( 'Please select at least one PDF file.', 'wp-pdf-embed-seo-optimize' ), 'error' );
 			return;
 		}
 
@@ -432,7 +432,7 @@ class PDF_Embed_SEO_Premium_Bulk {
 			if ( UPLOAD_ERR_OK !== $files['error'][ $i ] ) {
 				$errors[] = sprintf(
 					/* translators: %s: File name. */
-					__( 'Error uploading %s.', 'pdf-embed-seo-optimize' ),
+					__( 'Error uploading %s.', 'wp-pdf-embed-seo-optimize' ),
 					$files['name'][ $i ]
 				);
 				continue;
@@ -443,7 +443,7 @@ class PDF_Embed_SEO_Premium_Bulk {
 			if ( 'pdf' !== strtolower( $file_type['ext'] ) ) {
 				$errors[] = sprintf(
 					/* translators: %s: File name. */
-					__( '%s is not a valid PDF file.', 'pdf-embed-seo-optimize' ),
+					__( '%s is not a valid PDF file.', 'wp-pdf-embed-seo-optimize' ),
 					$files['name'][ $i ]
 				);
 				continue;
@@ -464,7 +464,7 @@ class PDF_Embed_SEO_Premium_Bulk {
 			if ( is_wp_error( $attachment_id ) ) {
 				$errors[] = sprintf(
 					/* translators: %s: File name. */
-					__( 'Failed to upload %s.', 'pdf-embed-seo-optimize' ),
+					__( 'Failed to upload %s.', 'wp-pdf-embed-seo-optimize' ),
 					$files['name'][ $i ]
 				);
 				continue;
@@ -487,7 +487,7 @@ class PDF_Embed_SEO_Premium_Bulk {
 			if ( is_wp_error( $post_id ) ) {
 				$errors[] = sprintf(
 					/* translators: %s: File name. */
-					__( 'Failed to create post for %s.', 'pdf-embed-seo-optimize' ),
+					__( 'Failed to create post for %s.', 'wp-pdf-embed-seo-optimize' ),
 					$files['name'][ $i ]
 				);
 				continue;
@@ -533,7 +533,7 @@ class PDF_Embed_SEO_Premium_Bulk {
 				'import_success',
 				sprintf(
 					/* translators: %d: Number of imported PDFs. */
-					__( 'Successfully imported %d PDF(s).', 'pdf-embed-seo-optimize' ),
+					__( 'Successfully imported %d PDF(s).', 'wp-pdf-embed-seo-optimize' ),
 					$imported
 				),
 				'success'

@@ -97,8 +97,8 @@ class PDF_Embed_SEO_Yoast {
 			'@context'    => 'https://schema.org',
 			'@type'       => 'CollectionPage',
 			'@id'         => $archive_url . '#collectionpage',
-			'name'        => __( 'PDF Documents', 'pdf-embed-seo-optimize' ),
-			'description' => __( 'Browse all available PDF documents.', 'pdf-embed-seo-optimize' ),
+			'name'        => __( 'PDF Documents', 'wp-pdf-embed-seo-optimize' ),
+			'description' => __( 'Browse all available PDF documents.', 'wp-pdf-embed-seo-optimize' ),
 			'url'         => $archive_url,
 			'isPartOf'    => array(
 				'@type' => 'WebSite',
