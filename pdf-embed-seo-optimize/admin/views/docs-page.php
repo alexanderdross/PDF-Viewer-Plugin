@@ -18,6 +18,71 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_html_e( 'Welcome to the documentation for PDF Embed & SEO Optimize. Below you will find details on how to control print/download permissions, use the shortcodes included with this plugin, and how to integrate them into your theme or custom templates for the best user experience.', 'pdf-embed-seo-optimize' ); ?>
 	</p>
 
+	<?php if ( ! function_exists( 'pdf_embed_seo_is_premium' ) || ! pdf_embed_seo_is_premium() ) : ?>
+	<!-- Premium Upgrade CTA -->
+	<div class="pdf-embed-seo-optimize-premium-cta">
+		<div class="premium-cta-header">
+			<span class="dashicons dashicons-star-filled"></span>
+			<h2><?php esc_html_e( 'Unlock Premium Features', 'pdf-embed-seo-optimize' ); ?></h2>
+		</div>
+		<p class="premium-cta-intro">
+			<?php esc_html_e( 'Take your PDF management to the next level with PDF Embed & SEO Optimize Pro. Get advanced analytics, password protection, reading progress tracking, and full REST API access.', 'pdf-embed-seo-optimize' ); ?>
+		</p>
+		<div class="premium-features-comparison">
+			<div class="feature-column free-column">
+				<h3><?php esc_html_e( 'Free Version', 'pdf-embed-seo-optimize' ); ?></h3>
+				<ul>
+					<li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'PDF.js Viewer Integration', 'pdf-embed-seo-optimize' ); ?></li>
+					<li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Clean SEO-friendly URLs', 'pdf-embed-seo-optimize' ); ?></li>
+					<li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Print/Download Controls', 'pdf-embed-seo-optimize' ); ?></li>
+					<li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Gutenberg Block', 'pdf-embed-seo-optimize' ); ?></li>
+					<li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Yoast SEO Integration', 'pdf-embed-seo-optimize' ); ?></li>
+					<li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Schema.org Markup', 'pdf-embed-seo-optimize' ); ?></li>
+					<li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Basic REST API', 'pdf-embed-seo-optimize' ); ?></li>
+					<li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'View Statistics', 'pdf-embed-seo-optimize' ); ?></li>
+					<li class="not-included"><span class="dashicons dashicons-no"></span> <?php esc_html_e( 'Password Protection', 'pdf-embed-seo-optimize' ); ?></li>
+					<li class="not-included"><span class="dashicons dashicons-no"></span> <?php esc_html_e( 'Analytics Dashboard', 'pdf-embed-seo-optimize' ); ?></li>
+					<li class="not-included"><span class="dashicons dashicons-no"></span> <?php esc_html_e( 'Reading Progress', 'pdf-embed-seo-optimize' ); ?></li>
+					<li class="not-included"><span class="dashicons dashicons-no"></span> <?php esc_html_e( 'Categories & Tags', 'pdf-embed-seo-optimize' ); ?></li>
+				</ul>
+			</div>
+			<div class="feature-column premium-column">
+				<h3><span class="dashicons dashicons-star-filled"></span> <?php esc_html_e( 'Pro Version', 'pdf-embed-seo-optimize' ); ?></h3>
+				<ul>
+					<li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Everything in Free, plus:', 'pdf-embed-seo-optimize' ); ?></li>
+					<li><span class="dashicons dashicons-yes"></span> <strong><?php esc_html_e( 'Password Protection', 'pdf-embed-seo-optimize' ); ?></strong> - <?php esc_html_e( 'Secure sensitive PDFs', 'pdf-embed-seo-optimize' ); ?></li>
+					<li><span class="dashicons dashicons-yes"></span> <strong><?php esc_html_e( 'Analytics Dashboard', 'pdf-embed-seo-optimize' ); ?></strong> - <?php esc_html_e( 'Track views, time spent, popular docs', 'pdf-embed-seo-optimize' ); ?></li>
+					<li><span class="dashicons dashicons-yes"></span> <strong><?php esc_html_e( 'Reading Progress', 'pdf-embed-seo-optimize' ); ?></strong> - <?php esc_html_e( 'Remember user position', 'pdf-embed-seo-optimize' ); ?></li>
+					<li><span class="dashicons dashicons-yes"></span> <strong><?php esc_html_e( 'Categories & Tags', 'pdf-embed-seo-optimize' ); ?></strong> - <?php esc_html_e( 'Organize your PDFs', 'pdf-embed-seo-optimize' ); ?></li>
+					<li><span class="dashicons dashicons-yes"></span> <strong><?php esc_html_e( 'Role-Based Access', 'pdf-embed-seo-optimize' ); ?></strong> - <?php esc_html_e( 'Control who sees what', 'pdf-embed-seo-optimize' ); ?></li>
+					<li><span class="dashicons dashicons-yes"></span> <strong><?php esc_html_e( 'Bulk Import', 'pdf-embed-seo-optimize' ); ?></strong> - <?php esc_html_e( 'Import multiple PDFs at once', 'pdf-embed-seo-optimize' ); ?></li>
+					<li><span class="dashicons dashicons-yes"></span> <strong><?php esc_html_e( 'PDF Sitemap', 'pdf-embed-seo-optimize' ); ?></strong> - <?php esc_html_e( 'Dedicated XML sitemap', 'pdf-embed-seo-optimize' ); ?></li>
+					<li><span class="dashicons dashicons-yes"></span> <strong><?php esc_html_e( 'Full REST API', 'pdf-embed-seo-optimize' ); ?></strong> - <?php esc_html_e( 'Analytics, progress, password endpoints', 'pdf-embed-seo-optimize' ); ?></li>
+					<li><span class="dashicons dashicons-yes"></span> <strong><?php esc_html_e( 'CSV Export', 'pdf-embed-seo-optimize' ); ?></strong> - <?php esc_html_e( 'Export analytics data', 'pdf-embed-seo-optimize' ); ?></li>
+					<li><span class="dashicons dashicons-yes"></span> <strong><?php esc_html_e( 'Priority Support', 'pdf-embed-seo-optimize' ); ?></strong> - <?php esc_html_e( 'Fast, dedicated help', 'pdf-embed-seo-optimize' ); ?></li>
+				</ul>
+			</div>
+		</div>
+		<div class="premium-cta-action">
+			<a href="https://pdfviewer.drossmedia.de" target="_blank" rel="noopener noreferrer" class="button button-primary button-hero">
+				<span class="dashicons dashicons-cart"></span>
+				<?php esc_html_e( 'Upgrade to Pro Now', 'pdf-embed-seo-optimize' ); ?>
+			</a>
+			<p class="premium-cta-guarantee">
+				<span class="dashicons dashicons-shield"></span>
+				<?php esc_html_e( '30-Day Money-Back Guarantee', 'pdf-embed-seo-optimize' ); ?>
+			</p>
+		</div>
+	</div>
+	<?php else : ?>
+	<!-- Premium Active Badge -->
+	<div class="pdf-embed-seo-optimize-premium-active">
+		<span class="dashicons dashicons-star-filled"></span>
+		<strong><?php esc_html_e( 'Pro Version Active', 'pdf-embed-seo-optimize' ); ?></strong>
+		<?php esc_html_e( 'Thank you for supporting PDF Embed & SEO Optimize!', 'pdf-embed-seo-optimize' ); ?>
+	</div>
+	<?php endif; ?>
+
 	<div class="pdf-embed-seo-optimize-docs-toc">
 		<h2><?php esc_html_e( 'Table of Contents', 'pdf-embed-seo-optimize' ); ?></h2>
 		<ol>
@@ -444,9 +509,19 @@ if ( function_exists( 'do_shortcode' ) ) {
 			</tbody>
 		</table>
 
-		<?php if ( function_exists( 'pdf_embed_seo_is_premium' ) && pdf_embed_seo_is_premium() ) : ?>
-		<h3><?php esc_html_e( 'Premium Endpoints', 'pdf-embed-seo-optimize' ); ?></h3>
-		<table class="widefat">
+		<h3>
+			<?php esc_html_e( 'Premium Endpoints', 'pdf-embed-seo-optimize' ); ?>
+			<?php if ( ! function_exists( 'pdf_embed_seo_is_premium' ) || ! pdf_embed_seo_is_premium() ) : ?>
+				<span class="premium-badge"><?php esc_html_e( 'PRO', 'pdf-embed-seo-optimize' ); ?></span>
+			<?php endif; ?>
+		</h3>
+
+		<?php if ( ! function_exists( 'pdf_embed_seo_is_premium' ) || ! pdf_embed_seo_is_premium() ) : ?>
+		<div class="premium-api-teaser">
+			<p><?php esc_html_e( 'Upgrade to Pro to unlock these powerful API endpoints for advanced integrations:', 'pdf-embed-seo-optimize' ); ?></p>
+		<?php endif; ?>
+
+		<table class="widefat <?php echo ( ! function_exists( 'pdf_embed_seo_is_premium' ) || ! pdf_embed_seo_is_premium() ) ? 'premium-locked' : ''; ?>">
 			<thead>
 				<tr>
 					<th><?php esc_html_e( 'Method', 'pdf-embed-seo-optimize' ); ?></th>
@@ -507,6 +582,15 @@ if ( function_exists( 'do_shortcode' ) ) {
 				</tr>
 			</tbody>
 		</table>
+
+		<?php if ( ! function_exists( 'pdf_embed_seo_is_premium' ) || ! pdf_embed_seo_is_premium() ) : ?>
+		<div class="premium-api-cta">
+			<a href="https://pdfviewer.drossmedia.de" target="_blank" rel="noopener noreferrer" class="button button-primary">
+				<span class="dashicons dashicons-unlock"></span>
+				<?php esc_html_e( 'Unlock Premium API Endpoints', 'pdf-embed-seo-optimize' ); ?>
+			</a>
+		</div>
+		</div>
 		<?php endif; ?>
 
 		<h3><?php esc_html_e( 'Query Parameters for /documents', 'pdf-embed-seo-optimize' ); ?></h3>
@@ -819,5 +903,198 @@ if ( function_exists( 'do_shortcode' ) ) {
 }
 .pdf-embed-seo-optimize-docs-credit a:hover {
 	text-decoration: underline;
+}
+
+/* Premium CTA Styles */
+.pdf-embed-seo-optimize-premium-cta {
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	border-radius: 12px;
+	padding: 30px;
+	margin: 25px 0;
+	color: #fff;
+	box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+}
+.pdf-embed-seo-optimize-premium-cta .premium-cta-header {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 15px;
+}
+.pdf-embed-seo-optimize-premium-cta .premium-cta-header .dashicons {
+	font-size: 28px;
+	width: 28px;
+	height: 28px;
+	color: #ffd700;
+}
+.pdf-embed-seo-optimize-premium-cta .premium-cta-header h2 {
+	margin: 0;
+	color: #fff;
+	font-size: 24px;
+}
+.pdf-embed-seo-optimize-premium-cta .premium-cta-intro {
+	font-size: 15px;
+	opacity: 0.95;
+	margin-bottom: 25px;
+	line-height: 1.6;
+}
+.pdf-embed-seo-optimize-premium-cta .premium-features-comparison {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 20px;
+	margin-bottom: 25px;
+}
+@media (max-width: 768px) {
+	.pdf-embed-seo-optimize-premium-cta .premium-features-comparison {
+		grid-template-columns: 1fr;
+	}
+}
+.pdf-embed-seo-optimize-premium-cta .feature-column {
+	background: rgba(255,255,255,0.1);
+	border-radius: 8px;
+	padding: 20px;
+}
+.pdf-embed-seo-optimize-premium-cta .feature-column h3 {
+	margin: 0 0 15px 0;
+	font-size: 16px;
+	color: #fff;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+.pdf-embed-seo-optimize-premium-cta .feature-column h3 .dashicons {
+	color: #ffd700;
+}
+.pdf-embed-seo-optimize-premium-cta .feature-column ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.pdf-embed-seo-optimize-premium-cta .feature-column li {
+	padding: 6px 0;
+	font-size: 13px;
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+}
+.pdf-embed-seo-optimize-premium-cta .feature-column li .dashicons {
+	flex-shrink: 0;
+	margin-top: 2px;
+}
+.pdf-embed-seo-optimize-premium-cta .feature-column li .dashicons-yes {
+	color: #7cff7c;
+}
+.pdf-embed-seo-optimize-premium-cta .feature-column li .dashicons-no {
+	color: rgba(255,255,255,0.4);
+}
+.pdf-embed-seo-optimize-premium-cta .feature-column li.not-included {
+	opacity: 0.5;
+}
+.pdf-embed-seo-optimize-premium-cta .premium-column {
+	background: rgba(255,255,255,0.2);
+	border: 2px solid rgba(255,215,0,0.5);
+}
+.pdf-embed-seo-optimize-premium-cta .premium-cta-action {
+	text-align: center;
+}
+.pdf-embed-seo-optimize-premium-cta .premium-cta-action .button-hero {
+	background: #ffd700;
+	border-color: #e6c200;
+	color: #333;
+	font-size: 16px;
+	padding: 12px 35px;
+	height: auto;
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	text-shadow: none;
+	box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+	transition: all 0.3s ease;
+}
+.pdf-embed-seo-optimize-premium-cta .premium-cta-action .button-hero:hover {
+	background: #ffe44d;
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+.pdf-embed-seo-optimize-premium-cta .premium-cta-action .button-hero .dashicons {
+	font-size: 20px;
+	width: 20px;
+	height: 20px;
+}
+.pdf-embed-seo-optimize-premium-cta .premium-cta-guarantee {
+	margin-top: 15px;
+	font-size: 13px;
+	opacity: 0.9;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+}
+.pdf-embed-seo-optimize-premium-cta .premium-cta-guarantee .dashicons {
+	color: #7cff7c;
+}
+
+/* Premium Badge in headings */
+.premium-badge {
+	display: inline-block;
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	color: #fff;
+	font-size: 10px;
+	font-weight: 600;
+	padding: 3px 8px;
+	border-radius: 4px;
+	margin-left: 10px;
+	vertical-align: middle;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+/* Premium API Teaser */
+.premium-api-teaser {
+	background: linear-gradient(135deg, #f8f9ff 0%, #f0f1ff 100%);
+	border: 2px dashed #667eea;
+	border-radius: 8px;
+	padding: 20px;
+	margin: 15px 0;
+}
+.premium-api-teaser p {
+	margin: 0 0 15px 0;
+	color: #555;
+}
+.premium-api-teaser table.premium-locked {
+	opacity: 0.7;
+}
+.premium-api-cta {
+	text-align: center;
+	margin-top: 20px;
+	padding-top: 15px;
+	border-top: 1px solid #ddd;
+}
+.premium-api-cta .button {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+.premium-api-cta .button .dashicons {
+	font-size: 16px;
+	width: 16px;
+	height: 16px;
+}
+
+/* Premium Active Badge */
+.pdf-embed-seo-optimize-premium-active {
+	background: linear-gradient(135deg, #46b450 0%, #2e7d32 100%);
+	color: #fff;
+	padding: 15px 20px;
+	border-radius: 8px;
+	margin: 20px 0;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+.pdf-embed-seo-optimize-premium-active .dashicons {
+	color: #ffd700;
+	font-size: 24px;
+	width: 24px;
+	height: 24px;
 }
 </style>
