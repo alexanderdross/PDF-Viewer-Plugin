@@ -1,0 +1,19 @@
+services:
+  # PDF analytics tracker service (premium).
+  pdf_embed_seo.analytics_tracker:
+    class: Drupal\pdf_embed_seo_premium\Service\PdfAnalyticsTracker
+    arguments:
+      - '@database'
+      - '@current_user'
+      - '@request_stack'
+      - '@datetime.time'
+      - '@config.factory'
+
+  # PDF progress tracker service (premium).
+  pdf_embed_seo.progress_tracker:
+    class: Drupal\pdf_embed_seo_premium\Service\PdfProgressTracker
+    arguments:
+      - '@database'
+      - '@current_user'
+      - '@request_stack'
+      - '@datetime.time'

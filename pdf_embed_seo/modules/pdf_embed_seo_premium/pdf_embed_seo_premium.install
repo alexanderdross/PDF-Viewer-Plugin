@@ -1,0 +1,187 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for PDF Embed & SEO Premium module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function pdf_embed_seo_premium_schema() {
+  $schema['pdf_embed_seo_analytics'] = [
+    'description' => 'Stores detailed PDF view analytics.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary key.',
+      ],
+      'pdf_document_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The PDF document entity ID.',
+      ],
+      'user_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The user ID (0 for anonymous).',
+      ],
+      'ip_address' => [
+        'type' => 'varchar',
+        'length' => 45,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Visitor IP address.',
+      ],
+      'user_agent' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Browser user agent.',
+      ],
+      'referer' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'HTTP referer.',
+      ],
+      'time_spent' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Time spent viewing (seconds).',
+      ],
+      'pages_viewed' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 1,
+        'description' => 'Number of pages viewed.',
+      ],
+      'timestamp' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Unix timestamp of the view.',
+      ],
+      'created' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Unix timestamp when record was created.',
+      ],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'pdf_document_id' => ['pdf_document_id'],
+      'user_id' => ['user_id'],
+      'timestamp' => ['timestamp'],
+      'created' => ['created'],
+    ],
+  ];
+
+  $schema['pdf_embed_seo_progress'] = [
+    'description' => 'Stores PDF reading progress.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary key.',
+      ],
+      'pdf_document_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The PDF document entity ID.',
+      ],
+      'user_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The user ID.',
+      ],
+      'session_id' => [
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Session ID for anonymous users.',
+      ],
+      'current_page' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 1,
+        'description' => 'Current page number.',
+      ],
+      'scroll_position' => [
+        'type' => 'float',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Scroll position on current page.',
+      ],
+      'zoom_level' => [
+        'type' => 'float',
+        'not null' => TRUE,
+        'default' => 1,
+        'description' => 'Current zoom level.',
+      ],
+      'updated' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Unix timestamp of last update.',
+      ],
+    ],
+    'primary key' => ['id'],
+    'unique keys' => [
+      'user_document' => ['pdf_document_id', 'user_id', 'session_id'],
+    ],
+    'indexes' => [
+      'pdf_document_id' => ['pdf_document_id'],
+      'user_id' => ['user_id'],
+    ],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_install().
+ */
+function pdf_embed_seo_premium_install() {
+  // Set default configuration.
+  $config = \Drupal::configFactory()->getEditable('pdf_embed_seo_premium.settings');
+  $config->set('enable_analytics', TRUE);
+  $config->set('enable_password_protection', TRUE);
+  $config->set('enable_reading_progress', TRUE);
+  $config->set('analytics_retention_days', 365);
+  $config->save();
+
+  \Drupal::messenger()->addMessage(t('PDF Embed & SEO Optimize Premium has been installed. Premium features are now active.'));
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function pdf_embed_seo_premium_uninstall() {
+  // Delete configuration.
+  \Drupal::configFactory()->getEditable('pdf_embed_seo_premium.settings')->delete();
+
+  \Drupal::messenger()->addMessage(t('PDF Embed & SEO Optimize Premium has been uninstalled. Premium features are no longer available.'));
+}

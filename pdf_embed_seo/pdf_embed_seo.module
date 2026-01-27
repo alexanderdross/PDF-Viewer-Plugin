@@ -66,23 +66,6 @@ function pdf_embed_seo_theme($existing, $type, $theme, $path) {
       ],
       'template' => 'pdf-archive-item',
     ],
-    // Premium templates.
-    'pdf_password_form' => [
-      'variables' => [
-        'pdf_document' => NULL,
-        'form' => NULL,
-      ],
-      'template' => 'pdf-password-form',
-    ],
-    'pdf_analytics_dashboard' => [
-      'variables' => [
-        'total_views' => 0,
-        'total_documents' => 0,
-        'popular_documents' => [],
-        'recent_views' => [],
-      ],
-      'template' => 'pdf-analytics-dashboard',
-    ],
   ];
 }
 

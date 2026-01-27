@@ -1,0 +1,135 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for PDF Embed & SEO Optimize Premium module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function pdf_embed_seo_premium_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.pdf_embed_seo_premium':
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('PDF Embed & SEO Optimize Premium adds advanced features to the base PDF Embed module.') . '</p>';
+      $output .= '<h3>' . t('Premium Features') . '</h3>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('Analytics Dashboard - Detailed view statistics and reports') . '</li>';
+      $output .= '<li>' . t('Password Protection - Protect individual PDFs with passwords') . '</li>';
+      $output .= '<li>' . t('Reading Progress - Remember and restore user reading position') . '</li>';
+      $output .= '<li>' . t('CSV Export - Export analytics data for external analysis') . '</li>';
+      $output .= '<li>' . t('Premium REST API - Additional API endpoints for integrations') . '</li>';
+      $output .= '</ul>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function pdf_embed_seo_premium_theme($existing, $type, $theme, $path) {
+  return [
+    'pdf_password_form' => [
+      'variables' => [
+        'pdf_document' => NULL,
+        'form' => NULL,
+      ],
+      'template' => 'pdf-password-form',
+    ],
+    'pdf_analytics_dashboard' => [
+      'variables' => [
+        'total_views' => 0,
+        'total_documents' => 0,
+        'popular_documents' => [],
+        'recent_views' => [],
+        'period' => '30days',
+      ],
+      'template' => 'pdf-analytics-dashboard',
+    ],
+  ];
+}
+
+/**
+ * Check if the premium module is active.
+ *
+ * @return bool
+ *   TRUE if premium is active.
+ */
+function pdf_embed_seo_premium_is_active() {
+  return TRUE;
+}
+
+/**
+ * Implements hook_pdf_embed_seo_api_settings_alter().
+ */
+function pdf_embed_seo_premium_pdf_embed_seo_api_settings_alter(array &$settings) {
+  $settings['is_premium'] = TRUE;
+  $settings['premium_features'] = [
+    'analytics' => TRUE,
+    'password_protection' => TRUE,
+    'reading_progress' => TRUE,
+    'csv_export' => TRUE,
+  ];
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for pdf_embed_seo_settings_form.
+ */
+function pdf_embed_seo_premium_form_pdf_embed_seo_settings_form_alter(&$form, &$form_state, $form_id) {
+  // Add premium settings section.
+  $config = \Drupal::config('pdf_embed_seo_premium.settings');
+
+  $form['premium'] = [
+    '#type' => 'details',
+    '#title' => t('Premium Features'),
+    '#open' => TRUE,
+    '#weight' => 50,
+  ];
+
+  $form['premium']['enable_analytics'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Enable Analytics Tracking'),
+    '#description' => t('Track detailed view statistics in a separate database table.'),
+    '#default_value' => $config->get('enable_analytics') ?? TRUE,
+  ];
+
+  $form['premium']['enable_password_protection'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Enable Password Protection'),
+    '#description' => t('Allow individual PDFs to be password protected.'),
+    '#default_value' => $config->get('enable_password_protection') ?? TRUE,
+  ];
+
+  $form['premium']['enable_reading_progress'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Enable Reading Progress'),
+    '#description' => t('Remember and restore user reading position in PDFs.'),
+    '#default_value' => $config->get('enable_reading_progress') ?? TRUE,
+  ];
+
+  $form['premium']['analytics_retention_days'] = [
+    '#type' => 'number',
+    '#title' => t('Analytics Data Retention (days)'),
+    '#description' => t('Number of days to keep detailed analytics data. Set to 0 for unlimited.'),
+    '#default_value' => $config->get('analytics_retention_days') ?? 365,
+    '#min' => 0,
+  ];
+
+  // Add submit handler.
+  $form['#submit'][] = 'pdf_embed_seo_premium_settings_form_submit';
+}
+
+/**
+ * Submit handler for premium settings.
+ */
+function pdf_embed_seo_premium_settings_form_submit(&$form, &$form_state) {
+  $config = \Drupal::configFactory()->getEditable('pdf_embed_seo_premium.settings');
+  $config->set('enable_analytics', $form_state->getValue('enable_analytics'));
+  $config->set('enable_password_protection', $form_state->getValue('enable_password_protection'));
+  $config->set('enable_reading_progress', $form_state->getValue('enable_reading_progress'));
+  $config->set('analytics_retention_days', $form_state->getValue('analytics_retention_days'));
+  $config->save();
+}

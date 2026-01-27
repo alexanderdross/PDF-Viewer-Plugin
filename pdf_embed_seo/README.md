@@ -2,9 +2,17 @@
 
 A powerful Drupal module that integrates Mozilla's PDF.js viewer to display PDFs with clean URLs, SEO optimization, and access controls.
 
+## Free vs Premium
+
+This module comes in two parts:
+- **pdf_embed_seo** (Free) - Core PDF viewing functionality
+- **pdf_embed_seo_premium** (Premium) - Advanced features like analytics, password protection, and reading progress
+
+See the feature comparison below.
+
 ## Features
 
-### Core Features
+### Core Features (Free)
 - **Clean URL Structure**: Display PDFs at URLs like `/pdf/document-name/` instead of exposing direct file URLs
 - **Mozilla PDF.js Integration**: Industry-standard PDF rendering directly in the browser
 - **Custom Entity Type**: Dedicated `pdf_document` entity with all necessary fields
@@ -15,13 +23,14 @@ A powerful Drupal module that integrates Mozilla's PDF.js viewer to display PDFs
 - **Block Plugin**: Embed PDF viewers anywhere using the PDF Viewer block
 - **Auto-Generate Thumbnails**: Create thumbnails from PDF first pages (requires ImageMagick or Ghostscript)
 
-### Premium Features
+### Premium Features (Requires pdf_embed_seo_premium)
 - **Password Protection**: Protect individual PDFs with passwords
 - **Analytics Dashboard**: Detailed view statistics and reports
-- **Search in PDF**: Full-text search within PDF documents
-- **Bookmarks**: Allow users to bookmark pages within PDFs
 - **Reading Progress**: Remember and restore user reading progress
 - **CSV Export**: Export analytics data
+- **Premium REST API**: Additional API endpoints for integrations
+
+Get premium at: **https://pdfviewer.drossmedia.de**
 
 ## Requirements
 
@@ -83,10 +92,12 @@ Use the PDF Viewer block to embed PDFs in any region:
 - **Delete PDF documents**: Delete any PDF document
 - **Delete own PDF documents**: Delete only your own PDF documents
 
-### Premium Permissions
+### Premium Permissions (Requires pdf_embed_seo_premium)
 - **View PDF analytics**: Access the analytics dashboard
+- **Export PDF analytics**: Export analytics data to CSV
 - **Bypass PDF password protection**: View password-protected PDFs without entering password
 - **Download protected PDFs**: Download PDFs even when disabled
+- **Administer PDF Premium settings**: Configure premium settings
 
 ## Theming
 

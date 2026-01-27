@@ -10,13 +10,14 @@ A comprehensive PDF management solution available for WordPress and Drupal that 
 
 ## Project Overview
 
-This project provides three modules:
+This project provides four modules:
 
 | Module | Directory | Platform | Features |
 |--------|-----------|----------|----------|
 | WordPress Free | `pdf-embed-seo-optimize/` | WordPress 5.8+ | Core PDF viewer, SEO, REST API |
 | WordPress Premium | `pdf-embed-seo-optimize/premium/` | WordPress 5.8+ | Analytics, passwords, progress tracking |
-| Drupal Module | `pdf_embed_seo/` | Drupal 10/11 | Full feature parity with WordPress |
+| Drupal Free | `pdf_embed_seo/` | Drupal 10/11 | Core PDF viewer, SEO, REST API |
+| Drupal Premium | `pdf_embed_seo/modules/pdf_embed_seo_premium/` | Drupal 10/11 | Analytics, passwords, progress tracking |
 
 ---
 
@@ -54,7 +55,7 @@ This project provides three modules:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    pdf_embed_seo Module                      │
+│                  pdf_embed_seo Module (Free)                 │
 ├─────────────────────────────────────────────────────────────┤
 │  ┌─────────────────┐  ┌─────────────────┐                   │
 │  │  PdfDocument    │  │  Controllers    │                   │
@@ -62,12 +63,19 @@ This project provides three modules:
 │  └─────────────────┘  └─────────────────┘                   │
 │  ┌─────────────────┐  ┌─────────────────┐                   │
 │  │  REST Resources │  │    Services     │                   │
-│  │  (API)          │  │  (Analytics)    │                   │
+│  │  (Basic API)    │  │  (Thumbnails)   │                   │
 │  └─────────────────┘  └─────────────────┘                   │
 │  ┌─────────────────┐  ┌─────────────────┐                   │
 │  │  Block Plugin   │  │     Forms       │                   │
 │  │  (PDF Viewer)   │  │  (Settings)     │                   │
 │  └─────────────────┘  └─────────────────┘                   │
+├─────────────────────────────────────────────────────────────┤
+│              pdf_embed_seo_premium (Optional)                │
+├─────────────────────────────────────────────────────────────┤
+│  ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌─────────────┐ │
+│  │ Analytics │ │ Password  │ │  Reading  │ │   Premium   │ │
+│  │ Dashboard │ │ Protection│ │  Progress │ │  REST API   │ │
+│  └───────────┘ └───────────┘ └───────────┘ └─────────────┘ │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -141,7 +149,7 @@ pdf-embed-seo-optimize/premium/
     └── sitemap-style.xsl
 ```
 
-### Drupal Module
+### Drupal Module (Free)
 
 ```
 pdf_embed_seo/
@@ -169,24 +177,19 @@ pdf_embed_seo/
 │   │   ├── PdfViewController.php        # Single PDF view
 │   │   ├── PdfArchiveController.php     # Archive listing
 │   │   ├── PdfDataController.php        # AJAX data endpoint
-│   │   ├── PdfAnalyticsController.php   # Analytics dashboard
 │   │   └── PdfApiController.php         # REST API controller
 │   │
 │   ├── Form/
 │   │   ├── PdfDocumentForm.php          # Entity form
-│   │   ├── PdfEmbedSeoSettingsForm.php  # Settings form
-│   │   └── PdfPasswordForm.php          # Password form
+│   │   └── PdfEmbedSeoSettingsForm.php  # Settings form
 │   │
 │   ├── Plugin/
 │   │   ├── Block/PdfViewerBlock.php     # Block plugin
 │   │   └── rest/resource/
 │   │       ├── PdfDocumentResource.php  # Documents REST
-│   │       ├── PdfDataResource.php      # Data REST
-│   │       ├── PdfAnalyticsResource.php # Analytics REST
-│   │       └── PdfProgressResource.php  # Progress REST
+│   │       └── PdfDataResource.php      # Data REST
 │   │
 │   ├── Service/
-│   │   ├── PdfAnalyticsTracker.php      # Analytics service
 │   │   └── PdfThumbnailGenerator.php    # Thumbnail service
 │   │
 │   ├── PdfDocumentAccessControlHandler.php
@@ -196,9 +199,7 @@ pdf_embed_seo/
 │   ├── pdf-document.html.twig
 │   ├── pdf-viewer.html.twig
 │   ├── pdf-archive.html.twig
-│   ├── pdf-archive-item.html.twig
-│   ├── pdf-password-form.html.twig
-│   └── pdf-analytics-dashboard.html.twig
+│   └── pdf-archive-item.html.twig
 │
 ├── assets/
 │   ├── css/
@@ -210,8 +211,46 @@ pdf_embed_seo/
 │       ├── pdf-viewer.js
 │       └── pdf-admin.js
 │
+├── modules/
+│   └── pdf_embed_seo_premium/           # Premium submodule
+│       └── (see below)
+│
 └── tests/qa/
     └── UAT-TEST-PLAN-DRUPAL.md
+```
+
+### Drupal Module (Premium)
+
+```
+pdf_embed_seo/modules/pdf_embed_seo_premium/
+├── pdf_embed_seo_premium.info.yml       # Module info (v1.2.0)
+├── pdf_embed_seo_premium.module         # Hook implementations
+├── pdf_embed_seo_premium.install        # Install/uninstall hooks
+├── pdf_embed_seo_premium.routing.yml    # Route definitions
+├── pdf_embed_seo_premium.services.yml   # Service definitions
+├── pdf_embed_seo_premium.permissions.yml# Permission definitions
+├── pdf_embed_seo_premium.links.menu.yml # Admin menu links
+├── README.md                            # Documentation
+│
+├── config/
+│   ├── install/pdf_embed_seo_premium.settings.yml
+│   └── schema/pdf_embed_seo_premium.schema.yml
+│
+├── src/
+│   ├── Controller/
+│   │   ├── PdfAnalyticsController.php   # Analytics dashboard
+│   │   └── PdfPremiumApiController.php  # Premium REST API
+│   │
+│   ├── Form/
+│   │   └── PdfPremiumSettingsForm.php   # Premium settings
+│   │
+│   └── Service/
+│       ├── PdfAnalyticsTracker.php      # Analytics service
+│       └── PdfProgressTracker.php       # Progress service
+│
+└── templates/
+    ├── pdf-analytics-dashboard.html.twig
+    └── pdf-password-form.html.twig
 ```
 
 ---

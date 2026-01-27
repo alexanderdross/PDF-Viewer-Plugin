@@ -33,18 +33,3 @@ delete own pdf document:
   title: 'Delete own PDF documents'
   description: 'Delete PDF documents created by the current user.'
 
-# Premium permissions.
-view pdf analytics:
-  title: 'View PDF analytics'
-  description: 'Access the PDF analytics dashboard and reports.'
-  restrict access: true
-
-bypass pdf password:
-  title: 'Bypass PDF password protection'
-  description: 'View password-protected PDFs without entering the password.'
-  restrict access: true
-
-download protected pdf:
-  title: 'Download protected PDFs'
-  description: 'Download PDFs even when downloads are disabled for regular users.'
-  restrict access: true

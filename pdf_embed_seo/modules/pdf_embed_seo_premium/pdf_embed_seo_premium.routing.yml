@@ -1,0 +1,79 @@
+# Premium routes for PDF Embed & SEO Optimize.
+
+# Premium settings form.
+pdf_embed_seo_premium.settings:
+  path: '/admin/config/content/pdf-embed-seo/premium'
+  defaults:
+    _form: '\Drupal\pdf_embed_seo_premium\Form\PdfPremiumSettingsForm'
+    _title: 'PDF Premium Settings'
+  requirements:
+    _permission: 'administer pdf premium settings'
+
+# Analytics dashboard.
+pdf_embed_seo_premium.analytics:
+  path: '/admin/reports/pdf-analytics'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfAnalyticsController::dashboard'
+    _title: 'PDF Analytics'
+  requirements:
+    _permission: 'view pdf analytics'
+
+# Export analytics CSV.
+pdf_embed_seo_premium.analytics_export:
+  path: '/admin/reports/pdf-analytics/export'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfAnalyticsController::export'
+  requirements:
+    _permission: 'export pdf analytics'
+
+# ==========================================
+# Premium REST API Endpoints
+# ==========================================
+
+# API: Get analytics overview (Premium).
+pdf_embed_seo_premium.api.analytics:
+  path: '/api/pdf-embed-seo/v1/analytics'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfPremiumApiController::getAnalytics'
+  requirements:
+    _permission: 'view pdf analytics'
+  methods: [GET]
+
+# API: Get reading progress (Premium).
+pdf_embed_seo_premium.api.progress.get:
+  path: '/api/pdf-embed-seo/v1/documents/{pdf_document}/progress'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfPremiumApiController::getProgress'
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
+  options:
+    parameters:
+      pdf_document:
+        type: entity:pdf_document
+
+# API: Save reading progress (Premium).
+pdf_embed_seo_premium.api.progress.post:
+  path: '/api/pdf-embed-seo/v1/documents/{pdf_document}/progress'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfPremiumApiController::saveProgress'
+  requirements:
+    _access: 'TRUE'
+  methods: [POST]
+  options:
+    parameters:
+      pdf_document:
+        type: entity:pdf_document
+
+# API: Verify password (Premium).
+pdf_embed_seo_premium.api.verify_password:
+  path: '/api/pdf-embed-seo/v1/documents/{pdf_document}/verify-password'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfPremiumApiController::verifyPassword'
+  requirements:
+    _access: 'TRUE'
+  methods: [POST]
+  options:
+    parameters:
+      pdf_document:
+        type: entity:pdf_document

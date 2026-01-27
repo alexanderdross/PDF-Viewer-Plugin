@@ -89,23 +89,6 @@ pdf_embed_seo.pdf_data:
         type: entity:pdf_document
     no_cache: TRUE
 
-# Premium: Analytics dashboard.
-pdf_embed_seo.analytics:
-  path: '/admin/reports/pdf-analytics'
-  defaults:
-    _controller: '\Drupal\pdf_embed_seo\Controller\PdfAnalyticsController::dashboard'
-    _title: 'PDF Analytics'
-  requirements:
-    _permission: 'view pdf analytics'
-
-# Premium: Export analytics CSV.
-pdf_embed_seo.analytics_export:
-  path: '/admin/reports/pdf-analytics/export'
-  defaults:
-    _controller: '\Drupal\pdf_embed_seo\Controller\PdfAnalyticsController::export'
-  requirements:
-    _permission: 'view pdf analytics'
-
 # ==========================================
 # REST API Endpoints
 # ==========================================
@@ -132,15 +115,3 @@ pdf_embed_seo.api.track_view:
       pdf_document:
         type: entity:pdf_document
 
-# API: Verify password (Premium).
-pdf_embed_seo.api.verify_password:
-  path: '/api/pdf-embed-seo/v1/documents/{pdf_document}/verify-password'
-  defaults:
-    _controller: '\Drupal\pdf_embed_seo\Controller\PdfApiController::verifyPassword'
-  requirements:
-    _access: 'TRUE'
-  methods: [POST]
-  options:
-    parameters:
-      pdf_document:
-        type: entity:pdf_document
