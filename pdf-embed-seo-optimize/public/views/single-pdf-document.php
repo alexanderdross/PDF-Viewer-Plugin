@@ -42,6 +42,7 @@ get_header();
 				<div class="entry-content pdf-embed-seo-optimize-content">
 					<?php
 					// Output the PDF viewer.
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Viewer HTML is safely constructed with escaped values.
 					echo PDF_Embed_SEO_Frontend::get_viewer_html( $post_id );
 					?>
 

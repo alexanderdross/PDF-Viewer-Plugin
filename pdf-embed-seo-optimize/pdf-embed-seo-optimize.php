@@ -158,9 +158,6 @@ final class PDF_Embed_SEO {
 	 * @return void
 	 */
 	private function init_hooks() {
-		// Load plugin textdomain.
-		add_action( 'init', array( $this, 'load_textdomain' ) );
-
 		// Initialize components.
 		add_action( 'init', array( $this, 'init' ), 0 );
 
@@ -169,19 +166,6 @@ final class PDF_Embed_SEO {
 
 		// Deactivation hook.
 		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
-	}
-
-	/**
-	 * Load plugin textdomain.
-	 *
-	 * @return void
-	 */
-	public function load_textdomain() {
-		load_plugin_textdomain(
-			'pdf-embed-seo-optimize',
-			false,
-			dirname( PDF_EMBED_SEO_PLUGIN_BASENAME ) . '/languages'
-		);
 	}
 
 	/**
