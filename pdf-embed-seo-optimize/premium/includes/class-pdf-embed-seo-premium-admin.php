@@ -39,6 +39,48 @@ class PDF_Embed_SEO_Premium_Admin {
 
 		// Modify plugin row.
 		add_filter( 'plugin_row_meta', array( $this, 'add_plugin_row_links' ), 10, 2 );
+
+		// Change plugin name to show Premium.
+		add_filter( 'all_plugins', array( $this, 'modify_plugin_name' ) );
+
+		// Modify plugin action links for premium.
+		add_filter( 'plugin_action_links_' . PDF_EMBED_SEO_PLUGIN_BASENAME, array( $this, 'modify_plugin_action_links' ), 20 );
+	}
+
+	/**
+	 * Modify plugin name to show Premium version.
+	 *
+	 * @param array $plugins All plugins.
+	 * @return array Modified plugins.
+	 */
+	public function modify_plugin_name( $plugins ) {
+		$plugin_file = 'pdf-embed-seo-optimize/pdf-embed-seo-optimize.php';
+		if ( isset( $plugins[ $plugin_file ] ) ) {
+			$plugins[ $plugin_file ]['Name'] = 'PDF Embed & SEO Optimize (Premium)';
+			$plugins[ $plugin_file ]['Title'] = 'PDF Embed & SEO Optimize (Premium)';
+			$plugins[ $plugin_file ]['PluginURI'] = 'https://pdfviewer.drossmedia.de';
+		}
+		return $plugins;
+	}
+
+	/**
+	 * Modify plugin action links for premium version.
+	 *
+	 * @param array $links Action links.
+	 * @return array Modified links.
+	 */
+	public function modify_plugin_action_links( $links ) {
+		// Remove "Get Premium" link since we have premium.
+		unset( $links['premium'] );
+
+		// Add "Visit Site" link.
+		$links['visit_site'] = sprintf(
+			'<a href="%s" target="_blank">%s</a>',
+			'https://pdfviewer.drossmedia.de',
+			esc_html__( 'Visit Site', 'pdf-embed-seo-optimize' )
+		);
+
+		return $links;
 	}
 
 	/**
@@ -399,6 +441,8 @@ class PDF_Embed_SEO_Premium_Admin {
 	public function add_plugin_row_links( $links, $file ) {
 		if ( strpos( $file, 'pdf-embed-seo-optimize' ) !== false ) {
 			$links[] = '<a href="' . esc_url( admin_url( 'edit.php?post_type=pdf_document&page=pdf-license' ) ) . '">' . esc_html__( 'License', 'pdf-embed-seo-optimize' ) . '</a>';
+			$links[] = '<a href="https://pdfviewer.drossmedia.de/documentation/" target="_blank">' . esc_html__( 'Documentation', 'pdf-embed-seo-optimize' ) . '</a>';
+			$links[] = '<a href="https://pdfviewer.drossmedia.de/support/" target="_blank">' . esc_html__( 'Support', 'pdf-embed-seo-optimize' ) . '</a>';
 		}
 
 		return $links;

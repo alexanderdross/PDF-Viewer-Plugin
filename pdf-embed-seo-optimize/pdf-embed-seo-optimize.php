@@ -1,13 +1,13 @@
 <?php
 /**
- * Plugin Name:       PDF Embed & SEO Optimize
- * Plugin URI:        https://github.com/alexanderdross/PDF-Viewer-2026
+ * Plugin Name:       PDF Embed & SEO Optimize (Free Version)
+ * Plugin URI:        https://pdfviewer.drossmedia.de
  * Description:       A powerful WordPress plugin that integrates Mozilla's PDF.js viewer to serve PDFs through a viewer URL, enhancing SEO with Schema Data, Open Graph Tags, Twitter Cards, and other Meta Tags. Control print/download permissions per PDF. Full Yoast SEO integration for title, slug, and meta description control.
  * Version:           1.2.1
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Author:            Dross:Media
- * Author URI:        https://github.com/alexanderdross
+ * Author URI:        https://dross.net/media/
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       pdf-embed-seo-optimize
@@ -174,6 +174,37 @@ final class PDF_Embed_SEO {
 
 		// Deactivation hook.
 		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
+
+		// Add plugin action links.
+		add_filter( 'plugin_action_links_' . PDF_EMBED_SEO_PLUGIN_BASENAME, array( $this, 'add_plugin_action_links' ) );
+	}
+
+	/**
+	 * Add plugin action links.
+	 *
+	 * @param array $links Existing links.
+	 * @return array Modified links.
+	 */
+	public function add_plugin_action_links( $links ) {
+		$custom_links = array();
+
+		// Add "Get Premium" link only if premium is not active.
+		if ( ! function_exists( 'pdf_embed_seo_is_premium' ) || ! pdf_embed_seo_is_premium() ) {
+			$custom_links['premium'] = sprintf(
+				'<a href="%s" target="_blank" style="color: #00a32a; font-weight: bold;">%s</a>',
+				'https://pdfviewer.drossmedia.de',
+				esc_html__( 'Get Premium', 'pdf-embed-seo-optimize' )
+			);
+		}
+
+		// Add settings link.
+		$custom_links['settings'] = sprintf(
+			'<a href="%s">%s</a>',
+			admin_url( 'edit.php?post_type=pdf_document&page=pdf-embed-seo-settings' ),
+			esc_html__( 'Settings', 'pdf-embed-seo-optimize' )
+		);
+
+		return array_merge( $custom_links, $links );
 	}
 
 	/**
