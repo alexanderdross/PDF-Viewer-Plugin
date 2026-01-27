@@ -304,6 +304,27 @@ class PDF_Embed_SEO_Premium_Admin {
 				</table>
 				<?php submit_button( __( 'Save License', 'pdf-embed-seo-optimize' ) ); ?>
 			</form>
+
+			<p class="pdf-embed-seo-get-license" style="margin-top: 20px;">
+				<?php
+				printf(
+					/* translators: %s: link to purchase page */
+					esc_html__( 'Don\'t have a license key? %s', 'pdf-embed-seo-optimize' ),
+					'<a href="https://pdfviewer.drossmedia.de/" target="_blank" rel="noopener noreferrer" aria-label="' . esc_attr__( 'Get a premium license (opens in new tab)', 'pdf-embed-seo-optimize' ) . '" title="' . esc_attr__( 'Get a premium license', 'pdf-embed-seo-optimize' ) . '">' . esc_html__( 'Get a premium license', 'pdf-embed-seo-optimize' ) . '</a>'
+				);
+				?>
+			</p>
+
+			<p class="pdf-embed-seo-optimize-credit" style="text-align: center; margin-top: 30px; color: #666; font-size: 13px;">
+				<?php
+				printf(
+					/* translators: %1$s: heart symbol, %2$s: Dross:Media link */
+					esc_html__( 'made with %1$s by %2$s', 'pdf-embed-seo-optimize' ),
+					'<span style="color: #e25555;" aria-hidden="true">♥</span><span class="screen-reader-text">' . esc_html__( 'love', 'pdf-embed-seo-optimize' ) . '</span>',
+					'<a href="https://dross.net/media/" target="_blank" rel="noopener noreferrer" aria-label="' . esc_attr__( 'Visit Dross:Media website (opens in new tab)', 'pdf-embed-seo-optimize' ) . '" title="' . esc_attr__( 'Visit Dross:Media website', 'pdf-embed-seo-optimize' ) . '">Dross:Media</a>'
+				);
+				?>
+			</p>
 		</div>
 
 		<style>
