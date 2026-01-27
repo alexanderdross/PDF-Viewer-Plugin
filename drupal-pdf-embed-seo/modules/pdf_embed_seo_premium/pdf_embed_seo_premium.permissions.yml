@@ -1,0 +1,26 @@
+# Premium permissions for PDF Embed & SEO Optimize.
+
+view pdf analytics:
+  title: 'View PDF analytics'
+  description: 'Access the PDF analytics dashboard and reports.'
+  restrict access: true
+
+export pdf analytics:
+  title: 'Export PDF analytics'
+  description: 'Export PDF analytics data to CSV.'
+  restrict access: true
+
+bypass pdf password:
+  title: 'Bypass PDF password protection'
+  description: 'View password-protected PDFs without entering the password.'
+  restrict access: true
+
+download protected pdf:
+  title: 'Download protected PDFs'
+  description: 'Download PDFs even when downloads are disabled for regular users.'
+  restrict access: true
+
+administer pdf premium settings:
+  title: 'Administer PDF Premium settings'
+  description: 'Configure premium feature settings.'
+  restrict access: true

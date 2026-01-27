@@ -1,0 +1,7 @@
+enable_analytics: true
+enable_password_protection: true
+enable_reading_progress: true
+analytics_retention_days: 365
+track_anonymous: true
+password_session_duration: 3600
+max_password_attempts: 5

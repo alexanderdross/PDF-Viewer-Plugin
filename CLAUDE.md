@@ -1,310 +1,651 @@
-# PDF Viewer 2026 - WordPress Plugin
+# PDF Embed & SEO Optimize - Multi-Platform Documentation
 
-A WordPress plugin that uses Mozilla's PDF.js library to securely display PDFs without exposing direct file URLs.
+A comprehensive PDF management solution available for WordPress and Drupal that uses Mozilla's PDF.js library to securely display PDFs with SEO optimization.
+
+**Current Version:** 1.2.1
+**Platforms:** WordPress (Free & Premium), Drupal 10/11
+**License:** GPL v2 or later
+
+---
 
 ## Project Overview
 
-This plugin provides a secure, SEO-friendly way to display PDF documents on WordPress sites. Instead of linking directly to PDF files (which exposes the `.pdf` URL), this plugin renders PDFs through a custom viewer with clean, SEO-optimized URLs.
+This project provides four modules:
 
-### Key Features
-
-- **Secure PDF Display**: PDFs are rendered through PDF.js, hiding original file URLs
-- **Clean URL Structure**: URLs like `www.domain.com/pdf/my-document/` instead of `www.domain.com/uploads/file.pdf`
-- **PDF Archive Page**: Overview page at `/pdf/` listing all published PDFs
-- **Yoast SEO Integration**: Full control over slugs, titles, meta tags, OG tags, and Twitter cards
-- **Admin Controls**: Per-PDF settings for print/download permissions
-- **WordPress Guidelines Compliant**: Built following official WordPress plugin development standards
+| Module | Directory | Platform | Features |
+|--------|-----------|----------|----------|
+| WP Free | `wp-wp-pdf-embed-seo-optimize/` | WordPress 5.8+ | Core PDF viewer, SEO, REST API |
+| WP Premium | `wp-wp-pdf-embed-seo-optimize/premium/` | WordPress 5.8+ | Analytics, passwords, progress, sitemap |
+| Drupal Free | `drupal-pdf-embed-seo/` | Drupal 10/11 | Core PDF viewer, SEO, REST API |
+| Drupal Premium | `drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/` | Drupal 10/11 | Analytics, passwords, progress, sitemap |
 
 ---
 
-## Architecture
+## Architecture Overview
 
-### Custom Post Type: `pdf_document`
-
-The plugin registers a custom post type to manage PDF documents:
+### WordPress Plugin Architecture
 
 ```
-Post Type: pdf_document
-Slug: /pdf/
-Supports: title, editor, thumbnail, excerpt, custom-fields
-Rewrite: /pdf/%postname%/
+┌─────────────────────────────────────────────────────────────┐
+│                    PDF_Embed_SEO (Main)                      │
+├─────────────────────────────────────────────────────────────┤
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐ │
+│  │  Post Type  │  │  Frontend   │  │      REST API       │ │
+│  │  Handler    │  │  Renderer   │  │  (Free Endpoints)   │ │
+│  └─────────────┘  └─────────────┘  └─────────────────────┘ │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐ │
+│  │    Admin    │  │    Yoast    │  │     Shortcodes      │ │
+│  │   Handler   │  │ Integration │  │     & Blocks        │ │
+│  └─────────────┘  └─────────────┘  └─────────────────────┘ │
+├─────────────────────────────────────────────────────────────┤
+│                 PDF_Embed_SEO_Premium (Optional)             │
+├─────────────────────────────────────────────────────────────┤
+│  ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌─────────────┐ │
+│  │ Analytics │ │ Password  │ │  Reading  │ │   Premium   │ │
+│  │ Dashboard │ │ Protection│ │  Progress │ │  REST API   │ │
+│  └───────────┘ └───────────┘ └───────────┘ └─────────────┘ │
+│  ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌─────────────┐ │
+│  │Taxonomies │ │   Roles   │ │   Bulk    │ │   Sitemap   │ │
+│  │ Cat/Tags  │ │  Access   │ │  Import   │ │   (XML)     │ │
+│  └───────────┘ └───────────┘ └───────────┘ └─────────────┘ │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-### Data Structure
+### Drupal Module Architecture
 
-Each PDF document stores:
-- **Post Title**: Display title for the PDF
-- **Post Content**: Optional description
-- **Featured Image**: Thumbnail for archive pages
-- **Meta Fields**:
-  - `_pdf_file_id` - Attachment ID of the uploaded PDF
-  - `_pdf_file_url` - Direct URL to the PDF (used internally only)
-  - `_pdf_allow_download` - Boolean: allow download button
-  - `_pdf_allow_print` - Boolean: allow print functionality
-  - `_pdf_view_count` - Integer: track view statistics
-
-### URL Structure
-
-| URL | Description |
-|-----|-------------|
-| `/pdf/` | Archive page showing all PDFs |
-| `/pdf/document-slug/` | Individual PDF viewer page |
-
----
-
-## Technical Implementation
-
-### 1. PDF.js Integration
-
-The plugin uses Mozilla's PDF.js library (https://mozilla.github.io/pdf.js/):
-
-- **Version**: Latest stable release via CDN or bundled
-- **Viewer**: Custom viewer template with WordPress integration
-- **Features**: Page navigation, zoom, search, optional print/download
-
-### 2. Security Measures
-
-- PDF files stored in protected directory or with restricted direct access
-- Nonce verification for AJAX requests
-- Capability checks for admin functions
-- Sanitization/escaping of all inputs/outputs
-
-### 3. Yoast SEO Integration
-
-The plugin integrates with Yoast SEO through:
-
-- Custom post type registration with `public => true` for SEO support
-- Proper `<head>` output allowing Yoast to inject meta tags
-- Support for Yoast's Schema.org integration
-- OpenGraph and Twitter Card meta tag support
-
-### 4. Admin Interface
-
-**PDF Document Edit Screen:**
-- File upload/selection via Media Library
-- Print permission toggle
-- Download permission toggle
-- View statistics display
-- Preview link
-
-**Settings Page:**
-- Default print/download permissions
-- PDF.js viewer customization options
-- URL slug configuration
-- Archive page settings
+```
+┌─────────────────────────────────────────────────────────────┐
+│                  pdf_embed_seo Module (Free)                 │
+├─────────────────────────────────────────────────────────────┤
+│  ┌─────────────────┐  ┌─────────────────┐                   │
+│  │  PdfDocument    │  │  Controllers    │                   │
+│  │  Entity         │  │  (View/Archive) │                   │
+│  └─────────────────┘  └─────────────────┘                   │
+│  ┌─────────────────┐  ┌─────────────────┐                   │
+│  │  REST Resources │  │    Services     │                   │
+│  │  (Basic API)    │  │  (Thumbnails)   │                   │
+│  └─────────────────┘  └─────────────────┘                   │
+│  ┌─────────────────┐  ┌─────────────────┐                   │
+│  │  Block Plugin   │  │     Forms       │                   │
+│  │  (PDF Viewer)   │  │  (Settings)     │                   │
+│  └─────────────────┘  └─────────────────┘                   │
+├─────────────────────────────────────────────────────────────┤
+│              pdf_embed_seo_premium (Optional)                │
+├─────────────────────────────────────────────────────────────┤
+│  ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌─────────────┐ │
+│  │ Analytics │ │ Password  │ │  Reading  │ │   Premium   │ │
+│  │ Dashboard │ │ Protection│ │  Progress │ │  REST API   │ │
+│  └───────────┘ └───────────┘ └───────────┘ └─────────────┘ │
+└─────────────────────────────────────────────────────────────┘
+```
 
 ---
 
 ## File Structure
 
+### WordPress Plugin (Free)
+
 ```
-pdf-embed-seo-optimize/
-├── pdf-embed-seo-optimize.php              # Main plugin file
-├── uninstall.php                     # Cleanup on uninstall
-├── README.txt                        # WordPress.org readme
-├── CLAUDE.md                         # Project documentation
-├── LICENSE                           # GPL v2 or later
+wp-pdf-embed-seo-optimize/
+├── pdf-embed-seo-optimize.php           # Main plugin file (v1.2.0)
+├── uninstall.php                        # Cleanup on uninstall
+├── README.txt                           # WordPress.org readme
+├── LICENSE                              # GPL v2 or later
 │
 ├── includes/
-│   ├── class-pdf-embed-seo-optimize.php           # Main plugin class
-│   ├── class-pdf-viewer-post-type.php      # Custom post type registration
-│   ├── class-pdf-viewer-admin.php          # Admin functionality
-│   ├── class-pdf-viewer-frontend.php       # Frontend rendering
-│   ├── class-pdf-viewer-ajax.php           # AJAX handlers
-│   └── class-pdf-viewer-yoast.php          # Yoast SEO integration
+│   ├── class-pdf-embed-seo-optimize-post-type.php    # CPT registration
+│   ├── class-pdf-embed-seo-optimize-admin.php        # Admin functionality
+│   ├── class-pdf-embed-seo-optimize-frontend.php     # Frontend rendering
+│   ├── class-pdf-embed-seo-optimize-yoast.php        # Yoast SEO integration
+│   ├── class-pdf-embed-seo-optimize-shortcodes.php   # Shortcode handlers
+│   ├── class-pdf-embed-seo-optimize-block.php        # Gutenberg block
+│   ├── class-pdf-embed-seo-optimize-thumbnail.php    # Thumbnail generation
+│   └── class-pdf-embed-seo-optimize-rest-api.php     # REST API (Free)
 │
 ├── admin/
-│   ├── css/
-│   │   └── admin-styles.css                # Admin stylesheet
-│   ├── js/
-│   │   └── admin-scripts.js                # Admin JavaScript
+│   ├── css/admin-styles.css
+│   ├── js/admin-scripts.js
 │   └── views/
-│       ├── meta-box-pdf-settings.php       # PDF settings meta box
-│       └── settings-page.php               # Plugin settings page
+│       ├── meta-box-pdf-settings.php
+│       ├── settings-page.php
+│       └── docs-page.php                # Documentation with premium CTA
 │
 ├── public/
-│   ├── css/
-│   │   └── viewer-styles.css               # PDF viewer stylesheet
-│   ├── js/
-│   │   └── viewer-scripts.js               # PDF viewer JavaScript
+│   ├── css/viewer-styles.css
+│   ├── js/viewer-scripts.js
 │   └── views/
-│       ├── single-pdf-document.php         # Single PDF template
-│       └── archive-pdf-document.php        # Archive template
+│       ├── single-pdf-document.php
+│       └── archive-pdf-document.php
 │
-├── assets/
-│   └── pdfjs/                              # PDF.js library files
-│       ├── pdf.min.js
-│       ├── pdf.worker.min.js
-│       └── web/
-│           └── viewer.html
+├── assets/pdfjs/                        # PDF.js library (bundled)
 │
 └── languages/
-    └── pdf-embed-seo-optimize.pot                 # Translation template
+    └── pdf-embed-seo-optimize.pot
+```
+
+### WordPress Plugin (Premium)
+
+```
+wp-pdf-embed-seo-optimize/premium/
+├── class-pdf-embed-seo-premium.php              # Premium loader (v1.2.0)
+├── COMPARISON.md                                # Free vs Pro comparison
+│
+├── includes/
+│   ├── class-pdf-embed-seo-premium-admin.php        # Premium admin UI
+│   ├── class-pdf-embed-seo-premium-analytics.php    # Analytics dashboard
+│   ├── class-pdf-embed-seo-premium-bulk.php         # Bulk import
+│   ├── class-pdf-embed-seo-premium-password.php     # Password protection
+│   ├── class-pdf-embed-seo-premium-roles.php        # Role-based access
+│   ├── class-pdf-embed-seo-premium-sitemap.php      # XML sitemap
+│   ├── class-pdf-embed-seo-premium-taxonomies.php   # Categories & tags
+│   ├── class-pdf-embed-seo-premium-viewer.php       # Enhanced viewer
+│   └── class-pdf-embed-seo-premium-rest-api.php     # Premium REST API
+│
+└── assets/
+    ├── css/premium-admin.css
+    ├── css/premium-viewer.css
+    ├── js/premium-admin.js
+    ├── js/premium-viewer.js
+    └── sitemap-style.xsl
+```
+
+### Drupal Module (Free)
+
+```
+drupal-pdf-embed-seo/
+├── pdf_embed_seo.info.yml               # Module info (v1.2.0)
+├── pdf_embed_seo.module                 # Hook implementations
+├── pdf_embed_seo.install                # Install/uninstall hooks
+├── pdf_embed_seo.routing.yml            # Route definitions
+├── pdf_embed_seo.services.yml           # Service definitions
+├── pdf_embed_seo.permissions.yml        # Permission definitions
+├── pdf_embed_seo.libraries.yml          # Asset libraries
+├── pdf_embed_seo.links.menu.yml         # Admin menu links
+├── pdf_embed_seo.links.action.yml       # Action links
+├── README.md                            # Documentation
+│
+├── config/
+│   ├── install/pdf_embed_seo.settings.yml
+│   └── schema/pdf_embed_seo.schema.yml
+│
+├── src/
+│   ├── Entity/
+│   │   ├── PdfDocument.php              # Entity class
+│   │   └── PdfDocumentInterface.php     # Entity interface
+│   │
+│   ├── Controller/
+│   │   ├── PdfViewController.php        # Single PDF view
+│   │   ├── PdfArchiveController.php     # Archive listing
+│   │   ├── PdfDataController.php        # AJAX data endpoint
+│   │   └── PdfApiController.php         # REST API controller
+│   │
+│   ├── Form/
+│   │   ├── PdfDocumentForm.php          # Entity form
+│   │   └── PdfEmbedSeoSettingsForm.php  # Settings form
+│   │
+│   ├── Plugin/
+│   │   ├── Block/PdfViewerBlock.php     # Block plugin
+│   │   └── rest/resource/
+│   │       ├── PdfDocumentResource.php  # Documents REST
+│   │       └── PdfDataResource.php      # Data REST
+│   │
+│   ├── Service/
+│   │   └── PdfThumbnailGenerator.php    # Thumbnail service
+│   │
+│   ├── PdfDocumentAccessControlHandler.php
+│   └── PdfDocumentListBuilder.php
+│
+├── templates/
+│   ├── pdf-document.html.twig
+│   ├── pdf-viewer.html.twig
+│   ├── pdf-archive.html.twig
+│   └── pdf-archive-item.html.twig
+│
+├── assets/
+│   ├── css/
+│   │   ├── pdf-viewer.css
+│   │   ├── pdf-viewer-dark.css
+│   │   ├── pdf-archive.css
+│   │   └── pdf-admin.css
+│   └── js/
+│       ├── pdf-viewer.js
+│       └── pdf-admin.js
+│
+├── modules/
+│   └── pdf_embed_seo_premium/           # Premium submodule
+│       └── (see below)
+│
+└── tests/qa/
+    └── UAT-TEST-PLAN-DRUPAL.md
+```
+
+### Drupal Module (Premium)
+
+```
+drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
+├── pdf_embed_seo_premium.info.yml       # Module info (v1.2.0)
+├── pdf_embed_seo_premium.module         # Hook implementations
+├── pdf_embed_seo_premium.install        # Install/uninstall hooks
+├── pdf_embed_seo_premium.routing.yml    # Route definitions
+├── pdf_embed_seo_premium.services.yml   # Service definitions
+├── pdf_embed_seo_premium.permissions.yml# Permission definitions
+├── pdf_embed_seo_premium.links.menu.yml # Admin menu links
+├── README.md                            # Documentation
+│
+├── config/
+│   ├── install/pdf_embed_seo_premium.settings.yml
+│   └── schema/pdf_embed_seo_premium.schema.yml
+│
+├── src/
+│   ├── Controller/
+│   │   ├── PdfAnalyticsController.php   # Analytics dashboard
+│   │   └── PdfPremiumApiController.php  # Premium REST API
+│   │
+│   ├── Form/
+│   │   └── PdfPremiumSettingsForm.php   # Premium settings
+│   │
+│   └── Service/
+│       ├── PdfAnalyticsTracker.php      # Analytics service
+│       └── PdfProgressTracker.php       # Progress service
+│
+└── templates/
+    ├── pdf-analytics-dashboard.html.twig
+    └── pdf-password-form.html.twig
 ```
 
 ---
 
-## WordPress Guidelines Compliance
+## REST API Reference
 
-### Coding Standards
+### API Base URLs
 
-- Follow [WordPress Coding Standards](https://developer.wordpress.org/coding-standards/)
-- Use WordPress coding style for PHP, JS, and CSS
-- Prefix all functions, classes, and global variables with `pdf_viewer_2026_`
-- Use proper escaping functions: `esc_html()`, `esc_attr()`, `esc_url()`
-- Use `wp_nonce_field()` and `wp_verify_nonce()` for form security
+| Platform | Base URL |
+|----------|----------|
+| WordPress | `/wp-json/pdf-embed-seo/v1/` |
+| Drupal | `/api/pdf-embed-seo/v1/` |
 
-### Security Best Practices
+### Public Endpoints (Free)
 
-- Validate and sanitize all user inputs
-- Use prepared statements for database queries
-- Check user capabilities before performing actions
-- Escape all output
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| `GET` | `/documents` | List all published PDFs | None |
+| `GET` | `/documents/{id}` | Get single PDF details | None |
+| `GET` | `/documents/{id}/data` | Get PDF file URL securely | None |
+| `POST` | `/documents/{id}/view` | Track PDF view | None |
+| `GET` | `/settings` | Get public settings | None |
 
-### Performance
+### Premium Endpoints
 
-- Enqueue scripts/styles only when needed
-- Use WordPress caching APIs
-- Minimize database queries
-- Lazy load PDF.js only on viewer pages
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| `GET` | `/analytics` | Analytics overview | Admin |
+| `GET` | `/analytics/documents` | Per-document analytics | Admin |
+| `GET` | `/analytics/export` | Export analytics CSV/JSON | Admin |
+| `GET` | `/documents/{id}/progress` | Get reading progress | None |
+| `POST` | `/documents/{id}/progress` | Save reading progress | None |
+| `POST` | `/documents/{id}/verify-password` | Verify PDF password | None |
+| `GET` | `/categories` | List PDF categories | None |
+| `GET` | `/tags` | List PDF tags | None |
+| `POST` | `/bulk/import` | Start bulk import | Admin |
+| `GET` | `/bulk/import/status` | Get import status | Admin |
 
-### Internationalization
+### Query Parameters for `/documents`
 
-- All strings wrapped in translation functions: `__()`, `_e()`, `esc_html__()`
-- Text domain: `pdf-embed-seo-optimize`
-- POT file for translations
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `page` | 1 | Page number |
+| `per_page` | 10 | Items per page (max 100) |
+| `search` | - | Search term |
+| `orderby` | date | Sort: date, title, modified, views |
+| `order` | desc | Sort direction: asc, desc |
 
----
+### Response Format
 
-## Development Phases
-
-### Phase 1: Core Infrastructure
-- [ ] Create main plugin file with proper headers
-- [ ] Register custom post type `pdf_document`
-- [ ] Set up basic file structure
-- [ ] Create activation/deactivation hooks
-
-### Phase 2: Admin Interface
-- [ ] Create meta boxes for PDF settings
-- [ ] Implement Media Library integration for PDF upload
-- [ ] Add print/download permission toggles
-- [ ] Create plugin settings page
-
-### Phase 3: PDF.js Integration
-- [ ] Include PDF.js library
-- [ ] Create viewer template
-- [ ] Implement security measures (disable context menu, etc.)
-- [ ] Add print/download controls based on permissions
-
-### Phase 4: Frontend Display
-- [ ] Create single PDF document template
-- [ ] Create archive template
-- [ ] Style the viewer for responsive display
-- [ ] Add page navigation controls
-
-### Phase 5: Yoast SEO Integration
-- [ ] Ensure proper meta tag support
-- [ ] Test OpenGraph integration
-- [ ] Test Twitter Cards
-- [ ] Verify sitemap inclusion
-
-### Phase 6: Security & Polish
-- [ ] Security audit
-- [ ] Performance optimization
-- [ ] Accessibility improvements
-- [ ] Documentation
+```json
+{
+  "id": 123,
+  "title": "Document Title",
+  "slug": "document-slug",
+  "url": "https://site.com/pdf/document-slug/",
+  "excerpt": "Description...",
+  "date": "2024-01-15T10:30:00+00:00",
+  "modified": "2024-06-20T14:45:00+00:00",
+  "views": 1542,
+  "thumbnail": "https://site.com/uploads/thumb.jpg",
+  "allow_download": true,
+  "allow_print": false
+}
+```
 
 ---
 
-## Hooks and Filters
+## WordPress Hooks Reference
 
 ### Actions
 
-```php
-// Fired when a PDF is viewed
-do_action( 'pdf_viewer_2026_pdf_viewed', $post_id );
-
-// Fired when PDF settings are saved
-do_action( 'pdf_viewer_2026_settings_saved', $post_id, $settings );
-```
+| Hook | Parameters | Description |
+|------|------------|-------------|
+| `pdf_embed_seo_pdf_viewed` | `$post_id, $count` | PDF was viewed |
+| `pdf_embed_seo_premium_init` | - | Premium features initialized |
+| `pdf_embed_seo_settings_saved` | `$post_id, $settings` | Settings saved |
 
 ### Filters
 
-```php
-// Modify PDF.js viewer options
-apply_filters( 'pdf_viewer_2026_viewer_options', $options, $post_id );
+| Hook | Parameters | Description |
+|------|------------|-------------|
+| `pdf_embed_seo_post_type_args` | `$args` | Modify CPT registration |
+| `pdf_embed_seo_schema_data` | `$schema, $post_id` | Modify Schema.org data |
+| `pdf_embed_seo_archive_schema_data` | `$schema` | Modify archive schema |
+| `pdf_embed_seo_archive_query` | `$posts_per_page` | Modify archive query |
+| `pdf_embed_seo_archive_title` | `$title` | Modify archive title |
+| `pdf_embed_seo_archive_description` | `$description` | Modify archive description |
+| `pdf_embed_seo_sitemap_query_args` | `$query_args, $atts` | Modify sitemap query |
+| `pdf_embed_seo_viewer_options` | `$options, $post_id` | Modify viewer options |
+| `pdf_embed_seo_allowed_types` | `$types` | Modify allowed MIME types |
+| `pdf_embed_seo_rest_document` | `$data, $post, $detailed` | Modify REST response |
+| `pdf_embed_seo_rest_document_data` | `$data, $post_id` | Modify REST data response |
+| `pdf_embed_seo_rest_settings` | `$settings` | Modify REST settings |
 
-// Modify allowed file types
-apply_filters( 'pdf_viewer_2026_allowed_types', array( 'application/pdf' ) );
+### Premium Filters
 
-// Customize archive query
-apply_filters( 'pdf_viewer_2026_archive_query', $query_args );
-```
+| Hook | Parameters | Description |
+|------|------------|-------------|
+| `pdf_embed_seo_password_error` | `$error` | Custom password error |
+| `pdf_embed_seo_verify_password` | `$is_valid, $post_id, $password` | Override password check |
+| `pdf_embed_seo_rest_analytics` | `$data, $period` | Modify analytics response |
 
 ---
 
-## Database
+## Drupal Hooks Reference
 
-### Custom Tables
+### Alter Hooks
 
-None required - uses WordPress post meta for all data storage.
+| Hook | Description |
+|------|-------------|
+| `hook_pdf_embed_seo_document_data_alter` | Modify API document data |
+| `hook_pdf_embed_seo_api_settings_alter` | Modify API settings |
+| `hook_pdf_embed_seo_verify_password_alter` | Override password verification |
+| `hook_pdf_embed_seo_viewer_options_alter` | Modify viewer options |
+| `hook_pdf_embed_seo_schema_alter` | Modify Schema.org output |
 
-### Options
+### Event Hooks
 
-```
-pdf_viewer_2026_settings - Serialized array of plugin settings
-pdf_viewer_2026_version - Current plugin version for upgrades
-```
+| Hook | Description |
+|------|-------------|
+| `hook_pdf_embed_seo_view_tracked` | PDF view was tracked |
+| `hook_pdf_embed_seo_document_saved` | PDF document saved |
+
+---
+
+## Data Models
+
+### WordPress Post Meta
+
+| Meta Key | Type | Description |
+|----------|------|-------------|
+| `_pdf_file_id` | int | Attachment ID |
+| `_pdf_file_url` | string | Direct PDF URL (internal) |
+| `_pdf_allow_download` | bool | Allow download |
+| `_pdf_allow_print` | bool | Allow print |
+| `_pdf_view_count` | int | View count |
+| `_pdf_password_protected` | bool | Password enabled (Premium) |
+| `_pdf_password` | string | Hashed password (Premium) |
+
+### WordPress Options
+
+| Option | Description |
+|--------|-------------|
+| `pdf_embed_seo_settings` | Serialized plugin settings |
+| `pdf_embed_seo_version` | Current version |
+| `pdf_embed_seo_premium_license_status` | License status (Premium) |
+| `pdf_embed_seo_premium_settings` | Premium settings (Premium) |
+
+### Drupal Entity Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | int | Entity ID |
+| `uuid` | string | UUID |
+| `title` | string | Document title |
+| `description` | text | Description |
+| `pdf_file` | file | PDF file reference |
+| `thumbnail` | image | Thumbnail image |
+| `slug` | string | URL slug |
+| `allow_download` | boolean | Allow download |
+| `allow_print` | boolean | Allow print |
+| `view_count` | integer | View count |
+| `password_protected` | boolean | Password enabled |
+| `password` | string | Hashed password |
+| `status` | boolean | Published status |
+| `created` | timestamp | Created date |
+| `changed` | timestamp | Modified date |
+
+---
+
+## URL Structure
+
+| Page | WordPress | Drupal |
+|------|-----------|--------|
+| Archive | `/pdf/` | `/pdf` |
+| Single PDF | `/pdf/{slug}/` | `/pdf/{slug}` |
+| XML Sitemap (Premium) | `/pdf/sitemap.xml` | `/pdf/sitemap.xml` |
+| Admin List | `/wp-admin/edit.php?post_type=pdf_document` | `/admin/content/pdf-documents` |
+| Settings | `/wp-admin/edit.php?post_type=pdf_document&page=pdf-embed-seo-settings` | `/admin/config/content/pdf-embed-seo` |
+| Analytics | `/wp-admin/edit.php?post_type=pdf_document&page=pdf-analytics` | `/admin/reports/pdf-analytics` |
+
+---
+
+## Feature Matrix
+
+### Viewer & Display
+
+| Feature | Free | Premium |
+|---------|:----:|:-------:|
+| Mozilla PDF.js Viewer (v4.0) | ✓ | ✓ |
+| Light Theme | ✓ | ✓ |
+| Dark Theme | ✓ | ✓ |
+| Responsive Design | ✓ | ✓ |
+| Print Control (per PDF) | ✓ | ✓ |
+| Download Control (per PDF) | ✓ | ✓ |
+| Configurable Viewer Height | ✓ | ✓ |
+| Gutenberg Block (WP) | ✓ | ✓ |
+| PDF Viewer Block (Drupal) | ✓ | ✓ |
+| Shortcodes (WP) | ✓ | ✓ |
+| Text Search in Viewer | - | ✓ |
+| Bookmark Navigation | - | ✓ |
+
+### Content Management
+
+| Feature | Free | Premium |
+|---------|:----:|:-------:|
+| Custom Post Type / Entity | ✓ | ✓ |
+| Title, Description, Slug | ✓ | ✓ |
+| File Upload & Management | ✓ | ✓ |
+| Featured Image / Thumbnail | ✓ | ✓ |
+| Auto-Generate Thumbnails | ✓ | ✓ |
+| Published/Draft Status | ✓ | ✓ |
+| Owner/Author Tracking | ✓ | ✓ |
+| Admin List with Columns | ✓ | ✓ |
+| Quick Edit Support (WP) | ✓ | ✓ |
+| Multi-language Support | ✓ | ✓ |
+| Categories Taxonomy | - | ✓ |
+| Tags Taxonomy | - | ✓ |
+| Role-Based Access Control | - | ✓ |
+| Bulk Edit Actions | - | ✓ |
+| Bulk Import (CSV/ZIP) | - | ✓ |
+
+### SEO & URLs
+
+| Feature | Free | Premium |
+|---------|:----:|:-------:|
+| Clean URL Structure (`/pdf/slug/`) | ✓ | ✓ |
+| Auto Path/Slug Generation | ✓ | ✓ |
+| Schema.org DigitalDocument | ✓ | ✓ |
+| Schema.org CollectionPage | ✓ | ✓ |
+| Yoast SEO Integration (WP) | ✓ | ✓ |
+| OpenGraph Meta Tags | ✓ | ✓ |
+| Twitter Card Support | ✓ | ✓ |
+| XML Sitemap (`/pdf/sitemap.xml`) | - | ✓ |
+| Sitemap XSL Stylesheet | - | ✓ |
+| Search Engine Ping | - | ✓ |
+
+### Archive & Listing
+
+| Feature | Free | Premium |
+|---------|:----:|:-------:|
+| Archive Page (`/pdf`) | ✓ | ✓ |
+| Pagination Support | ✓ | ✓ |
+| Grid/List Display Modes | ✓ | ✓ |
+| Sorting Options | ✓ | ✓ |
+| Search Filtering | ✓ | ✓ |
+| Category Filter | - | ✓ |
+| Tag Filter | - | ✓ |
+
+### REST API
+
+| Feature | Free | Premium |
+|---------|:----:|:-------:|
+| GET /documents (list) | ✓ | ✓ |
+| GET /documents/{id} (single) | ✓ | ✓ |
+| GET /documents/{id}/data (secure) | ✓ | ✓ |
+| POST /documents/{id}/view (track) | ✓ | ✓ |
+| GET /settings | ✓ | ✓ |
+| GET /analytics | - | ✓ |
+| GET /analytics/documents | - | ✓ |
+| GET /analytics/export | - | ✓ |
+| GET/POST /documents/{id}/progress | - | ✓ |
+| POST /documents/{id}/verify-password | - | ✓ |
+| GET /categories | - | ✓ |
+| GET /tags | - | ✓ |
+| POST /bulk/import | - | ✓ |
+
+### Statistics & Analytics
+
+| Feature | Free | Premium |
+|---------|:----:|:-------:|
+| Basic View Counter | ✓ | ✓ |
+| View Count Display | ✓ | ✓ |
+| Analytics Dashboard | - | ✓ |
+| Detailed View Tracking | - | ✓ |
+| IP, User Agent, Referrer | - | ✓ |
+| Time Spent Tracking | - | ✓ |
+| Popular Documents Report | - | ✓ |
+| Recent Views Log | - | ✓ |
+| Analytics Export (CSV/JSON) | - | ✓ |
+| Time Period Filters | - | ✓ |
+
+### Security & Access
+
+| Feature | Free | Premium |
+|---------|:----:|:-------:|
+| Nonce/CSRF Protection | ✓ | ✓ |
+| Permission System | ✓ | ✓ |
+| Capability/Access Checks | ✓ | ✓ |
+| Secure PDF URL (no direct links) | ✓ | ✓ |
+| Input Sanitization | ✓ | ✓ |
+| Output Escaping | ✓ | ✓ |
+| Password Protection | - | ✓ |
+| Password Hashing (secure) | - | ✓ |
+| Session-Based Access | - | ✓ |
+| Login Requirement Option | - | ✓ |
+| Role Restrictions | - | ✓ |
+
+### Reading Experience
+
+| Feature | Free | Premium |
+|---------|:----:|:-------:|
+| Page Navigation | ✓ | ✓ |
+| Zoom Controls | ✓ | ✓ |
+| Full Screen Mode | ✓ | ✓ |
+| Reading Progress Tracking | - | ✓ |
+| Resume Reading Feature | - | ✓ |
+| Page/Scroll/Zoom Save | - | ✓ |
+
+### Developer
+
+| Feature | Free | Premium |
+|---------|:----:|:-------:|
+| WordPress Hooks (actions/filters) | ✓ | ✓ |
+| Drupal Hooks (alter/events) | ✓ | ✓ |
+| Template Overrides | ✓ | ✓ |
+| CSS Classes for Styling | ✓ | ✓ |
+| JavaScript Events | ✓ | ✓ |
+| Cache Tags & Contexts | ✓ | ✓ |
+| Analytics Tracker Service | - | ✓ |
+| Progress Tracker Service | - | ✓ |
+| Priority Support | - | ✓ |
 
 ---
 
 ## Dependencies
 
+### WordPress
 - WordPress 5.8+
 - PHP 7.4+
-- Mozilla PDF.js (included)
-- Optional: Yoast SEO for enhanced SEO features
+- Mozilla PDF.js (bundled)
+- Optional: Yoast SEO
+- Optional: ImageMagick or Ghostscript (thumbnails)
+
+### Drupal
+- Drupal 10 or 11
+- PHP 8.1+
+- Core modules: node, file, taxonomy, path, path_alias
+- Optional: ImageMagick or Ghostscript (thumbnails)
 
 ---
 
-## Testing Checklist
+## Security Measures
 
-- [ ] PDF upload and display works correctly
-- [ ] URLs are clean and SEO-friendly
-- [ ] Print/download restrictions work
-- [ ] Yoast SEO meta boxes appear
-- [ ] Archive page displays all PDFs
-- [ ] Mobile responsive design
-- [ ] Security: direct PDF access is restricted
-- [ ] Performance: lazy loading works
-- [ ] i18n: all strings are translatable
+1. **PDF URL Protection**: Direct URLs hidden via AJAX/API
+2. **Nonce Verification**: All AJAX requests verified
+3. **Capability Checks**: Admin functions require proper permissions
+4. **Input Sanitization**: All inputs sanitized
+5. **Output Escaping**: All outputs escaped
+6. **CSRF Protection**: Forms protected with tokens
+7. **Password Hashing**: Passwords stored hashed (Premium)
+
+---
+
+## Premium Purchase URL
+
+**https://pdfviewer.drossmedia.de**
 
 ---
 
 ## Changelog
 
-### 1.0.0 (In Development)
+### 1.2.1 (Current)
+- Version bump for release
+- Documentation improvements
+
+### 1.2.0
+- Added REST API endpoints for all platforms
+- Added reading progress tracking (Premium)
+- Added password verification endpoint (Premium)
+- Added XML Sitemap at `/pdf/sitemap.xml` (Premium)
+- Separated Drupal into free base + premium submodule
+- Added comprehensive developer documentation
+- Added premium upgrade CTA to docs page
+- Updated feature comparison tables
+
+### 1.1.5
+- Version sync across all modules
+- Bug fixes and improvements
+
+### 1.1.0
+- Added UAT/QA test documentation
+- Added Drupal module
+
+### 1.0.0
 - Initial release
-- Custom post type for PDFs
-- PDF.js viewer integration
-- Yoast SEO compatibility
+- WordPress plugin with PDF.js viewer
+- Yoast SEO integration
 - Print/download controls
 
 ---
 
-## Contributing
+## Credits
 
-This plugin follows WordPress coding standards. Before contributing:
+Made with ♥ by [Dross:Media](https://dross.net/media/)
 
-1. Run PHP CodeSniffer with WordPress standards
-2. Test on multiple WordPress versions
-3. Ensure no PHP warnings/notices
-4. Update translation files if strings changed
-
----
-
-## License
-
-GPL v2 or later - https://www.gnu.org/licenses/gpl-2.0.html
-
-This is free software, and you are welcome to redistribute it under certain conditions.
+**License:** GPL v2 or later - https://www.gnu.org/licenses/gpl-2.0.html

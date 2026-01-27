@@ -1,0 +1,8 @@
+# Menu links for PDF Embed & SEO Optimize Premium.
+
+pdf_embed_seo_premium.analytics:
+  title: 'PDF Analytics'
+  description: 'View PDF view statistics and analytics.'
+  route_name: pdf_embed_seo_premium.analytics
+  parent: system.admin_reports
+  weight: 50

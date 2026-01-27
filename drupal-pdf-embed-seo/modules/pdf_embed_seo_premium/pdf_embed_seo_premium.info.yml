@@ -1,0 +1,19 @@
+name: 'PDF Embed & SEO Optimize (Premium)'
+version: '1.2.1'
+type: module
+description: 'Premium features for PDF Embed & SEO Optimize: Analytics dashboard, password protection, reading progress tracking, and more.'
+package: 'Content'
+core_version_requirement: ^10 || ^11
+php: 8.1
+
+dependencies:
+  - pdf_embed_seo:pdf_embed_seo
+
+configure: pdf_embed_seo_premium.settings
+
+# Premium features included:
+# - Analytics Dashboard with detailed reports
+# - Password Protection for PDFs
+# - Reading Progress tracking
+# - CSV Export of analytics data
+# - Premium REST API endpoints

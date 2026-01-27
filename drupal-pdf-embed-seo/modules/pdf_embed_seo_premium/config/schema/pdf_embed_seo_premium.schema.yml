@@ -1,0 +1,25 @@
+pdf_embed_seo_premium.settings:
+  type: config_object
+  label: 'PDF Embed & SEO Premium settings'
+  mapping:
+    enable_analytics:
+      type: boolean
+      label: 'Enable analytics tracking'
+    enable_password_protection:
+      type: boolean
+      label: 'Enable password protection'
+    enable_reading_progress:
+      type: boolean
+      label: 'Enable reading progress'
+    analytics_retention_days:
+      type: integer
+      label: 'Analytics data retention days'
+    track_anonymous:
+      type: boolean
+      label: 'Track anonymous users'
+    password_session_duration:
+      type: integer
+      label: 'Password session duration in seconds'
+    max_password_attempts:
+      type: integer
+      label: 'Maximum password attempts'
