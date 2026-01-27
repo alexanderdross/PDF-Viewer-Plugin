@@ -1,0 +1,112 @@
+# Libraries for PDF Embed & SEO Optimize module.
+
+# PDF.js core library.
+pdfjs:
+  version: '4.0.379'
+  js:
+    assets/pdfjs/pdf.min.js: { minified: true }
+    assets/pdfjs/pdf.worker.min.js: { minified: true }
+  css:
+    theme:
+      assets/pdfjs/web/viewer.css: {}
+
+# PDF viewer frontend.
+viewer:
+  version: 1.x
+  js:
+    assets/js/pdf-viewer.js: {}
+  css:
+    theme:
+      assets/css/pdf-viewer.css: {}
+  dependencies:
+    - pdf_embed_seo/pdfjs
+    - core/drupal
+    - core/drupalSettings
+    - core/once
+
+# PDF viewer - dark theme.
+viewer-dark:
+  version: 1.x
+  css:
+    theme:
+      assets/css/pdf-viewer-dark.css: {}
+  dependencies:
+    - pdf_embed_seo/viewer
+
+# Archive page styles.
+archive:
+  version: 1.x
+  css:
+    theme:
+      assets/css/pdf-archive.css: {}
+  dependencies:
+    - core/drupal
+
+# Admin styles.
+admin:
+  version: 1.x
+  js:
+    assets/js/pdf-admin.js: {}
+  css:
+    theme:
+      assets/css/pdf-admin.css: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery
+    - core/once
+
+# Premium: Search in PDF.
+premium-search:
+  version: 1.x
+  js:
+    assets/js/premium/pdf-search.js: {}
+  css:
+    component:
+      assets/css/premium/pdf-search.css: {}
+  dependencies:
+    - pdf_embed_seo/viewer
+
+# Premium: Bookmarks.
+premium-bookmarks:
+  version: 1.x
+  js:
+    assets/js/premium/pdf-bookmarks.js: {}
+  css:
+    component:
+      assets/css/premium/pdf-bookmarks.css: {}
+  dependencies:
+    - pdf_embed_seo/viewer
+    - core/drupal.ajax
+
+# Premium: Reading progress.
+premium-progress:
+  version: 1.x
+  js:
+    assets/js/premium/pdf-progress.js: {}
+  css:
+    component:
+      assets/css/premium/pdf-progress.css: {}
+  dependencies:
+    - pdf_embed_seo/viewer
+
+# Premium: Analytics tracking.
+premium-analytics:
+  version: 1.x
+  js:
+    assets/js/premium/pdf-analytics.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+
+# Premium: Password protection.
+premium-password:
+  version: 1.x
+  js:
+    assets/js/premium/pdf-password.js: {}
+  css:
+    component:
+      assets/css/premium/pdf-password.css: {}
+  dependencies:
+    - core/drupal
+    - core/drupal.ajax

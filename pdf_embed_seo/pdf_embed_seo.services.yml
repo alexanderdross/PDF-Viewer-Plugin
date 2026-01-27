@@ -1,0 +1,18 @@
+services:
+  # PDF thumbnail generator service.
+  pdf_embed_seo.thumbnail_generator:
+    class: Drupal\pdf_embed_seo\Service\PdfThumbnailGenerator
+    arguments:
+      - '@file_system'
+      - '@entity_type.manager'
+      - '@logger.factory'
+      - '@config.factory'
+
+  # PDF analytics tracker service (premium).
+  pdf_embed_seo.analytics_tracker:
+    class: Drupal\pdf_embed_seo\Service\PdfAnalyticsTracker
+    arguments:
+      - '@database'
+      - '@current_user'
+      - '@request_stack'
+      - '@datetime.time'

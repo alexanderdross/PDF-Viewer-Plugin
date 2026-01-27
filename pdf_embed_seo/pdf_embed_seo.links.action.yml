@@ -1,0 +1,7 @@
+# Action links for PDF Embed & SEO Optimize.
+
+entity.pdf_document.add_form:
+  title: 'Add PDF Document'
+  route_name: entity.pdf_document.add_form
+  appears_on:
+    - entity.pdf_document.collection

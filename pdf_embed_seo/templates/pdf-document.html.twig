@@ -1,0 +1,34 @@
+{#
+/**
+ * @file
+ * Default template for displaying a PDF document entity.
+ *
+ * Available variables:
+ * - pdf_document: The PDF document entity.
+ * - view_mode: The view mode being displayed.
+ * - content: All field items for the PDF document.
+ */
+#}
+<article{{ attributes.addClass('pdf-document', 'pdf-document--' ~ view_mode) }}>
+  {% if content.pdf_viewer is defined %}
+    {{ content.pdf_viewer }}
+  {% endif %}
+
+  {% if content.description is defined %}
+    <div class="pdf-document-description">
+      {{ content.description }}
+    </div>
+  {% endif %}
+
+  {% if content.pdf_download_button is defined %}
+    <div class="pdf-document-actions">
+      {{ content.pdf_download_button }}
+    </div>
+  {% endif %}
+
+  {% if content.pdf_view_count is defined %}
+    <div class="pdf-document-stats">
+      {{ content.pdf_view_count }}
+    </div>
+  {% endif %}
+</article>
