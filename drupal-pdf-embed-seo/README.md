@@ -1,10 +1,15 @@
 # PDF Embed & SEO Optimize for Drupal
 
+<p align="center">
+  <img src="https://pdfviewer.drossmedia.de/wp-content/uploads/2025/03/wp-pdf-embed-and-seo-optimized.png" alt="PDF Embed & SEO Optimize" width="128">
+</p>
+
 A powerful Drupal module that integrates Mozilla's PDF.js viewer to display PDFs with clean URLs, SEO optimization, and access controls.
 
 **Current Version:** 1.2.1
 **Platforms:** Drupal 10, Drupal 11
 **License:** GPL v2 or later
+**Website:** [pdfviewer.drossmedia.de](https://pdfviewer.drossmedia.de)
 
 ## Free vs Premium
 

@@ -1,6 +1,12 @@
 # PDF Embed & SEO Optimize - Free vs Premium Comparison
 
+<p align="center">
+  <img src="https://pdfviewer.drossmedia.de/wp-content/uploads/2025/03/wp-pdf-embed-and-seo-optimized.png" alt="PDF Embed & SEO Optimize" width="100">
+</p>
+
 A detailed comparison of features available in the Free and Premium versions.
+
+**Get Premium:** [pdfviewer.drossmedia.de](https://pdfviewer.drossmedia.de)
 
 ---
 
