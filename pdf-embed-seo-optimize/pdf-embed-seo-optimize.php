@@ -3,7 +3,7 @@
  * Plugin Name:       PDF Embed & SEO Optimize
  * Plugin URI:        https://github.com/alexanderdross/PDF-Viewer-2026
  * Description:       A powerful WordPress plugin that integrates Mozilla's PDF.js viewer to serve PDFs through a viewer URL, enhancing SEO with Schema Data, Open Graph Tags, Twitter Cards, and other Meta Tags. Control print/download permissions per PDF. Full Yoast SEO integration for title, slug, and meta description control.
- * Version:           1.1.5
+ * Version:           1.2.0
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Author:            Dross:Media
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Plugin version.
  */
-define( 'PDF_EMBED_SEO_VERSION', '1.1.5' );
+define( 'PDF_EMBED_SEO_VERSION', '1.2.0' );
 
 /**
  * Plugin directory path.
@@ -113,6 +113,13 @@ final class PDF_Embed_SEO {
 	public $thumbnail = null;
 
 	/**
+	 * REST API instance.
+	 *
+	 * @var PDF_Embed_SEO_REST_API|null
+	 */
+	public $rest_api = null;
+
+	/**
 	 * Get the single instance of the class.
 	 *
 	 * @return PDF_Embed_SEO
@@ -145,6 +152,7 @@ final class PDF_Embed_SEO {
 		require_once PDF_EMBED_SEO_PLUGIN_DIR . 'includes/class-pdf-embed-seo-optimize-shortcodes.php';
 		require_once PDF_EMBED_SEO_PLUGIN_DIR . 'includes/class-pdf-embed-seo-optimize-block.php';
 		require_once PDF_EMBED_SEO_PLUGIN_DIR . 'includes/class-pdf-embed-seo-optimize-thumbnail.php';
+		require_once PDF_EMBED_SEO_PLUGIN_DIR . 'includes/class-pdf-embed-seo-optimize-rest-api.php';
 
 		// Admin classes (only in admin context).
 		if ( is_admin() ) {
@@ -191,6 +199,9 @@ final class PDF_Embed_SEO {
 
 		// Initialize thumbnail generator.
 		$this->thumbnail = new PDF_Embed_SEO_Thumbnail();
+
+		// Initialize REST API.
+		$this->rest_api = new PDF_Embed_SEO_REST_API();
 
 		// Initialize admin (only in admin context).
 		if ( is_admin() ) {

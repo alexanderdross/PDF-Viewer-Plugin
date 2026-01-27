@@ -105,3 +105,42 @@ pdf_embed_seo.analytics_export:
     _controller: '\Drupal\pdf_embed_seo\Controller\PdfAnalyticsController::export'
   requirements:
     _permission: 'view pdf analytics'
+
+# ==========================================
+# REST API Endpoints
+# ==========================================
+
+# API: Get plugin settings.
+pdf_embed_seo.api.settings:
+  path: '/api/pdf-embed-seo/v1/settings'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo\Controller\PdfApiController::getSettings'
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
+
+# API: Track PDF view.
+pdf_embed_seo.api.track_view:
+  path: '/api/pdf-embed-seo/v1/documents/{pdf_document}/view'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo\Controller\PdfApiController::trackView'
+  requirements:
+    _access: 'TRUE'
+  methods: [POST]
+  options:
+    parameters:
+      pdf_document:
+        type: entity:pdf_document
+
+# API: Verify password (Premium).
+pdf_embed_seo.api.verify_password:
+  path: '/api/pdf-embed-seo/v1/documents/{pdf_document}/verify-password'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo\Controller\PdfApiController::verifyPassword'
+  requirements:
+    _access: 'TRUE'
+  methods: [POST]
+  options:
+    parameters:
+      pdf_document:
+        type: entity:pdf_document

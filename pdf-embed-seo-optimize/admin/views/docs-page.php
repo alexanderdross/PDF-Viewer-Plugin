@@ -29,6 +29,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<li><a href="#custom-templates"><?php esc_html_e( 'Using [pdf_viewer] in Custom Template Files', 'pdf-embed-seo-optimize' ); ?></a></li>
 			<li><a href="#url-structure"><?php esc_html_e( 'URL Structure', 'pdf-embed-seo-optimize' ); ?></a></li>
 			<li><a href="#yoast-seo"><?php esc_html_e( 'Yoast SEO Integration', 'pdf-embed-seo-optimize' ); ?></a></li>
+			<li><a href="#rest-api"><?php esc_html_e( 'REST API', 'pdf-embed-seo-optimize' ); ?></a></li>
+			<li><a href="#wordpress-hooks"><?php esc_html_e( 'WordPress Hooks', 'pdf-embed-seo-optimize' ); ?></a></li>
 		</ol>
 	</div>
 
@@ -389,6 +391,350 @@ if ( function_exists( 'do_shortcode' ) ) {
 			<li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Schema Markup - DigitalDocument schema for rich search results', 'pdf-embed-seo-optimize' ); ?></li>
 			<li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Sitemap Inclusion - PDFs automatically added to XML sitemap', 'pdf-embed-seo-optimize' ); ?></li>
 		</ul>
+	</div>
+
+	<hr>
+
+	<div class="pdf-embed-seo-optimize-docs-section" id="rest-api">
+		<h2><?php esc_html_e( '9. REST API', 'pdf-embed-seo-optimize' ); ?></h2>
+
+		<p>
+			<strong><?php esc_html_e( 'Purpose:', 'pdf-embed-seo-optimize' ); ?></strong>
+			<?php esc_html_e( 'PDF Embed & SEO Optimize provides a RESTful API for accessing PDF documents programmatically. This allows integration with external applications, mobile apps, headless WordPress setups, and custom frontends.', 'pdf-embed-seo-optimize' ); ?>
+		</p>
+
+		<h3><?php esc_html_e( 'API Base URL', 'pdf-embed-seo-optimize' ); ?></h3>
+		<pre class="pdf-embed-seo-optimize-code"><?php echo esc_html( rest_url( 'pdf-embed-seo/v1/' ) ); ?></pre>
+
+		<h3><?php esc_html_e( 'Public Endpoints (Free)', 'pdf-embed-seo-optimize' ); ?></h3>
+		<table class="widefat">
+			<thead>
+				<tr>
+					<th><?php esc_html_e( 'Method', 'pdf-embed-seo-optimize' ); ?></th>
+					<th><?php esc_html_e( 'Endpoint', 'pdf-embed-seo-optimize' ); ?></th>
+					<th><?php esc_html_e( 'Description', 'pdf-embed-seo-optimize' ); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>GET</code></td>
+					<td><code>/documents</code></td>
+					<td><?php esc_html_e( 'List all published PDF documents with pagination', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>GET</code></td>
+					<td><code>/documents/{id}</code></td>
+					<td><?php esc_html_e( 'Get single PDF document details', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>GET</code></td>
+					<td><code>/documents/{id}/data</code></td>
+					<td><?php esc_html_e( 'Get PDF file URL securely (for viewer)', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>POST</code></td>
+					<td><code>/documents/{id}/view</code></td>
+					<td><?php esc_html_e( 'Track a PDF view (increment view count)', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>GET</code></td>
+					<td><code>/settings</code></td>
+					<td><?php esc_html_e( 'Get public plugin settings', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<?php if ( function_exists( 'pdf_embed_seo_is_premium' ) && pdf_embed_seo_is_premium() ) : ?>
+		<h3><?php esc_html_e( 'Premium Endpoints', 'pdf-embed-seo-optimize' ); ?></h3>
+		<table class="widefat">
+			<thead>
+				<tr>
+					<th><?php esc_html_e( 'Method', 'pdf-embed-seo-optimize' ); ?></th>
+					<th><?php esc_html_e( 'Endpoint', 'pdf-embed-seo-optimize' ); ?></th>
+					<th><?php esc_html_e( 'Description', 'pdf-embed-seo-optimize' ); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>GET</code></td>
+					<td><code>/analytics</code></td>
+					<td><?php esc_html_e( 'Get analytics overview (admin only)', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>GET</code></td>
+					<td><code>/analytics/documents</code></td>
+					<td><?php esc_html_e( 'Get per-document analytics (admin only)', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>GET</code></td>
+					<td><code>/analytics/export</code></td>
+					<td><?php esc_html_e( 'Export analytics as CSV/JSON (admin only)', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>GET</code></td>
+					<td><code>/documents/{id}/progress</code></td>
+					<td><?php esc_html_e( 'Get reading progress for a PDF', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>POST</code></td>
+					<td><code>/documents/{id}/progress</code></td>
+					<td><?php esc_html_e( 'Save reading progress (page, scroll, zoom)', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>POST</code></td>
+					<td><code>/documents/{id}/verify-password</code></td>
+					<td><?php esc_html_e( 'Verify password for protected PDFs', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>GET</code></td>
+					<td><code>/categories</code></td>
+					<td><?php esc_html_e( 'Get all PDF categories', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>GET</code></td>
+					<td><code>/tags</code></td>
+					<td><?php esc_html_e( 'Get all PDF tags', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>POST</code></td>
+					<td><code>/bulk/import</code></td>
+					<td><?php esc_html_e( 'Start bulk PDF import (admin only)', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>GET</code></td>
+					<td><code>/bulk/import/status</code></td>
+					<td><?php esc_html_e( 'Get bulk import status (admin only)', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+			</tbody>
+		</table>
+		<?php endif; ?>
+
+		<h3><?php esc_html_e( 'Query Parameters for /documents', 'pdf-embed-seo-optimize' ); ?></h3>
+		<table class="widefat">
+			<thead>
+				<tr>
+					<th><?php esc_html_e( 'Parameter', 'pdf-embed-seo-optimize' ); ?></th>
+					<th><?php esc_html_e( 'Default', 'pdf-embed-seo-optimize' ); ?></th>
+					<th><?php esc_html_e( 'Description', 'pdf-embed-seo-optimize' ); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>page</code></td>
+					<td>1</td>
+					<td><?php esc_html_e( 'Page number for pagination', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>per_page</code></td>
+					<td>10</td>
+					<td><?php esc_html_e( 'Items per page (max 100)', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>search</code></td>
+					<td>-</td>
+					<td><?php esc_html_e( 'Search term to filter documents', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>orderby</code></td>
+					<td>date</td>
+					<td><?php esc_html_e( 'Sort by: date, title, modified, views', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>order</code></td>
+					<td>desc</td>
+					<td><?php esc_html_e( 'Sort order: asc or desc', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h3><?php esc_html_e( 'Example: List Documents', 'pdf-embed-seo-optimize' ); ?></h3>
+		<pre class="pdf-embed-seo-optimize-code">curl -X GET "<?php echo esc_url( rest_url( 'pdf-embed-seo/v1/documents?per_page=5&orderby=views' ) ); ?>"</pre>
+
+		<h3><?php esc_html_e( 'Example: Get Single Document', 'pdf-embed-seo-optimize' ); ?></h3>
+		<pre class="pdf-embed-seo-optimize-code">curl -X GET "<?php echo esc_url( rest_url( 'pdf-embed-seo/v1/documents/123' ) ); ?>"</pre>
+
+		<h3><?php esc_html_e( 'Example Response', 'pdf-embed-seo-optimize' ); ?></h3>
+		<pre class="pdf-embed-seo-optimize-code">{
+  "id": 123,
+  "title": "Annual Report 2024",
+  "slug": "annual-report-2024",
+  "url": "<?php echo esc_url( home_url( '/pdf/annual-report-2024/' ) ); ?>",
+  "excerpt": "Company annual report...",
+  "date": "2024-01-15T10:30:00+00:00",
+  "views": 1542,
+  "thumbnail": "<?php echo esc_url( home_url( '/wp-content/uploads/thumb.jpg' ) ); ?>",
+  "allow_download": true,
+  "allow_print": false
+}</pre>
+
+		<h3><?php esc_html_e( 'Authentication', 'pdf-embed-seo-optimize' ); ?></h3>
+		<p><?php esc_html_e( 'Public endpoints require no authentication. Admin-only endpoints require authentication via:', 'pdf-embed-seo-optimize' ); ?></p>
+		<ul>
+			<li><?php esc_html_e( 'Cookie authentication (when logged into WordPress)', 'pdf-embed-seo-optimize' ); ?></li>
+			<li><?php esc_html_e( 'Application Passwords (WordPress 5.6+)', 'pdf-embed-seo-optimize' ); ?></li>
+			<li><?php esc_html_e( 'OAuth / JWT via third-party plugins', 'pdf-embed-seo-optimize' ); ?></li>
+		</ul>
+	</div>
+
+	<hr>
+
+	<div class="pdf-embed-seo-optimize-docs-section" id="wordpress-hooks">
+		<h2><?php esc_html_e( '10. WordPress Hooks', 'pdf-embed-seo-optimize' ); ?></h2>
+
+		<p>
+			<strong><?php esc_html_e( 'Purpose:', 'pdf-embed-seo-optimize' ); ?></strong>
+			<?php esc_html_e( 'Developers can use these action and filter hooks to extend or customize the plugin functionality.', 'pdf-embed-seo-optimize' ); ?>
+		</p>
+
+		<h3><?php esc_html_e( 'Actions', 'pdf-embed-seo-optimize' ); ?></h3>
+		<table class="widefat">
+			<thead>
+				<tr>
+					<th><?php esc_html_e( 'Hook Name', 'pdf-embed-seo-optimize' ); ?></th>
+					<th><?php esc_html_e( 'Parameters', 'pdf-embed-seo-optimize' ); ?></th>
+					<th><?php esc_html_e( 'Description', 'pdf-embed-seo-optimize' ); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>pdf_embed_seo_pdf_viewed</code></td>
+					<td><code>$post_id, $count</code></td>
+					<td><?php esc_html_e( 'Fired when a PDF is viewed. Use for custom analytics.', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>pdf_embed_seo_premium_init</code></td>
+					<td>-</td>
+					<td><?php esc_html_e( 'Fired when premium features are initialized.', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>pdf_embed_seo_settings_saved</code></td>
+					<td><code>$post_id, $settings</code></td>
+					<td><?php esc_html_e( 'Fired when PDF settings are saved.', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h3><?php esc_html_e( 'Example: Track PDF Views', 'pdf-embed-seo-optimize' ); ?></h3>
+		<pre class="pdf-embed-seo-optimize-code">add_action( 'pdf_embed_seo_pdf_viewed', function( $post_id, $count ) {
+    // Send to your analytics service
+    my_analytics_track( 'pdf_view', [
+        'pdf_id' => $post_id,
+        'title'  => get_the_title( $post_id ),
+        'views'  => $count,
+    ]);
+}, 10, 2 );</pre>
+
+		<h3><?php esc_html_e( 'Filters', 'pdf-embed-seo-optimize' ); ?></h3>
+		<table class="widefat">
+			<thead>
+				<tr>
+					<th><?php esc_html_e( 'Hook Name', 'pdf-embed-seo-optimize' ); ?></th>
+					<th><?php esc_html_e( 'Parameters', 'pdf-embed-seo-optimize' ); ?></th>
+					<th><?php esc_html_e( 'Description', 'pdf-embed-seo-optimize' ); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>pdf_embed_seo_post_type_args</code></td>
+					<td><code>$args</code></td>
+					<td><?php esc_html_e( 'Modify the PDF document post type registration arguments.', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>pdf_embed_seo_schema_data</code></td>
+					<td><code>$schema, $post_id</code></td>
+					<td><?php esc_html_e( 'Modify Schema.org data for a single PDF.', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>pdf_embed_seo_archive_schema_data</code></td>
+					<td><code>$schema</code></td>
+					<td><?php esc_html_e( 'Modify Schema.org data for the archive page.', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>pdf_embed_seo_archive_query</code></td>
+					<td><code>$posts_per_page</code></td>
+					<td><?php esc_html_e( 'Modify the archive page posts per page setting.', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>pdf_embed_seo_sitemap_query_args</code></td>
+					<td><code>$query_args, $atts</code></td>
+					<td><?php esc_html_e( 'Modify the sitemap shortcode query arguments.', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>pdf_embed_seo_archive_title</code></td>
+					<td><code>$title</code></td>
+					<td><?php esc_html_e( 'Modify the archive page title.', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>pdf_embed_seo_archive_description</code></td>
+					<td><code>$description</code></td>
+					<td><?php esc_html_e( 'Modify the archive page description.', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>pdf_embed_seo_viewer_options</code></td>
+					<td><code>$options, $post_id</code></td>
+					<td><?php esc_html_e( 'Modify PDF.js viewer options.', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>pdf_embed_seo_allowed_types</code></td>
+					<td><code>$types</code></td>
+					<td><?php esc_html_e( 'Modify allowed MIME types for upload.', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>pdf_embed_seo_rest_document</code></td>
+					<td><code>$data, $post, $detailed</code></td>
+					<td><?php esc_html_e( 'Modify REST API document response.', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>pdf_embed_seo_rest_document_data</code></td>
+					<td><code>$data, $post_id</code></td>
+					<td><?php esc_html_e( 'Modify REST API document data response.', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>pdf_embed_seo_rest_settings</code></td>
+					<td><code>$settings</code></td>
+					<td><?php esc_html_e( 'Modify REST API settings response.', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<?php if ( function_exists( 'pdf_embed_seo_is_premium' ) && pdf_embed_seo_is_premium() ) : ?>
+				<tr>
+					<td><code>pdf_embed_seo_password_error</code></td>
+					<td><code>$error</code></td>
+					<td><?php esc_html_e( 'Custom password validation error (Premium).', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>pdf_embed_seo_verify_password</code></td>
+					<td><code>$is_valid, $post_id, $password</code></td>
+					<td><?php esc_html_e( 'Override password verification (Premium).', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><code>pdf_embed_seo_rest_analytics</code></td>
+					<td><code>$data, $period</code></td>
+					<td><?php esc_html_e( 'Modify REST API analytics response (Premium).', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<?php endif; ?>
+			</tbody>
+		</table>
+
+		<h3><?php esc_html_e( 'Example: Add Custom Schema Data', 'pdf-embed-seo-optimize' ); ?></h3>
+		<pre class="pdf-embed-seo-optimize-code">add_filter( 'pdf_embed_seo_schema_data', function( $schema, $post_id ) {
+    // Add custom author information
+    $schema['author'] = [
+        '@type' => 'Person',
+        'name'  => get_post_meta( $post_id, '_pdf_author', true ),
+    ];
+    return $schema;
+}, 10, 2 );</pre>
+
+		<h3><?php esc_html_e( 'Example: Customize Archive Title', 'pdf-embed-seo-optimize' ); ?></h3>
+		<pre class="pdf-embed-seo-optimize-code">add_filter( 'pdf_embed_seo_archive_title', function( $title ) {
+    return 'Our Document Library';
+});</pre>
+
+		<h3><?php esc_html_e( 'Example: Add Custom Field to REST API', 'pdf-embed-seo-optimize' ); ?></h3>
+		<pre class="pdf-embed-seo-optimize-code">add_filter( 'pdf_embed_seo_rest_document', function( $data, $post, $detailed ) {
+    // Add custom category
+    $data['department'] = get_post_meta( $post->ID, '_pdf_department', true );
+    return $data;
+}, 10, 3 );</pre>
 	</div>
 
 	<hr>

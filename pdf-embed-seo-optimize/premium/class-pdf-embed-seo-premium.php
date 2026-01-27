@@ -30,7 +30,7 @@ final class PDF_Embed_SEO_Premium {
 	 *
 	 * @var string
 	 */
-	const VERSION = '1.1.5';
+	const VERSION = '1.2.0';
 
 	/**
 	 * License status.
@@ -89,6 +89,13 @@ final class PDF_Embed_SEO_Premium {
 	public $sitemap = null;
 
 	/**
+	 * REST API instance.
+	 *
+	 * @var PDF_Embed_SEO_Premium_REST_API|null
+	 */
+	public $rest_api = null;
+
+	/**
 	 * Get the single instance of the class.
 	 *
 	 * @return PDF_Embed_SEO_Premium
@@ -135,6 +142,7 @@ final class PDF_Embed_SEO_Premium {
 		require_once PDF_EMBED_SEO_PREMIUM_DIR . 'includes/class-pdf-embed-seo-premium-viewer.php';
 		require_once PDF_EMBED_SEO_PREMIUM_DIR . 'includes/class-pdf-embed-seo-premium-bulk.php';
 		require_once PDF_EMBED_SEO_PREMIUM_DIR . 'includes/class-pdf-embed-seo-premium-sitemap.php';
+		require_once PDF_EMBED_SEO_PREMIUM_DIR . 'includes/class-pdf-embed-seo-premium-rest-api.php';
 
 		// Admin classes (only in admin context).
 		if ( is_admin() ) {
@@ -184,6 +192,9 @@ final class PDF_Embed_SEO_Premium {
 
 		// Initialize sitemap.
 		$this->sitemap = new PDF_Embed_SEO_Premium_Sitemap();
+
+		// Initialize premium REST API.
+		$this->rest_api = new PDF_Embed_SEO_Premium_REST_API();
 
 		// Initialize admin (only in admin context).
 		if ( is_admin() ) {

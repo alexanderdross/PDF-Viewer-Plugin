@@ -106,18 +106,159 @@ Main classes for styling:
 - `.pdf-archive` - Archive page wrapper
 - `.pdf-archive-item` - Individual archive item
 
-## API
+## REST API
+
+PDF Embed & SEO Optimize provides a RESTful API for accessing PDF documents programmatically.
+
+### API Base URL
+```
+/api/pdf-embed-seo/v1/
+```
+
+### Public Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/documents` | List all published PDF documents |
+| `GET` | `/documents/{id}` | Get single PDF document details |
+| `GET` | `/documents/{id}/data` | Get PDF file URL securely |
+| `POST` | `/documents/{id}/view` | Track a PDF view |
+| `GET` | `/settings` | Get public module settings |
+
+### Premium Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/analytics` | Get analytics overview (requires permission) |
+| `GET` | `/documents/{id}/progress` | Get reading progress |
+| `POST` | `/documents/{id}/progress` | Save reading progress |
+| `POST` | `/documents/{id}/verify-password` | Verify password for protected PDFs |
+
+### Query Parameters for /documents
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `page` | 0 | Page offset for pagination |
+| `limit` | 50 | Items per page |
+| `sort` | created | Sort by: created, title, view_count |
+| `direction` | DESC | Sort direction: ASC or DESC |
+
+### Example: List Documents
+```bash
+curl -X GET "https://example.com/api/pdf-embed-seo/v1/documents?limit=5"
+```
+
+### Example: Get Single Document
+```bash
+curl -X GET "https://example.com/api/pdf-embed-seo/v1/documents/123"
+```
+
+### Example Response
+```json
+{
+  "id": 123,
+  "title": "Annual Report 2024",
+  "slug": "annual-report-2024",
+  "url": "https://example.com/pdf/annual-report-2024",
+  "description": "Company annual report...",
+  "created": "2024-01-15T10:30:00+00:00",
+  "views": 1542,
+  "allow_download": true,
+  "allow_print": false
+}
+```
+
+### Authentication
+- Public endpoints require no authentication
+- Admin endpoints require appropriate Drupal permissions
+- Use session cookies or OAuth tokens for authenticated requests
+
+## Drupal Hooks
+
+Developers can use these hooks to extend or customize the module.
+
+### Alter Hooks
+
+| Hook | Description |
+|------|-------------|
+| `hook_pdf_embed_seo_document_data_alter` | Modify PDF data returned by API |
+| `hook_pdf_embed_seo_api_settings_alter` | Modify API settings response |
+| `hook_pdf_embed_seo_verify_password_alter` | Override password verification |
+| `hook_pdf_embed_seo_viewer_options_alter` | Modify PDF.js viewer options |
+| `hook_pdf_embed_seo_schema_alter` | Modify Schema.org output |
+
+### Events
+
+| Hook | Description |
+|------|-------------|
+| `hook_pdf_embed_seo_view_tracked` | Fired when a PDF view is tracked |
+| `hook_pdf_embed_seo_document_saved` | Fired when a PDF document is saved |
+
+### Example: Modify Document Data
+```php
+/**
+ * Implements hook_pdf_embed_seo_document_data_alter().
+ */
+function mymodule_pdf_embed_seo_document_data_alter(array &$data, $document) {
+  // Add custom department field
+  $data['department'] = $document->get('field_department')->value;
+}
+```
+
+### Example: Track Views
+```php
+/**
+ * Implements hook_pdf_embed_seo_view_tracked().
+ */
+function mymodule_pdf_embed_seo_view_tracked($document, $count) {
+  // Send to external analytics
+  \Drupal::service('mymodule.analytics')->track('pdf_view', [
+    'pdf_id' => $document->id(),
+    'title' => $document->label(),
+    'views' => $count,
+  ]);
+}
+```
+
+### Example: Custom Schema Data
+```php
+/**
+ * Implements hook_pdf_embed_seo_schema_alter().
+ */
+function mymodule_pdf_embed_seo_schema_alter(array &$schema, $document) {
+  // Add author to schema
+  $schema['author'] = [
+    '@type' => 'Person',
+    'name' => $document->get('field_author')->value,
+  ];
+}
+```
+
+## JavaScript API
 
 ### Events
 The PDF viewer triggers these JavaScript events:
 - `pdfLoaded` - When PDF document is loaded
 - `pageRendered` - When a page is rendered
+- `pageChanged` - When user navigates to a different page
+- `zoomChanged` - When zoom level changes
 
 ### Services
 - `pdf_embed_seo.thumbnail_generator` - Generate PDF thumbnails
 - `pdf_embed_seo.analytics_tracker` - Track and query view statistics
 
 ## Changelog
+
+### 1.2.0
+- Added REST API endpoints for external integrations
+- Added reading progress tracking (Premium)
+- Added password verification endpoint (Premium)
+- Added Drupal hooks for extensibility
+- Improved API documentation
+
+### 1.1.5
+- Version sync with WordPress plugin
+- Bug fixes and improvements
 
 ### 1.0.0
 - Initial release
