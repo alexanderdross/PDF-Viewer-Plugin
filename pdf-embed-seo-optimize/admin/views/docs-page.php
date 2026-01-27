@@ -86,6 +86,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="pdf-embed-seo-optimize-docs-toc">
 		<h2><?php esc_html_e( 'Table of Contents', 'pdf-embed-seo-optimize' ); ?></h2>
 		<ol>
+			<?php if ( function_exists( 'pdf_embed_seo_is_premium' ) && pdf_embed_seo_is_premium() ) : ?>
+			<li><a href="#license"><?php esc_html_e( 'License Activation', 'pdf-embed-seo-optimize' ); ?></a></li>
+			<?php endif; ?>
 			<li><a href="#print-download"><?php esc_html_e( 'Print & Download Permissions', 'pdf-embed-seo-optimize' ); ?></a></li>
 			<li><a href="#gutenberg-block"><?php esc_html_e( 'Gutenberg Block', 'pdf-embed-seo-optimize' ); ?></a></li>
 			<li><a href="#thumbnails"><?php esc_html_e( 'PDF Thumbnails', 'pdf-embed-seo-optimize' ); ?></a></li>
@@ -96,8 +99,99 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<li><a href="#yoast-seo"><?php esc_html_e( 'Yoast SEO Integration', 'pdf-embed-seo-optimize' ); ?></a></li>
 			<li><a href="#rest-api"><?php esc_html_e( 'REST API', 'pdf-embed-seo-optimize' ); ?></a></li>
 			<li><a href="#wordpress-hooks"><?php esc_html_e( 'WordPress Hooks', 'pdf-embed-seo-optimize' ); ?></a></li>
+			<?php if ( function_exists( 'pdf_embed_seo_is_premium' ) && pdf_embed_seo_is_premium() ) : ?>
+			<li><a href="#premium-features"><?php esc_html_e( 'Premium Features Guide', 'pdf-embed-seo-optimize' ); ?></a></li>
+			<?php else : ?>
+			<li><a href="#premium-preview"><?php esc_html_e( 'Premium Features Preview', 'pdf-embed-seo-optimize' ); ?></a></li>
+			<?php endif; ?>
 		</ol>
 	</div>
+
+	<?php if ( function_exists( 'pdf_embed_seo_is_premium' ) && pdf_embed_seo_is_premium() ) : ?>
+	<hr>
+
+	<div class="pdf-embed-seo-optimize-docs-section" id="license">
+		<h2><?php esc_html_e( '0. License Activation', 'pdf-embed-seo-optimize' ); ?></h2>
+
+		<p>
+			<strong><?php esc_html_e( 'Purpose:', 'pdf-embed-seo-optimize' ); ?></strong>
+			<?php esc_html_e( 'Your license key unlocks premium features and enables automatic updates. Keep your license active to receive the latest features and security updates.', 'pdf-embed-seo-optimize' ); ?>
+		</p>
+
+		<h3><?php esc_html_e( 'License Status', 'pdf-embed-seo-optimize' ); ?></h3>
+		<?php
+		$license_status = get_option( 'pdf_embed_seo_premium_license_status', 'inactive' );
+		$license_tier = get_option( 'pdf_embed_seo_premium_license_tier', '' );
+		$license_expires = get_option( 'pdf_embed_seo_premium_license_expires', '' );
+		?>
+		<table class="widefat" style="max-width: 500px;">
+			<tbody>
+				<tr>
+					<td><strong><?php esc_html_e( 'Status', 'pdf-embed-seo-optimize' ); ?></strong></td>
+					<td>
+						<?php if ( $license_status === 'valid' ) : ?>
+							<span style="color: #46b450;"><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e( 'Active', 'pdf-embed-seo-optimize' ); ?></span>
+						<?php else : ?>
+							<span style="color: #dc3232;"><span class="dashicons dashicons-warning"></span> <?php esc_html_e( 'Inactive', 'pdf-embed-seo-optimize' ); ?></span>
+						<?php endif; ?>
+					</td>
+				</tr>
+				<?php if ( $license_tier ) : ?>
+				<tr>
+					<td><strong><?php esc_html_e( 'License Tier', 'pdf-embed-seo-optimize' ); ?></strong></td>
+					<td><?php echo esc_html( ucfirst( $license_tier ) ); ?></td>
+				</tr>
+				<?php endif; ?>
+				<?php if ( $license_expires ) : ?>
+				<tr>
+					<td><strong><?php esc_html_e( 'Expires', 'pdf-embed-seo-optimize' ); ?></strong></td>
+					<td><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime( $license_expires ) ) ); ?></td>
+				</tr>
+				<?php endif; ?>
+			</tbody>
+		</table>
+
+		<h3><?php esc_html_e( 'Activating Your License', 'pdf-embed-seo-optimize' ); ?></h3>
+		<ol>
+			<li><?php esc_html_e( 'Go to PDF Documents > Settings > License tab', 'pdf-embed-seo-optimize' ); ?></li>
+			<li><?php esc_html_e( 'Enter your license key (received via email after purchase)', 'pdf-embed-seo-optimize' ); ?></li>
+			<li><?php esc_html_e( 'Click "Activate License"', 'pdf-embed-seo-optimize' ); ?></li>
+		</ol>
+
+		<h3><?php esc_html_e( 'License Tiers', 'pdf-embed-seo-optimize' ); ?></h3>
+		<table class="widefat">
+			<thead>
+				<tr>
+					<th><?php esc_html_e( 'Tier', 'pdf-embed-seo-optimize' ); ?></th>
+					<th><?php esc_html_e( 'Sites', 'pdf-embed-seo-optimize' ); ?></th>
+					<th><?php esc_html_e( 'Features', 'pdf-embed-seo-optimize' ); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><strong><?php esc_html_e( 'Starter', 'pdf-embed-seo-optimize' ); ?></strong></td>
+					<td><?php esc_html_e( '1 site', 'pdf-embed-seo-optimize' ); ?></td>
+					<td><?php esc_html_e( 'Analytics, Password Protection', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><strong><?php esc_html_e( 'Professional', 'pdf-embed-seo-optimize' ); ?></strong></td>
+					<td><?php esc_html_e( '5 sites', 'pdf-embed-seo-optimize' ); ?></td>
+					<td><?php esc_html_e( '+ Reading Progress, XML Sitemap, Categories/Tags', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+				<tr>
+					<td><strong><?php esc_html_e( 'Agency', 'pdf-embed-seo-optimize' ); ?></strong></td>
+					<td><?php esc_html_e( 'Unlimited', 'pdf-embed-seo-optimize' ); ?></td>
+					<td><?php esc_html_e( '+ Priority Support, Bulk Import, Full API', 'pdf-embed-seo-optimize' ); ?></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="notice notice-info inline" style="padding: 10px; margin: 10px 0;">
+			<span class="dashicons dashicons-info" style="color: #0073aa;"></span>
+			<?php esc_html_e( 'Need to upgrade? Visit pdfviewer.drossmedia.de to upgrade your license tier.', 'pdf-embed-seo-optimize' ); ?>
+		</div>
+	</div>
+	<?php endif; ?>
 
 	<hr>
 
@@ -418,8 +512,28 @@ if ( function_exists( 'do_shortcode' ) ) {
 					<td><?php esc_html_e( 'Single PDF Document', 'pdf-embed-seo-optimize' ); ?></td>
 					<td><code><?php echo esc_html( home_url( '/pdf/your-pdf-slug/' ) ); ?></code></td>
 				</tr>
+				<tr>
+					<td>
+						<?php esc_html_e( 'XML Sitemap', 'pdf-embed-seo-optimize' ); ?>
+						<?php if ( ! function_exists( 'pdf_embed_seo_is_premium' ) || ! pdf_embed_seo_is_premium() ) : ?>
+							<span class="premium-badge"><?php esc_html_e( 'PRO', 'pdf-embed-seo-optimize' ); ?></span>
+						<?php endif; ?>
+					</td>
+					<td><code><?php echo esc_html( home_url( '/pdf/sitemap.xml' ) ); ?></code></td>
+				</tr>
 			</tbody>
 		</table>
+
+		<?php if ( function_exists( 'pdf_embed_seo_is_premium' ) && pdf_embed_seo_is_premium() ) : ?>
+		<h3><?php esc_html_e( 'XML Sitemap Features', 'pdf-embed-seo-optimize' ); ?></h3>
+		<ul class="pdf-embed-seo-optimize-feature-list">
+			<li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Dedicated sitemap for all PDF documents', 'pdf-embed-seo-optimize' ); ?></li>
+			<li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Beautiful XSL-styled browser view', 'pdf-embed-seo-optimize' ); ?></li>
+			<li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Auto-includes PDF metadata (title, description, thumbnail)', 'pdf-embed-seo-optimize' ); ?></li>
+			<li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Updates automatically when PDFs change', 'pdf-embed-seo-optimize' ); ?></li>
+			<li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Submit to Google Search Console for better indexing', 'pdf-embed-seo-optimize' ); ?></li>
+		</ul>
+		<?php endif; ?>
 
 		<p>
 			<strong><?php esc_html_e( 'Note:', 'pdf-embed-seo-optimize' ); ?></strong>
