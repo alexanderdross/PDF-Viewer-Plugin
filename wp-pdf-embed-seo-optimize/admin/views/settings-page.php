@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <div class="wrap">
-	<h1><?php esc_html_e( 'PDF Viewer Settings', 'pdf-embed-seo-optimize' ); ?></h1>
+	<h1><?php esc_html_e( 'PDF Viewer Settings', 'wp-pdf-embed-seo-optimize' ); ?></h1>
 
 	<?php settings_errors(); ?>
 
@@ -26,38 +26,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<hr>
 
-	<h2><?php esc_html_e( 'Shortcode Usage', 'pdf-embed-seo-optimize' ); ?></h2>
-	<p><?php esc_html_e( 'You can embed PDF viewers anywhere using shortcodes:', 'pdf-embed-seo-optimize' ); ?></p>
+	<h2><?php esc_html_e( 'Shortcode Usage', 'wp-pdf-embed-seo-optimize' ); ?></h2>
+	<p><?php esc_html_e( 'You can embed PDF viewers anywhere using shortcodes:', 'wp-pdf-embed-seo-optimize' ); ?></p>
 	<code>[pdf_viewer id="123"]</code>
-	<p class="description"><?php esc_html_e( 'Replace 123 with the ID of your PDF document.', 'pdf-embed-seo-optimize' ); ?></p>
+	<p class="description"><?php esc_html_e( 'Replace 123 with the ID of your PDF document.', 'wp-pdf-embed-seo-optimize' ); ?></p>
 
 	<hr>
 
-	<h2><?php esc_html_e( 'URL Structure', 'pdf-embed-seo-optimize' ); ?></h2>
-	<p><?php esc_html_e( 'Your PDF documents are available at:', 'pdf-embed-seo-optimize' ); ?></p>
+	<h2><?php esc_html_e( 'URL Structure', 'wp-pdf-embed-seo-optimize' ); ?></h2>
+	<p><?php esc_html_e( 'Your PDF documents are available at:', 'wp-pdf-embed-seo-optimize' ); ?></p>
 	<ul>
 		<li>
-			<strong><?php esc_html_e( 'Archive:', 'pdf-embed-seo-optimize' ); ?></strong>
+			<strong><?php esc_html_e( 'Archive:', 'wp-pdf-embed-seo-optimize' ); ?></strong>
 			<code><?php echo esc_html( home_url( '/pdf/' ) ); ?></code>
 		</li>
 		<li>
-			<strong><?php esc_html_e( 'Single PDF:', 'pdf-embed-seo-optimize' ); ?></strong>
+			<strong><?php esc_html_e( 'Single PDF:', 'wp-pdf-embed-seo-optimize' ); ?></strong>
 			<code><?php echo esc_html( home_url( '/pdf/your-pdf-slug/' ) ); ?></code>
 		</li>
 	</ul>
 
 	<hr>
 
-	<h2><?php esc_html_e( 'Yoast SEO Integration', 'pdf-embed-seo-optimize' ); ?></h2>
+	<h2><?php esc_html_e( 'Yoast SEO Integration', 'wp-pdf-embed-seo-optimize' ); ?></h2>
 	<?php if ( defined( 'WPSEO_VERSION' ) ) : ?>
 		<p class="notice notice-success" style="padding: 10px;">
 			<span class="dashicons dashicons-yes-alt" style="color: #46b450;"></span>
-			<?php esc_html_e( 'Yoast SEO is active! You can configure SEO settings for each PDF document.', 'pdf-embed-seo-optimize' ); ?>
+			<?php esc_html_e( 'Yoast SEO is active! You can configure SEO settings for each PDF document.', 'wp-pdf-embed-seo-optimize' ); ?>
 		</p>
 	<?php else : ?>
 		<p class="notice notice-warning" style="padding: 10px;">
 			<span class="dashicons dashicons-warning" style="color: #ffb900;"></span>
-			<?php esc_html_e( 'Yoast SEO is not active. Install and activate Yoast SEO to configure meta titles, descriptions, OG tags, and Twitter cards for your PDF documents.', 'pdf-embed-seo-optimize' ); ?>
+			<?php esc_html_e( 'Yoast SEO is not active. Install and activate Yoast SEO to configure meta titles, descriptions, OG tags, and Twitter cards for your PDF documents.', 'wp-pdf-embed-seo-optimize' ); ?>
 		</p>
 	<?php endif; ?>
 
@@ -65,9 +65,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php
 		printf(
 			/* translators: %1$s: heart symbol, %2$s: Dross:Media link */
-			esc_html__( 'made with %1$s by %2$s', 'pdf-embed-seo-optimize' ),
-			'<span style="color: #e25555;" aria-hidden="true">♥</span><span class="screen-reader-text">' . esc_html__( 'love', 'pdf-embed-seo-optimize' ) . '</span>',
-			'<a href="https://dross.net/media/" target="_blank" rel="noopener noreferrer" aria-label="' . esc_attr__( 'Visit Dross:Media website (opens in new tab)', 'pdf-embed-seo-optimize' ) . '" title="' . esc_attr__( 'Visit Dross:Media website', 'pdf-embed-seo-optimize' ) . '">Dross:Media</a>'
+			esc_html__( 'made with %1$s by %2$s', 'wp-pdf-embed-seo-optimize' ),
+			'<span style="color: #e25555;" aria-hidden="true">♥</span><span class="screen-reader-text">' . esc_html__( 'love', 'wp-pdf-embed-seo-optimize' ) . '</span>',
+			'<a href="https://dross.net/media/" target="_blank" rel="noopener noreferrer" aria-label="' . esc_attr__( 'Visit Dross:Media website (opens in new tab)', 'wp-pdf-embed-seo-optimize' ) . '" title="' . esc_attr__( 'Visit Dross:Media website', 'wp-pdf-embed-seo-optimize' ) . '">Dross:Media</a>'
 		);
 		?>
 	</p>

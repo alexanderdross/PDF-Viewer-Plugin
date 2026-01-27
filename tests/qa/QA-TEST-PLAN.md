@@ -153,7 +153,7 @@
 | WPP-003 | Valid License | Enter valid key | License activates | ☐ |
 | WPP-004 | Invalid License | Enter invalid key | Error message shown | ☐ |
 | WPP-005 | License Status | Check license status | Status displays correctly | ☐ |
-| WPP-006 | Plugin Links | Check plugins page | "Visit Site" link shows | ☐ |
+| WPP-006 | Plugin Links | Check plugins page | "Changelog" link shows | ☐ |
 
 ### 2.2 Analytics Tests
 

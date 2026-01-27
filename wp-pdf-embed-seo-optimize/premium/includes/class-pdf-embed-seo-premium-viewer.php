@@ -77,17 +77,17 @@ class PDF_Embed_SEO_Premium_Viewer {
 				'enableBookmarks' => true,
 				'enableProgress'  => is_user_logged_in(),
 				'i18n'            => array(
-					'search'           => __( 'Search in document', 'pdf-embed-seo-optimize' ),
-					'searchPlaceholder' => __( 'Enter search term...', 'pdf-embed-seo-optimize' ),
-					'noResults'        => __( 'No results found', 'pdf-embed-seo-optimize' ),
+					'search'           => __( 'Search in document', 'wp-pdf-embed-seo-optimize' ),
+					'searchPlaceholder' => __( 'Enter search term...', 'wp-pdf-embed-seo-optimize' ),
+					'noResults'        => __( 'No results found', 'wp-pdf-embed-seo-optimize' ),
 					/* translators: %d: Number of search matches found */
-					'matchesFound'     => __( '%d matches found', 'pdf-embed-seo-optimize' ),
-					'bookmarks'        => __( 'Bookmarks', 'pdf-embed-seo-optimize' ),
-					'noBookmarks'      => __( 'No bookmarks in this document', 'pdf-embed-seo-optimize' ),
+					'matchesFound'     => __( '%d matches found', 'wp-pdf-embed-seo-optimize' ),
+					'bookmarks'        => __( 'Bookmarks', 'wp-pdf-embed-seo-optimize' ),
+					'noBookmarks'      => __( 'No bookmarks in this document', 'wp-pdf-embed-seo-optimize' ),
 					/* translators: %d: Page number to resume reading from */
-					'resumeReading'    => __( 'Resume from page %d?', 'pdf-embed-seo-optimize' ),
-					'resume'           => __( 'Resume', 'pdf-embed-seo-optimize' ),
-					'startOver'        => __( 'Start Over', 'pdf-embed-seo-optimize' ),
+					'resumeReading'    => __( 'Resume from page %d?', 'wp-pdf-embed-seo-optimize' ),
+					'resume'           => __( 'Resume', 'wp-pdf-embed-seo-optimize' ),
+					'startOver'        => __( 'Start Over', 'wp-pdf-embed-seo-optimize' ),
 				),
 			)
 		);
@@ -122,13 +122,13 @@ class PDF_Embed_SEO_Premium_Viewer {
 		?>
 		<!-- Search Control -->
 		<div class="pdf-control-group pdf-search-group">
-			<button type="button" class="pdf-control-btn pdf-search-toggle" title="<?php esc_attr_e( 'Search', 'pdf-embed-seo-optimize' ); ?>">
+			<button type="button" class="pdf-control-btn pdf-search-toggle" title="<?php esc_attr_e( 'Search', 'wp-pdf-embed-seo-optimize' ); ?>">
 				<span class="dashicons dashicons-search"></span>
 			</button>
 			<div class="pdf-search-panel" style="display: none;">
-				<input type="text" class="pdf-search-input" placeholder="<?php esc_attr_e( 'Search...', 'pdf-embed-seo-optimize' ); ?>" />
-				<button type="button" class="pdf-search-prev" title="<?php esc_attr_e( 'Previous', 'pdf-embed-seo-optimize' ); ?>">&lsaquo;</button>
-				<button type="button" class="pdf-search-next" title="<?php esc_attr_e( 'Next', 'pdf-embed-seo-optimize' ); ?>">&rsaquo;</button>
+				<input type="text" class="pdf-search-input" placeholder="<?php esc_attr_e( 'Search...', 'wp-pdf-embed-seo-optimize' ); ?>" />
+				<button type="button" class="pdf-search-prev" title="<?php esc_attr_e( 'Previous', 'wp-pdf-embed-seo-optimize' ); ?>">&lsaquo;</button>
+				<button type="button" class="pdf-search-next" title="<?php esc_attr_e( 'Next', 'wp-pdf-embed-seo-optimize' ); ?>">&rsaquo;</button>
 				<span class="pdf-search-results"></span>
 				<button type="button" class="pdf-search-close">&times;</button>
 			</div>
@@ -136,14 +136,14 @@ class PDF_Embed_SEO_Premium_Viewer {
 
 		<!-- Bookmarks Control -->
 		<div class="pdf-control-group pdf-bookmarks-group">
-			<button type="button" class="pdf-control-btn pdf-bookmarks-toggle" title="<?php esc_attr_e( 'Bookmarks', 'pdf-embed-seo-optimize' ); ?>">
+			<button type="button" class="pdf-control-btn pdf-bookmarks-toggle" title="<?php esc_attr_e( 'Bookmarks', 'wp-pdf-embed-seo-optimize' ); ?>">
 				<span class="dashicons dashicons-book"></span>
 			</button>
 		</div>
 
 		<!-- Presentation Mode -->
 		<div class="pdf-control-group pdf-presentation-group">
-			<button type="button" class="pdf-control-btn pdf-presentation-toggle" title="<?php esc_attr_e( 'Presentation Mode', 'pdf-embed-seo-optimize' ); ?>">
+			<button type="button" class="pdf-control-btn pdf-presentation-toggle" title="<?php esc_attr_e( 'Presentation Mode', 'wp-pdf-embed-seo-optimize' ); ?>">
 				<span class="dashicons dashicons-slides"></span>
 			</button>
 		</div>
@@ -164,7 +164,7 @@ class PDF_Embed_SEO_Premium_Viewer {
 		$user_id     = get_current_user_id();
 
 		if ( ! $post_id ) {
-			wp_send_json_error( array( 'message' => __( 'Invalid request.', 'pdf-embed-seo-optimize' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Invalid request.', 'wp-pdf-embed-seo-optimize' ) ) );
 		}
 
 		// Save progress for logged-in users.
@@ -190,7 +190,7 @@ class PDF_Embed_SEO_Premium_Viewer {
 		$user_id = get_current_user_id();
 
 		if ( ! $post_id ) {
-			wp_send_json_error( array( 'message' => __( 'Invalid request.', 'pdf-embed-seo-optimize' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Invalid request.', 'wp-pdf-embed-seo-optimize' ) ) );
 		}
 
 		$page_number = 1;
@@ -236,7 +236,7 @@ class PDF_Embed_SEO_Premium_Viewer {
 		?>
 		<div class="pdf-bookmarks-sidebar" style="display: none;">
 			<div class="pdf-bookmarks-header">
-				<h4><?php esc_html_e( 'Document Outline', 'pdf-embed-seo-optimize' ); ?></h4>
+				<h4><?php esc_html_e( 'Document Outline', 'wp-pdf-embed-seo-optimize' ); ?></h4>
 				<button type="button" class="pdf-bookmarks-close">&times;</button>
 			</div>
 			<div class="pdf-bookmarks-content">
@@ -244,7 +244,7 @@ class PDF_Embed_SEO_Premium_Viewer {
 					<!-- Populated by JavaScript -->
 				</ul>
 				<p class="pdf-no-bookmarks" style="display: none;">
-					<?php esc_html_e( 'This document has no bookmarks.', 'pdf-embed-seo-optimize' ); ?>
+					<?php esc_html_e( 'This document has no bookmarks.', 'wp-pdf-embed-seo-optimize' ); ?>
 				</p>
 			</div>
 		</div>
@@ -265,10 +265,10 @@ class PDF_Embed_SEO_Premium_Viewer {
 				<p class="pdf-progress-message"></p>
 				<div class="pdf-progress-buttons">
 					<button type="button" class="pdf-progress-resume button button-primary">
-						<?php esc_html_e( 'Resume', 'pdf-embed-seo-optimize' ); ?>
+						<?php esc_html_e( 'Resume', 'wp-pdf-embed-seo-optimize' ); ?>
 					</button>
 					<button type="button" class="pdf-progress-start-over button">
-						<?php esc_html_e( 'Start Over', 'pdf-embed-seo-optimize' ); ?>
+						<?php esc_html_e( 'Start Over', 'wp-pdf-embed-seo-optimize' ); ?>
 					</button>
 				</div>
 			</div>

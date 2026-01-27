@@ -38,7 +38,7 @@ class PDF_Embed_SEO_Admin {
 	public function add_meta_boxes() {
 		add_meta_box(
 			'pdf_embed_seo_file',
-			__( 'PDF File', 'pdf-embed-seo-optimize' ),
+			__( 'PDF File', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_file_meta_box' ),
 			'pdf_document',
 			'normal',
@@ -47,7 +47,7 @@ class PDF_Embed_SEO_Admin {
 
 		add_meta_box(
 			'pdf_embed_seo_settings',
-			__( 'PDF Settings', 'pdf-embed-seo-optimize' ),
+			__( 'PDF Settings', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_settings_meta_box' ),
 			'pdf_document',
 			'side',
@@ -56,7 +56,7 @@ class PDF_Embed_SEO_Admin {
 
 		add_meta_box(
 			'pdf_embed_seo_stats',
-			__( 'View Statistics', 'pdf-embed-seo-optimize' ),
+			__( 'View Statistics', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_stats_meta_box' ),
 			'pdf_document',
 			'side',
@@ -209,10 +209,10 @@ class PDF_Embed_SEO_Admin {
 				'pdf-embed-seo-optimize-admin',
 				'pdfEmbedSeoAdmin',
 				array(
-					'selectPdf'   => __( 'Select PDF File', 'pdf-embed-seo-optimize' ),
-					'usePdf'      => __( 'Use this PDF', 'pdf-embed-seo-optimize' ),
-					'removePdf'   => __( 'Remove PDF', 'pdf-embed-seo-optimize' ),
-					'noPdfSelect' => __( 'No PDF selected', 'pdf-embed-seo-optimize' ),
+					'selectPdf'   => __( 'Select PDF File', 'wp-pdf-embed-seo-optimize' ),
+					'usePdf'      => __( 'Use this PDF', 'wp-pdf-embed-seo-optimize' ),
+					'removePdf'   => __( 'Remove PDF', 'wp-pdf-embed-seo-optimize' ),
+					'noPdfSelect' => __( 'No PDF selected', 'wp-pdf-embed-seo-optimize' ),
 				)
 			);
 		}
@@ -237,8 +237,8 @@ class PDF_Embed_SEO_Admin {
 		// Add Docs page.
 		add_submenu_page(
 			'edit.php?post_type=pdf_document',
-			__( 'Docs & Usage', 'pdf-embed-seo-optimize' ),
-			__( 'Docs', 'pdf-embed-seo-optimize' ),
+			__( 'Docs & Usage', 'wp-pdf-embed-seo-optimize' ),
+			__( 'Docs', 'wp-pdf-embed-seo-optimize' ),
 			'edit_posts',
 			'pdf-embed-seo-optimize-docs',
 			array( $this, 'render_docs_page' )
@@ -247,8 +247,8 @@ class PDF_Embed_SEO_Admin {
 		// Add Settings page.
 		add_submenu_page(
 			'edit.php?post_type=pdf_document',
-			__( 'PDF Viewer Settings', 'pdf-embed-seo-optimize' ),
-			__( 'Settings', 'pdf-embed-seo-optimize' ),
+			__( 'PDF Viewer Settings', 'wp-pdf-embed-seo-optimize' ),
+			__( 'Settings', 'wp-pdf-embed-seo-optimize' ),
 			'manage_options',
 			'pdf-embed-seo-optimize-settings',
 			array( $this, 'render_settings_page' )
@@ -282,14 +282,14 @@ class PDF_Embed_SEO_Admin {
 		// Default Settings Section.
 		add_settings_section(
 			'pdf_embed_seo_defaults',
-			__( 'Default Settings', 'pdf-embed-seo-optimize' ),
+			__( 'Default Settings', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_defaults_section' ),
 			'pdf-embed-seo-optimize-settings'
 		);
 
 		add_settings_field(
 			'default_allow_download',
-			__( 'Allow Download by Default', 'pdf-embed-seo-optimize' ),
+			__( 'Allow Download by Default', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_checkbox_field' ),
 			'pdf-embed-seo-optimize-settings',
 			'pdf_embed_seo_defaults',
@@ -301,7 +301,7 @@ class PDF_Embed_SEO_Admin {
 
 		add_settings_field(
 			'default_allow_print',
-			__( 'Allow Print by Default', 'pdf-embed-seo-optimize' ),
+			__( 'Allow Print by Default', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_checkbox_field' ),
 			'pdf-embed-seo-optimize-settings',
 			'pdf_embed_seo_defaults',
@@ -313,7 +313,7 @@ class PDF_Embed_SEO_Admin {
 
 		add_settings_field(
 			'auto_generate_thumbnails',
-			__( 'Auto-generate Thumbnails', 'pdf-embed-seo-optimize' ),
+			__( 'Auto-generate Thumbnails', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_thumbnail_field' ),
 			'pdf-embed-seo-optimize-settings',
 			'pdf_embed_seo_defaults',
@@ -326,14 +326,14 @@ class PDF_Embed_SEO_Admin {
 		// Viewer Settings Section.
 		add_settings_section(
 			'pdf_embed_seo_viewer',
-			__( 'Viewer Settings', 'pdf-embed-seo-optimize' ),
+			__( 'Viewer Settings', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_viewer_section' ),
 			'pdf-embed-seo-optimize-settings'
 		);
 
 		add_settings_field(
 			'viewer_theme',
-			__( 'Viewer Theme', 'pdf-embed-seo-optimize' ),
+			__( 'Viewer Theme', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_select_field' ),
 			'pdf-embed-seo-optimize-settings',
 			'pdf_embed_seo_viewer',
@@ -341,8 +341,8 @@ class PDF_Embed_SEO_Admin {
 				'label_for' => 'viewer_theme',
 				'key'       => 'viewer_theme',
 				'options'   => array(
-					'light' => __( 'Light', 'pdf-embed-seo-optimize' ),
-					'dark'  => __( 'Dark', 'pdf-embed-seo-optimize' ),
+					'light' => __( 'Light', 'wp-pdf-embed-seo-optimize' ),
+					'dark'  => __( 'Dark', 'wp-pdf-embed-seo-optimize' ),
 				),
 			)
 		);
@@ -350,14 +350,14 @@ class PDF_Embed_SEO_Admin {
 		// Archive Settings Section.
 		add_settings_section(
 			'pdf_embed_seo_archive',
-			__( 'Archive Settings', 'pdf-embed-seo-optimize' ),
+			__( 'Archive Settings', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_archive_section' ),
 			'pdf-embed-seo-optimize-settings'
 		);
 
 		add_settings_field(
 			'archive_posts_per_page',
-			__( 'PDFs per Page', 'pdf-embed-seo-optimize' ),
+			__( 'PDFs per Page', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_number_field' ),
 			'pdf-embed-seo-optimize-settings',
 			'pdf_embed_seo_archive',
@@ -411,7 +411,7 @@ class PDF_Embed_SEO_Admin {
 	 * @return void
 	 */
 	public function render_defaults_section() {
-		echo '<p>' . esc_html__( 'Set default permissions for new PDF documents.', 'pdf-embed-seo-optimize' ) . '</p>';
+		echo '<p>' . esc_html__( 'Set default permissions for new PDF documents.', 'wp-pdf-embed-seo-optimize' ) . '</p>';
 	}
 
 	/**
@@ -420,7 +420,7 @@ class PDF_Embed_SEO_Admin {
 	 * @return void
 	 */
 	public function render_viewer_section() {
-		echo '<p>' . esc_html__( 'Customize the PDF viewer appearance.', 'pdf-embed-seo-optimize' ) . '</p>';
+		echo '<p>' . esc_html__( 'Customize the PDF viewer appearance.', 'wp-pdf-embed-seo-optimize' ) . '</p>';
 	}
 
 	/**
@@ -429,7 +429,7 @@ class PDF_Embed_SEO_Admin {
 	 * @return void
 	 */
 	public function render_archive_section() {
-		echo '<p>' . esc_html__( 'Configure the PDF archive page.', 'pdf-embed-seo-optimize' ) . '</p>';
+		echo '<p>' . esc_html__( 'Configure the PDF archive page.', 'wp-pdf-embed-seo-optimize' ) . '</p>';
 	}
 
 	/**
@@ -518,7 +518,7 @@ class PDF_Embed_SEO_Admin {
 		/>
 		<p class="description">
 			<?php if ( $availability['available'] ) : ?>
-				<?php esc_html_e( 'Automatically generate a thumbnail from the first page of the PDF when no featured image is set.', 'pdf-embed-seo-optimize' ); ?>
+				<?php esc_html_e( 'Automatically generate a thumbnail from the first page of the PDF when no featured image is set.', 'wp-pdf-embed-seo-optimize' ); ?>
 				<br>
 				<span style="color: #00a32a;">
 					<?php echo esc_html( $availability['message'] ); ?>
@@ -546,9 +546,9 @@ class PDF_Embed_SEO_Admin {
 
 			// Add our columns after the title.
 			if ( 'title' === $key ) {
-				$new_columns['pdf_file']    = __( 'PDF File', 'pdf-embed-seo-optimize' );
-				$new_columns['permissions'] = __( 'Permissions', 'pdf-embed-seo-optimize' );
-				$new_columns['views']       = __( 'Views', 'pdf-embed-seo-optimize' );
+				$new_columns['pdf_file']    = __( 'PDF File', 'wp-pdf-embed-seo-optimize' );
+				$new_columns['permissions'] = __( 'Permissions', 'wp-pdf-embed-seo-optimize' );
+				$new_columns['views']       = __( 'Views', 'wp-pdf-embed-seo-optimize' );
 			}
 		}
 
@@ -571,7 +571,7 @@ class PDF_Embed_SEO_Admin {
 					echo '<span class="dashicons dashicons-pdf"></span> ';
 					echo esc_html( $file_name );
 				} else {
-					echo '<em>' . esc_html__( 'No file attached', 'pdf-embed-seo-optimize' ) . '</em>';
+					echo '<em>' . esc_html__( 'No file attached', 'wp-pdf-embed-seo-optimize' ) . '</em>';
 				}
 				break;
 
@@ -581,14 +581,14 @@ class PDF_Embed_SEO_Admin {
 
 				$permissions = array();
 				if ( $allow_download ) {
-					$permissions[] = __( 'Download', 'pdf-embed-seo-optimize' );
+					$permissions[] = __( 'Download', 'wp-pdf-embed-seo-optimize' );
 				}
 				if ( $allow_print ) {
-					$permissions[] = __( 'Print', 'pdf-embed-seo-optimize' );
+					$permissions[] = __( 'Print', 'wp-pdf-embed-seo-optimize' );
 				}
 
 				if ( empty( $permissions ) ) {
-					echo '<em>' . esc_html__( 'View only', 'pdf-embed-seo-optimize' ) . '</em>';
+					echo '<em>' . esc_html__( 'View only', 'wp-pdf-embed-seo-optimize' ) . '</em>';
 				} else {
 					echo esc_html( implode( ', ', $permissions ) );
 				}

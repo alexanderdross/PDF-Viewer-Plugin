@@ -54,7 +54,7 @@ class PDF_Embed_SEO_Premium_Admin {
 	 * @return array Modified plugins.
 	 */
 	public function modify_plugin_name( $plugins ) {
-		$plugin_file = 'pdf-embed-seo-optimize/pdf-embed-seo-optimize.php';
+		$plugin_file = 'wp-pdf-embed-seo-optimize/pdf-embed-seo-optimize.php';
 		if ( isset( $plugins[ $plugin_file ] ) ) {
 			$plugins[ $plugin_file ]['Name'] = 'PDF Embed & SEO Optimize (Premium)';
 			$plugins[ $plugin_file ]['Title'] = 'PDF Embed & SEO Optimize (Premium)';
@@ -73,11 +73,11 @@ class PDF_Embed_SEO_Premium_Admin {
 		// Remove "Get Premium" link since we have premium.
 		unset( $links['premium'] );
 
-		// Add "Visit Site" link.
-		$links['visit_site'] = sprintf(
+		// Add "Changelog" link.
+		$links['changelog'] = sprintf(
 			'<a href="%s" target="_blank">%s</a>',
-			'https://pdfviewer.drossmedia.de',
-			esc_html__( 'Visit Site', 'pdf-embed-seo-optimize' )
+			'https://pdfviewer.drossmedia.de/changelog/',
+			esc_html__( 'Changelog', 'wp-pdf-embed-seo-optimize' )
 		);
 
 		return $links;
@@ -94,7 +94,7 @@ class PDF_Embed_SEO_Premium_Admin {
 		// Premium features section.
 		add_settings_section(
 			'pdf_premium_features',
-			__( 'Premium Features', 'pdf-embed-seo-optimize' ),
+			__( 'Premium Features', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_features_section' ),
 			'pdf-embed-seo-premium'
 		);
@@ -102,97 +102,97 @@ class PDF_Embed_SEO_Premium_Admin {
 		// Enable/disable features.
 		add_settings_field(
 			'enable_categories',
-			__( 'PDF Categories', 'pdf-embed-seo-optimize' ),
+			__( 'PDF Categories', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_toggle_field' ),
 			'pdf-embed-seo-premium',
 			'pdf_premium_features',
 			array(
 				'id'          => 'enable_categories',
-				'description' => __( 'Enable PDF categories and tags.', 'pdf-embed-seo-optimize' ),
+				'description' => __( 'Enable PDF categories and tags.', 'wp-pdf-embed-seo-optimize' ),
 			)
 		);
 
 		add_settings_field(
 			'enable_password',
-			__( 'Password Protection', 'pdf-embed-seo-optimize' ),
+			__( 'Password Protection', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_toggle_field' ),
 			'pdf-embed-seo-premium',
 			'pdf_premium_features',
 			array(
 				'id'          => 'enable_password',
-				'description' => __( 'Enable password protection for PDFs.', 'pdf-embed-seo-optimize' ),
+				'description' => __( 'Enable password protection for PDFs.', 'wp-pdf-embed-seo-optimize' ),
 			)
 		);
 
 		add_settings_field(
 			'enable_roles',
-			__( 'Role Restrictions', 'pdf-embed-seo-optimize' ),
+			__( 'Role Restrictions', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_toggle_field' ),
 			'pdf-embed-seo-premium',
 			'pdf_premium_features',
 			array(
 				'id'          => 'enable_roles',
-				'description' => __( 'Enable user role restrictions for PDFs.', 'pdf-embed-seo-optimize' ),
+				'description' => __( 'Enable user role restrictions for PDFs.', 'wp-pdf-embed-seo-optimize' ),
 			)
 		);
 
 		add_settings_field(
 			'enable_analytics',
-			__( 'Advanced Analytics', 'pdf-embed-seo-optimize' ),
+			__( 'Advanced Analytics', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_toggle_field' ),
 			'pdf-embed-seo-premium',
 			'pdf_premium_features',
 			array(
 				'id'          => 'enable_analytics',
-				'description' => __( 'Enable detailed PDF analytics.', 'pdf-embed-seo-optimize' ),
+				'description' => __( 'Enable detailed PDF analytics.', 'wp-pdf-embed-seo-optimize' ),
 			)
 		);
 
 		add_settings_field(
 			'enable_search',
-			__( 'Text Search', 'pdf-embed-seo-optimize' ),
+			__( 'Text Search', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_toggle_field' ),
 			'pdf-embed-seo-premium',
 			'pdf_premium_features',
 			array(
 				'id'          => 'enable_search',
-				'description' => __( 'Enable text search in PDF viewer.', 'pdf-embed-seo-optimize' ),
+				'description' => __( 'Enable text search in PDF viewer.', 'wp-pdf-embed-seo-optimize' ),
 			)
 		);
 
 		add_settings_field(
 			'enable_bookmarks',
-			__( 'Bookmarks Panel', 'pdf-embed-seo-optimize' ),
+			__( 'Bookmarks Panel', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_toggle_field' ),
 			'pdf-embed-seo-premium',
 			'pdf_premium_features',
 			array(
 				'id'          => 'enable_bookmarks',
-				'description' => __( 'Enable bookmarks/outline panel in viewer.', 'pdf-embed-seo-optimize' ),
+				'description' => __( 'Enable bookmarks/outline panel in viewer.', 'wp-pdf-embed-seo-optimize' ),
 			)
 		);
 
 		add_settings_field(
 			'enable_progress',
-			__( 'Reading Progress', 'pdf-embed-seo-optimize' ),
+			__( 'Reading Progress', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_toggle_field' ),
 			'pdf-embed-seo-premium',
 			'pdf_premium_features',
 			array(
 				'id'          => 'enable_progress',
-				'description' => __( 'Save and resume reading progress.', 'pdf-embed-seo-optimize' ),
+				'description' => __( 'Save and resume reading progress.', 'wp-pdf-embed-seo-optimize' ),
 			)
 		);
 
 		add_settings_field(
 			'enable_sitemap',
-			__( 'PDF Sitemap', 'pdf-embed-seo-optimize' ),
+			__( 'PDF Sitemap', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_toggle_field' ),
 			'pdf-embed-seo-premium',
 			'pdf_premium_features',
 			array(
 				'id'          => 'enable_sitemap',
-				'description' => __( 'Generate dedicated XML sitemap for PDFs.', 'pdf-embed-seo-optimize' ),
+				'description' => __( 'Generate dedicated XML sitemap for PDFs.', 'wp-pdf-embed-seo-optimize' ),
 			)
 		);
 	}
@@ -230,7 +230,7 @@ class PDF_Embed_SEO_Premium_Admin {
 	 * @return void
 	 */
 	public function render_features_section() {
-		echo '<p>' . esc_html__( 'Enable or disable premium features as needed.', 'pdf-embed-seo-optimize' ) . '</p>';
+		echo '<p>' . esc_html__( 'Enable or disable premium features as needed.', 'wp-pdf-embed-seo-optimize' ) . '</p>';
 	}
 
 	/**
@@ -260,7 +260,7 @@ class PDF_Embed_SEO_Premium_Admin {
 	 * @return array
 	 */
 	public function add_settings_tab( $tabs ) {
-		$tabs['premium'] = __( 'Premium', 'pdf-embed-seo-optimize' );
+		$tabs['premium'] = __( 'Premium', 'wp-pdf-embed-seo-optimize' );
 		return $tabs;
 	}
 
@@ -300,8 +300,8 @@ class PDF_Embed_SEO_Premium_Admin {
 	public function add_license_page() {
 		add_submenu_page(
 			'edit.php?post_type=pdf_document',
-			__( 'License', 'pdf-embed-seo-optimize' ),
-			__( 'License', 'pdf-embed-seo-optimize' ),
+			__( 'License', 'wp-pdf-embed-seo-optimize' ),
+			__( 'License', 'wp-pdf-embed-seo-optimize' ),
 			'manage_options',
 			'pdf-license',
 			array( $this, 'render_license_page' )
@@ -318,16 +318,16 @@ class PDF_Embed_SEO_Premium_Admin {
 		$license_status = get_option( 'pdf_embed_seo_premium_license_status', 'valid' );
 		?>
 		<div class="wrap">
-			<h1><?php esc_html_e( 'License Settings', 'pdf-embed-seo-optimize' ); ?></h1>
+			<h1><?php esc_html_e( 'License Settings', 'wp-pdf-embed-seo-optimize' ); ?></h1>
 
 			<div class="pdf-license-status <?php echo 'valid' === $license_status ? 'active' : 'inactive'; ?>">
 				<span class="dashicons <?php echo 'valid' === $license_status ? 'dashicons-yes-alt' : 'dashicons-warning'; ?>"></span>
 				<?php if ( 'valid' === $license_status ) : ?>
-					<strong><?php esc_html_e( 'License Active', 'pdf-embed-seo-optimize' ); ?></strong>
-					<p><?php esc_html_e( 'Your premium license is active. Thank you for your support!', 'pdf-embed-seo-optimize' ); ?></p>
+					<strong><?php esc_html_e( 'License Active', 'wp-pdf-embed-seo-optimize' ); ?></strong>
+					<p><?php esc_html_e( 'Your premium license is active. Thank you for your support!', 'wp-pdf-embed-seo-optimize' ); ?></p>
 				<?php else : ?>
-					<strong><?php esc_html_e( 'License Inactive', 'pdf-embed-seo-optimize' ); ?></strong>
-					<p><?php esc_html_e( 'Please enter a valid license key to activate premium features.', 'pdf-embed-seo-optimize' ); ?></p>
+					<strong><?php esc_html_e( 'License Inactive', 'wp-pdf-embed-seo-optimize' ); ?></strong>
+					<p><?php esc_html_e( 'Please enter a valid license key to activate premium features.', 'wp-pdf-embed-seo-optimize' ); ?></p>
 				<?php endif; ?>
 			</div>
 
@@ -336,23 +336,23 @@ class PDF_Embed_SEO_Premium_Admin {
 				<table class="form-table">
 					<tr>
 						<th scope="row">
-							<label for="license_key"><?php esc_html_e( 'License Key', 'pdf-embed-seo-optimize' ); ?></label>
+							<label for="license_key"><?php esc_html_e( 'License Key', 'wp-pdf-embed-seo-optimize' ); ?></label>
 						</th>
 						<td>
 							<input type="password" id="license_key" name="pdf_embed_seo_premium_license_key" value="<?php echo esc_attr( $license_key ); ?>" class="regular-text" />
-							<p class="description"><?php esc_html_e( 'Enter your license key to activate automatic updates and premium support.', 'pdf-embed-seo-optimize' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Enter your license key to activate automatic updates and premium support.', 'wp-pdf-embed-seo-optimize' ); ?></p>
 						</td>
 					</tr>
 				</table>
-				<?php submit_button( __( 'Save License', 'pdf-embed-seo-optimize' ) ); ?>
+				<?php submit_button( __( 'Save License', 'wp-pdf-embed-seo-optimize' ) ); ?>
 			</form>
 
 			<p class="pdf-embed-seo-get-license" style="margin-top: 20px;">
 				<?php
 				printf(
 					/* translators: %s: link to purchase page */
-					esc_html__( 'Don\'t have a license key? %s', 'pdf-embed-seo-optimize' ),
-					'<a href="https://pdfviewer.drossmedia.de/" target="_blank" rel="noopener noreferrer" aria-label="' . esc_attr__( 'Get a premium license (opens in new tab)', 'pdf-embed-seo-optimize' ) . '" title="' . esc_attr__( 'Get a premium license', 'pdf-embed-seo-optimize' ) . '">' . esc_html__( 'Get a premium license', 'pdf-embed-seo-optimize' ) . '</a>'
+					esc_html__( 'Don\'t have a license key? %s', 'wp-pdf-embed-seo-optimize' ),
+					'<a href="https://pdfviewer.drossmedia.de/" target="_blank" rel="noopener noreferrer" aria-label="' . esc_attr__( 'Get a premium license (opens in new tab)', 'wp-pdf-embed-seo-optimize' ) . '" title="' . esc_attr__( 'Get a premium license', 'wp-pdf-embed-seo-optimize' ) . '">' . esc_html__( 'Get a premium license', 'wp-pdf-embed-seo-optimize' ) . '</a>'
 				);
 				?>
 			</p>
@@ -361,9 +361,9 @@ class PDF_Embed_SEO_Premium_Admin {
 				<?php
 				printf(
 					/* translators: %1$s: heart symbol, %2$s: Dross:Media link */
-					esc_html__( 'made with %1$s by %2$s', 'pdf-embed-seo-optimize' ),
-					'<span style="color: #e25555;" aria-hidden="true">♥</span><span class="screen-reader-text">' . esc_html__( 'love', 'pdf-embed-seo-optimize' ) . '</span>',
-					'<a href="https://dross.net/media/" target="_blank" rel="noopener noreferrer" aria-label="' . esc_attr__( 'Visit Dross:Media website (opens in new tab)', 'pdf-embed-seo-optimize' ) . '" title="' . esc_attr__( 'Visit Dross:Media website', 'pdf-embed-seo-optimize' ) . '">Dross:Media</a>'
+					esc_html__( 'made with %1$s by %2$s', 'wp-pdf-embed-seo-optimize' ),
+					'<span style="color: #e25555;" aria-hidden="true">♥</span><span class="screen-reader-text">' . esc_html__( 'love', 'wp-pdf-embed-seo-optimize' ) . '</span>',
+					'<a href="https://dross.net/media/" target="_blank" rel="noopener noreferrer" aria-label="' . esc_attr__( 'Visit Dross:Media website (opens in new tab)', 'wp-pdf-embed-seo-optimize' ) . '" title="' . esc_attr__( 'Visit Dross:Media website', 'wp-pdf-embed-seo-optimize' ) . '">Dross:Media</a>'
 				);
 				?>
 			</p>
@@ -439,10 +439,9 @@ class PDF_Embed_SEO_Premium_Admin {
 	 * @return array
 	 */
 	public function add_plugin_row_links( $links, $file ) {
-		if ( strpos( $file, 'pdf-embed-seo-optimize' ) !== false ) {
-			$links[] = '<a href="' . esc_url( admin_url( 'edit.php?post_type=pdf_document&page=pdf-license' ) ) . '">' . esc_html__( 'License', 'pdf-embed-seo-optimize' ) . '</a>';
-			$links[] = '<a href="https://pdfviewer.drossmedia.de/documentation/" target="_blank">' . esc_html__( 'Documentation', 'pdf-embed-seo-optimize' ) . '</a>';
-			$links[] = '<a href="https://pdfviewer.drossmedia.de/support/" target="_blank">' . esc_html__( 'Support', 'pdf-embed-seo-optimize' ) . '</a>';
+		if ( strpos( $file, 'wp-pdf-embed-seo-optimize' ) !== false ) {
+			$links[] = '<a href="' . esc_url( admin_url( 'edit.php?post_type=pdf_document&page=pdf-license' ) ) . '">' . esc_html__( 'License', 'wp-pdf-embed-seo-optimize' ) . '</a>';
+			$links[] = '<a href="https://pdfviewer.drossmedia.de/documentation/" target="_blank">' . esc_html__( 'Documentation', 'wp-pdf-embed-seo-optimize' ) . '</a>';
 		}
 
 		return $links;

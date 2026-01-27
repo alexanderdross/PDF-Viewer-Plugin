@@ -27,7 +27,7 @@ get_header();
 				 *
 				 * @param string $title The archive page title.
 				 */
-				echo esc_html( apply_filters( 'pdf_embed_seo_archive_title', __( 'PDF Documents', 'pdf-embed-seo-optimize' ) ) );
+				echo esc_html( apply_filters( 'pdf_embed_seo_archive_title', __( 'PDF Documents', 'wp-pdf-embed-seo-optimize' ) ) );
 				?>
 			</h1>
 
@@ -37,7 +37,7 @@ get_header();
 			 *
 			 * @param string $description The archive page description.
 			 */
-			$archive_description = apply_filters( 'pdf_embed_seo_archive_description', __( 'Browse all available PDF documents.', 'pdf-embed-seo-optimize' ) );
+			$archive_description = apply_filters( 'pdf_embed_seo_archive_description', __( 'Browse all available PDF documents.', 'wp-pdf-embed-seo-optimize' ) );
 
 			if ( ! empty( $archive_description ) ) :
 				?>
@@ -94,7 +94,7 @@ get_header();
 										<?php
 										printf(
 											/* translators: %s: View count */
-											esc_html( _n( '%s view', '%s views', $view_count, 'pdf-embed-seo-optimize' ) ),
+											esc_html( _n( '%s view', '%s views', $view_count, 'wp-pdf-embed-seo-optimize' ) ),
 											esc_html( number_format_i18n( $view_count ) )
 										);
 										?>
@@ -103,7 +103,7 @@ get_header();
 							</div>
 
 							<a href="<?php the_permalink(); ?>" class="pdf-embed-seo-optimize-card-link">
-								<?php esc_html_e( 'View PDF', 'pdf-embed-seo-optimize' ); ?>
+								<?php esc_html_e( 'View PDF', 'wp-pdf-embed-seo-optimize' ); ?>
 								<span class="screen-reader-text"><?php the_title(); ?></span>
 							</a>
 						</div>
@@ -117,8 +117,8 @@ get_header();
 			the_posts_pagination(
 				array(
 					'mid_size'  => 2,
-					'prev_text' => __( '&laquo; Previous', 'pdf-embed-seo-optimize' ),
-					'next_text' => __( 'Next &raquo;', 'pdf-embed-seo-optimize' ),
+					'prev_text' => __( '&laquo; Previous', 'wp-pdf-embed-seo-optimize' ),
+					'next_text' => __( 'Next &raquo;', 'wp-pdf-embed-seo-optimize' ),
 					'class'     => 'pdf-embed-seo-optimize-pagination',
 				)
 			);
@@ -127,7 +127,7 @@ get_header();
 		<?php else : ?>
 
 			<div class="pdf-embed-seo-optimize-no-results">
-				<p><?php esc_html_e( 'No PDF documents have been published yet.', 'pdf-embed-seo-optimize' ); ?></p>
+				<p><?php esc_html_e( 'No PDF documents have been published yet.', 'wp-pdf-embed-seo-optimize' ); ?></p>
 			</div>
 
 		<?php endif; ?>

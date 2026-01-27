@@ -56,14 +56,14 @@ class PDF_Embed_SEO_Shortcodes {
 		$post = get_post( $post_id );
 
 		if ( ! $post || 'pdf_document' !== $post->post_type || 'publish' !== $post->post_status ) {
-			return '<p class="pdf-embed-seo-optimize-error">' . esc_html__( 'PDF document not found.', 'pdf-embed-seo-optimize' ) . '</p>';
+			return '<p class="pdf-embed-seo-optimize-error">' . esc_html__( 'PDF document not found.', 'wp-pdf-embed-seo-optimize' ) . '</p>';
 		}
 
 		// Check if PDF file exists.
 		$pdf_url = PDF_Embed_SEO_Post_Type::get_pdf_url( $post_id );
 
 		if ( ! $pdf_url ) {
-			return '<p class="pdf-embed-seo-optimize-error">' . esc_html__( 'No PDF file attached to this document.', 'pdf-embed-seo-optimize' ) . '</p>';
+			return '<p class="pdf-embed-seo-optimize-error">' . esc_html__( 'No PDF file attached to this document.', 'wp-pdf-embed-seo-optimize' ) . '</p>';
 		}
 
 		// Enqueue scripts.
@@ -130,7 +130,7 @@ class PDF_Embed_SEO_Shortcodes {
 		$pdfs = new WP_Query( $query_args );
 
 		if ( ! $pdfs->have_posts() ) {
-			return '<p class="pdf-embed-seo-optimize-no-pdfs">' . esc_html__( 'No PDF documents found.', 'pdf-embed-seo-optimize' ) . '</p>';
+			return '<p class="pdf-embed-seo-optimize-no-pdfs">' . esc_html__( 'No PDF documents found.', 'wp-pdf-embed-seo-optimize' ) . '</p>';
 		}
 
 		// Build output.
@@ -222,17 +222,17 @@ class PDF_Embed_SEO_Shortcodes {
 				'allowPrint'    => $allow_print,
 				'viewerTheme'   => $viewer_theme,
 				'strings'       => array(
-					'loading'    => __( 'Loading PDF...', 'pdf-embed-seo-optimize' ),
-					'error'      => __( 'Error loading PDF', 'pdf-embed-seo-optimize' ),
-					'page'       => __( 'Page', 'pdf-embed-seo-optimize' ),
-					'of'         => __( 'of', 'pdf-embed-seo-optimize' ),
-					'zoomIn'     => __( 'Zoom In', 'pdf-embed-seo-optimize' ),
-					'zoomOut'    => __( 'Zoom Out', 'pdf-embed-seo-optimize' ),
-					'download'   => __( 'Download', 'pdf-embed-seo-optimize' ),
-					'print'      => __( 'Print', 'pdf-embed-seo-optimize' ),
-					'prevPage'   => __( 'Previous Page', 'pdf-embed-seo-optimize' ),
-					'nextPage'   => __( 'Next Page', 'pdf-embed-seo-optimize' ),
-					'fullscreen' => __( 'Fullscreen', 'pdf-embed-seo-optimize' ),
+					'loading'    => __( 'Loading PDF...', 'wp-pdf-embed-seo-optimize' ),
+					'error'      => __( 'Error loading PDF', 'wp-pdf-embed-seo-optimize' ),
+					'page'       => __( 'Page', 'wp-pdf-embed-seo-optimize' ),
+					'of'         => __( 'of', 'wp-pdf-embed-seo-optimize' ),
+					'zoomIn'     => __( 'Zoom In', 'wp-pdf-embed-seo-optimize' ),
+					'zoomOut'    => __( 'Zoom Out', 'wp-pdf-embed-seo-optimize' ),
+					'download'   => __( 'Download', 'wp-pdf-embed-seo-optimize' ),
+					'print'      => __( 'Print', 'wp-pdf-embed-seo-optimize' ),
+					'prevPage'   => __( 'Previous Page', 'wp-pdf-embed-seo-optimize' ),
+					'nextPage'   => __( 'Next Page', 'wp-pdf-embed-seo-optimize' ),
+					'fullscreen' => __( 'Fullscreen', 'wp-pdf-embed-seo-optimize' ),
 				),
 			)
 		);

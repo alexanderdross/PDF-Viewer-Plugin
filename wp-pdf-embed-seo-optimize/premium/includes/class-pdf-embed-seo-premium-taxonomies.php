@@ -34,23 +34,23 @@ class PDF_Embed_SEO_Premium_Taxonomies {
 	public function register_taxonomies() {
 		// PDF Categories.
 		$category_labels = array(
-			'name'                       => _x( 'PDF Categories', 'taxonomy general name', 'pdf-embed-seo-optimize' ),
-			'singular_name'              => _x( 'PDF Category', 'taxonomy singular name', 'pdf-embed-seo-optimize' ),
-			'search_items'               => __( 'Search PDF Categories', 'pdf-embed-seo-optimize' ),
-			'popular_items'              => __( 'Popular PDF Categories', 'pdf-embed-seo-optimize' ),
-			'all_items'                  => __( 'All PDF Categories', 'pdf-embed-seo-optimize' ),
-			'parent_item'                => __( 'Parent PDF Category', 'pdf-embed-seo-optimize' ),
-			'parent_item_colon'          => __( 'Parent PDF Category:', 'pdf-embed-seo-optimize' ),
-			'edit_item'                  => __( 'Edit PDF Category', 'pdf-embed-seo-optimize' ),
-			'update_item'                => __( 'Update PDF Category', 'pdf-embed-seo-optimize' ),
-			'add_new_item'               => __( 'Add New PDF Category', 'pdf-embed-seo-optimize' ),
-			'new_item_name'              => __( 'New PDF Category Name', 'pdf-embed-seo-optimize' ),
-			'separate_items_with_commas' => __( 'Separate categories with commas', 'pdf-embed-seo-optimize' ),
-			'add_or_remove_items'        => __( 'Add or remove categories', 'pdf-embed-seo-optimize' ),
-			'choose_from_most_used'      => __( 'Choose from the most used categories', 'pdf-embed-seo-optimize' ),
-			'not_found'                  => __( 'No PDF categories found.', 'pdf-embed-seo-optimize' ),
-			'menu_name'                  => __( 'Categories', 'pdf-embed-seo-optimize' ),
-			'back_to_items'              => __( '&larr; Back to PDF Categories', 'pdf-embed-seo-optimize' ),
+			'name'                       => _x( 'PDF Categories', 'taxonomy general name', 'wp-pdf-embed-seo-optimize' ),
+			'singular_name'              => _x( 'PDF Category', 'taxonomy singular name', 'wp-pdf-embed-seo-optimize' ),
+			'search_items'               => __( 'Search PDF Categories', 'wp-pdf-embed-seo-optimize' ),
+			'popular_items'              => __( 'Popular PDF Categories', 'wp-pdf-embed-seo-optimize' ),
+			'all_items'                  => __( 'All PDF Categories', 'wp-pdf-embed-seo-optimize' ),
+			'parent_item'                => __( 'Parent PDF Category', 'wp-pdf-embed-seo-optimize' ),
+			'parent_item_colon'          => __( 'Parent PDF Category:', 'wp-pdf-embed-seo-optimize' ),
+			'edit_item'                  => __( 'Edit PDF Category', 'wp-pdf-embed-seo-optimize' ),
+			'update_item'                => __( 'Update PDF Category', 'wp-pdf-embed-seo-optimize' ),
+			'add_new_item'               => __( 'Add New PDF Category', 'wp-pdf-embed-seo-optimize' ),
+			'new_item_name'              => __( 'New PDF Category Name', 'wp-pdf-embed-seo-optimize' ),
+			'separate_items_with_commas' => __( 'Separate categories with commas', 'wp-pdf-embed-seo-optimize' ),
+			'add_or_remove_items'        => __( 'Add or remove categories', 'wp-pdf-embed-seo-optimize' ),
+			'choose_from_most_used'      => __( 'Choose from the most used categories', 'wp-pdf-embed-seo-optimize' ),
+			'not_found'                  => __( 'No PDF categories found.', 'wp-pdf-embed-seo-optimize' ),
+			'menu_name'                  => __( 'Categories', 'wp-pdf-embed-seo-optimize' ),
+			'back_to_items'              => __( '&larr; Back to PDF Categories', 'wp-pdf-embed-seo-optimize' ),
 		);
 
 		$category_args = array(
@@ -73,21 +73,21 @@ class PDF_Embed_SEO_Premium_Taxonomies {
 
 		// PDF Tags.
 		$tag_labels = array(
-			'name'                       => _x( 'PDF Tags', 'taxonomy general name', 'pdf-embed-seo-optimize' ),
-			'singular_name'              => _x( 'PDF Tag', 'taxonomy singular name', 'pdf-embed-seo-optimize' ),
-			'search_items'               => __( 'Search PDF Tags', 'pdf-embed-seo-optimize' ),
-			'popular_items'              => __( 'Popular PDF Tags', 'pdf-embed-seo-optimize' ),
-			'all_items'                  => __( 'All PDF Tags', 'pdf-embed-seo-optimize' ),
-			'edit_item'                  => __( 'Edit PDF Tag', 'pdf-embed-seo-optimize' ),
-			'update_item'                => __( 'Update PDF Tag', 'pdf-embed-seo-optimize' ),
-			'add_new_item'               => __( 'Add New PDF Tag', 'pdf-embed-seo-optimize' ),
-			'new_item_name'              => __( 'New PDF Tag Name', 'pdf-embed-seo-optimize' ),
-			'separate_items_with_commas' => __( 'Separate tags with commas', 'pdf-embed-seo-optimize' ),
-			'add_or_remove_items'        => __( 'Add or remove tags', 'pdf-embed-seo-optimize' ),
-			'choose_from_most_used'      => __( 'Choose from the most used tags', 'pdf-embed-seo-optimize' ),
-			'not_found'                  => __( 'No PDF tags found.', 'pdf-embed-seo-optimize' ),
-			'menu_name'                  => __( 'Tags', 'pdf-embed-seo-optimize' ),
-			'back_to_items'              => __( '&larr; Back to PDF Tags', 'pdf-embed-seo-optimize' ),
+			'name'                       => _x( 'PDF Tags', 'taxonomy general name', 'wp-pdf-embed-seo-optimize' ),
+			'singular_name'              => _x( 'PDF Tag', 'taxonomy singular name', 'wp-pdf-embed-seo-optimize' ),
+			'search_items'               => __( 'Search PDF Tags', 'wp-pdf-embed-seo-optimize' ),
+			'popular_items'              => __( 'Popular PDF Tags', 'wp-pdf-embed-seo-optimize' ),
+			'all_items'                  => __( 'All PDF Tags', 'wp-pdf-embed-seo-optimize' ),
+			'edit_item'                  => __( 'Edit PDF Tag', 'wp-pdf-embed-seo-optimize' ),
+			'update_item'                => __( 'Update PDF Tag', 'wp-pdf-embed-seo-optimize' ),
+			'add_new_item'               => __( 'Add New PDF Tag', 'wp-pdf-embed-seo-optimize' ),
+			'new_item_name'              => __( 'New PDF Tag Name', 'wp-pdf-embed-seo-optimize' ),
+			'separate_items_with_commas' => __( 'Separate tags with commas', 'wp-pdf-embed-seo-optimize' ),
+			'add_or_remove_items'        => __( 'Add or remove tags', 'wp-pdf-embed-seo-optimize' ),
+			'choose_from_most_used'      => __( 'Choose from the most used tags', 'wp-pdf-embed-seo-optimize' ),
+			'not_found'                  => __( 'No PDF tags found.', 'wp-pdf-embed-seo-optimize' ),
+			'menu_name'                  => __( 'Tags', 'wp-pdf-embed-seo-optimize' ),
+			'back_to_items'              => __( '&larr; Back to PDF Tags', 'wp-pdf-embed-seo-optimize' ),
 		);
 
 		$tag_args = array(
@@ -182,7 +182,7 @@ class PDF_Embed_SEO_Premium_Taxonomies {
 		}
 
 		$output  = '<select name="pdf_category" class="pdf-category-filter">';
-		$output .= '<option value="">' . esc_html__( 'All Categories', 'pdf-embed-seo-optimize' ) . '</option>';
+		$output .= '<option value="">' . esc_html__( 'All Categories', 'wp-pdf-embed-seo-optimize' ) . '</option>';
 
 		foreach ( $categories as $category ) {
 			$output .= sprintf(

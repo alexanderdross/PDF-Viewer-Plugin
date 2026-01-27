@@ -59,7 +59,7 @@ class PDF_Embed_SEO_Premium_Password {
 	public function add_meta_box() {
 		add_meta_box(
 			'pdf_password_settings',
-			__( 'Password Protection', 'pdf-embed-seo-optimize' ),
+			__( 'Password Protection', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_meta_box' ),
 			'pdf_document',
 			'side',
@@ -82,14 +82,14 @@ class PDF_Embed_SEO_Premium_Password {
 		<p>
 			<label>
 				<input type="checkbox" name="pdf_password_enabled" value="1" <?php checked( $enabled, '1' ); ?> />
-				<?php esc_html_e( 'Enable password protection', 'pdf-embed-seo-optimize' ); ?>
+				<?php esc_html_e( 'Enable password protection', 'wp-pdf-embed-seo-optimize' ); ?>
 			</label>
 		</p>
 		<p class="pdf-password-field" style="<?php echo $enabled ? '' : 'display:none;'; ?>">
-			<label for="pdf_password"><?php esc_html_e( 'Password:', 'pdf-embed-seo-optimize' ); ?></label><br />
-			<input type="password" id="pdf_password" name="pdf_password" value="" class="widefat" placeholder="<?php echo $password ? esc_attr__( 'Leave empty to keep current', 'pdf-embed-seo-optimize' ) : ''; ?>" />
+			<label for="pdf_password"><?php esc_html_e( 'Password:', 'wp-pdf-embed-seo-optimize' ); ?></label><br />
+			<input type="password" id="pdf_password" name="pdf_password" value="" class="widefat" placeholder="<?php echo $password ? esc_attr__( 'Leave empty to keep current', 'wp-pdf-embed-seo-optimize' ) : ''; ?>" />
 			<?php if ( $password ) : ?>
-				<span class="description"><?php esc_html_e( 'Password is set.', 'pdf-embed-seo-optimize' ); ?></span>
+				<span class="description"><?php esc_html_e( 'Password is set.', 'wp-pdf-embed-seo-optimize' ); ?></span>
 			<?php endif; ?>
 		</p>
 		<script>
@@ -275,15 +275,15 @@ class PDF_Embed_SEO_Premium_Password {
 		$password = isset( $_POST['password'] ) ? sanitize_text_field( wp_unslash( $_POST['password'] ) ) : '';
 
 		if ( ! $post_id || ! $password ) {
-			wp_send_json_error( array( 'message' => __( 'Invalid request.', 'pdf-embed-seo-optimize' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Invalid request.', 'wp-pdf-embed-seo-optimize' ) ) );
 		}
 
 		if ( self::verify_password( $post_id, $password ) ) {
 			self::grant_access( $post_id );
-			wp_send_json_success( array( 'message' => __( 'Access granted.', 'pdf-embed-seo-optimize' ) ) );
+			wp_send_json_success( array( 'message' => __( 'Access granted.', 'wp-pdf-embed-seo-optimize' ) ) );
 		}
 
-		wp_send_json_error( array( 'message' => __( 'Incorrect password.', 'pdf-embed-seo-optimize' ) ) );
+		wp_send_json_error( array( 'message' => __( 'Incorrect password.', 'wp-pdf-embed-seo-optimize' ) ) );
 	}
 
 	/**
@@ -299,23 +299,23 @@ class PDF_Embed_SEO_Premium_Password {
 		?>
 		<div class="pdf-password-form-container">
 			<div class="pdf-password-form">
-				<h3><?php esc_html_e( 'This PDF is password protected', 'pdf-embed-seo-optimize' ); ?></h3>
-				<p><?php esc_html_e( 'Please enter the password to view this document.', 'pdf-embed-seo-optimize' ); ?></p>
+				<h3><?php esc_html_e( 'This PDF is password protected', 'wp-pdf-embed-seo-optimize' ); ?></h3>
+				<p><?php esc_html_e( 'Please enter the password to view this document.', 'wp-pdf-embed-seo-optimize' ); ?></p>
 
 				<?php if ( $error ) : ?>
 					<div class="pdf-password-error">
-						<?php esc_html_e( 'Incorrect password. Please try again.', 'pdf-embed-seo-optimize' ); ?>
+						<?php esc_html_e( 'Incorrect password. Please try again.', 'wp-pdf-embed-seo-optimize' ); ?>
 					</div>
 				<?php endif; ?>
 
 				<form method="post" action="">
 					<?php wp_nonce_field( 'pdf_password_check', 'pdf_password_check_nonce' ); ?>
 					<p>
-						<label for="pdf_access_password"><?php esc_html_e( 'Password:', 'pdf-embed-seo-optimize' ); ?></label>
+						<label for="pdf_access_password"><?php esc_html_e( 'Password:', 'wp-pdf-embed-seo-optimize' ); ?></label>
 						<input type="password" name="pdf_access_password" id="pdf_access_password" required />
 					</p>
 					<p>
-						<button type="submit" name="pdf_password_submit" class="button"><?php esc_html_e( 'Submit', 'pdf-embed-seo-optimize' ); ?></button>
+						<button type="submit" name="pdf_password_submit" class="button"><?php esc_html_e( 'Submit', 'wp-pdf-embed-seo-optimize' ); ?></button>
 					</p>
 				</form>
 			</div>

@@ -166,7 +166,7 @@ class PDF_Embed_SEO_Premium_Analytics {
 	public function add_dashboard_widget() {
 		wp_add_dashboard_widget(
 			'pdf_analytics_widget',
-			__( 'PDF Views Overview', 'pdf-embed-seo-optimize' ),
+			__( 'PDF Views Overview', 'wp-pdf-embed-seo-optimize' ),
 			array( $this, 'render_dashboard_widget' )
 		);
 	}
@@ -183,28 +183,28 @@ class PDF_Embed_SEO_Premium_Analytics {
 			<div class="pdf-stats-grid">
 				<div class="pdf-stat-box">
 					<span class="pdf-stat-number"><?php echo esc_html( number_format_i18n( $stats['total_views'] ) ); ?></span>
-					<span class="pdf-stat-label"><?php esc_html_e( 'Total Views', 'pdf-embed-seo-optimize' ); ?></span>
+					<span class="pdf-stat-label"><?php esc_html_e( 'Total Views', 'wp-pdf-embed-seo-optimize' ); ?></span>
 				</div>
 				<div class="pdf-stat-box">
 					<span class="pdf-stat-number"><?php echo esc_html( number_format_i18n( $stats['views_today'] ) ); ?></span>
-					<span class="pdf-stat-label"><?php esc_html_e( 'Today', 'pdf-embed-seo-optimize' ); ?></span>
+					<span class="pdf-stat-label"><?php esc_html_e( 'Today', 'wp-pdf-embed-seo-optimize' ); ?></span>
 				</div>
 				<div class="pdf-stat-box">
 					<span class="pdf-stat-number"><?php echo esc_html( number_format_i18n( $stats['views_week'] ) ); ?></span>
-					<span class="pdf-stat-label"><?php esc_html_e( 'This Week', 'pdf-embed-seo-optimize' ); ?></span>
+					<span class="pdf-stat-label"><?php esc_html_e( 'This Week', 'wp-pdf-embed-seo-optimize' ); ?></span>
 				</div>
 				<div class="pdf-stat-box">
 					<span class="pdf-stat-number"><?php echo esc_html( number_format_i18n( $stats['views_month'] ) ); ?></span>
-					<span class="pdf-stat-label"><?php esc_html_e( 'This Month', 'pdf-embed-seo-optimize' ); ?></span>
+					<span class="pdf-stat-label"><?php esc_html_e( 'This Month', 'wp-pdf-embed-seo-optimize' ); ?></span>
 				</div>
 			</div>
 
-			<h4><?php esc_html_e( 'Top PDFs (Last 30 Days)', 'pdf-embed-seo-optimize' ); ?></h4>
+			<h4><?php esc_html_e( 'Top PDFs (Last 30 Days)', 'wp-pdf-embed-seo-optimize' ); ?></h4>
 			<table class="widefat striped">
 				<thead>
 					<tr>
-						<th><?php esc_html_e( 'Document', 'pdf-embed-seo-optimize' ); ?></th>
-						<th><?php esc_html_e( 'Views', 'pdf-embed-seo-optimize' ); ?></th>
+						<th><?php esc_html_e( 'Document', 'wp-pdf-embed-seo-optimize' ); ?></th>
+						<th><?php esc_html_e( 'Views', 'wp-pdf-embed-seo-optimize' ); ?></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -213,7 +213,7 @@ class PDF_Embed_SEO_Premium_Analytics {
 					if ( empty( $top_pdfs ) ) :
 						?>
 						<tr>
-							<td colspan="2"><?php esc_html_e( 'No data available yet.', 'pdf-embed-seo-optimize' ); ?></td>
+							<td colspan="2"><?php esc_html_e( 'No data available yet.', 'wp-pdf-embed-seo-optimize' ); ?></td>
 						</tr>
 						<?php
 					else :
@@ -236,7 +236,7 @@ class PDF_Embed_SEO_Premium_Analytics {
 
 			<p class="pdf-widget-footer">
 				<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=pdf_document&page=pdf-analytics' ) ); ?>">
-					<?php esc_html_e( 'View Full Analytics', 'pdf-embed-seo-optimize' ); ?> &rarr;
+					<?php esc_html_e( 'View Full Analytics', 'wp-pdf-embed-seo-optimize' ); ?> &rarr;
 				</a>
 			</p>
 		</div>
@@ -383,8 +383,8 @@ class PDF_Embed_SEO_Premium_Analytics {
 	public function add_analytics_page() {
 		add_submenu_page(
 			'edit.php?post_type=pdf_document',
-			__( 'PDF Analytics', 'pdf-embed-seo-optimize' ),
-			__( 'Analytics', 'pdf-embed-seo-optimize' ),
+			__( 'PDF Analytics', 'wp-pdf-embed-seo-optimize' ),
+			__( 'Analytics', 'wp-pdf-embed-seo-optimize' ),
 			'manage_options',
 			'pdf-analytics',
 			array( $this, 'render_analytics_page' )
@@ -401,7 +401,7 @@ class PDF_Embed_SEO_Premium_Analytics {
 		$top_pdfs = $this->get_top_pdfs( 20, 30 );
 		?>
 		<div class="wrap">
-			<h1><?php esc_html_e( 'PDF Analytics', 'pdf-embed-seo-optimize' ); ?></h1>
+			<h1><?php esc_html_e( 'PDF Analytics', 'wp-pdf-embed-seo-optimize' ); ?></h1>
 
 			<div class="pdf-analytics-overview">
 				<div class="pdf-stats-cards">
@@ -409,51 +409,51 @@ class PDF_Embed_SEO_Premium_Analytics {
 						<span class="dashicons dashicons-visibility"></span>
 						<div class="pdf-stat-content">
 							<span class="pdf-stat-value"><?php echo esc_html( number_format_i18n( $stats['total_views'] ) ); ?></span>
-							<span class="pdf-stat-title"><?php esc_html_e( 'Total Views', 'pdf-embed-seo-optimize' ); ?></span>
+							<span class="pdf-stat-title"><?php esc_html_e( 'Total Views', 'wp-pdf-embed-seo-optimize' ); ?></span>
 						</div>
 					</div>
 					<div class="pdf-stat-card">
 						<span class="dashicons dashicons-calendar-alt"></span>
 						<div class="pdf-stat-content">
 							<span class="pdf-stat-value"><?php echo esc_html( number_format_i18n( $stats['views_today'] ) ); ?></span>
-							<span class="pdf-stat-title"><?php esc_html_e( 'Views Today', 'pdf-embed-seo-optimize' ); ?></span>
+							<span class="pdf-stat-title"><?php esc_html_e( 'Views Today', 'wp-pdf-embed-seo-optimize' ); ?></span>
 						</div>
 					</div>
 					<div class="pdf-stat-card">
 						<span class="dashicons dashicons-chart-bar"></span>
 						<div class="pdf-stat-content">
 							<span class="pdf-stat-value"><?php echo esc_html( number_format_i18n( $stats['views_week'] ) ); ?></span>
-							<span class="pdf-stat-title"><?php esc_html_e( 'Views This Week', 'pdf-embed-seo-optimize' ); ?></span>
+							<span class="pdf-stat-title"><?php esc_html_e( 'Views This Week', 'wp-pdf-embed-seo-optimize' ); ?></span>
 						</div>
 					</div>
 					<div class="pdf-stat-card">
 						<span class="dashicons dashicons-chart-area"></span>
 						<div class="pdf-stat-content">
 							<span class="pdf-stat-value"><?php echo esc_html( number_format_i18n( $stats['views_month'] ) ); ?></span>
-							<span class="pdf-stat-title"><?php esc_html_e( 'Views This Month', 'pdf-embed-seo-optimize' ); ?></span>
+							<span class="pdf-stat-title"><?php esc_html_e( 'Views This Month', 'wp-pdf-embed-seo-optimize' ); ?></span>
 						</div>
 					</div>
 				</div>
 			</div>
 
 			<div class="pdf-analytics-section">
-				<h2><?php esc_html_e( 'Top Performing PDFs (Last 30 Days)', 'pdf-embed-seo-optimize' ); ?></h2>
+				<h2><?php esc_html_e( 'Top Performing PDFs (Last 30 Days)', 'wp-pdf-embed-seo-optimize' ); ?></h2>
 
 				<form method="get" action="">
 					<input type="hidden" name="post_type" value="pdf_document" />
 					<input type="hidden" name="page" value="pdf-analytics" />
 					<?php wp_nonce_field( 'pdf_export_analytics', 'pdf_export_nonce' ); ?>
 					<button type="submit" name="export" value="csv" class="button">
-						<?php esc_html_e( 'Export to CSV', 'pdf-embed-seo-optimize' ); ?>
+						<?php esc_html_e( 'Export to CSV', 'wp-pdf-embed-seo-optimize' ); ?>
 					</button>
 				</form>
 
 				<table class="wp-list-table widefat fixed striped">
 					<thead>
 						<tr>
-							<th><?php esc_html_e( 'Document', 'pdf-embed-seo-optimize' ); ?></th>
-							<th><?php esc_html_e( 'Views', 'pdf-embed-seo-optimize' ); ?></th>
-							<th><?php esc_html_e( 'Actions', 'pdf-embed-seo-optimize' ); ?></th>
+							<th><?php esc_html_e( 'Document', 'wp-pdf-embed-seo-optimize' ); ?></th>
+							<th><?php esc_html_e( 'Views', 'wp-pdf-embed-seo-optimize' ); ?></th>
+							<th><?php esc_html_e( 'Actions', 'wp-pdf-embed-seo-optimize' ); ?></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -461,7 +461,7 @@ class PDF_Embed_SEO_Premium_Analytics {
 						if ( empty( $top_pdfs ) ) :
 							?>
 							<tr>
-								<td colspan="3"><?php esc_html_e( 'No analytics data available yet.', 'pdf-embed-seo-optimize' ); ?></td>
+								<td colspan="3"><?php esc_html_e( 'No analytics data available yet.', 'wp-pdf-embed-seo-optimize' ); ?></td>
 							</tr>
 							<?php
 						else :
@@ -473,8 +473,8 @@ class PDF_Embed_SEO_Premium_Analytics {
 									</td>
 									<td><?php echo esc_html( number_format_i18n( $pdf->views ) ); ?></td>
 									<td>
-										<a href="<?php echo esc_url( get_permalink( $pdf->post_id ) ); ?>" target="_blank"><?php esc_html_e( 'View', 'pdf-embed-seo-optimize' ); ?></a> |
-										<a href="<?php echo esc_url( get_edit_post_link( $pdf->post_id ) ); ?>"><?php esc_html_e( 'Edit', 'pdf-embed-seo-optimize' ); ?></a>
+										<a href="<?php echo esc_url( get_permalink( $pdf->post_id ) ); ?>" target="_blank"><?php esc_html_e( 'View', 'wp-pdf-embed-seo-optimize' ); ?></a> |
+										<a href="<?php echo esc_url( get_edit_post_link( $pdf->post_id ) ); ?>"><?php esc_html_e( 'Edit', 'wp-pdf-embed-seo-optimize' ); ?></a>
 									</td>
 								</tr>
 								<?php
@@ -489,9 +489,9 @@ class PDF_Embed_SEO_Premium_Analytics {
 				<?php
 				printf(
 					/* translators: %1$s: heart symbol, %2$s: Dross:Media link */
-					esc_html__( 'made with %1$s by %2$s', 'pdf-embed-seo-optimize' ),
-					'<span style="color: #e25555;" aria-hidden="true">♥</span><span class="screen-reader-text">' . esc_html__( 'love', 'pdf-embed-seo-optimize' ) . '</span>',
-					'<a href="https://dross.net/media/" target="_blank" rel="noopener noreferrer" aria-label="' . esc_attr__( 'Visit Dross:Media website (opens in new tab)', 'pdf-embed-seo-optimize' ) . '" title="' . esc_attr__( 'Visit Dross:Media website', 'pdf-embed-seo-optimize' ) . '">Dross:Media</a>'
+					esc_html__( 'made with %1$s by %2$s', 'wp-pdf-embed-seo-optimize' ),
+					'<span style="color: #e25555;" aria-hidden="true">♥</span><span class="screen-reader-text">' . esc_html__( 'love', 'wp-pdf-embed-seo-optimize' ) . '</span>',
+					'<a href="https://dross.net/media/" target="_blank" rel="noopener noreferrer" aria-label="' . esc_attr__( 'Visit Dross:Media website (opens in new tab)', 'wp-pdf-embed-seo-optimize' ) . '" title="' . esc_attr__( 'Visit Dross:Media website', 'wp-pdf-embed-seo-optimize' ) . '">Dross:Media</a>'
 				);
 				?>
 			</p>
@@ -603,7 +603,7 @@ class PDF_Embed_SEO_Premium_Analytics {
 		check_ajax_referer( 'pdf_analytics_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'pdf-embed-seo-optimize' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'wp-pdf-embed-seo-optimize' ) ) );
 		}
 
 		$days    = isset( $_POST['days'] ) ? absint( $_POST['days'] ) : 30;
