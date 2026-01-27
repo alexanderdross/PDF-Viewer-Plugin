@@ -8,10 +8,10 @@ This document contains updated content for the website pages. Copy the relevant 
 
 | Module | GitHub Folder | Platform | Description |
 |--------|---------------|----------|-------------|
-| **WP Free** | `pdf-embed-seo-optimize/` | WordPress 5.8+ | Core PDF viewer, SEO, basic REST API |
-| **WP Premium** | `pdf-embed-seo-optimize/premium/` | WordPress 5.8+ | Analytics, passwords, progress, sitemap |
-| **Drupal Free** | `pdf_embed_seo/` | Drupal 10/11 | Core PDF viewer, SEO, basic REST API |
-| **Drupal Premium** | `pdf_embed_seo/modules/pdf_embed_seo_premium/` | Drupal 10/11 | Analytics, passwords, progress, sitemap |
+| **WP Free** | `wp-pdf-embed-seo-optimize/` | WordPress 5.8+ | Core PDF viewer, SEO, basic REST API |
+| **WP Premium** | `wp-pdf-embed-seo-optimize/premium/` | WordPress 5.8+ | Analytics, passwords, progress, sitemap |
+| **Drupal Free** | `drupal-pdf-embed-seo/` | Drupal 10/11 | Core PDF viewer, SEO, basic REST API |
+| **Drupal Premium** | `drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/` | Drupal 10/11 | Analytics, passwords, progress, sitemap |
 
 ---
 

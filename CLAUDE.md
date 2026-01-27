@@ -14,10 +14,10 @@ This project provides four modules:
 
 | Module | Directory | Platform | Features |
 |--------|-----------|----------|----------|
-| WP Free | `pdf-embed-seo-optimize/` | WordPress 5.8+ | Core PDF viewer, SEO, REST API |
-| WP Premium | `pdf-embed-seo-optimize/premium/` | WordPress 5.8+ | Analytics, passwords, progress, sitemap |
-| Drupal Free | `pdf_embed_seo/` | Drupal 10/11 | Core PDF viewer, SEO, REST API |
-| Drupal Premium | `pdf_embed_seo/modules/pdf_embed_seo_premium/` | Drupal 10/11 | Analytics, passwords, progress, sitemap |
+| WP Free | `wp-wp-pdf-embed-seo-optimize/` | WordPress 5.8+ | Core PDF viewer, SEO, REST API |
+| WP Premium | `wp-wp-pdf-embed-seo-optimize/premium/` | WordPress 5.8+ | Analytics, passwords, progress, sitemap |
+| Drupal Free | `drupal-pdf-embed-seo/` | Drupal 10/11 | Core PDF viewer, SEO, REST API |
+| Drupal Premium | `drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/` | Drupal 10/11 | Analytics, passwords, progress, sitemap |
 
 ---
 
@@ -86,7 +86,7 @@ This project provides four modules:
 ### WordPress Plugin (Free)
 
 ```
-pdf-embed-seo-optimize/
+wp-pdf-embed-seo-optimize/
 ├── pdf-embed-seo-optimize.php           # Main plugin file (v1.2.0)
 ├── uninstall.php                        # Cleanup on uninstall
 ├── README.txt                           # WordPress.org readme
@@ -126,7 +126,7 @@ pdf-embed-seo-optimize/
 ### WordPress Plugin (Premium)
 
 ```
-pdf-embed-seo-optimize/premium/
+wp-pdf-embed-seo-optimize/premium/
 ├── class-pdf-embed-seo-premium.php              # Premium loader (v1.2.0)
 ├── COMPARISON.md                                # Free vs Pro comparison
 │
@@ -152,7 +152,7 @@ pdf-embed-seo-optimize/premium/
 ### Drupal Module (Free)
 
 ```
-pdf_embed_seo/
+drupal-pdf-embed-seo/
 ├── pdf_embed_seo.info.yml               # Module info (v1.2.0)
 ├── pdf_embed_seo.module                 # Hook implementations
 ├── pdf_embed_seo.install                # Install/uninstall hooks
@@ -222,7 +222,7 @@ pdf_embed_seo/
 ### Drupal Module (Premium)
 
 ```
-pdf_embed_seo/modules/pdf_embed_seo_premium/
+drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 ├── pdf_embed_seo_premium.info.yml       # Module info (v1.2.0)
 ├── pdf_embed_seo_premium.module         # Hook implementations
 ├── pdf_embed_seo_premium.install        # Install/uninstall hooks

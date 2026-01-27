@@ -612,9 +612,9 @@ document.addEventListener('pageChanged', function(e) {
 
 ## Support
 
-- **Documentation:** https://pdfviewer.drossmedia.de/docs
+- **Website:** https://pdfviewer.drossmedia.de
+- **Documentation:** https://pdfviewer.drossmedia.de/documentation/
 - **Support:** support@drossmedia.de
-- **GitHub:** https://github.com/drossmedia/pdf-embed-seo-optimize
 
 ---
 
