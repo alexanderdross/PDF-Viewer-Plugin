@@ -202,6 +202,19 @@ class PdfEmbedSeoSettingsForm extends ConfigFormBase {
       ];
     }
 
+    // Credit link.
+    $form['credit'] = [
+      '#type' => 'markup',
+      '#markup' => '<p class="pdf-embed-seo-credit" style="text-align: center; margin-top: 30px; color: #666; font-size: 13px;">' .
+        $this->t('made with <span style="color: #e25555;" aria-hidden="true">♥</span><span class="visually-hidden">love</span> by <a href="@url" target="_blank" rel="noopener noreferrer" aria-label="@aria_label" title="@title">Dross:Media</a>', [
+          '@url' => 'https://dross.net/media/',
+          '@aria_label' => $this->t('Visit Dross:Media website (opens in new tab)'),
+          '@title' => $this->t('Visit Dross:Media website'),
+        ]) .
+        '</p>',
+      '#weight' => 999,
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
