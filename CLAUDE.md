@@ -437,27 +437,143 @@ pdf_embed_seo/modules/pdf_embed_seo_premium/
 
 ## Feature Matrix
 
+### Viewer & Display
+
 | Feature | Free | Premium |
 |---------|:----:|:-------:|
-| PDF.js Viewer | ✓ | ✓ |
-| Clean SEO URLs | ✓ | ✓ |
-| Print/Download Controls | ✓ | ✓ |
-| Gutenberg Block | ✓ | ✓ |
-| Yoast SEO Integration | ✓ | ✓ |
-| Schema.org Markup | ✓ | ✓ |
-| View Statistics | ✓ | ✓ |
-| Basic REST API | ✓ | ✓ |
-| Auto Thumbnails | ✓ | ✓ |
-| Password Protection | ✗ | ✓ |
-| Analytics Dashboard | ✗ | ✓ |
-| Reading Progress | ✗ | ✓ |
-| Categories & Tags | ✗ | ✓ |
-| Role-Based Access | ✗ | ✓ |
-| Bulk Import | ✗ | ✓ |
-| XML Sitemap | ✗ | ✓ |
-| Full REST API | ✗ | ✓ |
-| CSV Export | ✗ | ✓ |
-| Priority Support | ✗ | ✓ |
+| Mozilla PDF.js Viewer (v4.0) | ✓ | ✓ |
+| Light Theme | ✓ | ✓ |
+| Dark Theme | ✓ | ✓ |
+| Responsive Design | ✓ | ✓ |
+| Print Control (per PDF) | ✓ | ✓ |
+| Download Control (per PDF) | ✓ | ✓ |
+| Configurable Viewer Height | ✓ | ✓ |
+| Gutenberg Block (WP) | ✓ | ✓ |
+| PDF Viewer Block (Drupal) | ✓ | ✓ |
+| Shortcodes (WP) | ✓ | ✓ |
+| Text Search in Viewer | - | ✓ |
+| Bookmark Navigation | - | ✓ |
+
+### Content Management
+
+| Feature | Free | Premium |
+|---------|:----:|:-------:|
+| Custom Post Type / Entity | ✓ | ✓ |
+| Title, Description, Slug | ✓ | ✓ |
+| File Upload & Management | ✓ | ✓ |
+| Featured Image / Thumbnail | ✓ | ✓ |
+| Auto-Generate Thumbnails | ✓ | ✓ |
+| Published/Draft Status | ✓ | ✓ |
+| Owner/Author Tracking | ✓ | ✓ |
+| Admin List with Columns | ✓ | ✓ |
+| Quick Edit Support (WP) | ✓ | ✓ |
+| Multi-language Support | ✓ | ✓ |
+| Categories Taxonomy | - | ✓ |
+| Tags Taxonomy | - | ✓ |
+| Role-Based Access Control | - | ✓ |
+| Bulk Edit Actions | - | ✓ |
+| Bulk Import (CSV/ZIP) | - | ✓ |
+
+### SEO & URLs
+
+| Feature | Free | Premium |
+|---------|:----:|:-------:|
+| Clean URL Structure (`/pdf/slug/`) | ✓ | ✓ |
+| Auto Path/Slug Generation | ✓ | ✓ |
+| Schema.org DigitalDocument | ✓ | ✓ |
+| Schema.org CollectionPage | ✓ | ✓ |
+| Yoast SEO Integration (WP) | ✓ | ✓ |
+| OpenGraph Meta Tags | ✓ | ✓ |
+| Twitter Card Support | ✓ | ✓ |
+| XML Sitemap (`/pdf/sitemap.xml`) | - | ✓ |
+| Sitemap XSL Stylesheet | - | ✓ |
+| Search Engine Ping | - | ✓ |
+
+### Archive & Listing
+
+| Feature | Free | Premium |
+|---------|:----:|:-------:|
+| Archive Page (`/pdf`) | ✓ | ✓ |
+| Pagination Support | ✓ | ✓ |
+| Grid/List Display Modes | ✓ | ✓ |
+| Sorting Options | ✓ | ✓ |
+| Search Filtering | ✓ | ✓ |
+| Category Filter | - | ✓ |
+| Tag Filter | - | ✓ |
+
+### REST API
+
+| Feature | Free | Premium |
+|---------|:----:|:-------:|
+| GET /documents (list) | ✓ | ✓ |
+| GET /documents/{id} (single) | ✓ | ✓ |
+| GET /documents/{id}/data (secure) | ✓ | ✓ |
+| POST /documents/{id}/view (track) | ✓ | ✓ |
+| GET /settings | ✓ | ✓ |
+| GET /analytics | - | ✓ |
+| GET /analytics/documents | - | ✓ |
+| GET /analytics/export | - | ✓ |
+| GET/POST /documents/{id}/progress | - | ✓ |
+| POST /documents/{id}/verify-password | - | ✓ |
+| GET /categories | - | ✓ |
+| GET /tags | - | ✓ |
+| POST /bulk/import | - | ✓ |
+
+### Statistics & Analytics
+
+| Feature | Free | Premium |
+|---------|:----:|:-------:|
+| Basic View Counter | ✓ | ✓ |
+| View Count Display | ✓ | ✓ |
+| Analytics Dashboard | - | ✓ |
+| Detailed View Tracking | - | ✓ |
+| IP, User Agent, Referrer | - | ✓ |
+| Time Spent Tracking | - | ✓ |
+| Popular Documents Report | - | ✓ |
+| Recent Views Log | - | ✓ |
+| Analytics Export (CSV/JSON) | - | ✓ |
+| Time Period Filters | - | ✓ |
+
+### Security & Access
+
+| Feature | Free | Premium |
+|---------|:----:|:-------:|
+| Nonce/CSRF Protection | ✓ | ✓ |
+| Permission System | ✓ | ✓ |
+| Capability/Access Checks | ✓ | ✓ |
+| Secure PDF URL (no direct links) | ✓ | ✓ |
+| Input Sanitization | ✓ | ✓ |
+| Output Escaping | ✓ | ✓ |
+| Password Protection | - | ✓ |
+| Password Hashing (secure) | - | ✓ |
+| Session-Based Access | - | ✓ |
+| Login Requirement Option | - | ✓ |
+| Role Restrictions | - | ✓ |
+
+### Reading Experience
+
+| Feature | Free | Premium |
+|---------|:----:|:-------:|
+| Page Navigation | ✓ | ✓ |
+| Zoom Controls | ✓ | ✓ |
+| Full Screen Mode | ✓ | ✓ |
+| Reading Progress Tracking | - | ✓ |
+| Resume Reading Feature | - | ✓ |
+| Page/Scroll/Zoom Save | - | ✓ |
+
+### Developer
+
+| Feature | Free | Premium |
+|---------|:----:|:-------:|
+| WordPress Hooks (actions/filters) | ✓ | ✓ |
+| Drupal Hooks (alter/events) | ✓ | ✓ |
+| Template Overrides | ✓ | ✓ |
+| CSS Classes for Styling | ✓ | ✓ |
+| JavaScript Events | ✓ | ✓ |
+| Cache Tags & Contexts | ✓ | ✓ |
+| Analytics Tracker Service | - | ✓ |
+| Progress Tracker Service | - | ✓ |
+| Priority Support | - | ✓ |
 
 ---
 
@@ -502,8 +618,11 @@ pdf_embed_seo/modules/pdf_embed_seo_premium/
 - Added REST API endpoints for all platforms
 - Added reading progress tracking (Premium)
 - Added password verification endpoint (Premium)
+- Added XML Sitemap at `/pdf/sitemap.xml` (Premium)
+- Separated Drupal into free base + premium submodule
 - Added comprehensive developer documentation
 - Added premium upgrade CTA to docs page
+- Updated feature comparison tables
 
 ### 1.1.5
 - Version sync across all modules

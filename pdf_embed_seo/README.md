@@ -2,35 +2,91 @@
 
 A powerful Drupal module that integrates Mozilla's PDF.js viewer to display PDFs with clean URLs, SEO optimization, and access controls.
 
+**Current Version:** 1.2.0
+**Platforms:** Drupal 10, Drupal 11
+**License:** GPL v2 or later
+
 ## Free vs Premium
 
 This module comes in two parts:
 - **pdf_embed_seo** (Free) - Core PDF viewing functionality
 - **pdf_embed_seo_premium** (Premium) - Advanced features like analytics, password protection, and reading progress
 
-See the feature comparison below.
-
-## Features
-
-### Core Features (Free)
-- **Clean URL Structure**: Display PDFs at URLs like `/pdf/document-name/` instead of exposing direct file URLs
-- **Mozilla PDF.js Integration**: Industry-standard PDF rendering directly in the browser
-- **Custom Entity Type**: Dedicated `pdf_document` entity with all necessary fields
-- **SEO Optimization**: Schema.org markup (DigitalDocument) for rich search results
-- **Print/Download Controls**: Per-document permissions for printing and downloading
-- **View Statistics**: Track how many times each PDF has been viewed
-- **Responsive Design**: Works on desktop, tablet, and mobile devices
-- **Block Plugin**: Embed PDF viewers anywhere using the PDF Viewer block
-- **Auto-Generate Thumbnails**: Create thumbnails from PDF first pages (requires ImageMagick or Ghostscript)
-
-### Premium Features (Requires pdf_embed_seo_premium)
-- **Password Protection**: Protect individual PDFs with passwords
-- **Analytics Dashboard**: Detailed view statistics and reports
-- **Reading Progress**: Remember and restore user reading progress
-- **CSV Export**: Export analytics data
-- **Premium REST API**: Additional API endpoints for integrations
-
 Get premium at: **https://pdfviewer.drossmedia.de**
+
+---
+
+## Feature Comparison
+
+| Feature | Free | Premium |
+|---------|:----:|:-------:|
+| **Viewer & Display** | | |
+| Mozilla PDF.js Viewer | ✓ | ✓ |
+| Light Theme | ✓ | ✓ |
+| Dark Theme | ✓ | ✓ |
+| Responsive Design | ✓ | ✓ |
+| Print Control (per PDF) | ✓ | ✓ |
+| Download Control (per PDF) | ✓ | ✓ |
+| Configurable Viewer Height | ✓ | ✓ |
+| PDF Viewer Block | ✓ | ✓ |
+| **Content Management** | | |
+| PDF Document Entity | ✓ | ✓ |
+| Title, Description, Slug Fields | ✓ | ✓ |
+| File Upload & Management | ✓ | ✓ |
+| Thumbnail Support | ✓ | ✓ |
+| Auto-Generate Thumbnails | ✓ | ✓ |
+| Published/Unpublished Status | ✓ | ✓ |
+| Owner/User Tracking | ✓ | ✓ |
+| Multi-language Support | ✓ | ✓ |
+| Admin List with Columns | ✓ | ✓ |
+| **SEO & URLs** | | |
+| Clean URL Structure (`/pdf/slug/`) | ✓ | ✓ |
+| Auto Path Alias Generation | ✓ | ✓ |
+| Schema.org Markup (DigitalDocument) | ✓ | ✓ |
+| Archive Schema (CollectionPage) | ✓ | ✓ |
+| **Archive & Listing** | | |
+| Archive Page (`/pdf`) | ✓ | ✓ |
+| Pagination Support | ✓ | ✓ |
+| Grid/List Display Modes | ✓ | ✓ |
+| Sorting Options | ✓ | ✓ |
+| Search Filtering | ✓ | ✓ |
+| **REST API** | | |
+| GET /documents (list) | ✓ | ✓ |
+| GET /documents/{id} (single) | ✓ | ✓ |
+| GET /documents/{id}/data (secure URL) | ✓ | ✓ |
+| POST /documents/{id}/view (track) | ✓ | ✓ |
+| GET /settings | ✓ | ✓ |
+| **Statistics** | | |
+| Basic View Counter | ✓ | ✓ |
+| View Count Display | ✓ | ✓ |
+| **Security** | | |
+| Nonce/CSRF Protection | ✓ | ✓ |
+| Permission System | ✓ | ✓ |
+| Entity Access Control | ✓ | ✓ |
+| Secure PDF URL (no direct links) | ✓ | ✓ |
+| **Theming** | | |
+| Twig Template Overrides | ✓ | ✓ |
+| CSS Classes for Styling | ✓ | ✓ |
+| **Developer** | | |
+| Drupal Hooks (alter, events) | ✓ | ✓ |
+| Cache Tags & Contexts | ✓ | ✓ |
+| **Premium Features** | | |
+| Analytics Dashboard | - | ✓ |
+| Detailed View Tracking (IP, UA, referrer) | - | ✓ |
+| Popular Documents Report | - | ✓ |
+| Recent Views Log | - | ✓ |
+| Analytics Export (CSV/JSON) | - | ✓ |
+| Password Protection | - | ✓ |
+| Password Verification API | - | ✓ |
+| Reading Progress Tracking | - | ✓ |
+| Resume Reading Feature | - | ✓ |
+| XML Sitemap (`/pdf/sitemap.xml`) | - | ✓ |
+| Sitemap XSL Stylesheet | - | ✓ |
+| GET /analytics endpoint | - | ✓ |
+| GET/POST /progress endpoints | - | ✓ |
+| POST /verify-password endpoint | - | ✓ |
+
+---
 
 ## Requirements
 
@@ -70,7 +126,7 @@ Get premium at: **https://pdfviewer.drossmedia.de**
 5. Configure print/download permissions
 6. Save
 
-### Embedding PDFs
+### Embedding PDFs with Block
 Use the PDF Viewer block to embed PDFs in any region:
 1. Go to Admin > Structure > Block Layout
 2. Place a new "PDF Viewer" block
@@ -78,55 +134,75 @@ Use the PDF Viewer block to embed PDFs in any region:
 4. Configure height and title visibility
 
 ### URL Structure
-- **Archive Page**: `/pdf/` - Lists all published PDF documents
-- **Single PDF**: `/pdf/document-slug/` - Individual PDF viewer page
+| Page | URL |
+|------|-----|
+| Archive | `/pdf` |
+| Single PDF | `/pdf/{slug}` |
+| XML Sitemap (Premium) | `/pdf/sitemap.xml` |
+| Admin List | `/admin/content/pdf-documents` |
+| Settings | `/admin/config/content/pdf-embed-seo` |
+| Analytics (Premium) | `/admin/reports/pdf-analytics` |
+
+---
 
 ## Permissions
 
-- **Administer PDF Embed & SEO settings**: Configure module settings
-- **Access PDF document overview**: View the admin list of PDFs
-- **View PDF documents**: View published PDFs on the frontend
-- **Create PDF documents**: Create new PDF documents
-- **Edit PDF documents**: Edit any PDF document
-- **Edit own PDF documents**: Edit only your own PDF documents
-- **Delete PDF documents**: Delete any PDF document
-- **Delete own PDF documents**: Delete only your own PDF documents
+### Free Permissions
+| Permission | Description |
+|------------|-------------|
+| Administer PDF Embed & SEO settings | Configure module settings |
+| Access PDF document overview | View the admin list of PDFs |
+| View PDF documents | View published PDFs on the frontend |
+| Create PDF documents | Create new PDF documents |
+| Edit PDF documents | Edit any PDF document |
+| Edit own PDF documents | Edit only your own PDF documents |
+| Delete PDF documents | Delete any PDF document |
+| Delete own PDF documents | Delete only your own PDF documents |
 
-### Premium Permissions (Requires pdf_embed_seo_premium)
-- **View PDF analytics**: Access the analytics dashboard
-- **Export PDF analytics**: Export analytics data to CSV
-- **Bypass PDF password protection**: View password-protected PDFs without entering password
-- **Download protected PDFs**: Download PDFs even when disabled
-- **Administer PDF Premium settings**: Configure premium settings
+### Premium Permissions
+| Permission | Description |
+|------------|-------------|
+| View PDF analytics | Access the analytics dashboard |
+| Export PDF analytics | Export analytics data to CSV/JSON |
+| Bypass PDF password protection | View protected PDFs without password |
+| Download protected PDFs | Download PDFs when disabled for others |
+| Administer PDF Premium settings | Configure premium settings |
+
+---
 
 ## Theming
 
 ### Template Files
 Override these templates in your theme:
-- `pdf-document.html.twig` - Single PDF document display
-- `pdf-viewer.html.twig` - The PDF.js viewer
-- `pdf-archive.html.twig` - Archive page listing
-- `pdf-archive-item.html.twig` - Individual archive item
-- `pdf-password-form.html.twig` - Password protection form
+| Template | Description |
+|----------|-------------|
+| `pdf-document.html.twig` | Single PDF document display |
+| `pdf-viewer.html.twig` | The PDF.js viewer |
+| `pdf-archive.html.twig` | Archive page listing |
+| `pdf-archive-item.html.twig` | Individual archive item |
 
 ### CSS Classes
-Main classes for styling:
-- `.pdf-viewer-wrapper` - Main viewer container
-- `.pdf-viewer-toolbar` - Toolbar with controls
-- `.pdf-viewer-container` - Canvas container
-- `.pdf-archive` - Archive page wrapper
-- `.pdf-archive-item` - Individual archive item
+| Class | Description |
+|-------|-------------|
+| `.pdf-viewer-wrapper` | Main viewer container |
+| `.pdf-viewer-toolbar` | Toolbar with controls |
+| `.pdf-viewer-container` | Canvas container |
+| `.pdf-viewer-theme-light` | Light theme modifier |
+| `.pdf-viewer-theme-dark` | Dark theme modifier |
+| `.pdf-archive` | Archive page wrapper |
+| `.pdf-archive-item` | Individual archive item |
+| `.pdf-download-button` | Download button |
+
+---
 
 ## REST API
-
-PDF Embed & SEO Optimize provides a RESTful API for accessing PDF documents programmatically.
 
 ### API Base URL
 ```
 /api/pdf-embed-seo/v1/
 ```
 
-### Public Endpoints
+### Free Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -140,29 +216,19 @@ PDF Embed & SEO Optimize provides a RESTful API for accessing PDF documents prog
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `GET` | `/analytics` | Get analytics overview (requires permission) |
+| `GET` | `/analytics` | Get analytics overview |
 | `GET` | `/documents/{id}/progress` | Get reading progress |
 | `POST` | `/documents/{id}/progress` | Save reading progress |
-| `POST` | `/documents/{id}/verify-password` | Verify password for protected PDFs |
+| `POST` | `/documents/{id}/verify-password` | Verify PDF password |
 
 ### Query Parameters for /documents
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
 | `page` | 0 | Page offset for pagination |
-| `limit` | 50 | Items per page |
+| `limit` | 50 | Items per page (max 100) |
 | `sort` | created | Sort by: created, title, view_count |
 | `direction` | DESC | Sort direction: ASC or DESC |
-
-### Example: List Documents
-```bash
-curl -X GET "https://example.com/api/pdf-embed-seo/v1/documents?limit=5"
-```
-
-### Example: Get Single Document
-```bash
-curl -X GET "https://example.com/api/pdf-embed-seo/v1/documents/123"
-```
 
 ### Example Response
 ```json
@@ -173,20 +239,17 @@ curl -X GET "https://example.com/api/pdf-embed-seo/v1/documents/123"
   "url": "https://example.com/pdf/annual-report-2024",
   "description": "Company annual report...",
   "created": "2024-01-15T10:30:00+00:00",
+  "modified": "2024-06-20T14:45:00+00:00",
   "views": 1542,
+  "thumbnail": "https://example.com/sites/default/files/thumbnails/report.jpg",
   "allow_download": true,
   "allow_print": false
 }
 ```
 
-### Authentication
-- Public endpoints require no authentication
-- Admin endpoints require appropriate Drupal permissions
-- Use session cookies or OAuth tokens for authenticated requests
+---
 
 ## Drupal Hooks
-
-Developers can use these hooks to extend or customize the module.
 
 ### Alter Hooks
 
@@ -194,16 +257,21 @@ Developers can use these hooks to extend or customize the module.
 |------|-------------|
 | `hook_pdf_embed_seo_document_data_alter` | Modify PDF data returned by API |
 | `hook_pdf_embed_seo_api_settings_alter` | Modify API settings response |
-| `hook_pdf_embed_seo_verify_password_alter` | Override password verification |
 | `hook_pdf_embed_seo_viewer_options_alter` | Modify PDF.js viewer options |
 | `hook_pdf_embed_seo_schema_alter` | Modify Schema.org output |
 
-### Events
+### Event Hooks
 
 | Hook | Description |
 |------|-------------|
 | `hook_pdf_embed_seo_view_tracked` | Fired when a PDF view is tracked |
 | `hook_pdf_embed_seo_document_saved` | Fired when a PDF document is saved |
+
+### Premium Hooks
+
+| Hook | Description |
+|------|-------------|
+| `hook_pdf_embed_seo_verify_password_alter` | Override password verification |
 
 ### Example: Modify Document Data
 ```php
@@ -211,23 +279,7 @@ Developers can use these hooks to extend or customize the module.
  * Implements hook_pdf_embed_seo_document_data_alter().
  */
 function mymodule_pdf_embed_seo_document_data_alter(array &$data, $document) {
-  // Add custom department field
   $data['department'] = $document->get('field_department')->value;
-}
-```
-
-### Example: Track Views
-```php
-/**
- * Implements hook_pdf_embed_seo_view_tracked().
- */
-function mymodule_pdf_embed_seo_view_tracked($document, $count) {
-  // Send to external analytics
-  \Drupal::service('mymodule.analytics')->track('pdf_view', [
-    'pdf_id' => $document->id(),
-    'title' => $document->label(),
-    'views' => $count,
-  ]);
 }
 ```
 
@@ -237,7 +289,6 @@ function mymodule_pdf_embed_seo_view_tracked($document, $count) {
  * Implements hook_pdf_embed_seo_schema_alter().
  */
 function mymodule_pdf_embed_seo_schema_alter(array &$schema, $document) {
-  // Add author to schema
   $schema['author'] = [
     '@type' => 'Person',
     'name' => $document->get('field_author')->value,
@@ -245,18 +296,35 @@ function mymodule_pdf_embed_seo_schema_alter(array &$schema, $document) {
 }
 ```
 
-## JavaScript API
+---
 
-### Events
+## JavaScript Events
+
 The PDF viewer triggers these JavaScript events:
-- `pdfLoaded` - When PDF document is loaded
-- `pageRendered` - When a page is rendered
-- `pageChanged` - When user navigates to a different page
-- `zoomChanged` - When zoom level changes
 
-### Services
-- `pdf_embed_seo.thumbnail_generator` - Generate PDF thumbnails
-- `pdf_embed_seo.analytics_tracker` - Track and query view statistics
+| Event | Description |
+|-------|-------------|
+| `pdfLoaded` | When PDF document is loaded |
+| `pageRendered` | When a page is rendered |
+| `pageChanged` | When user navigates to a different page |
+| `zoomChanged` | When zoom level changes |
+
+---
+
+## Services
+
+| Service | Description |
+|---------|-------------|
+| `pdf_embed_seo.thumbnail_generator` | Generate PDF thumbnails |
+
+### Premium Services
+
+| Service | Description |
+|---------|-------------|
+| `pdf_embed_seo.analytics_tracker` | Track and query view statistics |
+| `pdf_embed_seo.progress_tracker` | Save and retrieve reading progress |
+
+---
 
 ## Changelog
 
@@ -264,7 +332,9 @@ The PDF viewer triggers these JavaScript events:
 - Added REST API endpoints for external integrations
 - Added reading progress tracking (Premium)
 - Added password verification endpoint (Premium)
+- Added XML sitemap at /pdf/sitemap.xml (Premium)
 - Added Drupal hooks for extensibility
+- Separated free and premium into base module + submodule
 - Improved API documentation
 
 ### 1.1.5
@@ -280,8 +350,8 @@ The PDF viewer triggers these JavaScript events:
 - View statistics
 - Block plugin
 - Archive page
-- Password protection (premium)
-- Analytics dashboard (premium)
+
+---
 
 ## License
 
