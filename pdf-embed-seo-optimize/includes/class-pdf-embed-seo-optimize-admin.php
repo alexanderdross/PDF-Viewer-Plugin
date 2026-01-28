@@ -310,6 +310,9 @@ class PDF_Embed_SEO_Admin {
 			)
 		);
 
+		// Add capability filter for settings form submission.
+		add_filter( 'option_page_capability_pdf_embed_seo_settings_group', array( $this, 'get_settings_page_capability' ) );
+
 		// Default Settings Section.
 		add_settings_section(
 			'pdf_embed_seo_defaults',
@@ -493,6 +496,15 @@ class PDF_Embed_SEO_Admin {
 		}
 
 		include PDF_EMBED_SEO_PLUGIN_DIR . 'admin/views/settings-page.php';
+	}
+
+	/**
+	 * Get the capability required for the settings page.
+	 *
+	 * @return string The required capability.
+	 */
+	public function get_settings_page_capability() {
+		return 'manage_options';
 	}
 
 	/**

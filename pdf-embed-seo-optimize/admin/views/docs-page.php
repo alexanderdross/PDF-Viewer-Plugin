@@ -218,7 +218,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			printf(
 				/* translators: %s: Settings page link */
 				esc_html__( 'You can set default permissions for all new PDFs in %s:', 'pdf-embed-seo-optimize' ),
-				'<a href="' . esc_url( admin_url( 'edit.php?post_type=pdf_document&page=pdf-embed-seo-settings' ) ) . '">' . esc_html__( 'PDF Documents > Settings', 'pdf-embed-seo-optimize' ) . '</a>'
+				'<a href="' . esc_url( admin_url( 'edit.php?post_type=pdf_document&page=pdf-embed-seo-optimize-settings' ) ) . '">' . esc_html__( 'PDF Documents > Settings', 'pdf-embed-seo-optimize' ) . '</a>'
 			);
 			?>
 		</p>
