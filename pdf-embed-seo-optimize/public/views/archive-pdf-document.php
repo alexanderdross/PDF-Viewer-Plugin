@@ -92,64 +92,33 @@ get_header();
 		<?php if ( have_posts() ) : ?>
 
 			<?php if ( 'list' === $display_style ) : ?>
-				<?php // List View - Simple accessible list. ?>
+				<?php // List View - Simple clean list with PDF icon and title only. ?>
 				<nav class="pdf-embed-seo-optimize-list-nav" aria-label="<?php esc_attr_e( 'PDF Documents List', 'pdf-embed-seo-optimize' ); ?>">
 					<ul class="pdf-embed-seo-optimize-list" role="list">
 						<?php
 						while ( have_posts() ) :
 							the_post();
 
-							$post_id    = get_the_ID();
-							$view_count = PDF_Embed_SEO_Post_Type::get_view_count( $post_id );
-							$pdf_title  = get_the_title();
-							$pdf_date   = get_the_date();
-							$pdf_url    = get_permalink();
-							$pdf_desc   = get_the_excerpt();
+							$post_id   = get_the_ID();
+							$pdf_title = get_the_title();
+							$pdf_url   = get_permalink();
 							?>
 
-							<li class="pdf-embed-seo-optimize-list-item" id="pdf-<?php echo esc_attr( $post_id ); ?>">
-								<article itemscope itemtype="https://schema.org/DigitalDocument">
-									<?php
-									/* translators: %s: PDF document title */
-									$view_title_attr = sprintf( __( 'View %s PDF document', 'pdf-embed-seo-optimize' ), $pdf_title );
-									/* translators: %1$s: PDF document title, %2$s: Publication date */
-									$view_aria_attr = sprintf( __( 'View %1$s PDF document, published on %2$s', 'pdf-embed-seo-optimize' ), $pdf_title, $pdf_date );
-									?>
-									<a href="<?php echo esc_url( $pdf_url ); ?>"
-									   class="pdf-embed-seo-optimize-list-link"
-									   title="<?php echo esc_attr( $view_title_attr ); ?>"
-									   aria-label="<?php echo esc_attr( $view_aria_attr ); ?>"
-									   itemprop="url">
-										<span class="pdf-embed-seo-optimize-list-icon" aria-hidden="true">
-											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
-												<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2l5 5h-5V4zM8.5 13H10v4H8.5v-4zm3 0H13v4h-1.5v-4zm3 0H16v4h-1.5v-4z"/>
-											</svg>
-										</span>
-										<span class="pdf-embed-seo-optimize-list-title" itemprop="name"><?php echo esc_html( $pdf_title ); ?></span>
-									</a>
-
-									<span class="pdf-embed-seo-optimize-list-meta">
-										<time class="pdf-embed-seo-optimize-list-date" datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>" itemprop="datePublished">
-											<?php echo esc_html( $pdf_date ); ?>
-										</time>
-										<?php if ( $show_view_count && $view_count > 0 ) : ?>
-											<?php
-											/* translators: %s: Number of views */
-											$views_label = sprintf( _n( '%s view', '%s views', $view_count, 'pdf-embed-seo-optimize' ), number_format_i18n( $view_count ) );
-											?>
-											<span class="pdf-embed-seo-optimize-list-views" aria-label="<?php echo esc_attr( $views_label ); ?>">
-												(<?php echo esc_html( number_format_i18n( $view_count ) ); ?>
-												<span class="screen-reader-text"><?php echo esc_html( _n( 'view', 'views', $view_count, 'pdf-embed-seo-optimize' ) ); ?></span>)
-											</span>
-										<?php endif; ?>
+							<li class="pdf-embed-seo-optimize-list-item">
+								<?php
+								/* translators: %s: PDF document title */
+								$view_title_attr = sprintf( __( 'View %s', 'pdf-embed-seo-optimize' ), $pdf_title );
+								?>
+								<a href="<?php echo esc_url( $pdf_url ); ?>"
+								   class="pdf-embed-seo-optimize-list-link"
+								   title="<?php echo esc_attr( $view_title_attr ); ?>">
+									<span class="pdf-embed-seo-optimize-list-icon" aria-hidden="true">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+											<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2l5 5h-5V4zM8.5 13H10v4H8.5v-4zm3 0H13v4h-1.5v-4zm3 0H16v4h-1.5v-4z"/>
+										</svg>
 									</span>
-
-									<?php if ( $show_description && ! empty( $pdf_desc ) ) : ?>
-										<p class="pdf-embed-seo-optimize-list-description" itemprop="description">
-											<?php echo esc_html( wp_trim_words( $pdf_desc, 20, '...' ) ); ?>
-										</p>
-									<?php endif; ?>
-								</article>
+									<span class="pdf-embed-seo-optimize-list-title"><?php echo esc_html( $pdf_title ); ?></span>
+								</a>
 							</li>
 
 						<?php endwhile; ?>

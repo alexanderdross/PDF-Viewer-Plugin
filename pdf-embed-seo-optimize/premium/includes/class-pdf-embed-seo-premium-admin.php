@@ -446,7 +446,7 @@ class PDF_Embed_SEO_Premium_Admin {
 	 * Process license key validation.
 	 *
 	 * Validates the license key and updates the license status accordingly.
-	 * Accepts test/development keys for unlimited validity.
+	 * Keys must be 20+ characters with special characters for security.
 	 *
 	 * @param string $license_key The license key to validate.
 	 * @return void
@@ -458,12 +458,20 @@ class PDF_Embed_SEO_Premium_Admin {
 			return;
 		}
 
+		// Minimum length check (20+ characters).
+		if ( strlen( $license_key ) < 20 ) {
+			update_option( 'pdf_embed_seo_premium_license_status', 'invalid' );
+			delete_option( 'pdf_embed_seo_premium_license_expires' );
+			return;
+		}
+
 		// Test/Development license keys for unlimited validity.
-		// Format: PDFPRO-DEV-XXXX-XXXX or PDFPRO-TEST-XXXX-XXXX.
+		// Format: PDF$UNLIMITED#XXXX@XXXX!XXXX (24 chars with special characters).
 		$test_key_patterns = array(
-			'/^PDFPRO-DEV-[A-Z0-9]{4}-[A-Z0-9]{4}$/i',
-			'/^PDFPRO-TEST-[A-Z0-9]{4}-[A-Z0-9]{4}$/i',
-			'/^PDFPRO-UNLIMITED-[A-Z0-9]{4}$/i',
+			// PDF$UNLIMITED#XXXX@XXXX!XXXX format.
+			'/^PDF\$UNLIMITED#[A-Z0-9]{4}@[A-Z0-9]{4}![A-Z0-9]{4}$/i',
+			// PDF$DEV#XXXX-XXXX@XXXX!XXXX format.
+			'/^PDF\$DEV#[A-Z0-9]{4}-[A-Z0-9]{4}@[A-Z0-9]{4}![A-Z0-9]{4}$/i',
 		);
 
 		$is_test_key = false;
@@ -482,8 +490,8 @@ class PDF_Embed_SEO_Premium_Admin {
 		}
 
 		// Standard license key validation.
-		// Format: PDFPRO-XXXX-XXXX-XXXX-XXXX.
-		if ( preg_match( '/^PDFPRO-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/i', $license_key ) ) {
+		// Format: PDF$PRO#XXXX-XXXX@XXXX-XXXX!XXXX (28 chars with special characters).
+		if ( preg_match( '/^PDF\$PRO#[A-Z0-9]{4}-[A-Z0-9]{4}@[A-Z0-9]{4}-[A-Z0-9]{4}![A-Z0-9]{4}$/i', $license_key ) ) {
 			// Valid format - activate for 1 year.
 			update_option( 'pdf_embed_seo_premium_license_status', 'valid' );
 			update_option( 'pdf_embed_seo_premium_license_expires', gmdate( 'Y-m-d', strtotime( '+1 year' ) ) );

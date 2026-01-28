@@ -622,6 +622,7 @@
 .pdf-embed-seo-optimize-list-item {
     border-bottom: 1px solid #eee;
     transition: background-color 0.2s;
+    padding: 12px 20px;
 }
 
 .pdf-embed-seo-optimize-list-item:last-child {
@@ -630,10 +631,6 @@
 
 .pdf-embed-seo-optimize-list-item:hover {
     background-color: #f8f9fa;
-}
-
-.pdf-embed-seo-optimize-list-item article {
-    padding: 16px 20px;
 }
 
 .pdf-embed-seo-optimize-list-link {
