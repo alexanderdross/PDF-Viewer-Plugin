@@ -150,6 +150,13 @@ class PdfEmbedSeoSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('archive_show_view_count') ?? TRUE,
     ];
 
+    $form['archive']['show_breadcrumbs'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Show visible breadcrumbs'),
+      '#description' => $this->t('Display visible breadcrumb navigation on PDF pages. The JSON-LD breadcrumb schema for SEO is always included regardless of this setting.'),
+      '#default_value' => $config->get('show_breadcrumbs') ?? TRUE,
+    ];
+
     // SEO settings.
     $form['seo'] = [
       '#type' => 'details',
@@ -256,6 +263,7 @@ class PdfEmbedSeoSettingsForm extends ConfigFormBase {
     $config->set('archive_display', $form_state->getValue('archive_display'));
     $config->set('archive_show_description', $form_state->getValue('archive_show_description'));
     $config->set('archive_show_view_count', $form_state->getValue('archive_show_view_count'));
+    $config->set('show_breadcrumbs', $form_state->getValue('show_breadcrumbs'));
 
     // SEO settings.
     $config->set('enable_schema', $form_state->getValue('enable_schema'));

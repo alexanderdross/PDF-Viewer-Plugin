@@ -29,6 +29,7 @@ class PdfArchiveController extends ControllerBase {
     $display = $config->get('archive_display') ?? 'grid';
     $show_description = $config->get('archive_show_description') ?? TRUE;
     $show_view_count = $config->get('archive_show_view_count') ?? TRUE;
+    $show_breadcrumbs = $config->get('show_breadcrumbs') ?? TRUE;
 
     // Load published PDF documents.
     $storage = $this->entityTypeManager()->getStorage('pdf_document');
@@ -105,6 +106,7 @@ class PdfArchiveController extends ControllerBase {
       '#site_name' => $site_name,
       '#site_url' => $site_url,
       '#archive_url' => $archive_url,
+      '#show_breadcrumbs' => $show_breadcrumbs,
       '#attached' => [
         'library' => ['pdf_embed_seo/archive'],
       ],

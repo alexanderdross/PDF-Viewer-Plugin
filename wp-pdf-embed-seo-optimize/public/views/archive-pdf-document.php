@@ -23,6 +23,7 @@ $settings          = PDF_Embed_SEO::get_setting();
 $display_style     = isset( $settings['archive_display_style'] ) ? $settings['archive_display_style'] : 'grid';
 $show_description  = isset( $settings['archive_show_description'] ) ? $settings['archive_show_description'] : true;
 $show_view_count   = isset( $settings['archive_show_view_count'] ) ? $settings['archive_show_view_count'] : true;
+$show_breadcrumbs  = isset( $settings['show_breadcrumbs'] ) ? $settings['show_breadcrumbs'] : true;
 
 // Archive info.
 $archive_url   = get_post_type_archive_link( 'pdf_document' );
@@ -59,20 +60,22 @@ get_header();
 <div id="primary" class="content-area pdf-embed-seo-optimize-archive">
 	<main id="main" class="site-main" role="main">
 
-		<?php // Breadcrumb navigation for accessibility (JSON-LD schema is above, no microdata needed here). ?>
-		<nav class="pdf-embed-seo-optimize-breadcrumb" aria-label="<?php esc_attr_e( 'Breadcrumb', 'wp-pdf-embed-seo-optimize' ); ?>">
-			<ol class="pdf-embed-seo-optimize-breadcrumb-list">
-				<li class="pdf-embed-seo-optimize-breadcrumb-item">
-					<?php /* translators: %s: Site name */ ?>
-					<a href="<?php echo esc_url( $site_url ); ?>" title="<?php echo esc_attr( sprintf( __( 'Go to %s homepage', 'wp-pdf-embed-seo-optimize' ), $site_name ) ); ?>">
-						<?php echo esc_html( $site_name ); ?>
-					</a>
-				</li>
-				<li class="pdf-embed-seo-optimize-breadcrumb-item pdf-embed-seo-optimize-breadcrumb-current" aria-current="page">
-					<?php echo esc_html( $archive_title ); ?>
-				</li>
-			</ol>
-		</nav>
+		<?php // Visible breadcrumb navigation (JSON-LD schema is always output above for SEO). ?>
+		<?php if ( $show_breadcrumbs ) : ?>
+			<nav class="pdf-embed-seo-optimize-breadcrumb" aria-label="<?php esc_attr_e( 'Breadcrumb', 'wp-pdf-embed-seo-optimize' ); ?>">
+				<ol class="pdf-embed-seo-optimize-breadcrumb-list">
+					<li class="pdf-embed-seo-optimize-breadcrumb-item">
+						<?php /* translators: %s: Site name */ ?>
+						<a href="<?php echo esc_url( $site_url ); ?>" title="<?php echo esc_attr( sprintf( __( 'Go to %s homepage', 'wp-pdf-embed-seo-optimize' ), $site_name ) ); ?>">
+							<?php echo esc_html( $site_name ); ?>
+						</a>
+					</li>
+					<li class="pdf-embed-seo-optimize-breadcrumb-item pdf-embed-seo-optimize-breadcrumb-current" aria-current="page">
+						<?php echo esc_html( $archive_title ); ?>
+					</li>
+				</ol>
+			</nav>
+		<?php endif; ?>
 
 		<header class="page-header pdf-embed-seo-optimize-archive-header">
 			<h1 class="page-title pdf-embed-seo-optimize-archive-title">

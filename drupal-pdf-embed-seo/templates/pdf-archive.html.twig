@@ -50,19 +50,21 @@
 </script>
 
 <div{{ attributes.addClass('pdf-embed-seo-archive') }}>
-  {# Breadcrumb navigation for accessibility (JSON-LD schema is above, no microdata needed here) #}
-  <nav class="pdf-embed-seo-breadcrumb" aria-label="{{ 'Breadcrumb'|t }}">
-    <ol class="pdf-embed-seo-breadcrumb-list">
-      <li class="pdf-embed-seo-breadcrumb-item">
-        <a href="{{ site_url }}" title="{{ 'Go to %site homepage'|t({'%site': site_name}) }}">
-          {{ site_name }}
-        </a>
-      </li>
-      <li class="pdf-embed-seo-breadcrumb-item pdf-embed-seo-breadcrumb-current" aria-current="page">
-        {{ archive_title }}
-      </li>
-    </ol>
-  </nav>
+  {# Visible breadcrumb navigation (JSON-LD schema is always output above for SEO) #}
+  {% if show_breadcrumbs %}
+    <nav class="pdf-embed-seo-breadcrumb" aria-label="{{ 'Breadcrumb'|t }}">
+      <ol class="pdf-embed-seo-breadcrumb-list">
+        <li class="pdf-embed-seo-breadcrumb-item">
+          <a href="{{ site_url }}" title="{{ 'Go to %site homepage'|t({'%site': site_name}) }}">
+            {{ site_name }}
+          </a>
+        </li>
+        <li class="pdf-embed-seo-breadcrumb-item pdf-embed-seo-breadcrumb-current" aria-current="page">
+          {{ archive_title }}
+        </li>
+      </ol>
+    </nav>
+  {% endif %}
 
   <header class="pdf-embed-seo-archive-header">
     <h1 class="pdf-embed-seo-archive-title">{{ archive_title }}</h1>

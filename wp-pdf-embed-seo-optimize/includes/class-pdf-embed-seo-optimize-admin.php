@@ -409,6 +409,18 @@ class PDF_Embed_SEO_Admin {
 				'key'       => 'archive_show_view_count',
 			)
 		);
+
+		add_settings_field(
+			'show_breadcrumbs',
+			__( 'Show Visible Breadcrumbs', 'wp-pdf-embed-seo-optimize' ),
+			array( $this, 'render_breadcrumb_field' ),
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_archive',
+			array(
+				'label_for' => 'show_breadcrumbs',
+				'key'       => 'show_breadcrumbs',
+			)
+		);
 	}
 
 	/**
@@ -434,6 +446,7 @@ class PDF_Embed_SEO_Admin {
 			: 'grid';
 		$sanitized['archive_show_description']  = ! empty( $input['archive_show_description'] );
 		$sanitized['archive_show_view_count']   = ! empty( $input['archive_show_view_count'] );
+		$sanitized['show_breadcrumbs']          = ! empty( $input['show_breadcrumbs'] );
 
 		return $sanitized;
 	}
@@ -540,6 +553,29 @@ class PDF_Embed_SEO_Admin {
 			max="<?php echo esc_attr( $args['max'] ); ?>"
 			class="small-text"
 		/>
+		<?php
+	}
+
+	/**
+	 * Render the breadcrumb visibility field.
+	 *
+	 * @param array $args Field arguments.
+	 * @return void
+	 */
+	public function render_breadcrumb_field( $args ) {
+		$settings = PDF_Embed_SEO::get_setting();
+		$value    = isset( $settings[ $args['key'] ] ) ? $settings[ $args['key'] ] : true;
+		?>
+		<input
+			type="checkbox"
+			id="<?php echo esc_attr( $args['key'] ); ?>"
+			name="pdf_embed_seo_settings[<?php echo esc_attr( $args['key'] ); ?>]"
+			value="1"
+			<?php checked( $value, true ); ?>
+		/>
+		<p class="description">
+			<?php esc_html_e( 'Display visible breadcrumb navigation on PDF pages. The JSON-LD breadcrumb schema for SEO is always included regardless of this setting.', 'wp-pdf-embed-seo-optimize' ); ?>
+		</p>
 		<?php
 	}
 
