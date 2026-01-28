@@ -28,6 +28,7 @@ class PDF_Embed_SEO_Admin {
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_filter( 'manage_pdf_document_posts_columns', array( $this, 'add_custom_columns' ) );
 		add_action( 'manage_pdf_document_posts_custom_column', array( $this, 'render_custom_columns' ), 10, 2 );
+		add_action( 'edit_form_after_title', array( $this, 'render_editor_help_notice' ) );
 	}
 
 	/**
@@ -113,6 +114,36 @@ class PDF_Embed_SEO_Admin {
 		$view_count = PDF_Embed_SEO_Post_Type::get_view_count( $post->ID );
 
 		include PDF_EMBED_SEO_PLUGIN_DIR . 'admin/views/meta-box-pdf-stats.php';
+	}
+
+	/**
+	 * Render help notice above the editor for PDF documents.
+	 *
+	 * @param WP_Post $post The current post object.
+	 * @return void
+	 */
+	public function render_editor_help_notice( $post ) {
+		if ( 'pdf_document' !== $post->post_type ) {
+			return;
+		}
+		?>
+		<div class="notice notice-info inline" style="margin: 15px 0;">
+			<p>
+				<strong><?php esc_html_e( 'Content Editor:', 'wp-pdf-embed-seo-optimize' ); ?></strong>
+				<?php esc_html_e( 'Use this area for optional descriptions or additional content. The PDF viewer is displayed automatically from the PDF File you select below.', 'wp-pdf-embed-seo-optimize' ); ?>
+			</p>
+			<p>
+				<strong><?php esc_html_e( 'Want to embed this PDF elsewhere?', 'wp-pdf-embed-seo-optimize' ); ?></strong>
+				<?php
+				printf(
+					/* translators: %s: shortcode example */
+					esc_html__( 'Use the shortcode %s on any page or post.', 'wp-pdf-embed-seo-optimize' ),
+					'<code>[pdf_viewer id="' . esc_html( $post->ID ) . '"]</code>'
+				);
+				?>
+			</p>
+		</div>
+		<?php
 	}
 
 	/**

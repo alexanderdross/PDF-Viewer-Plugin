@@ -52,4 +52,8 @@ if ( $file_id ) {
 	<p class="description">
 		<?php esc_html_e( 'Select a PDF file from your Media Library or upload a new one.', 'wp-pdf-embed-seo-optimize' ); ?>
 	</p>
+	<p class="description" style="margin-top: 10px; padding: 8px; background: #f0f6fc; border-left: 3px solid #2271b1;">
+		<strong><?php esc_html_e( 'How it works:', 'wp-pdf-embed-seo-optimize' ); ?></strong><br>
+		<?php esc_html_e( 'The PDF viewer is displayed automatically on this document\'s page. Use the content editor above only for additional text or descriptions you want to show below the PDF viewer.', 'wp-pdf-embed-seo-optimize' ); ?>
+	</p>
 </div>
