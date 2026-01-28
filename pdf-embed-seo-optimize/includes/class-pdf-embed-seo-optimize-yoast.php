@@ -82,10 +82,38 @@ class PDF_Embed_SEO_Yoast {
 			return;
 		}
 
-		// Output JSON-LD.
+		// Output JSON-LD for DigitalDocument.
 		echo "\n<!-- PDF Embed & SEO Optimize - DigitalDocument Schema -->\n";
 		echo '<script type="application/ld+json">' . "\n";
 		echo wp_json_encode( $schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
+		echo "\n</script>\n";
+
+		// Output separate WebPage schema with speakable (speakable is only valid on WebPage/Article).
+		$webpage_schema = array(
+			'@context'    => 'https://schema.org',
+			'@type'       => 'WebPage',
+			'@id'         => get_permalink( $post_id ) . '#webpage',
+			'url'         => get_permalink( $post_id ),
+			'name'        => get_the_title( $post_id ),
+			'description' => isset( $schema['description'] ) ? $schema['description'] : '',
+			'mainEntity'  => array(
+				'@id' => get_permalink( $post_id ) . '#digitaldocument',
+			),
+			'speakable'   => array(
+				'@type'       => 'SpeakableSpecification',
+				'cssSelector' => array(
+					'.pdf-embed-seo-optimize-title',
+					'.pdf-embed-seo-optimize-excerpt',
+					'.pdf-embed-seo-optimize-description',
+					'.entry-title',
+					'.entry-content',
+				),
+			),
+		);
+
+		echo "\n<!-- PDF Embed & SEO Optimize - WebPage Schema (GEO/AEO) -->\n";
+		echo '<script type="application/ld+json">' . "\n";
+		echo wp_json_encode( $webpage_schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
 		echo "\n</script>\n";
 	}
 
@@ -146,17 +174,8 @@ class PDF_Embed_SEO_Yoast {
 			}
 		}
 
-		// GEO/AEO/LLM Optimization: Speakable property for voice assistants and AI.
-		$schema['speakable'] = array(
-			'@type'       => 'SpeakableSpecification',
-			'cssSelector' => array(
-				'.pdf-embed-seo-optimize-archive-title',
-				'.pdf-embed-seo-optimize-archive-description',
-				'.pdf-embed-seo-optimize-card-title',
-				'.pdf-embed-seo-optimize-list-title',
-				'.page-title',
-			),
-		);
+		// Note: speakable is only valid on WebPage/Article, not CollectionPage.
+		// We output a separate WebPage schema with speakable below.
 
 		// GEO/AEO: Potential actions for AI assistants.
 		$schema['potentialAction'] = array(
@@ -282,13 +301,8 @@ class PDF_Embed_SEO_Yoast {
 					'url'   => $site_url,
 				);
 
-				// GEO/AEO: Add speakable for each document.
-				$document['speakable'] = array(
-					'@type'       => 'SpeakableSpecification',
-					'cssSelector' => array( '.entry-title', '.entry-content' ),
-				);
-
 				// GEO/AEO: Access and content properties.
+				// Note: speakable removed - only valid on WebPage/Article, not DigitalDocument.
 				$document['accessMode']           = array( 'textual', 'visual' );
 				$document['genre']                = 'PDF Document';
 				$document['learningResourceType'] = 'Document';
@@ -329,10 +343,43 @@ class PDF_Embed_SEO_Yoast {
 		 */
 		$schema = apply_filters( 'pdf_embed_seo_archive_schema_data', $schema );
 
-		// Output JSON-LD.
+		// Output JSON-LD for CollectionPage.
 		echo "\n<!-- PDF Embed & SEO Optimize - Archive Page Schema -->\n";
 		echo '<script type="application/ld+json">' . "\n";
 		echo wp_json_encode( $schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
+		echo "\n</script>\n";
+
+		// Output separate WebPage schema with speakable (speakable is only valid on WebPage/Article).
+		$archive_url = get_post_type_archive_link( 'pdf_document' );
+		$site_name   = get_bloginfo( 'name' );
+
+		$webpage_schema = array(
+			'@context'    => 'https://schema.org',
+			'@type'       => 'WebPage',
+			'@id'         => $archive_url . '#webpage',
+			'url'         => $archive_url,
+			'name'        => apply_filters( 'pdf_embed_seo_archive_title', __( 'PDF Documents', 'pdf-embed-seo-optimize' ) ),
+			'description' => apply_filters( 'pdf_embed_seo_archive_description', __( 'Browse our collection of PDF documents.', 'pdf-embed-seo-optimize' ) ),
+			'isPartOf'    => array(
+				'@type' => 'WebSite',
+				'name'  => $site_name,
+				'url'   => home_url( '/' ),
+			),
+			'speakable'   => array(
+				'@type'       => 'SpeakableSpecification',
+				'cssSelector' => array(
+					'.pdf-embed-seo-optimize-archive-title',
+					'.pdf-embed-seo-optimize-archive-description',
+					'.pdf-embed-seo-optimize-card-title',
+					'.pdf-embed-seo-optimize-list-title',
+					'.page-title',
+				),
+			),
+		);
+
+		echo "\n<!-- PDF Embed & SEO Optimize - WebPage Schema (GEO/AEO) -->\n";
+		echo '<script type="application/ld+json">' . "\n";
+		echo wp_json_encode( $webpage_schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
 		echo "\n</script>\n";
 	}
 
@@ -606,27 +653,11 @@ class PDF_Embed_SEO_Yoast {
 			'@id'   => get_permalink( $post_id ),
 		);
 
-		// GEO/AEO/LLM Optimization: Speakable property for voice assistants and AI.
-		// Identifies content suitable for text-to-speech and AI consumption.
-		$schema['speakable'] = array(
-			'@type'       => 'SpeakableSpecification',
-			'cssSelector' => array(
-				'.pdf-embed-seo-optimize-title',
-				'.pdf-embed-seo-optimize-excerpt',
-				'.pdf-embed-seo-optimize-description',
-				'.entry-title',
-				'.entry-content',
-			),
-		);
-
 		// GEO/AEO: Access and interaction properties for AI understanding.
+		// Note: speakable is only valid on WebPage/Article, not DigitalDocument.
+		// We output a separate WebPage schema with speakable below.
 		$schema['accessMode']            = array( 'textual', 'visual' );
-		$schema['accessModeSufficient']  = array(
-			array(
-				'@type'      => 'ItemList',
-				'itemListElement' => array( 'textual', 'visual' ),
-			),
-		);
+		$schema['accessModeSufficient']  = array( 'textual', 'visual' );
 		$schema['accessibilityFeature']  = array( 'structuredNavigation', 'readingOrder', 'tableOfContents' );
 		$schema['accessibilityHazard']   = array( 'none' );
 
@@ -946,26 +977,11 @@ class PDF_Embed_SEO_Schema_Piece {
 			'@id' => get_permalink( $post_id ),
 		);
 
-		// GEO/AEO/LLM Optimization: Speakable property for voice assistants and AI.
-		$schema['speakable'] = array(
-			'@type'       => 'SpeakableSpecification',
-			'cssSelector' => array(
-				'.pdf-embed-seo-optimize-title',
-				'.pdf-embed-seo-optimize-excerpt',
-				'.pdf-embed-seo-optimize-description',
-				'.entry-title',
-				'.entry-content',
-			),
-		);
-
 		// GEO/AEO: Access properties for AI understanding.
+		// Note: speakable is only valid on WebPage/Article, not DigitalDocument.
+		// Yoast handles WebPage schema separately where speakable can be added via filter.
 		$schema['accessMode']            = array( 'textual', 'visual' );
-		$schema['accessModeSufficient']  = array(
-			array(
-				'@type'           => 'ItemList',
-				'itemListElement' => array( 'textual', 'visual' ),
-			),
-		);
+		$schema['accessModeSufficient']  = array( 'textual', 'visual' );
 		$schema['accessibilityFeature']  = array( 'structuredNavigation', 'readingOrder', 'tableOfContents' );
 		$schema['accessibilityHazard']   = array( 'none' );
 
