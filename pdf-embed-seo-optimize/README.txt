@@ -4,7 +4,7 @@ Tags: pdf, pdf viewer, seo, embed, document
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,6 +101,28 @@ Yes, you can choose between light and dark themes in the plugin settings. You ca
 6. Plugin settings page
 
 == Changelog ==
+
+= 1.2.3 =
+* GEO/AEO/LLM schema optimization (SpeakableSpecification, potentialAction, accessMode)
+* Standalone Open Graph and Twitter Card meta tags (when Yoast is not active)
+* Enhanced DigitalDocument schema (identifier, fileFormat, inLanguage, publisher)
+* Plugin Check compliance fixes
+
+= 1.2.2 =
+* Archive display options (list/grid views)
+* Schema.org BreadcrumbList markup
+* Visible breadcrumb navigation with accessibility support
+
+= 1.2.1 =
+* Version bump for release
+* Documentation improvements
+
+= 1.2.0 =
+* Added REST API endpoints
+* Added reading progress tracking (Premium)
+* Added password verification endpoint (Premium)
+* Added XML Sitemap at /pdf/sitemap.xml (Premium)
+* Added comprehensive developer documentation
 
 = 1.1.0 =
 * Added comprehensive UAT/QA test documentation
