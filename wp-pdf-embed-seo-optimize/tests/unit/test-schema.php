@@ -6,8 +6,8 @@
  * @subpackage Tests
  */
 
-// Prevent direct access (only allow CLI/test context).
-if ( ! defined( 'ABSPATH' ) && php_sapi_name() !== 'cli' ) {
+// Prevent direct access.
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 

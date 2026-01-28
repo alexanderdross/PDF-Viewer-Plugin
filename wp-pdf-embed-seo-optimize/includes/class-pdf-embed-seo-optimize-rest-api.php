@@ -226,6 +226,7 @@ class PDF_Embed_SEO_REST_API {
 		);
 
 		if ( 'views' === $orderby ) {
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Required for ordering by view count.
 			$args['meta_key'] = '_pdf_view_count';
 		}
 
