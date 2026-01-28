@@ -41,4 +41,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<p class="description">
 		<?php esc_html_e( 'Allow users to print the PDF document.', 'pdf-embed-seo-optimize' ); ?>
 	</p>
+
+	<hr style="margin: 15px 0;">
+
+	<p>
+		<label>
+			<input
+				type="checkbox"
+				name="pdf_standalone_mode"
+				value="1"
+				<?php checked( $standalone_mode, true ); ?>
+			>
+			<?php esc_html_e( 'Standalone Mode', 'pdf-embed-seo-optimize' ); ?>
+		</label>
+	</p>
+	<p class="description">
+		<?php esc_html_e( 'Display PDF in a clean fullscreen view without theme header, footer, or breadcrumbs.', 'pdf-embed-seo-optimize' ); ?>
+	</p>
 </div>

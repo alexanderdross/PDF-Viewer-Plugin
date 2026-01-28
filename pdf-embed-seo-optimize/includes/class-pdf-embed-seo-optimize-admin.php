@@ -87,8 +87,9 @@ class PDF_Embed_SEO_Admin {
 	 * @return void
 	 */
 	public function render_settings_meta_box( $post ) {
-		$allow_download = get_post_meta( $post->ID, '_pdf_allow_download', true );
-		$allow_print    = get_post_meta( $post->ID, '_pdf_allow_print', true );
+		$allow_download  = get_post_meta( $post->ID, '_pdf_allow_download', true );
+		$allow_print     = get_post_meta( $post->ID, '_pdf_allow_print', true );
+		$standalone_mode = get_post_meta( $post->ID, '_pdf_standalone_mode', true );
 
 		// Get defaults from settings.
 		$defaults = PDF_Embed_SEO::get_setting();
@@ -191,6 +192,10 @@ class PDF_Embed_SEO_Admin {
 		// Save print permission.
 		$allow_print = isset( $_POST['pdf_allow_print'] ) ? true : false;
 		update_post_meta( $post_id, '_pdf_allow_print', $allow_print );
+
+		// Save standalone mode.
+		$standalone_mode = isset( $_POST['pdf_standalone_mode'] ) ? true : false;
+		update_post_meta( $post_id, '_pdf_standalone_mode', $standalone_mode );
 
 		/**
 		 * Fires when PDF settings are saved.

@@ -8,6 +8,7 @@
  * Features:
  * - SEO optimized with Schema.org breadcrumb markup
  * - Fully accessible with ARIA labels and title attributes
+ * - Standalone mode for fullscreen PDF viewing without header/footer
  *
  * @package PDF_Embed_SEO
  */
@@ -29,6 +30,111 @@ $site_url    = home_url( '/' );
 $settings         = PDF_Embed_SEO::get_setting();
 $show_breadcrumbs = isset( $settings['show_breadcrumbs'] ) ? $settings['show_breadcrumbs'] : true;
 
+// Check for standalone mode.
+$standalone_mode = get_post_meta( $post_id, '_pdf_standalone_mode', true );
+
+// Standalone Mode: Render clean page without header/footer.
+if ( $standalone_mode ) :
+	?>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+	<meta charset="<?php bloginfo( 'charset' ); ?>">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title><?php echo esc_html( $pdf_title ); ?> - <?php echo esc_html( $site_name ); ?></title>
+	<?php wp_head(); ?>
+	<style>
+		/* Standalone mode styles */
+		html, body {
+			margin: 0;
+			padding: 0;
+			height: 100%;
+			overflow: hidden;
+			background: #525659;
+		}
+		.pdf-standalone-wrapper {
+			display: flex;
+			flex-direction: column;
+			height: 100vh;
+			width: 100%;
+		}
+		.pdf-standalone-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 10px 20px;
+			background: #323639;
+			color: #fff;
+			flex-shrink: 0;
+		}
+		.pdf-standalone-title {
+			margin: 0;
+			font-size: 16px;
+			font-weight: 500;
+			color: #fff;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+		.pdf-standalone-close {
+			display: inline-flex;
+			align-items: center;
+			gap: 5px;
+			padding: 8px 16px;
+			background: rgba(255,255,255,0.1);
+			color: #fff;
+			text-decoration: none;
+			border-radius: 4px;
+			font-size: 14px;
+			transition: background 0.2s;
+		}
+		.pdf-standalone-close:hover {
+			background: rgba(255,255,255,0.2);
+			color: #fff;
+		}
+		.pdf-standalone-content {
+			flex: 1;
+			overflow: hidden;
+		}
+		.pdf-standalone-content .pdf-embed-seo-optimize-container {
+			height: 100%;
+			border-radius: 0;
+		}
+		.pdf-standalone-content .pdf-embed-seo-optimize-viewer {
+			max-height: none;
+			height: calc(100% - 50px);
+		}
+		/* Hide any theme elements that might leak through */
+		#wpadminbar { display: none !important; }
+	</style>
+</head>
+<body class="pdf-standalone-body">
+	<div class="pdf-standalone-wrapper">
+		<header class="pdf-standalone-header">
+			<h1 class="pdf-standalone-title"><?php echo esc_html( $pdf_title ); ?></h1>
+			<a href="<?php echo esc_url( $archive_url ); ?>" class="pdf-standalone-close" title="<?php esc_attr_e( 'Back to PDF Documents', 'pdf-embed-seo-optimize' ); ?>">
+				<span aria-hidden="true">&larr;</span>
+				<?php esc_html_e( 'Back', 'pdf-embed-seo-optimize' ); ?>
+			</a>
+		</header>
+		<div class="pdf-standalone-content">
+			<?php
+			while ( have_posts() ) :
+				the_post();
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Viewer HTML is safely constructed with escaped values.
+				echo PDF_Embed_SEO_Frontend::get_viewer_html( $post_id );
+			endwhile;
+			?>
+		</div>
+	</div>
+	<?php wp_footer(); ?>
+</body>
+</html>
+	<?php
+	return; // Exit early, don't render normal template.
+endif;
+
+// Normal Mode: Render with theme header/footer.
 get_header();
 ?>
 
