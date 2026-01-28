@@ -3,32 +3,133 @@
  * @file
  * Default template for displaying a PDF document entity.
  *
+ * This template can be overridden by copying it to your theme:
+ * yourtheme/templates/pdf-document.html.twig
+ *
+ * Features:
+ * - SEO optimized with Schema.org breadcrumb markup
+ * - Fully accessible with ARIA labels and title attributes
+ *
  * Available variables:
  * - pdf_document: The PDF document entity.
  * - view_mode: The view mode being displayed.
  * - content: All field items for the PDF document.
  */
 #}
-<article{{ attributes.addClass('pdf-document', 'pdf-document--' ~ view_mode) }}>
-  {% if content.pdf_viewer is defined %}
-    {{ content.pdf_viewer }}
-  {% endif %}
 
-  {% if content.description is defined %}
-    <div class="pdf-document-description">
-      {{ content.description }}
-    </div>
-  {% endif %}
+{# Get breadcrumb data #}
+{% set site_name = site_name|default(drupal_config('system.site', 'name')) %}
+{% set site_url = url('<front>')|render|trim %}
+{% set archive_url = path('pdf_embed_seo.archive') %}
+{% set pdf_title = pdf_document.title.value %}
+{% set pdf_url = path('entity.pdf_document.canonical', {'pdf_document': pdf_document.id.value}) %}
+{% set published_date = pdf_document.created.value|date('M j, Y') %}
+{% set modified_date = pdf_document.changed.value|date('M j, Y') %}
 
-  {% if content.pdf_download_button is defined %}
-    <div class="pdf-document-actions">
-      {{ content.pdf_download_button }}
-    </div>
-  {% endif %}
+{# Breadcrumb Schema.org markup #}
+<script type="application/ld+json">
+{
+	"@context": "https://schema.org",
+	"@type": "BreadcrumbList",
+	"itemListElement": [
+		{
+			"@type": "ListItem",
+			"position": 1,
+			"name": {{ site_name|json_encode|raw }},
+			"item": {{ site_url|json_encode|raw }}
+		},
+		{
+			"@type": "ListItem",
+			"position": 2,
+			"name": {{ 'PDF Documents'|t|json_encode|raw }},
+			"item": {{ archive_url|json_encode|raw }}
+		},
+		{
+			"@type": "ListItem",
+			"position": 3,
+			"name": {{ pdf_title|json_encode|raw }},
+			"item": {{ pdf_url|json_encode|raw }}
+		}
+	]
+}
+</script>
 
-  {% if content.pdf_view_count is defined %}
-    <div class="pdf-document-stats">
-      {{ content.pdf_view_count }}
+<article{{ attributes.addClass('pdf-embed-seo-single', 'pdf-document', 'pdf-document--' ~ view_mode) }} itemscope itemtype="https://schema.org/DigitalDocument">
+  {# Breadcrumb navigation for accessibility #}
+  <nav class="pdf-embed-seo-breadcrumb" aria-label="{{ 'Breadcrumb'|t }}">
+    <ol class="pdf-embed-seo-breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+      <li class="pdf-embed-seo-breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a href="{{ site_url }}" itemprop="item" title="{{ 'Go to %site homepage'|t({'%site': site_name}) }}">
+          <span itemprop="name">{{ site_name }}</span>
+        </a>
+        <meta itemprop="position" content="1" />
+      </li>
+      <li class="pdf-embed-seo-breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a href="{{ archive_url }}" itemprop="item" title="{{ 'View all PDF documents'|t }}">
+          <span itemprop="name">{{ 'PDF Documents'|t }}</span>
+        </a>
+        <meta itemprop="position" content="2" />
+      </li>
+      <li class="pdf-embed-seo-breadcrumb-item pdf-embed-seo-breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+        <span itemprop="name">{{ pdf_title }}</span>
+        <meta itemprop="item" content="{{ pdf_url }}" />
+        <meta itemprop="position" content="3" />
+      </li>
+    </ol>
+  </nav>
+
+  <header class="pdf-embed-seo-header">
+    <h1 class="pdf-embed-seo-title" itemprop="name">{{ pdf_title }}</h1>
+
+    {% if pdf_document.description.value %}
+      <div class="pdf-embed-seo-excerpt" itemprop="description">
+        <p>{{ pdf_document.description.value|striptags }}</p>
+      </div>
+    {% endif %}
+  </header>
+
+  <div class="pdf-embed-seo-content">
+    {% if content.pdf_viewer is defined %}
+      {{ content.pdf_viewer }}
+    {% endif %}
+
+    {% if content.description is defined %}
+      <div class="pdf-embed-seo-description" itemprop="text">
+        {{ content.description }}
+      </div>
+    {% endif %}
+
+    {% if content.pdf_download_button is defined %}
+      <div class="pdf-embed-seo-actions">
+        {{ content.pdf_download_button }}
+      </div>
+    {% endif %}
+  </div>
+
+  <footer class="pdf-embed-seo-footer">
+    <div class="pdf-embed-seo-meta">
+      <span class="pdf-embed-seo-published">
+        <time datetime="{{ pdf_document.created.value|date('c') }}" itemprop="datePublished">
+          {{ 'Published: %date'|t({'%date': published_date}) }}
+        </time>
+      </span>
+
+      {% if published_date != modified_date %}
+        <span class="pdf-embed-seo-modified">
+          <time datetime="{{ pdf_document.changed.value|date('c') }}" itemprop="dateModified">
+            {{ 'Updated: %date'|t({'%date': modified_date}) }}
+          </time>
+        </span>
+      {% endif %}
+
+      {% if content.pdf_view_count is defined %}
+        <span class="pdf-embed-seo-views">
+          {{ content.pdf_view_count }}
+        </span>
+      {% endif %}
     </div>
-  {% endif %}
+  </footer>
+
+  <meta itemprop="url" content="{{ pdf_url }}" />
+  <meta itemprop="encodingFormat" content="application/pdf" />
 </article>

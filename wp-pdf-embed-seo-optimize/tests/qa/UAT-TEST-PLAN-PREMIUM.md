@@ -410,6 +410,19 @@ Before running premium tests:
 | PST-008 | Enable Sitemap | Toggle, save, verify | Feature enabled | [ ] Pass [ ] Fail |
 | PST-009 | Enable Sitemap Ping | Toggle, save, verify | Feature enabled | [ ] Pass [ ] Fail |
 
+### 14.2 Archive Page Redirect
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| PST-010 | Redirect Settings Visible | 1. Go to Premium Settings<br>2. Check Archive Redirect section | Section visible | [ ] Pass [ ] Fail |
+| PST-011 | Enable Redirect Toggle | 1. Enable Archive Redirect<br>2. Save | Setting saved | [ ] Pass [ ] Fail |
+| PST-012 | Redirect Type 301 | 1. Set redirect type to 301<br>2. Set URL<br>3. Visit /pdf/<br>4. Check HTTP code | 301 redirect | [ ] Pass [ ] Fail |
+| PST-013 | Redirect Type 302 | 1. Set redirect type to 302<br>2. Visit /pdf/<br>3. Check HTTP code | 302 redirect | [ ] Pass [ ] Fail |
+| PST-014 | Redirect URL | 1. Set custom redirect URL<br>2. Visit /pdf/ | Redirects to custom URL | [ ] Pass [ ] Fail |
+| PST-015 | Redirect Disabled | 1. Disable redirect<br>2. Visit /pdf/ | Archive page displays normally | [ ] Pass [ ] Fail |
+| PST-016 | License Required | 1. Invalidate license<br>2. Enable redirect<br>3. Visit /pdf/ | Redirect disabled (free fallback) | [ ] Pass [ ] Fail |
+| PST-017 | URL Validation | 1. Enter invalid URL<br>2. Save | Error shown | [ ] Pass [ ] Fail |
+
 ### 14.2 Default States
 
 | Test ID | Test Case | Steps | Expected Result | Status |

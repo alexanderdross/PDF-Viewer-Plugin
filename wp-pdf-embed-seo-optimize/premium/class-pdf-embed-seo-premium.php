@@ -174,6 +174,48 @@ final class PDF_Embed_SEO_Premium {
 		add_action( 'init', array( $this, 'init' ), 5 );
 		add_action( 'admin_notices', array( $this, 'license_notices' ) );
 		add_filter( 'pdf_embed_seo_is_premium', '__return_true' );
+
+		// Archive redirect (premium feature).
+		add_action( 'template_redirect', array( $this, 'maybe_redirect_archive' ) );
+	}
+
+	/**
+	 * Maybe redirect the archive page based on premium settings.
+	 *
+	 * @return void
+	 */
+	public function maybe_redirect_archive() {
+		// Only proceed if on the PDF archive page.
+		if ( ! is_post_type_archive( 'pdf_document' ) ) {
+			return;
+		}
+
+		// Only if license is valid.
+		if ( ! $this->is_license_valid() ) {
+			return;
+		}
+
+		// Check if redirect is enabled.
+		$settings = get_option( 'pdf_embed_seo_premium_settings', array() );
+		$redirect_enabled = isset( $settings['archive_redirect_enabled'] ) && '1' === $settings['archive_redirect_enabled'];
+
+		if ( ! $redirect_enabled ) {
+			return;
+		}
+
+		// Get redirect settings.
+		$redirect_type = isset( $settings['archive_redirect_type'] ) ? $settings['archive_redirect_type'] : '301';
+		$redirect_url  = isset( $settings['archive_redirect_url'] ) ? $settings['archive_redirect_url'] : home_url( '/' );
+
+		// Validate redirect URL.
+		if ( empty( $redirect_url ) ) {
+			$redirect_url = home_url( '/' );
+		}
+
+		// Perform redirect.
+		$status_code = '301' === $redirect_type ? 301 : 302;
+		wp_safe_redirect( $redirect_url, $status_code );
+		exit;
 	}
 
 	/**

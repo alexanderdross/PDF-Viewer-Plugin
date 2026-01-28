@@ -4,6 +4,7 @@ namespace Drupal\pdf_embed_seo\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Url;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Controller for the PDF archive page.
@@ -13,13 +14,21 @@ class PdfArchiveController extends ControllerBase {
   /**
    * Display the PDF archive listing.
    *
-   * @return array
-   *   A render array.
+   * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+   *   A render array or redirect response.
    */
   public function listing() {
+    // Check for premium redirect first.
+    $redirect = $this->checkArchiveRedirect();
+    if ($redirect) {
+      return $redirect;
+    }
+
     $config = $this->config('pdf_embed_seo.settings');
     $posts_per_page = $config->get('archive_posts_per_page') ?? 12;
     $display = $config->get('archive_display') ?? 'grid';
+    $show_description = $config->get('archive_show_description') ?? TRUE;
+    $show_view_count = $config->get('archive_show_view_count') ?? TRUE;
 
     // Load published PDF documents.
     $storage = $this->entityTypeManager()->getStorage('pdf_document');
@@ -67,6 +76,8 @@ class PdfArchiveController extends ControllerBase {
         '#document' => $document,
         '#thumbnail' => $thumbnail,
         '#url' => $document->toUrl(),
+        '#show_description' => $show_description,
+        '#show_view_count' => $show_view_count,
       ];
     }
 
@@ -75,15 +86,30 @@ class PdfArchiveController extends ControllerBase {
       '#type' => 'pager',
     ];
 
+    // Build breadcrumb data.
+    $site_name = $this->config('system.site')->get('name');
+    $site_url = Url::fromRoute('<front>')->setAbsolute()->toString();
+    $archive_url = Url::fromRoute('pdf_embed_seo.archive')->setAbsolute()->toString();
+    $archive_title = $config->get('archive_title') ?? $this->t('PDF Documents');
+    $archive_description = $config->get('archive_description') ?? $this->t('Browse all available PDF documents.');
+
     $build = [
       '#theme' => 'pdf_archive',
       '#documents' => $items,
       '#pager' => $pager,
+      '#display_style' => $display,
+      '#show_description' => $show_description,
+      '#show_view_count' => $show_view_count,
+      '#archive_title' => $archive_title,
+      '#archive_description' => $archive_description,
+      '#site_name' => $site_name,
+      '#site_url' => $site_url,
+      '#archive_url' => $archive_url,
       '#attached' => [
         'library' => ['pdf_embed_seo/archive'],
       ],
       '#cache' => [
-        'tags' => ['pdf_document_list'],
+        'tags' => ['pdf_document_list', 'config:pdf_embed_seo.settings'],
         'contexts' => ['url.query_args:page', 'url.query_args:pdf_category', 'url.query_args:pdf_tag'],
       ],
     ];
@@ -176,6 +202,43 @@ class PdfArchiveController extends ControllerBase {
     }
 
     return [];
+  }
+
+  /**
+   * Check if archive redirect is enabled (premium feature).
+   *
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
+   *   A redirect response or NULL if no redirect is needed.
+   */
+  protected function checkArchiveRedirect() {
+    // Check if premium module is active and license is valid.
+    if (!$this->moduleHandler()->moduleExists('pdf_embed_seo_premium')) {
+      return NULL;
+    }
+
+    // Check license validity.
+    if (!function_exists('pdf_embed_seo_premium_is_license_valid') || !pdf_embed_seo_premium_is_license_valid()) {
+      return NULL;
+    }
+
+    // Check if redirect is enabled.
+    $premium_config = $this->config('pdf_embed_seo_premium.settings');
+    $redirect_enabled = $premium_config->get('archive_redirect_enabled') ?? FALSE;
+
+    if (!$redirect_enabled) {
+      return NULL;
+    }
+
+    $redirect_url = $premium_config->get('archive_redirect_url');
+    if (empty($redirect_url)) {
+      return NULL;
+    }
+
+    // Get redirect type (301 or 302).
+    $redirect_type = $premium_config->get('archive_redirect_type') ?? '301';
+    $status_code = ($redirect_type === '301') ? 301 : 302;
+
+    return new RedirectResponse($redirect_url, $status_code);
   }
 
 }

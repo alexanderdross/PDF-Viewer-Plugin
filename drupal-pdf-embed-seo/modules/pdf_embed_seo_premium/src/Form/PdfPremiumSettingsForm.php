@@ -138,6 +138,52 @@ class PdfPremiumSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('track_anonymous') ?? TRUE,
     ];
 
+    // Archive Redirect section.
+    $form['redirect'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Archive Page Redirect'),
+      '#description' => $this->t('Redirect the PDF archive page (/pdf) to another URL. Useful if you want to use a custom archive page.'),
+      '#open' => FALSE,
+    ];
+
+    $form['redirect']['archive_redirect_enabled'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enable Archive Redirect'),
+      '#description' => $this->t('When enabled, visitors to the PDF archive page will be redirected to the specified URL.'),
+      '#default_value' => $config->get('archive_redirect_enabled') ?? FALSE,
+    ];
+
+    $form['redirect']['archive_redirect_type'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Redirect Type'),
+      '#description' => $this->t('301 = Permanent (SEO-friendly, cached by browsers). 302 = Temporary (not cached).'),
+      '#options' => [
+        '301' => $this->t('301 Permanent Redirect'),
+        '302' => $this->t('302 Temporary Redirect'),
+      ],
+      '#default_value' => $config->get('archive_redirect_type') ?? '301',
+      '#states' => [
+        'visible' => [
+          ':input[name="archive_redirect_enabled"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+
+    $form['redirect']['archive_redirect_url'] = [
+      '#type' => 'url',
+      '#title' => $this->t('Redirect URL'),
+      '#description' => $this->t('The URL to redirect archive visitors to. Must be a valid URL starting with http:// or https://'),
+      '#default_value' => $config->get('archive_redirect_url') ?? '',
+      '#states' => [
+        'visible' => [
+          ':input[name="archive_redirect_enabled"]' => ['checked' => TRUE],
+        ],
+        'required' => [
+          ':input[name="archive_redirect_enabled"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+
     $form['password'] = [
       '#type' => 'details',
       '#title' => $this->t('Password Protection Settings'),
@@ -177,6 +223,9 @@ class PdfPremiumSettingsForm extends ConfigFormBase {
       ->set('track_anonymous', $form_state->getValue('track_anonymous'))
       ->set('password_session_duration', $form_state->getValue('password_session_duration'))
       ->set('max_password_attempts', $form_state->getValue('max_password_attempts'))
+      ->set('archive_redirect_enabled', $form_state->getValue('archive_redirect_enabled'))
+      ->set('archive_redirect_type', $form_state->getValue('archive_redirect_type'))
+      ->set('archive_redirect_url', $form_state->getValue('archive_redirect_url'))
       ->save();
 
     parent::submitForm($form, $form_state);

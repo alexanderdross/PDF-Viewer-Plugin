@@ -175,15 +175,50 @@
 
 ## 5. Archive/Listing Page
 
+### 5.1 Archive Display Options
+
 | Test ID | Test Case | Steps | Expected Result | Status |
 |---------|-----------|-------|-----------------|--------|
-| ARC-001 | Page Loads | 1. Visit /pdfs | Page displays | [ ] Pass [ ] Fail |
+| ARC-001 | Page Loads | 1. Visit /pdf | Page displays | [ ] Pass [ ] Fail |
 | ARC-002 | PDFs Listed | 1. Create PDFs<br>2. Visit archive | PDFs shown | [ ] Pass [ ] Fail |
 | ARC-003 | Thumbnails | 1. Add thumbnails<br>2. Visit archive | Thumbnails display | [ ] Pass [ ] Fail |
 | ARC-004 | Titles Linked | 1. Click title | Goes to viewer | [ ] Pass [ ] Fail |
 | ARC-005 | Descriptions | 1. Add descriptions<br>2. Visit archive | Descriptions shown | [ ] Pass [ ] Fail |
 | ARC-006 | Pagination | 1. Create 20+ PDFs | Pager works | [ ] Pass [ ] Fail |
 | ARC-007 | Empty State | 1. Delete all PDFs | "No PDFs" message | [ ] Pass [ ] Fail |
+| ARC-008 | Grid View Display | 1. Set display style to Grid<br>2. Visit archive | Cards with thumbnails shown | [ ] Pass [ ] Fail |
+| ARC-009 | List View Display | 1. Set display style to List<br>2. Visit archive | Simple list with icons shown | [ ] Pass [ ] Fail |
+| ARC-010 | Show Description Toggle | 1. Enable "Show descriptions"<br>2. Visit archive | Descriptions visible | [ ] Pass [ ] Fail |
+| ARC-011 | Hide Description Toggle | 1. Disable "Show descriptions"<br>2. Visit archive | Descriptions hidden | [ ] Pass [ ] Fail |
+| ARC-012 | Show View Count Toggle | 1. Enable "Show view counts"<br>2. Visit archive | View counts visible | [ ] Pass [ ] Fail |
+| ARC-013 | Hide View Count Toggle | 1. Disable "Show view counts"<br>2. Visit archive | View counts hidden | [ ] Pass [ ] Fail |
+
+### 5.2 Archive Breadcrumbs
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| ARC-014 | Breadcrumb Navigation | 1. Visit archive<br>2. Check breadcrumb | Home > PDF Documents shown | [ ] Pass [ ] Fail |
+| ARC-015 | Breadcrumb Schema | 1. View archive source<br>2. Check JSON-LD | BreadcrumbList schema present | [ ] Pass [ ] Fail |
+| ARC-016 | Breadcrumb Links Work | 1. Click Home in breadcrumb | Navigates to homepage | [ ] Pass [ ] Fail |
+| ARC-017 | Current Page Indicator | 1. Check archive breadcrumb | aria-current="page" on current | [ ] Pass [ ] Fail |
+
+### 5.3 Single PDF Breadcrumbs
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| ARC-018 | Single PDF Breadcrumb | 1. Visit single PDF<br>2. Check breadcrumb | Home > PDF Documents > Title | [ ] Pass [ ] Fail |
+| ARC-019 | Single PDF Schema | 1. View single PDF source<br>2. Check JSON-LD | BreadcrumbList with 3 items | [ ] Pass [ ] Fail |
+| ARC-020 | Archive Link Works | 1. Click PDF Documents in breadcrumb | Navigates to archive | [ ] Pass [ ] Fail |
+| ARC-021 | Breadcrumb A11Y | 1. Inspect breadcrumb nav | aria-label="Breadcrumb" present | [ ] Pass [ ] Fail |
+
+### 5.4 Archive Accessibility
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| ARC-022 | List View Title Attr | 1. Set list view<br>2. Hover over links | Title attributes shown | [ ] Pass [ ] Fail |
+| ARC-023 | Grid View Aria Labels | 1. Set grid view<br>2. Inspect card links | aria-label on links | [ ] Pass [ ] Fail |
+| ARC-024 | View PDF Button A11Y | 1. Inspect "View PDF" button | aria-label includes title | [ ] Pass [ ] Fail |
+| ARC-025 | Focus Styles | 1. Tab through archive | Focus indicators visible | [ ] Pass [ ] Fail |
 
 ---
 
@@ -307,6 +342,18 @@
 |---------|-----------|-------|-----------------|--------|
 | PRM-014 | Progress Bar | 1. View PDF | Progress bar visible | [ ] Pass [ ] Fail |
 | PRM-015 | Progress Saves | 1. Scroll to page 5<br>2. Return | Resumes at page 5 | [ ] Pass [ ] Fail |
+
+### 9.6 Archive Page Redirect (Premium)
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| PRM-016 | Redirect Settings | 1. Go to Premium Settings<br>2. Check Archive Redirect section | Section visible | [ ] Pass [ ] Fail |
+| PRM-017 | Enable Redirect | 1. Enable Archive Redirect<br>2. Save | Setting saved | [ ] Pass [ ] Fail |
+| PRM-018 | Redirect Type 301 | 1. Set redirect type to 301<br>2. Set URL<br>3. Visit /pdf<br>4. Check HTTP code | 301 redirect | [ ] Pass [ ] Fail |
+| PRM-019 | Redirect Type 302 | 1. Set redirect type to 302<br>2. Visit /pdf<br>3. Check HTTP code | 302 redirect | [ ] Pass [ ] Fail |
+| PRM-020 | Redirect URL | 1. Set custom redirect URL<br>2. Visit /pdf | Redirects to custom URL | [ ] Pass [ ] Fail |
+| PRM-021 | Redirect Disabled | 1. Disable redirect<br>2. Visit /pdf | Archive page displays normally | [ ] Pass [ ] Fail |
+| PRM-022 | License Required | 1. Invalidate license<br>2. Enable redirect<br>3. Visit /pdf | Redirect disabled (free fallback) | [ ] Pass [ ] Fail |
 
 ---
 

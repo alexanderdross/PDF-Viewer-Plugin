@@ -127,13 +127,27 @@ class PdfEmbedSeoSettingsForm extends ConfigFormBase {
 
     $form['archive']['archive_display'] = [
       '#type' => 'select',
-      '#title' => $this->t('Archive Display'),
-      '#description' => $this->t('How to display documents on the archive page.'),
+      '#title' => $this->t('Archive Display Style'),
+      '#description' => $this->t('Choose how PDF documents are displayed on the archive page.'),
       '#options' => [
-        'grid' => $this->t('Grid'),
-        'list' => $this->t('List'),
+        'grid' => $this->t('Grid View (Thumbnail cards)'),
+        'list' => $this->t('List View (Simple bullet-style list)'),
       ],
       '#default_value' => $config->get('archive_display') ?? 'grid',
+    ];
+
+    $form['archive']['archive_show_description'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Show descriptions'),
+      '#description' => $this->t('Display PDF descriptions/excerpts on the archive page.'),
+      '#default_value' => $config->get('archive_show_description') ?? TRUE,
+    ];
+
+    $form['archive']['archive_show_view_count'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Show view counts'),
+      '#description' => $this->t('Display view counts on the archive page.'),
+      '#default_value' => $config->get('archive_show_view_count') ?? TRUE,
     ];
 
     // SEO settings.
@@ -240,6 +254,8 @@ class PdfEmbedSeoSettingsForm extends ConfigFormBase {
     // Archive settings.
     $config->set('archive_posts_per_page', $form_state->getValue('archive_posts_per_page'));
     $config->set('archive_display', $form_state->getValue('archive_display'));
+    $config->set('archive_show_description', $form_state->getValue('archive_show_description'));
+    $config->set('archive_show_view_count', $form_state->getValue('archive_show_view_count'));
 
     // SEO settings.
     $config->set('enable_schema', $form_state->getValue('enable_schema'));

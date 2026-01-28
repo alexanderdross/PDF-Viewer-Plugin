@@ -3,38 +3,126 @@
  * @file
  * Template for a single PDF archive item.
  *
+ * This template can be overridden by copying it to your theme:
+ * yourtheme/templates/pdf-archive-item.html.twig
+ *
+ * Features:
+ * - SEO optimized with Schema.org markup
+ * - Fully accessible with ARIA labels and title attributes
+ *
  * Available variables:
  * - document: The PDF document entity.
  * - thumbnail: Rendered thumbnail image.
  * - url: URL to the PDF document.
+ * - show_description: Whether to show the description.
+ * - show_view_count: Whether to show the view count.
  */
 #}
-<article class="pdf-archive-item">
-  <a href="{{ url }}" class="pdf-archive-item-link">
-    <div class="pdf-archive-item-thumbnail">
-      {% if thumbnail %}
-        {{ thumbnail }}
-      {% else %}
-        <div class="pdf-archive-item-placeholder">
-          <span class="pdf-archive-item-icon">📄</span>
-        </div>
-      {% endif %}
-    </div>
-    <div class="pdf-archive-item-content">
-      <h3 class="pdf-archive-item-title">{{ document.title.value }}</h3>
-      {% if document.description.value %}
-        <p class="pdf-archive-item-description">
-          {{ document.description.value|striptags|slice(0, 150) }}{% if document.description.value|length > 150 %}...{% endif %}
+{% set pdf_title = document.title.value %}
+{% set pdf_date = document.created.value|date('M j, Y') %}
+{% set pdf_date_iso = document.created.value|date('c') %}
+{% set view_count = document.view_count.value|default(0) %}
+{% set pdf_desc = document.description.value|default('') %}
+
+{# Check parent display style from attributes #}
+{% set is_list_view = 'pdf-archive--list' in parent_attributes.class|default([]) %}
+
+{% if is_list_view %}
+  {# List View Item #}
+  <li class="pdf-embed-seo-list-item" id="pdf-{{ document.id.value }}">
+    <article itemscope itemtype="https://schema.org/DigitalDocument">
+      <a href="{{ url }}"
+         class="pdf-embed-seo-list-link"
+         title="{{ 'View %title PDF document'|t({'%title': pdf_title}) }}"
+         aria-label="{{ 'View %title PDF document, published on %date'|t({'%title': pdf_title, '%date': pdf_date}) }}"
+         itemprop="url">
+        <span class="pdf-embed-seo-list-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2l5 5h-5V4zM8.5 13H10v4H8.5v-4zm3 0H13v4h-1.5v-4zm3 0H16v4h-1.5v-4z"/>
+          </svg>
+        </span>
+        <span class="pdf-embed-seo-list-title" itemprop="name">{{ pdf_title }}</span>
+      </a>
+
+      <span class="pdf-embed-seo-list-meta">
+        <time class="pdf-embed-seo-list-date" datetime="{{ pdf_date_iso }}" itemprop="datePublished">
+          {{ pdf_date }}
+        </time>
+        {% if show_view_count and view_count > 0 %}
+          <span class="pdf-embed-seo-list-views" aria-label="{{ '%count views'|t({'%count': view_count|number_format}) }}">
+            ({{ view_count|number_format }}
+            <span class="visually-hidden">{{ view_count == 1 ? 'view'|t : 'views'|t }}</span>)
+          </span>
+        {% endif %}
+      </span>
+
+      {% if show_description and pdf_desc %}
+        <p class="pdf-embed-seo-list-description" itemprop="description">
+          {{ pdf_desc|striptags|slice(0, 150) }}{% if pdf_desc|length > 150 %}...{% endif %}
         </p>
       {% endif %}
-      <div class="pdf-archive-item-meta">
-        <span class="pdf-archive-item-views">
-          {{ 'Views: @count'|t({'@count': document.view_count.value|default(0)}) }}
-        </span>
-        <span class="pdf-archive-item-date">
-          {{ document.created.value|date('M j, Y') }}
-        </span>
+    </article>
+  </li>
+{% else %}
+  {# Grid View Item #}
+  <article class="pdf-embed-seo-card" id="post-{{ document.id.value }}" itemscope itemtype="https://schema.org/DigitalDocument">
+    {% if thumbnail %}
+      <div class="pdf-embed-seo-card-thumbnail">
+        <a href="{{ url }}"
+           title="{{ 'View %title'|t({'%title': pdf_title}) }}"
+           aria-label="{{ 'View %title PDF document'|t({'%title': pdf_title}) }}">
+          {{ thumbnail }}
+        </a>
       </div>
+    {% else %}
+      <div class="pdf-embed-seo-card-thumbnail pdf-embed-seo-card-thumbnail-placeholder">
+        <a href="{{ url }}"
+           title="{{ 'View %title'|t({'%title': pdf_title}) }}"
+           aria-label="{{ 'View %title PDF document'|t({'%title': pdf_title}) }}">
+          <span class="pdf-embed-seo-card-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2l5 5h-5V4zM8.5 13H10v4H8.5v-4zm3 0H13v4h-1.5v-4zm3 0H16v4h-1.5v-4z"/>
+            </svg>
+          </span>
+          <span class="visually-hidden">{{ 'PDF Document'|t }}</span>
+        </a>
+      </div>
+    {% endif %}
+
+    <div class="pdf-embed-seo-card-content">
+      <h2 class="pdf-embed-seo-card-title">
+        <a href="{{ url }}"
+           title="{{ 'View %title'|t({'%title': pdf_title}) }}"
+           itemprop="url">
+          <span itemprop="name">{{ pdf_title }}</span>
+        </a>
+      </h2>
+
+      {% if show_description and pdf_desc %}
+        <div class="pdf-embed-seo-card-excerpt" itemprop="description">
+          <p>{{ pdf_desc|striptags|slice(0, 150) }}{% if pdf_desc|length > 150 %}...{% endif %}</p>
+        </div>
+      {% endif %}
+
+      <div class="pdf-embed-seo-card-meta">
+        <time class="pdf-embed-seo-card-date" datetime="{{ pdf_date_iso }}" itemprop="datePublished">
+          {{ pdf_date }}
+        </time>
+
+        {% if show_view_count and view_count > 0 %}
+          <span class="pdf-embed-seo-card-views" aria-label="{{ '%count views'|t({'%count': view_count|number_format}) }}">
+            {{ '%count %label'|t({'%count': view_count|number_format, '%label': view_count == 1 ? 'view'|t : 'views'|t}) }}
+          </span>
+        {% endif %}
+      </div>
+
+      <a href="{{ url }}"
+         class="pdf-embed-seo-card-link"
+         title="{{ 'View %title PDF document'|t({'%title': pdf_title}) }}"
+         aria-label="{{ 'View %title PDF document'|t({'%title': pdf_title}) }}">
+        {{ 'View PDF'|t }}
+        <span class="visually-hidden">{{ pdf_title }}</span>
+      </a>
     </div>
-  </a>
-</article>
+  </article>
+{% endif %}

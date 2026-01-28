@@ -368,6 +368,47 @@ class PDF_Embed_SEO_Admin {
 				'max'       => 100,
 			)
 		);
+
+		add_settings_field(
+			'archive_display_style',
+			__( 'Archive Display Style', 'wp-pdf-embed-seo-optimize' ),
+			array( $this, 'render_select_field' ),
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_archive',
+			array(
+				'label_for'   => 'archive_display_style',
+				'key'         => 'archive_display_style',
+				'options'     => array(
+					'list' => __( 'List View (Simple bullet-style list)', 'wp-pdf-embed-seo-optimize' ),
+					'grid' => __( 'Grid View (Thumbnail cards)', 'wp-pdf-embed-seo-optimize' ),
+				),
+				'description' => __( 'Choose how PDF documents are displayed on the archive page.', 'wp-pdf-embed-seo-optimize' ),
+			)
+		);
+
+		add_settings_field(
+			'archive_show_description',
+			__( 'Show Description in Archive', 'wp-pdf-embed-seo-optimize' ),
+			array( $this, 'render_checkbox_field' ),
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_archive',
+			array(
+				'label_for' => 'archive_show_description',
+				'key'       => 'archive_show_description',
+			)
+		);
+
+		add_settings_field(
+			'archive_show_view_count',
+			__( 'Show View Count in Archive', 'wp-pdf-embed-seo-optimize' ),
+			array( $this, 'render_checkbox_field' ),
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_archive',
+			array(
+				'label_for' => 'archive_show_view_count',
+				'key'       => 'archive_show_view_count',
+			)
+		);
 	}
 
 	/**
@@ -388,6 +429,11 @@ class PDF_Embed_SEO_Admin {
 		$sanitized['archive_posts_per_page']    = isset( $input['archive_posts_per_page'] )
 			? absint( $input['archive_posts_per_page'] )
 			: 12;
+		$sanitized['archive_display_style']     = isset( $input['archive_display_style'] ) && in_array( $input['archive_display_style'], array( 'list', 'grid' ), true )
+			? $input['archive_display_style']
+			: 'grid';
+		$sanitized['archive_show_description']  = ! empty( $input['archive_show_description'] );
+		$sanitized['archive_show_view_count']   = ! empty( $input['archive_show_view_count'] );
 
 		return $sanitized;
 	}
