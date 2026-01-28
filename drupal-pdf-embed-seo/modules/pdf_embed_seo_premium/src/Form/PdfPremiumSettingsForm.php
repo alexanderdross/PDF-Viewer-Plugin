@@ -234,8 +234,8 @@ class PdfPremiumSettingsForm extends ConfigFormBase {
   /**
    * Activate license handler.
    *
-   * In production, this would validate the license key against a license server.
-   * For now, it simulates license validation.
+   * Validates the license key against supported patterns.
+   * Supports both WordPress-style (PDF$) and Drupal-style (PDF-) license keys.
    */
   public function activateLicense(array &$form, FormStateInterface $form_state) {
     $license_key = $form_state->getValue('license_key');
@@ -245,28 +245,65 @@ class PdfPremiumSettingsForm extends ConfigFormBase {
       return;
     }
 
-    // In production, this would call a license server API.
-    // For now, we'll accept any key that starts with 'PDF-' and is 32+ chars.
-    if (strlen($license_key) >= 32 && strpos($license_key, 'PDF-') === 0) {
-      // Valid license - set expiration to 1 year from now.
-      $expires = date('Y-m-d H:i:s', strtotime('+1 year'));
+    // Minimum length check (20+ characters).
+    if (strlen($license_key) < 20) {
+      $this->config('pdf_embed_seo_premium.settings')
+        ->set('license_key', $license_key)
+        ->set('license_status', 'invalid')
+        ->save();
+      $this->messenger()->addError($this->t('Invalid license key. Please check your license key and try again.'));
+      return;
+    }
 
+    // Test/Development license keys for unlimited validity (WordPress-compatible).
+    $test_key_patterns = [
+      '/^PDF\$UNLIMITED#[A-Z0-9]{4}@[A-Z0-9]{4}![A-Z0-9]{4}$/i',
+      '/^PDF\$DEV#[A-Z0-9]{4}-[A-Z0-9]{4}@[A-Z0-9]{4}![A-Z0-9]{4}$/i',
+    ];
+
+    foreach ($test_key_patterns as $pattern) {
+      if (preg_match($pattern, $license_key)) {
+        $this->config('pdf_embed_seo_premium.settings')
+          ->set('license_key', $license_key)
+          ->set('license_status', 'valid')
+          ->set('license_expires', NULL)
+          ->save();
+        $this->messenger()->addStatus($this->t('License activated successfully! Premium features are now enabled.'));
+        return;
+      }
+    }
+
+    // Standard WordPress-style license key validation.
+    if (preg_match('/^PDF\$PRO#[A-Z0-9]{4}-[A-Z0-9]{4}@[A-Z0-9]{4}-[A-Z0-9]{4}![A-Z0-9]{4}$/i', $license_key)) {
+      $expires = date('Y-m-d H:i:s', strtotime('+1 year'));
       $this->config('pdf_embed_seo_premium.settings')
         ->set('license_key', $license_key)
         ->set('license_status', 'valid')
         ->set('license_expires', $expires)
         ->save();
-
       $this->messenger()->addStatus($this->t('License activated successfully! Premium features are now enabled.'));
+      return;
     }
-    else {
+
+    // Drupal-style license key validation (backwards compatible).
+    // Accepts keys starting with 'PDF-' and 32+ characters.
+    if (strlen($license_key) >= 32 && strpos($license_key, 'PDF-') === 0) {
+      $expires = date('Y-m-d H:i:s', strtotime('+1 year'));
       $this->config('pdf_embed_seo_premium.settings')
         ->set('license_key', $license_key)
-        ->set('license_status', 'invalid')
+        ->set('license_status', 'valid')
+        ->set('license_expires', $expires)
         ->save();
-
-      $this->messenger()->addError($this->t('Invalid license key. Please check your license key and try again.'));
+      $this->messenger()->addStatus($this->t('License activated successfully! Premium features are now enabled.'));
+      return;
     }
+
+    // Invalid key format.
+    $this->config('pdf_embed_seo_premium.settings')
+      ->set('license_key', $license_key)
+      ->set('license_status', 'invalid')
+      ->save();
+    $this->messenger()->addError($this->t('Invalid license key. Please check your license key and try again.'));
   }
 
   /**

@@ -118,8 +118,18 @@ pdf_embed_seo_premium.api.bulk.import:
     _permission: 'administer pdf embed seo'
   methods: [POST]
 
-# API: Get bulk import status (Premium).
+# API: Get bulk import status (Premium) - WordPress-compatible route.
 pdf_embed_seo_premium.api.bulk.import.status:
+  path: '/api/pdf-embed-seo/v1/bulk/import/status'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfPremiumApiController::getBulkImportStatus'
+    batch_id: NULL
+  requirements:
+    _permission: 'administer pdf embed seo'
+  methods: [GET]
+
+# API: Get bulk import status by ID (Premium) - Legacy route for backwards compatibility.
+pdf_embed_seo_premium.api.bulk.import.status.byid:
   path: '/api/pdf-embed-seo/v1/bulk/import/{batch_id}/status'
   defaults:
     _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfPremiumApiController::getBulkImportStatus'

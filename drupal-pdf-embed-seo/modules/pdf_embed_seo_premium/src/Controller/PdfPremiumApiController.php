@@ -92,8 +92,16 @@ class PdfPremiumApiController extends ControllerBase {
       }
     }
 
+    // Calculate date range (WordPress-compatible).
+    $end_date = date('Y-m-d');
+    $start_date = date('Y-m-d', strtotime("-{$days} days"));
+
     return new JsonResponse([
       'period' => $period,
+      'date_range' => [
+        'start' => $start_date,
+        'end' => $end_date,
+      ],
       'total_views' => $total_views,
       'total_documents' => (int) $total_documents,
       'total_downloads' => $analytics->getTotalDownloads(),
@@ -371,15 +379,34 @@ class PdfPremiumApiController extends ControllerBase {
   /**
    * Get bulk import status.
    *
-   * @param string $batch_id
-   *   The batch ID.
+   * WordPress-compatible: If no batch_id provided, returns the most recent import.
+   *
+   * @param string|null $batch_id
+   *   The batch ID (optional).
    * @param \Symfony\Component\HttpFoundation\Request $request
    *   The request object.
    *
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   JSON response with import status.
    */
-  public function getBulkImportStatus($batch_id, Request $request) {
+  public function getBulkImportStatus($batch_id = NULL, Request $request) {
+    // If no batch_id provided, check query param or get the last import.
+    if (empty($batch_id)) {
+      $batch_id = $request->query->get('import_id');
+    }
+
+    // If still no batch_id, get the most recent import (WordPress-compatible).
+    if (empty($batch_id)) {
+      $batch_id = \Drupal::state()->get('pdf_embed_seo_last_import_id');
+    }
+
+    if (empty($batch_id)) {
+      return new JsonResponse([
+        'status' => 'none',
+        'message' => 'No recent imports found.',
+      ]);
+    }
+
     $job = \Drupal::state()->get('pdf_import_' . $batch_id);
 
     if (!$job) {
