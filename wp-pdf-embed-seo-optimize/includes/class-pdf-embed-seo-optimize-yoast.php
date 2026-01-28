@@ -177,11 +177,25 @@ class PDF_Embed_SEO_Yoast {
 			'inLanguage'      => get_bloginfo( 'language' ),
 		);
 
-		// Add description if available.
-		$excerpt = get_the_excerpt( $post_id );
-		if ( ! empty( $excerpt ) ) {
-			$schema['description'] = wp_strip_all_tags( $excerpt );
-			$schema['abstract']    = wp_strip_all_tags( $excerpt );
+		// Add description - prefer Yoast SEO meta description if available.
+		$description = '';
+
+		// Try Yoast SEO meta description first.
+		if ( class_exists( 'WPSEO_Meta' ) ) {
+			$yoast_desc = WPSEO_Meta::get_value( 'metadesc', $post_id );
+			if ( ! empty( $yoast_desc ) ) {
+				$description = $yoast_desc;
+			}
+		}
+
+		// Fall back to excerpt if no Yoast description.
+		if ( empty( $description ) ) {
+			$description = get_the_excerpt( $post_id );
+		}
+
+		if ( ! empty( $description ) ) {
+			$schema['description'] = wp_strip_all_tags( $description );
+			$schema['abstract']    = wp_strip_all_tags( $description );
 		}
 
 		// Add author information.
@@ -469,12 +483,24 @@ class PDF_Embed_SEO_Schema_Piece {
 		$file_id  = get_post_meta( $post_id, '_pdf_file_id', true );
 		$file_url = get_post_meta( $post_id, '_pdf_file_url', true );
 
+		// Get description - prefer Yoast SEO meta description.
+		$description = '';
+		if ( class_exists( 'WPSEO_Meta' ) ) {
+			$yoast_desc = WPSEO_Meta::get_value( 'metadesc', $post_id );
+			if ( ! empty( $yoast_desc ) ) {
+				$description = $yoast_desc;
+			}
+		}
+		if ( empty( $description ) ) {
+			$description = get_the_excerpt( $post_id );
+		}
+
 		$schema = array(
 			'@type'          => 'DigitalDocument',
 			'@id'            => get_permalink( $post_id ) . '#digitaldocument',
 			'name'           => get_the_title( $post_id ),
 			'headline'       => get_the_title( $post_id ),
-			'description'    => wp_strip_all_tags( get_the_excerpt( $post_id ) ),
+			'description'    => wp_strip_all_tags( $description ),
 			'url'            => get_permalink( $post_id ),
 			'encodingFormat' => 'application/pdf',
 			'fileFormat'     => 'application/pdf',

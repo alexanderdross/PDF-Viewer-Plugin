@@ -93,14 +93,14 @@ get_header();
 			$allow_print    = PDF_Embed_SEO_Post_Type::is_print_allowed( $post_id );
 			?>
 
-			<article id="post-<?php the_ID(); ?>" <?php post_class( 'pdf-embed-seo-optimize-article' ); ?> itemscope itemtype="https://schema.org/DigitalDocument">
+			<article id="post-<?php the_ID(); ?>" <?php post_class( 'pdf-embed-seo-optimize-article' ); ?>>
 				<header class="entry-header pdf-embed-seo-optimize-header">
-					<h1 class="entry-title pdf-embed-seo-optimize-title" itemprop="name">
+					<h1 class="entry-title pdf-embed-seo-optimize-title">
 						<?php echo esc_html( $pdf_title ); ?>
 					</h1>
 
 					<?php if ( has_excerpt() ) : ?>
-						<div class="pdf-embed-seo-optimize-excerpt" itemprop="description">
+						<div class="pdf-embed-seo-optimize-excerpt">
 							<?php the_excerpt(); ?>
 						</div>
 					<?php endif; ?>
@@ -118,7 +118,7 @@ get_header();
 					$content = get_the_content();
 					if ( ! empty( $content ) ) :
 						?>
-						<div class="pdf-embed-seo-optimize-description" itemprop="text">
+						<div class="pdf-embed-seo-optimize-description">
 							<?php the_content(); ?>
 						</div>
 					<?php endif; ?>
@@ -132,7 +132,7 @@ get_header();
 					?>
 					<div class="pdf-embed-seo-optimize-meta">
 						<span class="pdf-embed-seo-optimize-published">
-							<time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>" itemprop="datePublished">
+							<time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>">
 								<?php
 								printf(
 									/* translators: %s: Published date */
@@ -145,7 +145,7 @@ get_header();
 
 						<?php if ( $published_date !== $modified_date ) : ?>
 							<span class="pdf-embed-seo-optimize-modified">
-								<time datetime="<?php echo esc_attr( get_the_modified_date( 'c' ) ); ?>" itemprop="dateModified">
+								<time datetime="<?php echo esc_attr( get_the_modified_date( 'c' ) ); ?>">
 									<?php
 									printf(
 										/* translators: %s: Modified date */
@@ -159,8 +159,6 @@ get_header();
 					</div>
 				</footer>
 
-				<meta itemprop="url" content="<?php echo esc_url( $pdf_url ); ?>" />
-				<meta itemprop="encodingFormat" content="application/pdf" />
 			</article>
 
 			<?php

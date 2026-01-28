@@ -54,7 +54,7 @@
 }
 </script>
 
-<article{{ attributes.addClass('pdf-embed-seo-single', 'pdf-document', 'pdf-document--' ~ view_mode) }} itemscope itemtype="https://schema.org/DigitalDocument">
+<article{{ attributes.addClass('pdf-embed-seo-single', 'pdf-document', 'pdf-document--' ~ view_mode) }}>
   {# Visible breadcrumb navigation (JSON-LD schema is always output above for SEO) #}
   {% if show_breadcrumbs is not defined or show_breadcrumbs %}
     <nav class="pdf-embed-seo-breadcrumb" aria-label="{{ 'Breadcrumb'|t }}">
@@ -77,10 +77,10 @@
   {% endif %}
 
   <header class="pdf-embed-seo-header">
-    <h1 class="pdf-embed-seo-title" itemprop="name">{{ pdf_title }}</h1>
+    <h1 class="pdf-embed-seo-title">{{ pdf_title }}</h1>
 
     {% if pdf_document.description.value %}
-      <div class="pdf-embed-seo-excerpt" itemprop="description">
+      <div class="pdf-embed-seo-excerpt">
         <p>{{ pdf_document.description.value|striptags }}</p>
       </div>
     {% endif %}
@@ -92,7 +92,7 @@
     {% endif %}
 
     {% if content.description is defined %}
-      <div class="pdf-embed-seo-description" itemprop="text">
+      <div class="pdf-embed-seo-description">
         {{ content.description }}
       </div>
     {% endif %}
@@ -107,14 +107,14 @@
   <footer class="pdf-embed-seo-footer">
     <div class="pdf-embed-seo-meta">
       <span class="pdf-embed-seo-published">
-        <time datetime="{{ pdf_document.created.value|date('c') }}" itemprop="datePublished">
+        <time datetime="{{ pdf_document.created.value|date('c') }}">
           {{ 'Published: %date'|t({'%date': published_date}) }}
         </time>
       </span>
 
       {% if published_date != modified_date %}
         <span class="pdf-embed-seo-modified">
-          <time datetime="{{ pdf_document.changed.value|date('c') }}" itemprop="dateModified">
+          <time datetime="{{ pdf_document.changed.value|date('c') }}">
             {{ 'Updated: %date'|t({'%date': modified_date}) }}
           </time>
         </span>
@@ -128,6 +128,4 @@
     </div>
   </footer>
 
-  <meta itemprop="url" content="{{ pdf_url }}" />
-  <meta itemprop="encodingFormat" content="application/pdf" />
 </article>
