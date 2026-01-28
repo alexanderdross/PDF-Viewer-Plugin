@@ -31,9 +31,6 @@ class PDF_Embed_SEO_Premium_Admin {
 		// Enqueue admin scripts.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
 
-		// Add license settings.
-		add_action( 'admin_menu', array( $this, 'add_license_page' ), 99 );
-
 		// Add premium badge to admin.
 		add_action( 'admin_footer', array( $this, 'add_premium_badge' ) );
 
@@ -45,10 +42,6 @@ class PDF_Embed_SEO_Premium_Admin {
 
 		// Modify plugin action links for premium.
 		add_filter( 'plugin_action_links_' . PDF_EMBED_SEO_PLUGIN_BASENAME, array( $this, 'modify_plugin_action_links' ), 20 );
-
-		// Handle license activation on save.
-		add_action( 'update_option_pdf_embed_seo_premium_license_key', array( $this, 'validate_license_key' ), 10, 2 );
-		add_action( 'add_option_pdf_embed_seo_premium_license_key', array( $this, 'validate_license_key_on_add' ), 10, 2 );
 	}
 
 	/**
@@ -95,19 +88,6 @@ class PDF_Embed_SEO_Premium_Admin {
 	 */
 	public function register_settings() {
 		register_setting( 'pdf_embed_seo_premium_settings', 'pdf_embed_seo_premium_settings', array( $this, 'sanitize_settings' ) );
-
-		// Register license settings.
-		register_setting(
-			'pdf_embed_seo_license',
-			'pdf_embed_seo_premium_license_key',
-			array(
-				'type'              => 'string',
-				'sanitize_callback' => 'sanitize_text_field',
-			)
-		);
-
-		// Add capability filter for license settings page.
-		add_filter( 'option_page_capability_pdf_embed_seo_license', array( $this, 'get_license_page_capability' ) );
 
 		// Premium features section.
 		add_settings_section(
@@ -409,209 +389,6 @@ class PDF_Embed_SEO_Premium_Admin {
 			PDF_EMBED_SEO_PREMIUM_VERSION,
 			true
 		);
-	}
-
-	/**
-	 * Get capability for license settings page.
-	 *
-	 * @return string Capability required.
-	 */
-	public function get_license_page_capability() {
-		return 'manage_options';
-	}
-
-	/**
-	 * Validate license key when option is added.
-	 *
-	 * @param string $option Option name.
-	 * @param mixed  $value  Option value.
-	 * @return void
-	 */
-	public function validate_license_key_on_add( $option, $value ) {
-		$this->process_license_validation( $value );
-	}
-
-	/**
-	 * Validate license key when updated.
-	 *
-	 * @param mixed $old_value Old value.
-	 * @param mixed $new_value New value.
-	 * @return void
-	 */
-	public function validate_license_key( $old_value, $new_value ) {
-		$this->process_license_validation( $new_value );
-	}
-
-	/**
-	 * Process license key validation.
-	 *
-	 * Validates the license key and updates the license status accordingly.
-	 * Keys must be 20+ characters with special characters for security.
-	 *
-	 * @param string $license_key The license key to validate.
-	 * @return void
-	 */
-	private function process_license_validation( $license_key ) {
-		if ( empty( $license_key ) ) {
-			update_option( 'pdf_embed_seo_premium_license_status', 'inactive' );
-			delete_option( 'pdf_embed_seo_premium_license_expires' );
-			return;
-		}
-
-		// Minimum length check (20+ characters).
-		if ( strlen( $license_key ) < 20 ) {
-			update_option( 'pdf_embed_seo_premium_license_status', 'invalid' );
-			delete_option( 'pdf_embed_seo_premium_license_expires' );
-			return;
-		}
-
-		// Test/Development license keys for unlimited validity.
-		// Format: PDF$UNLIMITED#XXXX@XXXX!XXXX (24 chars with special characters).
-		$test_key_patterns = array(
-			// PDF$UNLIMITED#XXXX@XXXX!XXXX format.
-			'/^PDF\$UNLIMITED#[A-Z0-9]{4}@[A-Z0-9]{4}![A-Z0-9]{4}$/i',
-			// PDF$DEV#XXXX-XXXX@XXXX!XXXX format.
-			'/^PDF\$DEV#[A-Z0-9]{4}-[A-Z0-9]{4}@[A-Z0-9]{4}![A-Z0-9]{4}$/i',
-		);
-
-		$is_test_key = false;
-		foreach ( $test_key_patterns as $pattern ) {
-			if ( preg_match( $pattern, $license_key ) ) {
-				$is_test_key = true;
-				break;
-			}
-		}
-
-		if ( $is_test_key ) {
-			// Test keys are valid with no expiration.
-			update_option( 'pdf_embed_seo_premium_license_status', 'valid' );
-			delete_option( 'pdf_embed_seo_premium_license_expires' );
-			return;
-		}
-
-		// Standard license key validation.
-		// Format: PDF$PRO#XXXX-XXXX@XXXX-XXXX!XXXX (28 chars with special characters).
-		if ( preg_match( '/^PDF\$PRO#[A-Z0-9]{4}-[A-Z0-9]{4}@[A-Z0-9]{4}-[A-Z0-9]{4}![A-Z0-9]{4}$/i', $license_key ) ) {
-			// Valid format - activate for 1 year.
-			update_option( 'pdf_embed_seo_premium_license_status', 'valid' );
-			update_option( 'pdf_embed_seo_premium_license_expires', gmdate( 'Y-m-d', strtotime( '+1 year' ) ) );
-			return;
-		}
-
-		// Invalid key format.
-		update_option( 'pdf_embed_seo_premium_license_status', 'invalid' );
-		delete_option( 'pdf_embed_seo_premium_license_expires' );
-	}
-
-	/**
-	 * Add license page.
-	 *
-	 * @return void
-	 */
-	public function add_license_page() {
-		add_submenu_page(
-			'edit.php?post_type=pdf_document',
-			__( 'License', 'pdf-embed-seo-optimize' ),
-			__( 'License', 'pdf-embed-seo-optimize' ),
-			'manage_options',
-			'pdf-license',
-			array( $this, 'render_license_page' )
-		);
-	}
-
-	/**
-	 * Render license page.
-	 *
-	 * @return void
-	 */
-	public function render_license_page() {
-		$license_key    = get_option( 'pdf_embed_seo_premium_license_key', '' );
-		$license_status = get_option( 'pdf_embed_seo_premium_license_status', 'inactive' );
-		?>
-		<div class="wrap">
-			<h1><?php esc_html_e( 'License Settings', 'pdf-embed-seo-optimize' ); ?></h1>
-
-			<div class="pdf-license-status <?php echo 'valid' === $license_status ? 'active' : 'inactive'; ?>">
-				<span class="dashicons <?php echo 'valid' === $license_status ? 'dashicons-yes-alt' : 'dashicons-warning'; ?>"></span>
-				<?php if ( 'valid' === $license_status ) : ?>
-					<strong><?php esc_html_e( 'License Active', 'pdf-embed-seo-optimize' ); ?></strong>
-					<p><?php esc_html_e( 'Your premium license is active. Thank you for your support!', 'pdf-embed-seo-optimize' ); ?></p>
-				<?php else : ?>
-					<strong><?php esc_html_e( 'License Inactive', 'pdf-embed-seo-optimize' ); ?></strong>
-					<p><?php esc_html_e( 'Please enter a valid license key to activate premium features.', 'pdf-embed-seo-optimize' ); ?></p>
-				<?php endif; ?>
-			</div>
-
-			<form method="post" action="options.php">
-				<?php settings_fields( 'pdf_embed_seo_license' ); ?>
-				<table class="form-table">
-					<tr>
-						<th scope="row">
-							<label for="license_key"><?php esc_html_e( 'License Key', 'pdf-embed-seo-optimize' ); ?></label>
-						</th>
-						<td>
-							<input type="password" id="license_key" name="pdf_embed_seo_premium_license_key" value="<?php echo esc_attr( $license_key ); ?>" class="regular-text" />
-							<p class="description"><?php esc_html_e( 'Enter your license key to activate automatic updates and premium support.', 'pdf-embed-seo-optimize' ); ?></p>
-						</td>
-					</tr>
-				</table>
-				<?php submit_button( __( 'Save License', 'pdf-embed-seo-optimize' ) ); ?>
-			</form>
-
-			<p class="pdf-embed-seo-get-license" style="margin-top: 20px;">
-				<?php
-				printf(
-					/* translators: %s: link to purchase page */
-					esc_html__( 'Don\'t have a license key? %s', 'pdf-embed-seo-optimize' ),
-					'<a href="https://pdfviewer.drossmedia.de/" target="_blank" rel="noopener noreferrer" aria-label="' . esc_attr__( 'Get a premium license (opens in new tab)', 'pdf-embed-seo-optimize' ) . '" title="' . esc_attr__( 'Get a premium license', 'pdf-embed-seo-optimize' ) . '">' . esc_html__( 'Get a premium license', 'pdf-embed-seo-optimize' ) . '</a>'
-				);
-				?>
-			</p>
-
-			<p class="pdf-embed-seo-optimize-credit" style="text-align: center; margin-top: 30px; color: #666; font-size: 13px;">
-				<?php
-				printf(
-					/* translators: %1$s: heart symbol, %2$s: Dross:Media link */
-					esc_html__( 'made with %1$s by %2$s', 'pdf-embed-seo-optimize' ),
-					'<span style="color: #e25555;" aria-hidden="true">♥</span><span class="screen-reader-text">' . esc_html__( 'love', 'pdf-embed-seo-optimize' ) . '</span>',
-					'<a href="https://dross.net/media/" target="_blank" rel="noopener noreferrer" aria-label="' . esc_attr__( 'Visit Dross:Media website (opens in new tab)', 'pdf-embed-seo-optimize' ) . '" title="' . esc_attr__( 'Visit Dross:Media website', 'pdf-embed-seo-optimize' ) . '">Dross:Media</a>'
-				);
-				?>
-			</p>
-		</div>
-
-		<style>
-			.pdf-license-status {
-				padding: 20px;
-				border-radius: 4px;
-				margin: 20px 0;
-			}
-			.pdf-license-status.active {
-				background: #d4edda;
-				border: 1px solid #c3e6cb;
-				color: #155724;
-			}
-			.pdf-license-status.inactive {
-				background: #fff3cd;
-				border: 1px solid #ffeeba;
-				color: #856404;
-			}
-			.pdf-license-status .dashicons {
-				font-size: 24px;
-				width: 24px;
-				height: 24px;
-				vertical-align: middle;
-				margin-right: 10px;
-			}
-			.pdf-license-status strong {
-				font-size: 16px;
-				vertical-align: middle;
-			}
-			.pdf-license-status p {
-				margin: 10px 0 0 34px;
-			}
-		</style>
-		<?php
 	}
 
 	/**
