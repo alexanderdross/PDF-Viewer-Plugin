@@ -36,6 +36,13 @@ All notable changes to this project will be documented in this file.
 - Version bump to 1.2.5 across all modules
 
 ### Fixed
+- **Drupal PDF.js Assets Missing** - PDF.js library files now included in Drupal module
+  - Copied `pdf.min.js` and `pdf.worker.min.js` to `drupal-pdf-embed-seo/assets/pdfjs/`
+  - Enables PDF rendering without external dependencies
+- **Drupal workerSrc Configuration** - Fixed PDF.js worker not loading
+  - Added `workerSrc` to `drupalSettings.pdfEmbedSeo` in PdfViewController
+  - Added `workerSrc` to `drupalSettings.pdfEmbedSeo` in pdf_embed_seo.module
+  - Ensures proper PDF.js worker initialization for PDF rendering
 - **Cross-Platform License Validation** - Drupal now accepts WordPress-style license keys
   - Support for `PDF$PRO#`, `PDF$UNLIMITED#`, `PDF$DEV#` patterns
   - Backwards compatible with Drupal-style `PDF-` keys

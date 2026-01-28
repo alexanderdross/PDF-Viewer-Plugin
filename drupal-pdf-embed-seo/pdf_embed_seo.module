@@ -151,6 +151,7 @@ function pdf_embed_seo_pdf_document_view(array &$build, EntityInterface $entity,
               'pdfUrl' => Url::fromRoute('pdf_embed_seo.pdf_data', [
                 'pdf_document' => $entity->id(),
               ])->toString(),
+              'workerSrc' => '/' . \Drupal::service('extension.list.module')->getPath('pdf_embed_seo') . '/assets/pdfjs/pdf.worker.min.js',
               'allowDownload' => (bool) ($entity->get('allow_download')->value ?? $config->get('default_allow_download')),
               'allowPrint' => (bool) ($entity->get('allow_print')->value ?? $config->get('default_allow_print')),
             ],
