@@ -143,7 +143,7 @@
                 url: pdfEmbedSeo.ajaxUrl,
                 type: 'POST',
                 data: {
-                    action: 'pdf_viewer_2026_get_pdf',
+                    action: 'pdf_embed_seo_get_pdf',
                     nonce: pdfEmbedSeo.nonce,
                     post_id: postId
                 },
