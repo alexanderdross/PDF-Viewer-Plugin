@@ -200,7 +200,7 @@ final class PDF_Embed_SEO {
 		// Add settings link.
 		$custom_links['settings'] = sprintf(
 			'<a href="%s">%s</a>',
-			admin_url( 'edit.php?post_type=pdf_document&page=pdf-embed-seo-settings' ),
+			admin_url( 'edit.php?post_type=pdf_document&page=pdf-embed-seo-optimize-settings' ),
 			esc_html__( 'Settings', 'wp-pdf-embed-seo-optimize' )
 		);
 
