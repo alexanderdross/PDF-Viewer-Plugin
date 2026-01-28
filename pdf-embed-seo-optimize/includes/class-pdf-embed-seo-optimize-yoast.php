@@ -163,14 +163,22 @@ class PDF_Embed_SEO_Yoast {
 				$post_id = get_the_ID();
 
 				// Build detailed DigitalDocument for each PDF.
+				$pdf_url = get_permalink( $post_id );
 				$document = array(
-					'@type'          => 'DigitalDocument',
-					'@id'            => get_permalink( $post_id ) . '#digitaldocument',
-					'name'           => get_the_title( $post_id ),
-					'url'            => get_permalink( $post_id ),
-					'encodingFormat' => 'application/pdf',
-					'datePublished'  => get_the_date( 'c', $post_id ),
-					'dateModified'   => get_the_modified_date( 'c', $post_id ),
+					'@type'           => 'DigitalDocument',
+					'@id'             => $pdf_url . '#digitaldocument',
+					'identifier'      => $pdf_url,
+					'name'            => get_the_title( $post_id ),
+					'url'             => $pdf_url,
+					'encodingFormat'  => 'application/pdf',
+					'fileFormat'      => 'application/pdf',
+					'inLanguage'      => get_bloginfo( 'language' ),
+					'datePublished'   => get_the_date( 'c', $post_id ),
+					'dateModified'    => get_the_modified_date( 'c', $post_id ),
+					'mainEntityOfPage' => array(
+						'@type' => 'WebPage',
+						'@id'   => $pdf_url,
+					),
 				);
 
 				// Add description - prefer Yoast SEO meta description if available.
@@ -216,6 +224,13 @@ class PDF_Embed_SEO_Yoast {
 						'name'  => get_the_author_meta( 'display_name', $author_id ),
 					);
 				}
+
+				// Add publisher.
+				$document['publisher'] = array(
+					'@type' => 'Organization',
+					'name'  => $site_name,
+					'url'   => $site_url,
+				);
 
 				$items[] = array(
 					'@type'    => 'ListItem',

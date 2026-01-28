@@ -422,7 +422,7 @@ final class PDF_Embed_SEO_Premium {
 						printf(
 							/* translators: %d: Number of grace period days remaining. */
 							esc_html__( 'Your license has expired! You have %d days remaining in your grace period before premium features are disabled.', 'pdf-embed-seo-optimize' ),
-							$grace_days
+							absint( $grace_days )
 						);
 						?>
 						<a href="<?php echo esc_url( $renew_url ); ?>" target="_blank"><?php esc_html_e( 'Renew Now', 'pdf-embed-seo-optimize' ); ?></a>
@@ -467,7 +467,7 @@ final class PDF_Embed_SEO_Premium {
 							printf(
 								/* translators: %d: Number of days until license expires. */
 								esc_html__( 'Your license will expire in %d days. Renew now to maintain premium features.', 'pdf-embed-seo-optimize' ),
-								$days_remaining
+								absint( $days_remaining )
 							);
 							?>
 							<a href="<?php echo esc_url( $renew_url ); ?>" target="_blank"><?php esc_html_e( 'Renew License', 'pdf-embed-seo-optimize' ); ?></a>
