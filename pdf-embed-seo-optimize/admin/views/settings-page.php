@@ -25,22 +25,101 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</form>
 
 	<?php
-	// Premium settings section (only shown when premium is active with valid license).
-	if ( defined( 'PDF_EMBED_SEO_PREMIUM_VERSION' ) ) :
-		$license_status = get_option( 'pdf_embed_seo_premium_license_status', 'inactive' );
-		if ( 'valid' === $license_status ) :
-			?>
-			<hr>
-			<h2><?php esc_html_e( 'Premium Settings', 'pdf-embed-seo-optimize' ); ?></h2>
-			<form method="post" action="options.php">
-				<?php
-				settings_fields( 'pdf_embed_seo_premium_settings' );
-				do_settings_sections( 'pdf-embed-seo-premium' );
-				submit_button();
-				?>
-			</form>
+	// Premium settings section.
+	$pdf_has_premium    = defined( 'PDF_EMBED_SEO_PREMIUM_VERSION' );
+	$pdf_license_status = get_option( 'pdf_embed_seo_premium_license_status', 'inactive' );
+	$pdf_license_valid  = 'valid' === $pdf_license_status;
+
+	if ( $pdf_has_premium && $pdf_license_valid ) :
+		// Show active premium settings.
+		?>
+		<hr>
+		<h2><?php esc_html_e( 'Premium Settings', 'pdf-embed-seo-optimize' ); ?></h2>
+		<form method="post" action="options.php">
 			<?php
-		endif;
+			settings_fields( 'pdf_embed_seo_premium_settings' );
+			do_settings_sections( 'pdf-embed-seo-premium' );
+			submit_button();
+			?>
+		</form>
+		<?php
+	else :
+		// Show premium preview for free users or users without valid license.
+		?>
+		<hr>
+		<h2>
+			<?php esc_html_e( 'Premium Settings', 'pdf-embed-seo-optimize' ); ?>
+			<span class="dashicons dashicons-lock" style="color: #dba617; margin-left: 5px;"></span>
+		</h2>
+
+		<?php if ( $pdf_has_premium && ! $pdf_license_valid ) : ?>
+			<div class="notice notice-warning" style="padding: 12px; margin-bottom: 20px;">
+				<p>
+					<strong><?php esc_html_e( 'License Required', 'pdf-embed-seo-optimize' ); ?></strong> -
+					<?php
+					printf(
+						/* translators: %s: license page link */
+						esc_html__( 'Please %s to unlock premium settings.', 'pdf-embed-seo-optimize' ),
+						'<a href="' . esc_url( admin_url( 'edit.php?post_type=pdf_document&page=pdf-license' ) ) . '">' . esc_html__( 'activate your license', 'pdf-embed-seo-optimize' ) . '</a>'
+					);
+					?>
+				</p>
+			</div>
+		<?php endif; ?>
+
+		<div style="opacity: 0.6; pointer-events: none;">
+			<table class="form-table" role="presentation">
+				<tbody>
+					<tr>
+						<th scope="row"><?php esc_html_e( 'Premium Features', 'pdf-embed-seo-optimize' ); ?></th>
+						<td>
+							<p class="description"><?php esc_html_e( 'Configure premium features like categories, password protection, analytics, and more.', 'pdf-embed-seo-optimize' ); ?></p>
+							<fieldset style="margin-top: 10px;">
+								<label><input type="checkbox" disabled checked /> <?php esc_html_e( 'PDF Categories', 'pdf-embed-seo-optimize' ); ?></label><br>
+								<label><input type="checkbox" disabled checked /> <?php esc_html_e( 'Password Protection', 'pdf-embed-seo-optimize' ); ?></label><br>
+								<label><input type="checkbox" disabled checked /> <?php esc_html_e( 'Advanced Analytics', 'pdf-embed-seo-optimize' ); ?></label><br>
+								<label><input type="checkbox" disabled checked /> <?php esc_html_e( 'Reading Progress', 'pdf-embed-seo-optimize' ); ?></label><br>
+								<label><input type="checkbox" disabled checked /> <?php esc_html_e( 'PDF Sitemap', 'pdf-embed-seo-optimize' ); ?></label>
+							</fieldset>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><?php esc_html_e( 'Archive Page Redirect', 'pdf-embed-seo-optimize' ); ?></th>
+						<td>
+							<p class="description"><?php esc_html_e( 'Configure automatic redirect from the PDF archive page (/pdf/) to another URL.', 'pdf-embed-seo-optimize' ); ?></p>
+							<fieldset style="margin-top: 10px;">
+								<label><input type="checkbox" disabled /> <?php esc_html_e( 'Enable Archive Redirect', 'pdf-embed-seo-optimize' ); ?></label>
+								<p class="description"><?php esc_html_e( 'Redirect the PDF archive page (/pdf/) to another URL.', 'pdf-embed-seo-optimize' ); ?></p>
+							</fieldset>
+							<fieldset style="margin-top: 10px;">
+								<label><?php esc_html_e( 'Redirect Type', 'pdf-embed-seo-optimize' ); ?></label><br>
+								<select disabled style="width: 300px;">
+									<option><?php esc_html_e( '301 - Permanent Redirect (recommended for SEO)', 'pdf-embed-seo-optimize' ); ?></option>
+								</select>
+							</fieldset>
+							<fieldset style="margin-top: 10px;">
+								<label><?php esc_html_e( 'Redirect URL', 'pdf-embed-seo-optimize' ); ?></label><br>
+								<input type="url" disabled value="<?php echo esc_attr( home_url( '/' ) ); ?>" class="regular-text" />
+								<p class="description"><?php esc_html_e( 'Enter the URL where visitors should be redirected.', 'pdf-embed-seo-optimize' ); ?></p>
+							</fieldset>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<?php if ( ! $pdf_has_premium ) : ?>
+			<div style="text-align: center; padding: 20px; background: #f0f0f1; border-radius: 4px; margin-top: 20px;">
+				<p style="font-size: 14px; margin-bottom: 15px;">
+					<strong><?php esc_html_e( 'Unlock Premium Features', 'pdf-embed-seo-optimize' ); ?></strong><br>
+					<?php esc_html_e( 'Get archive redirect, password protection, analytics, categories, XML sitemap, and more!', 'pdf-embed-seo-optimize' ); ?>
+				</p>
+				<a href="https://pdfviewer.drossmedia.de" target="_blank" class="button button-primary button-hero">
+					<?php esc_html_e( 'Get Premium', 'pdf-embed-seo-optimize' ); ?>
+				</a>
+			</div>
+		<?php endif; ?>
+		<?php
 	endif;
 	?>
 
