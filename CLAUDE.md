@@ -14,8 +14,8 @@ This project provides four modules:
 
 | Module | Directory | Platform | Features |
 |--------|-----------|----------|----------|
-| WP Free | `wp-wp-pdf-embed-seo-optimize/` | WordPress 5.8+ | Core PDF viewer, SEO, REST API |
-| WP Premium | `wp-wp-pdf-embed-seo-optimize/premium/` | WordPress 5.8+ | Analytics, passwords, progress, sitemap |
+| WP Free | `wp-pdf-embed-seo-optimize/` | WordPress 5.8+ | Core PDF viewer, SEO, REST API |
+| WP Premium | `wp-pdf-embed-seo-optimize/premium/` | WordPress 5.8+ | Analytics, passwords, progress, sitemap |
 | Drupal Free | `drupal-pdf-embed-seo/` | Drupal 10/11 | Core PDF viewer, SEO, REST API |
 | Drupal Premium | `drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/` | Drupal 10/11 | Analytics, passwords, progress, sitemap |
 
@@ -155,7 +155,7 @@ Use shortcodes to embed an **existing PDF Document** into any page, post, or wid
 ### WordPress Plugin (Free)
 
 ```
-wp-pdf-embed-seo-optimize/
+pdf-embed-seo-optimize/
 ├── pdf-embed-seo-optimize.php           # Main plugin file (v1.2.0)
 ├── uninstall.php                        # Cleanup on uninstall
 ├── README.txt                           # WordPress.org readme
@@ -195,7 +195,7 @@ wp-pdf-embed-seo-optimize/
 ### WordPress Plugin (Premium)
 
 ```
-wp-pdf-embed-seo-optimize/premium/
+pdf-embed-seo-optimize/premium/
 ├── class-pdf-embed-seo-premium.php              # Premium loader (v1.2.0)
 ├── COMPARISON.md                                # Free vs Pro comparison
 │
