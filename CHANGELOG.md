@@ -8,6 +8,35 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.2.4] - 2025-01-28
+
+### Added
+- **Premium AI & Schema Optimization Meta Box** - Comprehensive GEO/AEO/LLM optimization for PDF documents
+  - AI Summary (TL;DR) field for voice assistants → `abstract` schema
+  - Key Points & Takeaways → `ItemList` schema for quick answers
+  - FAQ Schema (FAQPage) for Google rich results
+  - Table of Contents Schema (`hasPart`) with deep links
+  - Reading Time estimate → `timeRequired` schema (e.g., PT10M)
+  - Difficulty Level → `educationalLevel` schema
+  - Document Type classification → `additionalType` schema
+  - Target Audience → `audience` schema
+  - Custom Speakable Content for voice search priority
+  - Related Documents → `isRelatedTo` schema for content relationships
+  - Prerequisites → `coursePrerequisites` schema
+  - Learning Outcomes → `teaches` schema
+- **AI Optimization Preview Meta Box (Free)** - Preview of premium AI features with Get Premium CTA
+- **Premium Settings Preview (Free Settings Page)** - Shows disabled premium features for upgrade awareness
+
+### Changed
+- Updated documentation across all markdown files
+- Enhanced premium feature visibility for free users
+
+### Fixed
+- Schema validation: Properly separated WebPage schema from DigitalDocument
+- Premium settings now correctly display when license is valid
+
+---
+
 ## [1.2.3] - 2025-01-28
 
 ### Added

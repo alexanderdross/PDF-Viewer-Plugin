@@ -4,7 +4,7 @@ Tags: pdf, pdf viewer, seo, embed, document
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,6 +101,13 @@ Yes, you can choose between light and dark themes in the plugin settings. You ca
 6. Plugin settings page
 
 == Changelog ==
+
+= 1.2.4 =
+* Premium: AI & Schema Optimization meta box for GEO/AEO/LLM optimization
+* Premium: AI Summary, FAQ Schema, Table of Contents, Reading Time, and more
+* Free: AI Optimization preview meta box with premium upgrade CTA
+* Free: Premium settings preview on settings page
+* Fixed: Schema validation with proper WebPage/DigitalDocument separation
 
 = 1.2.3 =
 * GEO/AEO/LLM schema optimization (SpeakableSpecification, potentialAction, accessMode)
