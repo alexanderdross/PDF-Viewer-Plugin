@@ -54,7 +54,8 @@ class PDF_Embed_SEO_Premium_Admin {
 	 * @return array Modified plugins.
 	 */
 	public function modify_plugin_name( $plugins ) {
-		$plugin_file = 'wp-pdf-embed-seo-optimize/pdf-embed-seo-optimize.php';
+		// Use the actual plugin basename constant.
+		$plugin_file = PDF_EMBED_SEO_PLUGIN_BASENAME;
 		if ( isset( $plugins[ $plugin_file ] ) ) {
 			$plugins[ $plugin_file ]['Name'] = 'PDF Embed & SEO Optimize (Premium)';
 			$plugins[ $plugin_file ]['Title'] = 'PDF Embed & SEO Optimize (Premium)';
@@ -90,6 +91,9 @@ class PDF_Embed_SEO_Premium_Admin {
 	 */
 	public function register_settings() {
 		register_setting( 'pdf_embed_seo_premium_settings', 'pdf_embed_seo_premium_settings', array( $this, 'sanitize_settings' ) );
+
+		// Register license settings.
+		register_setting( 'pdf_embed_seo_license', 'pdf_embed_seo_premium_license_key', 'sanitize_text_field' );
 
 		// Premium features section.
 		add_settings_section(
