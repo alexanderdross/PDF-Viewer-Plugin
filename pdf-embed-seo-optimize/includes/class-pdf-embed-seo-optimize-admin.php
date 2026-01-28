@@ -29,6 +29,7 @@ class PDF_Embed_SEO_Admin {
 		add_filter( 'manage_pdf_document_posts_columns', array( $this, 'add_custom_columns' ) );
 		add_action( 'manage_pdf_document_posts_custom_column', array( $this, 'render_custom_columns' ), 10, 2 );
 		add_action( 'edit_form_after_title', array( $this, 'render_editor_help_notice' ) );
+		add_action( 'wp_dashboard_setup', array( $this, 'add_dashboard_widgets' ) );
 	}
 
 	/**
@@ -843,6 +844,156 @@ class PDF_Embed_SEO_Admin {
 				?>
 			</em>
 		</p>
+		<?php
+	}
+
+	/**
+	 * Add dashboard widgets.
+	 *
+	 * @return void
+	 */
+	public function add_dashboard_widgets() {
+		// Only show analytics preview if premium is not active with valid license.
+		$show_analytics_preview = true;
+		if ( defined( 'PDF_EMBED_SEO_PREMIUM_VERSION' ) ) {
+			$license_status = get_option( 'pdf_embed_seo_premium_license_status', 'inactive' );
+			if ( 'valid' === $license_status ) {
+				$show_analytics_preview = false; // Premium handles analytics with full functionality.
+			}
+		}
+
+		if ( $show_analytics_preview ) {
+			wp_add_dashboard_widget(
+				'pdf_embed_seo_analytics_preview',
+				__( 'PDF Analytics', 'pdf-embed-seo-optimize' ) . ' <span class="dashicons dashicons-lock" style="color: #dba617; font-size: 16px; vertical-align: middle;"></span>',
+				array( $this, 'render_analytics_dashboard_widget' )
+			);
+		}
+	}
+
+	/**
+	 * Render analytics preview dashboard widget.
+	 *
+	 * @return void
+	 */
+	public function render_analytics_dashboard_widget() {
+		// Get some basic stats to show in the preview.
+		$total_pdfs = wp_count_posts( 'pdf_document' );
+		$published  = isset( $total_pdfs->publish ) ? $total_pdfs->publish : 0;
+
+		// Calculate total views across all PDFs.
+		global $wpdb;
+		$total_views = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT SUM(CAST(meta_value AS UNSIGNED)) FROM {$wpdb->postmeta} WHERE meta_key = %s",
+				'_pdf_view_count'
+			)
+		);
+		$total_views = $total_views ? intval( $total_views ) : 0;
+
+		// Get top 3 viewed PDFs.
+		$top_pdfs = get_posts(
+			array(
+				'post_type'      => 'pdf_document',
+				'posts_per_page' => 3,
+				'meta_key'       => '_pdf_view_count',
+				'orderby'        => 'meta_value_num',
+				'order'          => 'DESC',
+				'post_status'    => 'publish',
+			)
+		);
+
+		$has_premium    = defined( 'PDF_EMBED_SEO_PREMIUM_VERSION' );
+		$license_status = get_option( 'pdf_embed_seo_premium_license_status', 'inactive' );
+		?>
+		<div class="pdf-analytics-preview">
+			<!-- Real Stats Section -->
+			<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+				<div style="text-align: center; padding: 15px; background: #f0f6fc; border-radius: 8px;">
+					<div style="font-size: 28px; font-weight: bold; color: #2271b1;"><?php echo esc_html( number_format_i18n( $published ) ); ?></div>
+					<div style="color: #50575e; font-size: 13px;"><?php esc_html_e( 'PDF Documents', 'pdf-embed-seo-optimize' ); ?></div>
+				</div>
+				<div style="text-align: center; padding: 15px; background: #fcf0f0; border-radius: 8px;">
+					<div style="font-size: 28px; font-weight: bold; color: #d63638;"><?php echo esc_html( number_format_i18n( $total_views ) ); ?></div>
+					<div style="color: #50575e; font-size: 13px;"><?php esc_html_e( 'Total Views', 'pdf-embed-seo-optimize' ); ?></div>
+				</div>
+			</div>
+
+			<!-- Top PDFs -->
+			<?php if ( ! empty( $top_pdfs ) ) : ?>
+				<h4 style="margin: 0 0 10px; font-size: 13px; color: #1d2327;"><?php esc_html_e( 'Top Viewed PDFs', 'pdf-embed-seo-optimize' ); ?></h4>
+				<ul style="margin: 0 0 15px; padding: 0; list-style: none;">
+					<?php foreach ( $top_pdfs as $pdf ) : ?>
+						<?php $views = PDF_Embed_SEO_Post_Type::get_view_count( $pdf->ID ); ?>
+						<li style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f0f0f1;">
+							<a href="<?php echo esc_url( get_edit_post_link( $pdf->ID ) ); ?>" style="text-decoration: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 70%;">
+								<?php echo esc_html( $pdf->post_title ); ?>
+							</a>
+							<span style="color: #50575e; font-size: 12px;"><?php echo esc_html( number_format_i18n( $views ) ); ?> <?php esc_html_e( 'views', 'pdf-embed-seo-optimize' ); ?></span>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+
+			<!-- Premium Features Preview (Blurred) -->
+			<div style="position: relative; margin-top: 15px;">
+				<div style="opacity: 0.4; pointer-events: none; filter: blur(1px);">
+					<h4 style="margin: 0 0 10px; font-size: 13px; color: #1d2327;">
+						<span class="dashicons dashicons-chart-area" style="font-size: 16px; vertical-align: middle;"></span>
+						<?php esc_html_e( 'Premium Analytics', 'pdf-embed-seo-optimize' ); ?>
+					</h4>
+					<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+						<div style="padding: 10px; background: #f9f9f9; border-radius: 4px; text-align: center;">
+							<div style="font-size: 18px; font-weight: bold;">2,847</div>
+							<div style="font-size: 11px; color: #666;"><?php esc_html_e( 'Unique Visitors', 'pdf-embed-seo-optimize' ); ?></div>
+						</div>
+						<div style="padding: 10px; background: #f9f9f9; border-radius: 4px; text-align: center;">
+							<div style="font-size: 18px; font-weight: bold;">4m 32s</div>
+							<div style="font-size: 11px; color: #666;"><?php esc_html_e( 'Avg. Time', 'pdf-embed-seo-optimize' ); ?></div>
+						</div>
+					</div>
+					<div style="background: #f9f9f9; border-radius: 4px; padding: 10px;">
+						<div style="display: flex; align-items: flex-end; height: 60px; gap: 4px;">
+							<?php
+							// Fake chart bars.
+							$bars = array( 30, 45, 35, 60, 50, 70, 55 );
+							foreach ( $bars as $height ) :
+								?>
+								<div style="flex: 1; background: linear-gradient(to top, #2271b1, #72aee6); border-radius: 2px 2px 0 0; height: <?php echo esc_attr( $height ); ?>%;"></div>
+							<?php endforeach; ?>
+						</div>
+						<div style="display: flex; justify-content: space-between; font-size: 10px; color: #666; margin-top: 5px;">
+							<span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Overlay CTA -->
+				<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; background: rgba(255,255,255,0.95); padding: 20px 25px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); width: 80%;">
+					<span class="dashicons dashicons-chart-bar" style="font-size: 32px; color: #2271b1; margin-bottom: 5px;"></span>
+					<h4 style="margin: 5px 0; font-size: 14px;"><?php esc_html_e( 'Unlock Full Analytics', 'pdf-embed-seo-optimize' ); ?></h4>
+					<p style="font-size: 12px; color: #666; margin: 0 0 10px;">
+						<?php esc_html_e( 'Track visitors, time spent, referrers, and more!', 'pdf-embed-seo-optimize' ); ?>
+					</p>
+					<?php if ( $has_premium && 'valid' !== $license_status ) : ?>
+						<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=pdf_document&page=pdf-license' ) ); ?>" class="button button-primary" style="font-size: 12px;">
+							<?php esc_html_e( 'Activate License', 'pdf-embed-seo-optimize' ); ?>
+						</a>
+					<?php else : ?>
+						<a href="https://pdfviewer.drossmedia.de" target="_blank" class="button button-primary" style="font-size: 12px;">
+							<?php esc_html_e( 'Get Premium', 'pdf-embed-seo-optimize' ); ?>
+						</a>
+					<?php endif; ?>
+				</div>
+			</div>
+
+			<!-- Quick Links -->
+			<div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #f0f0f1; text-align: center;">
+				<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=pdf_document' ) ); ?>" style="text-decoration: none; font-size: 13px;">
+					<?php esc_html_e( 'Manage PDFs', 'pdf-embed-seo-optimize' ); ?> →
+				</a>
+			</div>
+		</div>
 		<?php
 	}
 
