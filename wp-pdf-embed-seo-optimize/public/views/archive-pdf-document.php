@@ -63,6 +63,7 @@ get_header();
 		<nav class="pdf-embed-seo-optimize-breadcrumb" aria-label="<?php esc_attr_e( 'Breadcrumb', 'wp-pdf-embed-seo-optimize' ); ?>">
 			<ol class="pdf-embed-seo-optimize-breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
 				<li class="pdf-embed-seo-optimize-breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+					<?php /* translators: %s: Site name */ ?>
 					<a href="<?php echo esc_url( $site_url ); ?>" itemprop="item" title="<?php echo esc_attr( sprintf( __( 'Go to %s homepage', 'wp-pdf-embed-seo-optimize' ), $site_name ) ); ?>">
 						<span itemprop="name"><?php echo esc_html( $site_name ); ?></span>
 					</a>
@@ -108,10 +109,16 @@ get_header();
 
 							<li class="pdf-embed-seo-optimize-list-item" id="pdf-<?php echo esc_attr( $post_id ); ?>">
 								<article itemscope itemtype="https://schema.org/DigitalDocument">
+									<?php
+									/* translators: %s: PDF document title */
+									$view_title_attr = sprintf( __( 'View %s PDF document', 'wp-pdf-embed-seo-optimize' ), $pdf_title );
+									/* translators: %1$s: PDF document title, %2$s: Publication date */
+									$view_aria_attr = sprintf( __( 'View %1$s PDF document, published on %2$s', 'wp-pdf-embed-seo-optimize' ), $pdf_title, $pdf_date );
+									?>
 									<a href="<?php echo esc_url( $pdf_url ); ?>"
 									   class="pdf-embed-seo-optimize-list-link"
-									   title="<?php echo esc_attr( sprintf( __( 'View %s PDF document', 'wp-pdf-embed-seo-optimize' ), $pdf_title ) ); ?>"
-									   aria-label="<?php echo esc_attr( sprintf( __( 'View %s PDF document, published on %s', 'wp-pdf-embed-seo-optimize' ), $pdf_title, $pdf_date ) ); ?>"
+									   title="<?php echo esc_attr( $view_title_attr ); ?>"
+									   aria-label="<?php echo esc_attr( $view_aria_attr ); ?>"
 									   itemprop="url">
 										<span class="pdf-embed-seo-optimize-list-icon" aria-hidden="true">
 											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
@@ -126,7 +133,11 @@ get_header();
 											<?php echo esc_html( $pdf_date ); ?>
 										</time>
 										<?php if ( $show_view_count && $view_count > 0 ) : ?>
-											<span class="pdf-embed-seo-optimize-list-views" aria-label="<?php echo esc_attr( sprintf( _n( '%s view', '%s views', $view_count, 'wp-pdf-embed-seo-optimize' ), number_format_i18n( $view_count ) ) ); ?>">
+											<?php
+											/* translators: %s: Number of views */
+											$views_label = sprintf( _n( '%s view', '%s views', $view_count, 'wp-pdf-embed-seo-optimize' ), number_format_i18n( $view_count ) );
+											?>
+											<span class="pdf-embed-seo-optimize-list-views" aria-label="<?php echo esc_attr( $views_label ); ?>">
 												(<?php echo esc_html( number_format_i18n( $view_count ) ); ?>
 												<span class="screen-reader-text"><?php echo esc_html( _n( 'view', 'views', $view_count, 'wp-pdf-embed-seo-optimize' ) ); ?></span>)
 											</span>
@@ -160,18 +171,26 @@ get_header();
 						$pdf_desc   = get_the_excerpt();
 						?>
 
+						<?php
+						/* translators: %s: PDF document title */
+						$card_view_title = sprintf( __( 'View %s', 'wp-pdf-embed-seo-optimize' ), $pdf_title );
+						/* translators: %s: PDF document title */
+						$card_view_aria = sprintf( __( 'View %s PDF document', 'wp-pdf-embed-seo-optimize' ), $pdf_title );
+						/* translators: %s: PDF document title */
+						$card_thumb_alt = sprintf( __( 'Thumbnail for %s', 'wp-pdf-embed-seo-optimize' ), $pdf_title );
+						?>
 						<article id="post-<?php the_ID(); ?>" <?php post_class( 'pdf-embed-seo-optimize-card' ); ?> itemscope itemtype="https://schema.org/DigitalDocument">
 							<?php if ( has_post_thumbnail() ) : ?>
 								<div class="pdf-embed-seo-optimize-card-thumbnail">
 									<a href="<?php echo esc_url( $pdf_url ); ?>"
-									   title="<?php echo esc_attr( sprintf( __( 'View %s', 'wp-pdf-embed-seo-optimize' ), $pdf_title ) ); ?>"
-									   aria-label="<?php echo esc_attr( sprintf( __( 'View %s PDF document', 'wp-pdf-embed-seo-optimize' ), $pdf_title ) ); ?>">
+									   title="<?php echo esc_attr( $card_view_title ); ?>"
+									   aria-label="<?php echo esc_attr( $card_view_aria ); ?>">
 										<?php
 										the_post_thumbnail(
 											'medium',
 											array(
 												'class'    => 'pdf-embed-seo-optimize-thumb',
-												'alt'      => sprintf( __( 'Thumbnail for %s', 'wp-pdf-embed-seo-optimize' ), $pdf_title ),
+												'alt'      => $card_thumb_alt,
 												'itemprop' => 'thumbnailUrl',
 												'loading'  => 'lazy',
 											)
@@ -182,8 +201,8 @@ get_header();
 							<?php else : ?>
 								<div class="pdf-embed-seo-optimize-card-thumbnail pdf-embed-seo-optimize-card-thumbnail-placeholder">
 									<a href="<?php echo esc_url( $pdf_url ); ?>"
-									   title="<?php echo esc_attr( sprintf( __( 'View %s', 'wp-pdf-embed-seo-optimize' ), $pdf_title ) ); ?>"
-									   aria-label="<?php echo esc_attr( sprintf( __( 'View %s PDF document', 'wp-pdf-embed-seo-optimize' ), $pdf_title ) ); ?>">
+									   title="<?php echo esc_attr( $card_view_title ); ?>"
+									   aria-label="<?php echo esc_attr( $card_view_aria ); ?>">
 										<span class="dashicons dashicons-pdf" aria-hidden="true"></span>
 										<span class="screen-reader-text"><?php esc_html_e( 'PDF Document', 'wp-pdf-embed-seo-optimize' ); ?></span>
 									</a>
@@ -193,7 +212,7 @@ get_header();
 							<div class="pdf-embed-seo-optimize-card-content">
 								<h2 class="pdf-embed-seo-optimize-card-title">
 									<a href="<?php echo esc_url( $pdf_url ); ?>"
-									   title="<?php echo esc_attr( sprintf( __( 'View %s', 'wp-pdf-embed-seo-optimize' ), $pdf_title ) ); ?>"
+									   title="<?php echo esc_attr( $card_view_title ); ?>"
 									   itemprop="url">
 										<span itemprop="name"><?php echo esc_html( $pdf_title ); ?></span>
 									</a>
@@ -211,22 +230,20 @@ get_header();
 									</time>
 
 									<?php if ( $show_view_count && $view_count > 0 ) : ?>
-										<span class="pdf-embed-seo-optimize-card-views" aria-label="<?php echo esc_attr( sprintf( _n( '%s view', '%s views', $view_count, 'wp-pdf-embed-seo-optimize' ), number_format_i18n( $view_count ) ) ); ?>">
-											<?php
-											printf(
-												/* translators: %s: View count */
-												esc_html( _n( '%s view', '%s views', $view_count, 'wp-pdf-embed-seo-optimize' ) ),
-												esc_html( number_format_i18n( $view_count ) )
-											);
-											?>
+										<?php
+										/* translators: %s: Number of views */
+										$card_views_label = sprintf( _n( '%s view', '%s views', $view_count, 'wp-pdf-embed-seo-optimize' ), number_format_i18n( $view_count ) );
+										?>
+										<span class="pdf-embed-seo-optimize-card-views" aria-label="<?php echo esc_attr( $card_views_label ); ?>">
+											<?php echo esc_html( $card_views_label ); ?>
 										</span>
 									<?php endif; ?>
 								</div>
 
 								<a href="<?php echo esc_url( $pdf_url ); ?>"
 								   class="pdf-embed-seo-optimize-card-link"
-								   title="<?php echo esc_attr( sprintf( __( 'View %s PDF document', 'wp-pdf-embed-seo-optimize' ), $pdf_title ) ); ?>"
-								   aria-label="<?php echo esc_attr( sprintf( __( 'View %s PDF document', 'wp-pdf-embed-seo-optimize' ), $pdf_title ) ); ?>">
+								   title="<?php echo esc_attr( $card_view_aria ); ?>"
+								   aria-label="<?php echo esc_attr( $card_view_aria ); ?>">
 									<?php esc_html_e( 'View PDF', 'wp-pdf-embed-seo-optimize' ); ?>
 									<span class="screen-reader-text"><?php echo esc_html( $pdf_title ); ?></span>
 								</a>

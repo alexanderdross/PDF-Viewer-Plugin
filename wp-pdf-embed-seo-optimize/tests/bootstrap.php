@@ -5,6 +5,11 @@
  * @package PDF_Embed_SEO
  */
 
+// Prevent direct access (only allow CLI/test context).
+if ( ! defined( 'ABSPATH' ) && php_sapi_name() !== 'cli' ) {
+	exit;
+}
+
 // Load WordPress test environment.
 $_tests_dir = getenv( 'WP_TESTS_DIR' );
 
@@ -19,7 +24,8 @@ if ( false !== $_phpunit_polyfills_path ) {
 }
 
 if ( ! file_exists( "{$_tests_dir}/includes/functions.php" ) ) {
-	echo "Could not find {$_tests_dir}/includes/functions.php, have you run bin/install-wp-tests.sh ?" . PHP_EOL;
+	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CLI output for test environment setup.
+	echo 'Could not find ' . esc_html( $_tests_dir ) . '/includes/functions.php, have you run bin/install-wp-tests.sh ?' . PHP_EOL;
 	exit( 1 );
 }
 

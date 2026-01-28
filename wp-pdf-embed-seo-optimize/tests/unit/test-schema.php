@@ -6,6 +6,11 @@
  * @subpackage Tests
  */
 
+// Prevent direct access (only allow CLI/test context).
+if ( ! defined( 'ABSPATH' ) && php_sapi_name() !== 'cli' ) {
+	exit;
+}
+
 /**
  * Test Schema.org functionality.
  */

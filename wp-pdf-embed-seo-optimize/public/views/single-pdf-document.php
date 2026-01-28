@@ -63,6 +63,7 @@ get_header();
 		<nav class="pdf-embed-seo-optimize-breadcrumb" aria-label="<?php esc_attr_e( 'Breadcrumb', 'wp-pdf-embed-seo-optimize' ); ?>">
 			<ol class="pdf-embed-seo-optimize-breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
 				<li class="pdf-embed-seo-optimize-breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+				<?php /* translators: %s: Site name */ ?>
 					<a href="<?php echo esc_url( $site_url ); ?>" itemprop="item" title="<?php echo esc_attr( sprintf( __( 'Go to %s homepage', 'wp-pdf-embed-seo-optimize' ), $site_name ) ); ?>">
 						<span itemprop="name"><?php echo esc_html( $site_name ); ?></span>
 					</a>
