@@ -455,6 +455,24 @@ class PDF_Embed_SEO_Admin {
 				'key'       => 'show_breadcrumbs',
 			)
 		);
+
+		// Premium Preview Section (only show if premium is not active).
+		if ( ! defined( 'PDF_EMBED_SEO_IS_PREMIUM' ) || ! PDF_EMBED_SEO_IS_PREMIUM ) {
+			add_settings_section(
+				'pdf_embed_seo_premium_preview',
+				__( 'Premium Features', 'pdf-embed-seo-optimize' ),
+				array( $this, 'render_premium_preview_section' ),
+				'pdf-embed-seo-optimize-settings'
+			);
+
+			add_settings_field(
+				'archive_redirect_preview',
+				__( 'Archive Page Redirect', 'pdf-embed-seo-optimize' ),
+				array( $this, 'render_premium_redirect_preview' ),
+				'pdf-embed-seo-optimize-settings',
+				'pdf_embed_seo_premium_preview'
+			);
+		}
 	}
 
 	/**
@@ -653,6 +671,66 @@ class PDF_Embed_SEO_Admin {
 					<?php echo esc_html( $availability['message'] ); ?>
 				</span>
 			<?php endif; ?>
+		</p>
+		<?php
+	}
+
+	/**
+	 * Render premium preview section description.
+	 *
+	 * @return void
+	 */
+	public function render_premium_preview_section() {
+		?>
+		<p>
+			<?php esc_html_e( 'The following features are available in the Premium version.', 'pdf-embed-seo-optimize' ); ?>
+			<a href="https://pdfviewer.drossmedia.de/" target="_blank" rel="noopener noreferrer">
+				<?php esc_html_e( 'Upgrade to Premium', 'pdf-embed-seo-optimize' ); ?>
+			</a>
+		</p>
+		<?php
+	}
+
+	/**
+	 * Render premium redirect preview field (disabled).
+	 *
+	 * @return void
+	 */
+	public function render_premium_redirect_preview() {
+		?>
+		<div class="pdf-premium-preview-field" style="opacity: 0.6; pointer-events: none;">
+			<label style="display: block; margin-bottom: 15px;">
+				<input type="checkbox" disabled />
+				<?php esc_html_e( 'Enable Archive Redirect', 'pdf-embed-seo-optimize' ); ?>
+				<p class="description"><?php esc_html_e( 'Redirect the PDF archive page (/pdf/) to another URL.', 'pdf-embed-seo-optimize' ); ?></p>
+			</label>
+
+			<label style="display: block; margin-bottom: 15px;">
+				<strong><?php esc_html_e( 'Redirect Type', 'pdf-embed-seo-optimize' ); ?></strong><br>
+				<select disabled style="margin-top: 5px;">
+					<option><?php esc_html_e( '301 - Permanent Redirect (recommended for SEO)', 'pdf-embed-seo-optimize' ); ?></option>
+					<option><?php esc_html_e( '302 - Temporary Redirect', 'pdf-embed-seo-optimize' ); ?></option>
+				</select>
+			</label>
+
+			<label style="display: block; margin-bottom: 10px;">
+				<strong><?php esc_html_e( 'Redirect URL', 'pdf-embed-seo-optimize' ); ?></strong><br>
+				<input type="url" disabled class="regular-text" placeholder="<?php echo esc_attr( home_url( '/' ) ); ?>" style="margin-top: 5px;" />
+				<p class="description"><?php esc_html_e( 'Enter the URL where visitors should be redirected.', 'pdf-embed-seo-optimize' ); ?></p>
+			</label>
+		</div>
+
+		<p style="margin-top: 15px;">
+			<span class="dashicons dashicons-lock" style="color: #d63638;"></span>
+			<em>
+				<?php
+				printf(
+					/* translators: %s: link to premium page */
+					esc_html__( 'This feature is available in %s', 'pdf-embed-seo-optimize' ),
+					'<a href="https://pdfviewer.drossmedia.de/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'PDF Embed & SEO Optimize Premium', 'pdf-embed-seo-optimize' ) . '</a>'
+				);
+				?>
+			</em>
 		</p>
 		<?php
 	}
