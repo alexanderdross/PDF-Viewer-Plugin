@@ -1,7 +1,7 @@
 # UAT/QA Test Plan: PDF Embed & SEO Optimize (WordPress Premium Version)
 
-**Version:** 1.1.0
-**Last Updated:** 2026-01-27
+**Version:** 1.2.5
+**Last Updated:** 2026-01-28
 **Test Environment:** WordPress 6.4+, PHP 8.0+
 
 ---
@@ -432,7 +432,86 @@ Before running premium tests:
 
 ---
 
-## 15. Privacy & External Requests
+## 15. Download Tracking (v1.2.5)
+
+### 15.1 Download Counter
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| DWN-001 | Download Count Display | 1. Edit PDF in admin<br>2. Check meta box | Download count visible | [ ] Pass [ ] Fail |
+| DWN-002 | Download Tracking | 1. Download a PDF<br>2. Check admin | Download count increments | [ ] Pass [ ] Fail |
+| DWN-003 | Separate from Views | 1. View PDF<br>2. Download PDF<br>3. Check counts | View and download counts separate | [ ] Pass [ ] Fail |
+| DWN-004 | Download Analytics | 1. View Analytics dashboard | Download stats shown | [ ] Pass [ ] Fail |
+
+### 15.2 Download REST API
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| DWN-005 | POST /download | 1. POST to /documents/{id}/download | Returns success, count increments | [ ] Pass [ ] Fail |
+| DWN-006 | Download Response | 1. Check response data | Includes download_count, timestamp | [ ] Pass [ ] Fail |
+
+---
+
+## 16. Expiring Access Links (v1.2.5)
+
+### 16.1 Generate Links
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| EXP-001 | Generate Link Button | 1. Edit PDF<br>2. Check Expiring Links section | Generate button visible | [ ] Pass [ ] Fail |
+| EXP-002 | Generate Link | 1. Click Generate<br>2. Check response | Token URL returned | [ ] Pass [ ] Fail |
+| EXP-003 | Custom Expiration | 1. Set expiration to 1 hour<br>2. Generate link | Link expires in 1 hour | [ ] Pass [ ] Fail |
+| EXP-004 | Max Uses Setting | 1. Set max uses to 5<br>2. Generate link | Link limited to 5 uses | [ ] Pass [ ] Fail |
+| EXP-005 | Admin Only | 1. Try as non-admin | Access denied | [ ] Pass [ ] Fail |
+
+### 16.2 Validate Links
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| EXP-006 | Valid Link Access | 1. Use valid expiring link | PDF accessible | [ ] Pass [ ] Fail |
+| EXP-007 | Expired Link | 1. Wait for expiration<br>2. Try link | Access denied, shows expired | [ ] Pass [ ] Fail |
+| EXP-008 | Max Uses Exceeded | 1. Use link max times<br>2. Try again | Access denied, shows limit reached | [ ] Pass [ ] Fail |
+| EXP-009 | Invalid Token | 1. Use fake token | Access denied, invalid token | [ ] Pass [ ] Fail |
+| EXP-010 | Usage Counter | 1. Use link<br>2. Check admin | Usage count increments | [ ] Pass [ ] Fail |
+
+### 16.3 Expiring Links REST API
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| EXP-011 | POST /expiring-link | 1. POST as admin | Returns token and URL | [ ] Pass [ ] Fail |
+| EXP-012 | GET /expiring-link/{token} | 1. GET with valid token | Returns PDF data | [ ] Pass [ ] Fail |
+| EXP-013 | Unauthorized Generate | 1. POST as non-admin | 403 Forbidden | [ ] Pass [ ] Fail |
+
+---
+
+## 17. GEO/AEO/LLM Schema Optimization (v1.2.5)
+
+### 17.1 AI Summary & Key Points
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| GEO-001 | AI Summary Field | 1. Edit PDF<br>2. Check AI Optimization section | TL;DR field visible | [ ] Pass [ ] Fail |
+| GEO-002 | Key Points Field | 1. Check AI Optimization | Key Takeaways field visible | [ ] Pass [ ] Fail |
+| GEO-003 | Summary Schema | 1. Add summary<br>2. View source | abstract property in schema | [ ] Pass [ ] Fail |
+
+### 17.2 FAQ Schema
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| GEO-004 | FAQ Fields | 1. Edit PDF<br>2. Add FAQ items | FAQ Q&A fields work | [ ] Pass [ ] Fail |
+| GEO-005 | FAQPage Schema | 1. Add FAQs<br>2. View source | FAQPage schema present | [ ] Pass [ ] Fail |
+
+### 17.3 Reading Metadata
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| GEO-006 | Reading Time | 1. Set reading time<br>2. View source | timeRequired in schema | [ ] Pass [ ] Fail |
+| GEO-007 | Difficulty Level | 1. Set difficulty<br>2. View source | educationalLevel in schema | [ ] Pass [ ] Fail |
+| GEO-008 | Target Audience | 1. Set audience<br>2. View source | audience in schema | [ ] Pass [ ] Fail |
+
+---
+
+## 18. Privacy & External Requests
 
 ### 15.1 No Unwanted External Calls
 

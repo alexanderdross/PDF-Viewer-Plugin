@@ -1,7 +1,7 @@
 # QA Test Plan - PDF Embed & SEO Optimize
 
-**Version:** 1.2.3
-**Date:** 2025-01-28
+**Version:** 1.2.5
+**Date:** 2026-01-28
 **Modules:** WP Free, WP Premium, Drupal Free, Drupal Premium
 
 ---
@@ -240,6 +240,40 @@
 | WPP-066 | GET /categories | Request categories | Categories list returns | ☐ |
 | WPP-067 | GET /tags | Request tags | Tags list returns | ☐ |
 
+### 2.8 Download Tracking Tests (v1.2.5)
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| WPP-070 | Download Count | View PDF download count | Count displays correctly | ☐ |
+| WPP-071 | Track Download | Download PDF | Count increments | ☐ |
+| WPP-072 | Download API | POST to /download endpoint | Returns success with count | ☐ |
+| WPP-073 | Download Analytics | View analytics dashboard | Downloads shown | ☐ |
+| WPP-074 | Separate Counters | Compare view vs download | Counts are separate | ☐ |
+
+### 2.9 Expiring Access Links Tests (v1.2.5)
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| WPP-080 | Generate Link | POST to /expiring-link as admin | Token URL returned | ☐ |
+| WPP-081 | Custom Expiration | Set 1 hour expiration | Expires correctly | ☐ |
+| WPP-082 | Max Uses | Set max uses to 5 | Limit enforced | ☐ |
+| WPP-083 | Valid Link | GET /expiring-link/{token} | PDF data returned | ☐ |
+| WPP-084 | Expired Link | Use after expiration | 403 with error | ☐ |
+| WPP-085 | Max Uses Exceeded | Use beyond max | 403 with error | ☐ |
+| WPP-086 | Invalid Token | Use fake token | 404 error | ☐ |
+| WPP-087 | Non-Admin Generate | Try as subscriber | 403 forbidden | ☐ |
+
+### 2.10 GEO/AEO Schema Tests (v1.2.5)
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| WPP-090 | AI Summary | Add TL;DR, view source | abstract in schema | ☐ |
+| WPP-091 | Key Points | Add key points, view source | Included in schema | ☐ |
+| WPP-092 | FAQ Schema | Add FAQ items, view source | FAQPage schema | ☐ |
+| WPP-093 | Reading Time | Set reading time | timeRequired in schema | ☐ |
+| WPP-094 | Difficulty | Set difficulty level | educationalLevel in schema | ☐ |
+| WPP-095 | Target Audience | Set audience | audience in schema | ☐ |
+
 ---
 
 ## Module 3: Drupal Free (`drupal-pdf-embed-seo/`)
@@ -358,6 +392,54 @@
 | DRP-040 | Sitemap URL | Visit /pdf/sitemap.xml | Sitemap renders | ☐ |
 | DRP-041 | Content | Check entries | All PDFs listed | ☐ |
 
+### 4.6 Download Tracking Tests (v1.2.5)
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| DRP-050 | Download Count | View PDF download count | Count displays | ☐ |
+| DRP-051 | Track Download | Download PDF | Count increments | ☐ |
+| DRP-052 | Download API | POST to /download | Returns success | ☐ |
+
+### 4.7 Expiring Access Links Tests (v1.2.5)
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| DRP-060 | Generate Link | POST as admin | Token URL returned | ☐ |
+| DRP-061 | Valid Link | Use valid token | PDF accessible | ☐ |
+| DRP-062 | Expired Link | Use expired token | Access denied | ☐ |
+| DRP-063 | Max Uses | Exceed max uses | Access denied | ☐ |
+
+### 4.8 Schema Optimization Tests (v1.2.5)
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| DRP-070 | AI Summary | Add TL;DR, view source | abstract in schema | ☐ |
+| DRP-071 | FAQ Schema | Add FAQ items | FAQPage schema | ☐ |
+| DRP-072 | Reading Time | Set time | timeRequired in schema | ☐ |
+
+### 4.9 Role-Based Access Tests (v1.2.5)
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| DRP-080 | Role Restriction | Restrict to admin | Access controlled | ☐ |
+| DRP-081 | Multiple Roles | Allow multiple roles | Correct access | ☐ |
+| DRP-082 | Login Required | Require login | Anonymous denied | ☐ |
+
+### 4.10 Bulk Import Tests (v1.2.5)
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| DRP-090 | Import Page | Visit bulk import | Page loads | ☐ |
+| DRP-091 | Import PDFs | Import multiple | Documents created | ☐ |
+| DRP-092 | Skip Duplicates | Import same twice | Duplicate skipped | ☐ |
+
+### 4.11 Viewer Enhancement Tests (v1.2.5)
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| DRP-100 | Text Search | Use Ctrl+F | Search works | ☐ |
+| DRP-101 | Bookmarks Panel | View with bookmarks | Panel visible | ☐ |
+
 ---
 
 ## Cross-Platform Tests
@@ -431,4 +513,4 @@ Run after each code change:
 
 ---
 
-*PDF Embed & SEO Optimize v1.2.3 - QA Test Plan*
+*PDF Embed & SEO Optimize v1.2.5 - QA Test Plan*

@@ -1,8 +1,8 @@
 # User Acceptance Testing (UAT) Plan
 
-## PDF Embed & SEO Optimize - Version 1.2.3
+## PDF Embed & SEO Optimize - Version 1.2.5
 
-**Date:** 2025-01-28
+**Date:** 2026-01-28
 **Modules:** WP Free, WP Premium, Drupal Free, Drupal Premium
 
 ---
@@ -243,6 +243,55 @@ This UAT plan validates that the PDF Embed & SEO Optimize plugin meets business 
 
 ---
 
+#### US-WPP-006: Track Downloads (v1.2.5)
+**As a** site administrator
+**I want to** track PDF downloads separately from views
+**So that** I can understand document engagement better
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | Download count visible in admin | ☐ | ☐ | |
+| 2 | Downloads tracked separately from views | ☐ | ☐ | |
+| 3 | Download analytics in dashboard | ☐ | ☐ | |
+| 4 | Download event fires on button click | ☐ | ☐ | |
+| 5 | API endpoint POST /download works | ☐ | ☐ | |
+
+---
+
+#### US-WPP-007: Expiring Access Links (v1.2.5)
+**As a** site administrator
+**I want to** generate time-limited access links
+**So that** I can share PDFs temporarily with specific people
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | Can generate expiring link from admin | ☐ | ☐ | |
+| 2 | Can set custom expiration time | ☐ | ☐ | |
+| 3 | Can set maximum uses | ☐ | ☐ | |
+| 4 | Valid link grants access to PDF | ☐ | ☐ | |
+| 5 | Expired link shows error message | ☐ | ☐ | |
+| 6 | Max uses exceeded shows error | ☐ | ☐ | |
+| 7 | Only admins can generate links | ☐ | ☐ | |
+
+---
+
+#### US-WPP-008: GEO/AEO Schema Optimization (v1.2.5)
+**As a** site administrator
+**I want to** add AI-optimized metadata to PDFs
+**So that** they appear in AI search results and voice assistants
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | Can add AI Summary (TL;DR) | ☐ | ☐ | |
+| 2 | Can add Key Points/Takeaways | ☐ | ☐ | |
+| 3 | Can add FAQ items | ☐ | ☐ | |
+| 4 | FAQPage schema generated | ☐ | ☐ | |
+| 5 | Can set reading time | ☐ | ☐ | |
+| 6 | Can set difficulty level | ☐ | ☐ | |
+| 7 | Can set target audience | ☐ | ☐ | |
+
+---
+
 ### Drupal Free Module
 
 #### US-DRF-001: Add PDF Documents
@@ -332,6 +381,60 @@ This UAT plan validates that the PDF Embed & SEO Optimize plugin meets business 
 | 1 | Progress saves automatically | ☐ | ☐ | |
 | 2 | Resume prompt on return | ☐ | ☐ | |
 | 3 | Resume works correctly | ☐ | ☐ | |
+
+---
+
+#### US-DRP-004: Download Tracking (v1.2.5)
+**As a** site administrator
+**I want to** track PDF downloads
+**So that** I can measure document engagement
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | Download count tracked | ☐ | ☐ | |
+| 2 | Separate from view count | ☐ | ☐ | |
+| 3 | Visible in analytics | ☐ | ☐ | |
+
+---
+
+#### US-DRP-005: Expiring Access Links (v1.2.5)
+**As a** site administrator
+**I want to** create temporary access links
+**So that** I can share PDFs with time limits
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | Can generate expiring link | ☐ | ☐ | |
+| 2 | Link expires after set time | ☐ | ☐ | |
+| 3 | Max uses enforced | ☐ | ☐ | |
+| 4 | Invalid links rejected | ☐ | ☐ | |
+
+---
+
+#### US-DRP-006: Role-Based Access (v1.2.5)
+**As a** site administrator
+**I want to** restrict PDF access by user role
+**So that** only authorized users can view certain documents
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | Can select allowed roles | ☐ | ☐ | |
+| 2 | Unauthorized users denied | ☐ | ☐ | |
+| 3 | Login prompt shown | ☐ | ☐ | |
+
+---
+
+#### US-DRP-007: Bulk Import (v1.2.5)
+**As a** content editor
+**I want to** import multiple PDFs at once
+**So that** I can quickly add many documents
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | Bulk import page accessible | ☐ | ☐ | |
+| 2 | Can select multiple PDFs | ☐ | ☐ | |
+| 3 | Documents created correctly | ☐ | ☐ | |
+| 4 | Duplicates handled | ☐ | ☐ | |
 
 ---
 
@@ -443,4 +546,4 @@ This UAT plan validates that the PDF Embed & SEO Optimize plugin meets business 
 
 ---
 
-*PDF Embed & SEO Optimize v1.2.3 - UAT Test Plan*
+*PDF Embed & SEO Optimize v1.2.5 - UAT Test Plan*

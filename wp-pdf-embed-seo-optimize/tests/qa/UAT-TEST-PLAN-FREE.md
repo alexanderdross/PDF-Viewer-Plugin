@@ -1,7 +1,7 @@
 # UAT/QA Test Plan: PDF Embed & SEO Optimize (WordPress Free Version)
 
-**Version:** 1.1.0
-**Last Updated:** 2026-01-27
+**Version:** 1.2.5
+**Last Updated:** 2026-01-28
 **Test Environment:** WordPress 6.4+, PHP 8.0+
 
 ---
@@ -266,6 +266,30 @@
 |---------|-----------|-------|-----------------|--------|
 | SEO-011 | Schema Markup | 1. View source<br>2. Check JSON-LD | DigitalDocument schema | [ ] Pass [ ] Fail |
 | SEO-012 | Schema Validation | 1. Use Google Rich Results Test | No errors | [ ] Pass [ ] Fail |
+
+### 10.4 GEO/AEO/LLM Schema (Free Tier)
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| SEO-013 | SpeakableSpecification | 1. View source<br>2. Check JSON-LD | speakable property with cssSelector | [ ] Pass [ ] Fail |
+| SEO-014 | potentialAction Schema | 1. View source | ReadAction, ViewAction present | [ ] Pass [ ] Fail |
+| SEO-015 | accessMode Properties | 1. View source | accessMode, accessibilityFeature present | [ ] Pass [ ] Fail |
+| SEO-016 | fileFormat Schema | 1. View source | fileFormat=application/pdf | [ ] Pass [ ] Fail |
+| SEO-017 | inLanguage Schema | 1. View source | inLanguage matches site lang | [ ] Pass [ ] Fail |
+| SEO-018 | publisher Schema | 1. View source | publisher with name and logo | [ ] Pass [ ] Fail |
+
+### 10.5 REST API Testing
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| API-001 | GET /documents | 1. API request to /wp-json/pdf-embed-seo/v1/documents | Returns document list | [ ] Pass [ ] Fail |
+| API-002 | GET /documents/{id} | 1. Request single doc | Returns document details | [ ] Pass [ ] Fail |
+| API-003 | GET /documents/{id}/data | 1. Request data endpoint | Returns PDF URL securely | [ ] Pass [ ] Fail |
+| API-004 | POST /documents/{id}/view | 1. Track view via API | View count increments | [ ] Pass [ ] Fail |
+| API-005 | GET /settings | 1. Request settings | Returns public settings | [ ] Pass [ ] Fail |
+| API-006 | Pagination Params | 1. Use page, per_page params | Returns correct subset | [ ] Pass [ ] Fail |
+| API-007 | Search Param | 1. Use search param | Returns matching results | [ ] Pass [ ] Fail |
+| API-008 | Invalid ID | 1. Request non-existent ID | Returns 404 error | [ ] Pass [ ] Fail |
 
 ---
 
