@@ -59,20 +59,17 @@ get_header();
 <div id="primary" class="content-area pdf-embed-seo-optimize-archive">
 	<main id="main" class="site-main" role="main">
 
-		<?php // Breadcrumb navigation for accessibility. ?>
+		<?php // Breadcrumb navigation for accessibility (JSON-LD schema is above, no microdata needed here). ?>
 		<nav class="pdf-embed-seo-optimize-breadcrumb" aria-label="<?php esc_attr_e( 'Breadcrumb', 'wp-pdf-embed-seo-optimize' ); ?>">
-			<ol class="pdf-embed-seo-optimize-breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
-				<li class="pdf-embed-seo-optimize-breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+			<ol class="pdf-embed-seo-optimize-breadcrumb-list">
+				<li class="pdf-embed-seo-optimize-breadcrumb-item">
 					<?php /* translators: %s: Site name */ ?>
-					<a href="<?php echo esc_url( $site_url ); ?>" itemprop="item" title="<?php echo esc_attr( sprintf( __( 'Go to %s homepage', 'wp-pdf-embed-seo-optimize' ), $site_name ) ); ?>">
-						<span itemprop="name"><?php echo esc_html( $site_name ); ?></span>
+					<a href="<?php echo esc_url( $site_url ); ?>" title="<?php echo esc_attr( sprintf( __( 'Go to %s homepage', 'wp-pdf-embed-seo-optimize' ), $site_name ) ); ?>">
+						<?php echo esc_html( $site_name ); ?>
 					</a>
-					<meta itemprop="position" content="1" />
 				</li>
-				<li class="pdf-embed-seo-optimize-breadcrumb-item pdf-embed-seo-optimize-breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
-					<span itemprop="name"><?php echo esc_html( $archive_title ); ?></span>
-					<meta itemprop="item" content="<?php echo esc_url( $archive_url ); ?>" />
-					<meta itemprop="position" content="2" />
+				<li class="pdf-embed-seo-optimize-breadcrumb-item pdf-embed-seo-optimize-breadcrumb-current" aria-current="page">
+					<?php echo esc_html( $archive_title ); ?>
 				</li>
 			</ol>
 		</nav>

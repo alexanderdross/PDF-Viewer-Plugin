@@ -55,25 +55,21 @@
 </script>
 
 <article{{ attributes.addClass('pdf-embed-seo-single', 'pdf-document', 'pdf-document--' ~ view_mode) }} itemscope itemtype="https://schema.org/DigitalDocument">
-  {# Breadcrumb navigation for accessibility #}
+  {# Breadcrumb navigation for accessibility (JSON-LD schema is above, no microdata needed here) #}
   <nav class="pdf-embed-seo-breadcrumb" aria-label="{{ 'Breadcrumb'|t }}">
-    <ol class="pdf-embed-seo-breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
-      <li class="pdf-embed-seo-breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <a href="{{ site_url }}" itemprop="item" title="{{ 'Go to %site homepage'|t({'%site': site_name}) }}">
-          <span itemprop="name">{{ site_name }}</span>
+    <ol class="pdf-embed-seo-breadcrumb-list">
+      <li class="pdf-embed-seo-breadcrumb-item">
+        <a href="{{ site_url }}" title="{{ 'Go to %site homepage'|t({'%site': site_name}) }}">
+          {{ site_name }}
         </a>
-        <meta itemprop="position" content="1" />
       </li>
-      <li class="pdf-embed-seo-breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <a href="{{ archive_url }}" itemprop="item" title="{{ 'View all PDF documents'|t }}">
-          <span itemprop="name">{{ 'PDF Documents'|t }}</span>
+      <li class="pdf-embed-seo-breadcrumb-item">
+        <a href="{{ archive_url }}" title="{{ 'View all PDF documents'|t }}">
+          {{ 'PDF Documents'|t }}
         </a>
-        <meta itemprop="position" content="2" />
       </li>
-      <li class="pdf-embed-seo-breadcrumb-item pdf-embed-seo-breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
-        <span itemprop="name">{{ pdf_title }}</span>
-        <meta itemprop="item" content="{{ pdf_url }}" />
-        <meta itemprop="position" content="3" />
+      <li class="pdf-embed-seo-breadcrumb-item pdf-embed-seo-breadcrumb-current" aria-current="page">
+        {{ pdf_title }}
       </li>
     </ol>
   </nav>
