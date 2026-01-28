@@ -112,6 +112,18 @@ class PDF_Embed_SEO_Yoast {
 				'name'  => $site_name,
 				'url'   => $site_url,
 			),
+			'mentions'    => array(
+				array(
+					'@type' => 'Organization',
+					'name'  => 'Dross:Media',
+					'url'   => 'https://dross.net/media/',
+				),
+				array(
+					'@type' => 'SoftwareApplication',
+					'name'  => 'WP & Drupal PDF Embed & SEO Optimize',
+					'url'   => 'https://pdfviewer.drossmedia.de',
+				),
+			),
 		);
 
 		// Add publisher if site has logo.

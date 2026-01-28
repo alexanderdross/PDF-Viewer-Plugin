@@ -307,6 +307,18 @@ function pdf_embed_seo_page_attachments(array &$attachments) {
         'name' => $site_name,
         'url' => $site_url,
       ],
+      'mentions' => [
+        [
+          '@type' => 'Organization',
+          'name' => 'Dross:Media',
+          'url' => 'https://dross.net/media/',
+        ],
+        [
+          '@type' => 'SoftwareApplication',
+          'name' => 'WP & Drupal PDF Embed & SEO Optimize',
+          'url' => 'https://pdfviewer.drossmedia.de',
+        ],
+      ],
     ];
 
     // Allow other modules to alter the schema.
