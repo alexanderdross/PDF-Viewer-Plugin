@@ -143,6 +143,84 @@ class PDF_Embed_SEO_Yoast {
 			}
 		}
 
+		// Add PDF documents as ItemList with detailed DigitalDocument schema.
+		$pdf_query = new WP_Query(
+			array(
+				'post_type'      => 'pdf_document',
+				'post_status'    => 'publish',
+				'posts_per_page' => 50,
+				'orderby'        => 'date',
+				'order'          => 'DESC',
+			)
+		);
+
+		if ( $pdf_query->have_posts() ) {
+			$items = array();
+			$position = 1;
+
+			while ( $pdf_query->have_posts() ) {
+				$pdf_query->the_post();
+				$post_id = get_the_ID();
+
+				// Build detailed DigitalDocument for each PDF.
+				$document = array(
+					'@type'          => 'DigitalDocument',
+					'@id'            => get_permalink( $post_id ) . '#digitaldocument',
+					'name'           => get_the_title( $post_id ),
+					'url'            => get_permalink( $post_id ),
+					'encodingFormat' => 'application/pdf',
+					'datePublished'  => get_the_date( 'c', $post_id ),
+					'dateModified'   => get_the_modified_date( 'c', $post_id ),
+				);
+
+				// Add description if available.
+				$excerpt = get_the_excerpt( $post_id );
+				if ( ! empty( $excerpt ) ) {
+					$document['description'] = wp_strip_all_tags( $excerpt );
+				}
+
+				// Add thumbnail if available.
+				if ( has_post_thumbnail( $post_id ) ) {
+					$thumbnail_id   = get_post_thumbnail_id( $post_id );
+					$thumbnail_data = wp_get_attachment_image_src( $thumbnail_id, 'medium' );
+					if ( $thumbnail_data ) {
+						$document['thumbnailUrl'] = $thumbnail_data[0];
+						$document['image'] = array(
+							'@type'  => 'ImageObject',
+							'url'    => $thumbnail_data[0],
+							'width'  => $thumbnail_data[1],
+							'height' => $thumbnail_data[2],
+						);
+					}
+				}
+
+				// Add author.
+				$author_id = get_post_field( 'post_author', $post_id );
+				if ( $author_id ) {
+					$document['author'] = array(
+						'@type' => 'Person',
+						'name'  => get_the_author_meta( 'display_name', $author_id ),
+					);
+				}
+
+				$items[] = array(
+					'@type'    => 'ListItem',
+					'position' => $position,
+					'item'     => $document,
+				);
+
+				$position++;
+			}
+
+			wp_reset_postdata();
+
+			$schema['mainEntity'] = array(
+				'@type'           => 'ItemList',
+				'numberOfItems'   => count( $items ),
+				'itemListElement' => $items,
+			);
+		}
+
 		/**
 		 * Filter the archive page schema data.
 		 *
