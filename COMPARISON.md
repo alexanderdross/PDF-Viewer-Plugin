@@ -68,6 +68,7 @@ A detailed comparison of features available in the Free and Premium versions.
 | Auto Path/Slug Generation | ✓ | ✓ |
 | Schema.org DigitalDocument | ✓ | ✓ |
 | Schema.org CollectionPage (Archive) | ✓ | ✓ |
+| Schema.org BreadcrumbList | ✓ | ✓ |
 | Yoast SEO Integration (WP) | ✓ | ✓ |
 | OpenGraph Meta Tags | ✓ | ✓ |
 | Twitter Card Support | ✓ | ✓ |
@@ -84,8 +85,10 @@ A detailed comparison of features available in the Free and Premium versions.
 | Grid/List Display Modes | ✓ | ✓ |
 | Sorting Options | ✓ | ✓ |
 | Search Filtering | ✓ | ✓ |
+| Visible Breadcrumb Navigation | ✓ | ✓ |
 | **Category Filter** | - | ✓ |
 | **Tag Filter** | - | ✓ |
+| **Archive Page Redirect (301/302)** | - | ✓ |
 
 ### REST API
 

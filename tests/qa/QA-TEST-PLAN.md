@@ -1,7 +1,7 @@
 # QA Test Plan - PDF Embed & SEO Optimize
 
-**Version:** 1.2.1
-**Date:** 2025-01-27
+**Version:** 1.2.2
+**Date:** 2025-01-28
 **Modules:** WP Free, WP Premium, Drupal Free, Drupal Premium
 
 ---

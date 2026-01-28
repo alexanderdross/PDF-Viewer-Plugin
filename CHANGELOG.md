@@ -8,6 +8,31 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.2.2] - 2025-01-28
+
+### Added
+- **Archive Display Options** - Configurable list/grid views for PDF archives
+  - List view with condensed layout
+  - Grid/card view with thumbnails
+  - Toggle description and view count visibility
+  - WordPress and Drupal support
+- **Breadcrumb Schema** - Schema.org BreadcrumbList markup
+  - JSON-LD structured data for breadcrumbs
+  - 3-level breadcrumbs (Home > PDF Documents > Document Title)
+  - Visible breadcrumb navigation with accessibility support
+  - ARIA labels and proper focus states
+- **Archive Page Redirect** (Premium) - Redirect /pdf archive to custom URL
+  - 301 (permanent) or 302 (temporary) redirect options
+  - Configurable target URL
+  - License validation integration
+
+### Changed
+- Improved archive templates with accessibility attributes
+- Enhanced CSS with high contrast and reduced motion support
+- Better mobile responsiveness for archive pages
+
+---
+
 ## [1.2.1] - 2025-01-27
 
 ### Added
