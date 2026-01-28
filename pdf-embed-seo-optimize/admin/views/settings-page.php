@@ -24,6 +24,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 		?>
 	</form>
 
+	<?php
+	// Premium settings section (only shown when premium is active with valid license).
+	if ( defined( 'PDF_EMBED_SEO_PREMIUM_VERSION' ) ) :
+		$license_status = get_option( 'pdf_embed_seo_premium_license_status', 'inactive' );
+		if ( 'valid' === $license_status ) :
+			?>
+			<hr>
+			<h2><?php esc_html_e( 'Premium Settings', 'pdf-embed-seo-optimize' ); ?></h2>
+			<form method="post" action="options.php">
+				<?php
+				settings_fields( 'pdf_embed_seo_premium_settings' );
+				do_settings_sections( 'pdf-embed-seo-premium' );
+				submit_button();
+				?>
+			</form>
+			<?php
+		endif;
+	endif;
+	?>
+
 	<hr>
 
 	<h2><?php esc_html_e( 'Shortcode Usage', 'pdf-embed-seo-optimize' ); ?></h2>
