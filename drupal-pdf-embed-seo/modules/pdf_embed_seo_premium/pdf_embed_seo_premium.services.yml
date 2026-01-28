@@ -17,3 +17,32 @@ services:
       - '@current_user'
       - '@request_stack'
       - '@datetime.time'
+
+  # PDF schema enhancer service (premium).
+  pdf_embed_seo.schema_enhancer:
+    class: Drupal\pdf_embed_seo_premium\Service\PdfSchemaEnhancer
+    arguments:
+      - '@entity_type.manager'
+
+  # PDF access manager service (premium).
+  pdf_embed_seo.access_manager:
+    class: Drupal\pdf_embed_seo_premium\Service\PdfAccessManager
+    arguments:
+      - '@current_user'
+
+  # PDF viewer enhancer service (premium).
+  pdf_embed_seo.viewer_enhancer:
+    class: Drupal\pdf_embed_seo_premium\Service\PdfViewerEnhancer
+    arguments:
+      - '@current_user'
+      - '@config.factory'
+      - '@pdf_embed_seo.progress_tracker'
+
+  # PDF bulk operations service (premium).
+  pdf_embed_seo.bulk_operations:
+    class: Drupal\pdf_embed_seo_premium\Service\PdfBulkOperations
+    arguments:
+      - '@entity_type.manager'
+      - '@current_user'
+      - '@file_system'
+      - '@?file.repository'

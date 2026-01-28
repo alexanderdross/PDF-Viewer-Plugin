@@ -6,7 +6,7 @@
 
 Premium features submodule for PDF Embed & SEO Optimize.
 
-**Current Version:** 1.2.2
+**Current Version:** 1.2.5
 **Platforms:** Drupal 10, Drupal 11
 **License:** GPL v2 or later
 **Purchase:** [pdfviewer.drossmedia.de](https://pdfviewer.drossmedia.de)
@@ -33,10 +33,16 @@ Premium features submodule for PDF Embed & SEO Optimize.
 | Feature | Description |
 |---------|-------------|
 | Analytics Dashboard | Detailed view statistics with charts and reports |
+| Download Tracking | Track PDF downloads separately from views |
 | Password Protection | Protect individual PDFs with passwords |
 | Reading Progress | Remember and restore user reading position |
+| Expiring Access Links | Generate time-limited URLs for PDFs |
+| Role-Based Access Control | Restrict PDF access by user role |
+| Schema Optimization | GEO/AEO/LLM optimization for AI discovery |
+| Viewer Enhancements | Text search, bookmarks, and navigation |
+| Bulk Import | Import multiple PDFs from CSV |
 | XML Sitemap | Dedicated sitemap at `/pdf/sitemap.xml` |
-| Premium REST API | Additional API endpoints for integrations |
+| Premium REST API | 14+ API endpoints for integrations |
 | CSV/JSON Export | Export analytics data for external analysis |
 
 ---
@@ -66,6 +72,223 @@ Access at: **Admin > Reports > PDF Analytics**
 ### Export Options
 - **CSV Export**: Download analytics as spreadsheet
 - **JSON Export**: Download analytics as JSON for APIs
+
+---
+
+## Download Tracking
+
+Track PDF downloads separately from views to understand actual document usage.
+
+### Features
+- **Separate Counter**: Download counts tracked independently from view counts
+- **Download Analytics**: See download statistics in the analytics dashboard
+- **User Attribution**: Track which users downloaded documents
+- **REST API Integration**: Track downloads via API for headless implementations
+
+### Tracked Download Data
+| Data Point | Description |
+|------------|-------------|
+| Document ID | Which PDF was downloaded |
+| User ID | Authenticated user who downloaded |
+| IP Address | Visitor IP for anonymous downloads |
+| User Agent | Browser/device used for download |
+| Referrer | Source URL |
+| Timestamp | When the download occurred |
+
+---
+
+## Expiring Access Links
+
+Generate time-limited URLs for sharing PDFs with temporary access.
+
+### Features
+- **Time-Limited URLs**: Links expire after configurable duration
+- **Max Usage Limits**: Set maximum number of uses per link
+- **Token-Based Access**: Secure random tokens for each link
+- **Admin Generation**: Only administrators can create expiring links
+- **Usage Tracking**: Track how many times each link was used
+
+### Configuration Options
+| Option | Description | Default |
+|--------|-------------|---------|
+| Expiration Time | Duration in seconds before link expires | 86400 (24 hours) |
+| Max Uses | Maximum number of accesses (0 = unlimited) | 0 |
+
+### API Usage
+Generate an expiring link:
+```
+POST /api/pdf-embed-seo/v1/documents/{id}/expiring-link
+{
+  "expires_in": 3600,
+  "max_uses": 5
+}
+```
+
+Response:
+```json
+{
+  "success": true,
+  "token": "abc123xyz...",
+  "access_url": "https://example.com/pdf/document?pdf_access=abc123xyz",
+  "expires_at": "2024-06-21T14:45:00+00:00",
+  "max_uses": 5
+}
+```
+
+---
+
+## Role-Based Access Control
+
+Restrict PDF access based on user roles.
+
+### Features
+- **Login Requirement**: Require users to be authenticated
+- **Role Restrictions**: Limit access to specific user roles
+- **Flexible Configuration**: Set per-document access rules
+- **Access Denied Messages**: Customizable messages for unauthorized users
+- **Login Redirect**: Auto-redirect anonymous users to login page
+
+### Configuration
+| Field | Description |
+|-------|-------------|
+| Require Login | Users must be authenticated to view |
+| Role Restriction Enabled | Enable role-based restrictions |
+| Allowed Roles | Select which roles can access |
+
+### Services
+```php
+$access_manager = \Drupal::service('pdf_embed_seo.access_manager');
+
+// Check if user has access
+if ($access_manager->userHasAccess($pdf_document)) {
+  // Show PDF
+} else {
+  // Show access denied message
+  $message = $access_manager->getAccessDeniedMessage($pdf_document);
+}
+
+// Get available roles for admin UI
+$roles = $access_manager->getAvailableRoles();
+```
+
+---
+
+## Schema Optimization (GEO/AEO/LLM)
+
+Enhanced Schema.org markup for AI assistant optimization and search engine discoverability.
+
+### Features
+- **AI Summary**: TL;DR summary for AI assistants
+- **Key Points**: Structured key takeaways
+- **FAQ Schema**: FAQPage markup for document Q&A
+- **Table of Contents**: hasPart schema for document structure
+- **Reading Time**: timeRequired in ISO 8601 format
+- **Difficulty Level**: educationalLevel and proficiencyLevel
+- **Document Type**: additionalType for document classification
+- **Target Audience**: audience schema for content targeting
+- **Related Documents**: isRelatedTo for document relationships
+- **Prerequisites**: coursePrerequisites for learning content
+- **Learning Outcomes**: teaches schema for educational content
+
+### Entity Fields
+| Field | Schema Property | Description |
+|-------|-----------------|-------------|
+| ai_summary | abstract | AI-optimized summary |
+| key_points | mainEntity (ItemList) | Key takeaways list |
+| reading_time | timeRequired | Estimated reading time |
+| difficulty_level | educationalLevel | Content difficulty |
+| document_type | additionalType | Document classification |
+| target_audience | audience | Intended audience |
+| faq_items | FAQPage | Question/answer pairs |
+| toc_items | hasPart | Table of contents |
+| prerequisites | coursePrerequisites | Required knowledge |
+| learning_outcomes | teaches | Learning objectives |
+
+### Services
+```php
+$schema_enhancer = \Drupal::service('pdf_embed_seo.schema_enhancer');
+
+// Enhance DigitalDocument schema
+$schema = $schema_enhancer->enhanceSchema($base_schema, $pdf_document);
+
+// Generate FAQ schema
+$faq_schema = $schema_enhancer->generateFaqSchema($pdf_document);
+
+// Enhance WebPage schema with speakable
+$webpage_schema = $schema_enhancer->enhanceWebPageSchema($base_schema, $pdf_document);
+```
+
+---
+
+## Viewer Enhancements
+
+Enhanced PDF viewer with advanced navigation features.
+
+### Features
+- **Text Search**: Search within PDF documents
+- **Bookmarks Panel**: Navigate via PDF bookmarks/outline
+- **Reading Progress UI**: Visual progress indicator
+- **Enhanced Navigation**: Previous/next page with keyboard support
+- **Print/Download Controls**: Per-document permissions
+
+### Configuration
+| Setting | Description | Default |
+|---------|-------------|---------|
+| Enable Text Search | Allow searching within PDFs | Enabled |
+| Enable Bookmarks | Show bookmark navigation panel | Enabled |
+| Enable Reading Progress | Show progress bar | Enabled |
+
+### Services
+```php
+$viewer_enhancer = \Drupal::service('pdf_embed_seo.viewer_enhancer');
+
+// Get viewer options for a document
+$options = $viewer_enhancer->getViewerOptions($pdf_document);
+
+// Get JavaScript settings
+$js_settings = $viewer_enhancer->getJsSettings($pdf_document);
+```
+
+---
+
+## Bulk Import
+
+Import multiple PDF documents from CSV files.
+
+### Features
+- **CSV Import**: Import PDFs from CSV with metadata
+- **Batch Processing**: Handle large imports efficiently
+- **Field Mapping**: Map CSV columns to document fields
+- **Bulk Update**: Update multiple documents at once
+- **Permission Controls**: Bulk enable/disable downloads, prints
+
+### CSV Format
+| Column | Required | Description |
+|--------|----------|-------------|
+| title | Yes | Document title |
+| description | No | Document description |
+| file | No | File path or URL |
+| status | No | Published status (1/0) |
+| allow_download | No | Enable downloads (1/0) |
+| allow_print | No | Enable printing (1/0) |
+
+### Services
+```php
+$bulk_ops = \Drupal::service('pdf_embed_seo.bulk_operations');
+
+// Import from CSV
+$results = $bulk_ops->importFromCsv('/path/to/file.csv', $options);
+// Returns: ['success' => 10, 'failed' => 2, 'messages' => [...]]
+
+// Bulk update documents
+$results = $bulk_ops->bulkUpdate($document_ids, ['allow_download' => TRUE]);
+
+// Convenience methods
+$bulk_ops->bulkEnableDownload($document_ids);
+$bulk_ops->bulkDisableDownload($document_ids);
+$bulk_ops->bulkEnablePrint($document_ids);
+$bulk_ops->bulkDisablePrint($document_ids);
+```
 
 ---
 
@@ -153,10 +376,19 @@ Provides styled view with:
 
 | Method | Endpoint | Description | Auth Required |
 |--------|----------|-------------|---------------|
-| `GET` | `/analytics` | Get analytics overview | Yes (permission) |
+| `GET` | `/analytics` | Get analytics overview | Yes (admin) |
+| `GET` | `/analytics/documents` | Per-document analytics | Yes (admin) |
+| `GET` | `/analytics/export` | Export analytics CSV/JSON | Yes (admin) |
 | `GET` | `/documents/{id}/progress` | Get reading progress | No |
 | `POST` | `/documents/{id}/progress` | Save reading progress | No |
 | `POST` | `/documents/{id}/verify-password` | Verify PDF password | No |
+| `POST` | `/documents/{id}/download` | Track PDF download | No |
+| `POST` | `/documents/{id}/expiring-link` | Generate expiring link | Yes (admin) |
+| `GET` | `/documents/{id}/expiring-link/{token}` | Validate expiring link | No |
+| `GET` | `/categories` | List PDF categories | No |
+| `GET` | `/tags` | List PDF tags | No |
+| `POST` | `/bulk/import` | Start bulk import | Yes (admin) |
+| `GET` | `/bulk/import/{batch_id}/status` | Get import status | Yes (admin) |
 
 ### GET /analytics
 
@@ -256,6 +488,138 @@ Verifies password for protected PDF.
 }
 ```
 
+### POST /documents/{id}/download
+
+Tracks a PDF download event.
+
+**Response:**
+```json
+{
+  "success": true,
+  "document_id": 123,
+  "download_count": 45,
+  "file_url": "https://example.com/sites/default/files/pdfs/document.pdf"
+}
+```
+
+### POST /documents/{id}/expiring-link
+
+Generates a time-limited access link for a PDF.
+
+**Request Body:**
+```json
+{
+  "expires_in": 3600,
+  "max_uses": 5
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "token": "abc123xyz...",
+  "access_url": "https://example.com/pdf/document?pdf_access=abc123xyz",
+  "expires_at": "2024-06-21T14:45:00+00:00",
+  "max_uses": 5
+}
+```
+
+### GET /documents/{id}/expiring-link/{token}
+
+Validates an expiring link and returns PDF access.
+
+**Response:**
+```json
+{
+  "success": true,
+  "document_id": 123,
+  "title": "Annual Report",
+  "file_url": "https://example.com/sites/default/files/pdfs/document.pdf",
+  "uses": 2,
+  "max_uses": 5,
+  "expires_at": "2024-06-21T14:45:00+00:00",
+  "remaining_uses": 3
+}
+```
+
+### GET /categories
+
+Returns all PDF categories.
+
+**Response:**
+```json
+[
+  {
+    "id": 1,
+    "name": "Reports",
+    "description": "Annual and quarterly reports",
+    "count": 15
+  }
+]
+```
+
+### GET /tags
+
+Returns all PDF tags.
+
+**Response:**
+```json
+[
+  {
+    "id": 1,
+    "name": "Finance",
+    "count": 8
+  }
+]
+```
+
+### GET /analytics/documents
+
+Returns per-document analytics.
+
+**Query Parameters:**
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `period` | 30days | Time period |
+| `orderby` | views | Sort by: views, downloads, avg_time |
+| `limit` | 10 | Number of documents |
+
+**Response:**
+```json
+{
+  "period": "30days",
+  "documents": [
+    {
+      "id": 123,
+      "title": "Annual Report",
+      "views": 1542,
+      "downloads": 234,
+      "avg_time_spent": 180
+    }
+  ]
+}
+```
+
+### GET /analytics/export
+
+Exports analytics data.
+
+**Query Parameters:**
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `format` | csv | Export format: csv, json |
+| `period` | all | Time period |
+
+**CSV Response:**
+```json
+{
+  "format": "csv",
+  "filename": "pdf-analytics-2024-06-20.csv",
+  "content": "\"ID\",\"Title\",\"Views\"..."
+}
+```
+
 ---
 
 ## Permissions
@@ -337,6 +701,10 @@ Stores reading progress data.
 |---------|-------------|
 | `pdf_embed_seo.analytics_tracker` | Track and query view statistics |
 | `pdf_embed_seo.progress_tracker` | Save and retrieve reading progress |
+| `pdf_embed_seo.schema_enhancer` | GEO/AEO/LLM schema optimization |
+| `pdf_embed_seo.access_manager` | Role-based access control |
+| `pdf_embed_seo.viewer_enhancer` | Enhanced viewer features |
+| `pdf_embed_seo.bulk_operations` | Bulk import and update operations |
 
 ### Using Analytics Tracker
 ```php
@@ -407,6 +775,21 @@ Override these templates in your theme:
 ---
 
 ## Changelog
+
+### 1.2.5
+- Download Tracking - Track PDF downloads separately from views
+- Expiring Access Links - Generate time-limited URLs with max usage limits
+- Schema Optimization (GEO/AEO/LLM) service - AI summary, FAQ, TOC, and more
+- Role-Based Access Control service - Restrict by user role
+- Bulk Import operations - Import PDFs from CSV
+- Viewer Enhancements - Text search, bookmarks, reading progress UI
+- Extended REST API with 14+ endpoints matching WordPress
+- New endpoints: `/download`, `/expiring-link`, `/categories`, `/tags`, `/bulk/import`
+
+### 1.2.4
+- Premium AI & Schema Optimization meta box for GEO/AEO/LLM optimization
+- AI Summary, FAQ Schema, Table of Contents, Reading Time, Difficulty Level
+- Target Audience, Prerequisites, Learning Outcomes schema fields
 
 ### 1.2.1
 - Version bump for release

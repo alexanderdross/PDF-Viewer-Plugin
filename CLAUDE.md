@@ -2,7 +2,7 @@
 
 A comprehensive PDF management solution available for WordPress and Drupal that uses Mozilla's PDF.js library to securely display PDFs with SEO optimization.
 
-**Current Version:** 1.2.4
+**Current Version:** 1.2.5
 **Platforms:** WordPress (Free & Premium), Drupal 10/11
 **License:** GPL v2 or later
 
@@ -353,6 +353,9 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 | `GET` | `/documents/{id}/progress` | Get reading progress | None |
 | `POST` | `/documents/{id}/progress` | Save reading progress | None |
 | `POST` | `/documents/{id}/verify-password` | Verify PDF password | None |
+| `POST` | `/documents/{id}/download` | Track PDF download | None |
+| `POST` | `/documents/{id}/expiring-link` | Generate expiring access link | Admin |
+| `GET` | `/documents/{id}/expiring-link/{token}` | Validate expiring link | None |
 | `GET` | `/categories` | List PDF categories | None |
 | `GET` | `/tags` | List PDF tags | None |
 | `POST` | `/bulk/import` | Start bulk import | Admin |
@@ -458,6 +461,7 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 | `_pdf_allow_print` | bool | Allow print |
 | `_pdf_standalone_mode` | bool | Standalone fullscreen mode |
 | `_pdf_view_count` | int | View count |
+| `_pdf_download_count` | int | Download count (Premium) |
 | `_pdf_password_protected` | bool | Password enabled (Premium) |
 | `_pdf_password` | string | Hashed password (Premium) |
 | `_pdf_ai_summary` | string | AI summary/TL;DR (Premium) |
@@ -617,6 +621,9 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 | GET /analytics/export | - | ✓ |
 | GET/POST /documents/{id}/progress | - | ✓ |
 | POST /documents/{id}/verify-password | - | ✓ |
+| POST /documents/{id}/download | - | ✓ |
+| POST /documents/{id}/expiring-link | - | ✓ |
+| GET /documents/{id}/expiring-link/{token} | - | ✓ |
 | GET /categories | - | ✓ |
 | GET /tags | - | ✓ |
 | POST /bulk/import | - | ✓ |
@@ -629,6 +636,7 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 | View Count Display | ✓ | ✓ |
 | Analytics Dashboard | - | ✓ |
 | Detailed View Tracking | - | ✓ |
+| **Download Tracking** | - | ✓ |
 | IP, User Agent, Referrer | - | ✓ |
 | Time Spent Tracking | - | ✓ |
 | Popular Documents Report | - | ✓ |
@@ -651,6 +659,9 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 | Session-Based Access | - | ✓ |
 | Login Requirement Option | - | ✓ |
 | Role Restrictions | - | ✓ |
+| **Expiring Access Links** | - | ✓ |
+| **Time-Limited URLs** | - | ✓ |
+| **Max Uses per Link** | - | ✓ |
 
 ### Reading Experience
 
@@ -716,7 +727,18 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 
 ## Changelog
 
-### 1.2.4 (Current)
+### 1.2.5 (Current)
+- Download Tracking - Track PDF downloads separately from views
+- Expiring Access Links - Generate time-limited URLs for PDFs with max usage limits
+- Drupal Premium feature parity with WordPress:
+  - Schema Optimization (GEO/AEO/LLM) service
+  - Role-Based Access Control service
+  - Bulk Import operations service
+  - Viewer Enhancements (search, bookmarks) service
+- Extended Drupal REST API with 14+ new endpoints matching WordPress
+- New REST endpoints: `/documents/{id}/download`, `/documents/{id}/expiring-link`
+
+### 1.2.4
 - Premium AI & Schema Optimization meta box for GEO/AEO/LLM optimization
 - AI Summary, FAQ Schema, Table of Contents, Reading Time, Difficulty Level
 - Target Audience, Prerequisites, Learning Outcomes schema fields

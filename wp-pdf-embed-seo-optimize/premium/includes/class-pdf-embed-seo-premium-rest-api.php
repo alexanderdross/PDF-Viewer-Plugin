@@ -284,6 +284,93 @@ class PDF_Embed_SEO_Premium_REST_API {
 				'permission_callback' => '__return_true',
 			)
 		);
+
+		// ==========================================
+		// Download Tracking Endpoints
+		// ==========================================
+
+		// POST /documents/{id}/download - Track PDF download.
+		register_rest_route(
+			self::API_NAMESPACE,
+			'/documents/(?P<id>\d+)/download',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'track_download' ),
+				'permission_callback' => '__return_true',
+				'args'                => array(
+					'id' => array(
+						'description'       => __( 'PDF document ID.', 'pdf-embed-seo-optimize' ),
+						'type'              => 'integer',
+						'required'          => true,
+						'sanitize_callback' => 'absint',
+					),
+				),
+			)
+		);
+
+		// ==========================================
+		// Expiring Access Links Endpoints
+		// ==========================================
+
+		// POST /documents/{id}/expiring-link - Generate expiring access link.
+		register_rest_route(
+			self::API_NAMESPACE,
+			'/documents/(?P<id>\d+)/expiring-link',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'generate_expiring_link' ),
+				'permission_callback' => array( $this, 'admin_permissions_check' ),
+				'args'                => array(
+					'id'         => array(
+						'description'       => __( 'PDF document ID.', 'pdf-embed-seo-optimize' ),
+						'type'              => 'integer',
+						'required'          => true,
+						'sanitize_callback' => 'absint',
+					),
+					'expires_in' => array(
+						'description'       => __( 'Expiration time in seconds (default: 24 hours).', 'pdf-embed-seo-optimize' ),
+						'type'              => 'integer',
+						'default'           => 86400,
+						'minimum'           => 300,
+						'maximum'           => 2592000,
+						'sanitize_callback' => 'absint',
+					),
+					'max_uses'   => array(
+						'description'       => __( 'Maximum number of uses (0 = unlimited).', 'pdf-embed-seo-optimize' ),
+						'type'              => 'integer',
+						'default'           => 0,
+						'minimum'           => 0,
+						'maximum'           => 1000,
+						'sanitize_callback' => 'absint',
+					),
+				),
+			)
+		);
+
+		// GET /documents/{id}/expiring-link/{token} - Validate expiring link and get PDF access.
+		register_rest_route(
+			self::API_NAMESPACE,
+			'/documents/(?P<id>\d+)/expiring-link/(?P<token>[a-zA-Z0-9]+)',
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'validate_expiring_link' ),
+				'permission_callback' => '__return_true',
+				'args'                => array(
+					'id'    => array(
+						'description'       => __( 'PDF document ID.', 'pdf-embed-seo-optimize' ),
+						'type'              => 'integer',
+						'required'          => true,
+						'sanitize_callback' => 'absint',
+					),
+					'token' => array(
+						'description'       => __( 'Access token.', 'pdf-embed-seo-optimize' ),
+						'type'              => 'string',
+						'required'          => true,
+						'sanitize_callback' => 'sanitize_text_field',
+					),
+				),
+			)
+		);
 	}
 
 	/**
@@ -826,5 +913,266 @@ class PDF_Embed_SEO_Premium_REST_API {
 		// Use IP hash for anonymous users.
 		$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
 		return 'anon_' . md5( $ip );
+	}
+
+	/**
+	 * Track PDF download.
+	 *
+	 * @param WP_REST_Request $request Request object.
+	 * @return WP_REST_Response|WP_Error
+	 */
+	public function track_download( $request ) {
+		$post_id = $request->get_param( 'id' );
+
+		$post = get_post( $post_id );
+
+		if ( ! $post || 'pdf_document' !== $post->post_type ) {
+			return new WP_Error(
+				'invalid_document',
+				__( 'Invalid PDF document.', 'pdf-embed-seo-optimize' ),
+				array( 'status' => 404 )
+			);
+		}
+
+		// Check if downloads are allowed.
+		$allow_download = get_post_meta( $post_id, '_pdf_allow_download', true );
+		if ( ! $allow_download ) {
+			return new WP_Error(
+				'downloads_disabled',
+				__( 'Downloads are not enabled for this document.', 'pdf-embed-seo-optimize' ),
+				array( 'status' => 403 )
+			);
+		}
+
+		// Increment download count.
+		$download_count = (int) get_post_meta( $post_id, '_pdf_download_count', true );
+		update_post_meta( $post_id, '_pdf_download_count', $download_count + 1 );
+
+		// Log download in analytics table if exists.
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'pdf_analytics';
+
+		$table_exists = $wpdb->get_var(
+			$wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name )
+		);
+
+		if ( $table_exists ) {
+			$user_ip    = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
+			$user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
+			$referrer   = isset( $_SERVER['HTTP_REFERER'] ) ? esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
+
+			$wpdb->insert(
+				$table_name,
+				array(
+					'document_id' => $post_id,
+					'event_type'  => 'download',
+					'user_id'     => get_current_user_id(),
+					'user_ip'     => $user_ip,
+					'user_agent'  => $user_agent,
+					'referrer'    => $referrer,
+					'created_at'  => current_time( 'mysql' ),
+				),
+				array( '%d', '%s', '%d', '%s', '%s', '%s', '%s' )
+			);
+		}
+
+		/**
+		 * Fires when a PDF download is tracked.
+		 *
+		 * @since 1.2.4
+		 *
+		 * @param int $post_id        Document ID.
+		 * @param int $download_count New download count.
+		 */
+		do_action( 'pdf_embed_seo_download_tracked', $post_id, $download_count + 1 );
+
+		// Get the PDF file URL.
+		$file_id  = get_post_meta( $post_id, '_pdf_file_id', true );
+		$file_url = $file_id ? wp_get_attachment_url( $file_id ) : get_post_meta( $post_id, '_pdf_file_url', true );
+
+		return rest_ensure_response(
+			array(
+				'success'        => true,
+				'document_id'    => $post_id,
+				'download_count' => $download_count + 1,
+				'file_url'       => $file_url,
+			)
+		);
+	}
+
+	/**
+	 * Generate expiring access link for a PDF document.
+	 *
+	 * @param WP_REST_Request $request Request object.
+	 * @return WP_REST_Response|WP_Error
+	 */
+	public function generate_expiring_link( $request ) {
+		$post_id    = $request->get_param( 'id' );
+		$expires_in = $request->get_param( 'expires_in' );
+		$max_uses   = $request->get_param( 'max_uses' );
+
+		$post = get_post( $post_id );
+
+		if ( ! $post || 'pdf_document' !== $post->post_type ) {
+			return new WP_Error(
+				'invalid_document',
+				__( 'Invalid PDF document.', 'pdf-embed-seo-optimize' ),
+				array( 'status' => 404 )
+			);
+		}
+
+		// Generate secure token.
+		$token = wp_generate_password( 32, false );
+
+		// Calculate expiration timestamp.
+		$expires_at = time() + $expires_in;
+
+		// Store token data.
+		$token_data = array(
+			'document_id' => $post_id,
+			'expires_at'  => $expires_at,
+			'max_uses'    => $max_uses,
+			'uses'        => 0,
+			'created_by'  => get_current_user_id(),
+			'created_at'  => current_time( 'mysql' ),
+		);
+
+		// Store in options (for persistence) with expiration.
+		set_transient( 'pdf_expiring_link_' . $token, $token_data, $expires_in );
+
+		// Also store in a permanent list for admin tracking.
+		$expiring_links = get_option( 'pdf_embed_seo_expiring_links', array() );
+		$expiring_links[ $token ] = $token_data;
+		update_option( 'pdf_embed_seo_expiring_links', $expiring_links );
+
+		// Build the access URL.
+		$access_url = add_query_arg(
+			array(
+				'pdf_access' => $token,
+			),
+			get_permalink( $post_id )
+		);
+
+		/**
+		 * Fires when an expiring link is generated.
+		 *
+		 * @since 1.2.4
+		 *
+		 * @param int    $post_id    Document ID.
+		 * @param string $token      Access token.
+		 * @param array  $token_data Token data.
+		 */
+		do_action( 'pdf_embed_seo_expiring_link_generated', $post_id, $token, $token_data );
+
+		return rest_ensure_response(
+			array(
+				'success'    => true,
+				'token'      => $token,
+				'access_url' => $access_url,
+				'expires_at' => gmdate( 'c', $expires_at ),
+				'max_uses'   => $max_uses,
+			)
+		);
+	}
+
+	/**
+	 * Validate expiring access link.
+	 *
+	 * @param WP_REST_Request $request Request object.
+	 * @return WP_REST_Response|WP_Error
+	 */
+	public function validate_expiring_link( $request ) {
+		$post_id = $request->get_param( 'id' );
+		$token   = $request->get_param( 'token' );
+
+		$post = get_post( $post_id );
+
+		if ( ! $post || 'pdf_document' !== $post->post_type ) {
+			return new WP_Error(
+				'invalid_document',
+				__( 'Invalid PDF document.', 'pdf-embed-seo-optimize' ),
+				array( 'status' => 404 )
+			);
+		}
+
+		// Get token data.
+		$token_data = get_transient( 'pdf_expiring_link_' . $token );
+
+		if ( ! $token_data ) {
+			return new WP_Error(
+				'invalid_token',
+				__( 'This access link has expired or is invalid.', 'pdf-embed-seo-optimize' ),
+				array( 'status' => 403 )
+			);
+		}
+
+		// Verify document ID matches.
+		if ( (int) $token_data['document_id'] !== $post_id ) {
+			return new WP_Error(
+				'invalid_token',
+				__( 'This access link is not valid for this document.', 'pdf-embed-seo-optimize' ),
+				array( 'status' => 403 )
+			);
+		}
+
+		// Check expiration.
+		if ( time() > $token_data['expires_at'] ) {
+			delete_transient( 'pdf_expiring_link_' . $token );
+			return new WP_Error(
+				'link_expired',
+				__( 'This access link has expired.', 'pdf-embed-seo-optimize' ),
+				array( 'status' => 403 )
+			);
+		}
+
+		// Check max uses.
+		if ( $token_data['max_uses'] > 0 && $token_data['uses'] >= $token_data['max_uses'] ) {
+			delete_transient( 'pdf_expiring_link_' . $token );
+			return new WP_Error(
+				'max_uses_reached',
+				__( 'This access link has reached its maximum uses.', 'pdf-embed-seo-optimize' ),
+				array( 'status' => 403 )
+			);
+		}
+
+		// Increment uses.
+		$token_data['uses']++;
+		$remaining_time = $token_data['expires_at'] - time();
+		set_transient( 'pdf_expiring_link_' . $token, $token_data, $remaining_time );
+
+		// Update permanent list.
+		$expiring_links = get_option( 'pdf_embed_seo_expiring_links', array() );
+		if ( isset( $expiring_links[ $token ] ) ) {
+			$expiring_links[ $token ]['uses'] = $token_data['uses'];
+			update_option( 'pdf_embed_seo_expiring_links', $expiring_links );
+		}
+
+		// Get the PDF file URL.
+		$file_id  = get_post_meta( $post_id, '_pdf_file_id', true );
+		$file_url = $file_id ? wp_get_attachment_url( $file_id ) : get_post_meta( $post_id, '_pdf_file_url', true );
+
+		/**
+		 * Fires when an expiring link is validated.
+		 *
+		 * @since 1.2.4
+		 *
+		 * @param int    $post_id    Document ID.
+		 * @param string $token      Access token.
+		 * @param array  $token_data Token data.
+		 */
+		do_action( 'pdf_embed_seo_expiring_link_validated', $post_id, $token, $token_data );
+
+		return rest_ensure_response(
+			array(
+				'success'        => true,
+				'document_id'    => $post_id,
+				'title'          => get_the_title( $post ),
+				'file_url'       => $file_url,
+				'uses'           => $token_data['uses'],
+				'max_uses'       => $token_data['max_uses'],
+				'expires_at'     => gmdate( 'c', $token_data['expires_at'] ),
+				'remaining_uses' => $token_data['max_uses'] > 0 ? $token_data['max_uses'] - $token_data['uses'] : null,
+			)
+		);
 	}
 }
