@@ -188,8 +188,174 @@ final class PDF_Embed_SEO_Premium {
 
 		// Always initialize admin for license page (regardless of license status).
 		if ( is_admin() ) {
+			// Register license page early (admin_menu fires before admin_init).
+			add_action( 'admin_menu', array( $this, 'add_license_page' ), 99 );
+			add_action( 'admin_init', array( $this, 'register_license_settings' ) );
 			add_action( 'admin_init', array( $this, 'init_admin_always' ) );
 		}
+	}
+
+	/**
+	 * Register license settings.
+	 * This runs on admin_init to ensure settings are available for the license page.
+	 *
+	 * @return void
+	 */
+	public function register_license_settings() {
+		register_setting(
+			'pdf_embed_seo_license',
+			'pdf_embed_seo_premium_license_key',
+			array(
+				'type'              => 'string',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+
+		// Add capability filter for license settings page.
+		add_filter( 'option_page_capability_pdf_embed_seo_license', function() {
+			return 'manage_options';
+		} );
+
+		// Handle license key validation on save.
+		add_action( 'update_option_pdf_embed_seo_premium_license_key', array( $this, 'validate_license_key' ), 10, 2 );
+		add_action( 'add_option_pdf_embed_seo_premium_license_key', array( $this, 'validate_license_key_on_add' ), 10, 2 );
+	}
+
+	/**
+	 * Validate license key when option is added.
+	 *
+	 * @param string $option Option name.
+	 * @param mixed  $value  Option value.
+	 * @return void
+	 */
+	public function validate_license_key_on_add( $option, $value ) {
+		$this->validate_license( $value );
+	}
+
+	/**
+	 * Validate license key when updated.
+	 *
+	 * @param mixed $old_value Old value.
+	 * @param mixed $new_value New value.
+	 * @return void
+	 */
+	public function validate_license_key( $old_value, $new_value ) {
+		$this->validate_license( $new_value );
+	}
+
+	/**
+	 * Process license key validation.
+	 *
+	 * @param string $license_key The license key to validate.
+	 * @return void
+	 */
+	private function validate_license( $license_key ) {
+		if ( empty( $license_key ) ) {
+			update_option( 'pdf_embed_seo_premium_license_status', 'inactive' );
+			delete_option( 'pdf_embed_seo_premium_license_expires' );
+			return;
+		}
+
+		// Minimum length check (20+ characters).
+		if ( strlen( $license_key ) < 20 ) {
+			update_option( 'pdf_embed_seo_premium_license_status', 'invalid' );
+			delete_option( 'pdf_embed_seo_premium_license_expires' );
+			return;
+		}
+
+		// Test/Development license keys for unlimited validity.
+		$test_key_patterns = array(
+			'/^PDF\$UNLIMITED#[A-Z0-9]{4}@[A-Z0-9]{4}![A-Z0-9]{4}$/i',
+			'/^PDF\$DEV#[A-Z0-9]{4}-[A-Z0-9]{4}@[A-Z0-9]{4}![A-Z0-9]{4}$/i',
+		);
+
+		foreach ( $test_key_patterns as $pattern ) {
+			if ( preg_match( $pattern, $license_key ) ) {
+				update_option( 'pdf_embed_seo_premium_license_status', 'valid' );
+				delete_option( 'pdf_embed_seo_premium_license_expires' );
+				return;
+			}
+		}
+
+		// Standard license key validation.
+		if ( preg_match( '/^PDF\$PRO#[A-Z0-9]{4}-[A-Z0-9]{4}@[A-Z0-9]{4}-[A-Z0-9]{4}![A-Z0-9]{4}$/i', $license_key ) ) {
+			update_option( 'pdf_embed_seo_premium_license_status', 'valid' );
+			update_option( 'pdf_embed_seo_premium_license_expires', gmdate( 'Y-m-d', strtotime( '+1 year' ) ) );
+			return;
+		}
+
+		// Invalid key format.
+		update_option( 'pdf_embed_seo_premium_license_status', 'invalid' );
+		delete_option( 'pdf_embed_seo_premium_license_expires' );
+	}
+
+	/**
+	 * Add license page to admin menu.
+	 * This is hooked early to ensure the page is always accessible.
+	 *
+	 * @return void
+	 */
+	public function add_license_page() {
+		add_submenu_page(
+			'edit.php?post_type=pdf_document',
+			__( 'License', 'pdf-embed-seo-optimize' ),
+			__( 'License', 'pdf-embed-seo-optimize' ),
+			'manage_options',
+			'pdf-license',
+			array( $this, 'render_license_page' )
+		);
+	}
+
+	/**
+	 * Render license page.
+	 *
+	 * @return void
+	 */
+	public function render_license_page() {
+		$license_key    = get_option( 'pdf_embed_seo_premium_license_key', '' );
+		$license_status = get_option( 'pdf_embed_seo_premium_license_status', 'inactive' );
+		?>
+		<div class="wrap">
+			<h1><?php esc_html_e( 'License Settings', 'pdf-embed-seo-optimize' ); ?></h1>
+
+			<div class="pdf-license-status <?php echo 'valid' === $license_status ? 'active' : 'inactive'; ?>" style="padding: 15px; margin: 20px 0; border-radius: 4px; <?php echo 'valid' === $license_status ? 'background: #d4edda; border-left: 4px solid #28a745;' : 'background: #fff3cd; border-left: 4px solid #ffc107;'; ?>">
+				<span class="dashicons <?php echo 'valid' === $license_status ? 'dashicons-yes-alt' : 'dashicons-warning'; ?>" style="font-size: 24px; margin-right: 10px;"></span>
+				<?php if ( 'valid' === $license_status ) : ?>
+					<strong><?php esc_html_e( 'License Active', 'pdf-embed-seo-optimize' ); ?></strong>
+					<p style="margin: 5px 0 0;"><?php esc_html_e( 'Your premium license is active. Thank you for your support!', 'pdf-embed-seo-optimize' ); ?></p>
+				<?php else : ?>
+					<strong><?php esc_html_e( 'License Inactive', 'pdf-embed-seo-optimize' ); ?></strong>
+					<p style="margin: 5px 0 0;"><?php esc_html_e( 'Please enter a valid license key to activate premium features.', 'pdf-embed-seo-optimize' ); ?></p>
+				<?php endif; ?>
+			</div>
+
+			<form method="post" action="options.php">
+				<?php settings_fields( 'pdf_embed_seo_license' ); ?>
+				<table class="form-table">
+					<tr>
+						<th scope="row">
+							<label for="license_key"><?php esc_html_e( 'License Key', 'pdf-embed-seo-optimize' ); ?></label>
+						</th>
+						<td>
+							<input type="password" id="license_key" name="pdf_embed_seo_premium_license_key" value="<?php echo esc_attr( $license_key ); ?>" class="regular-text" />
+							<p class="description"><?php esc_html_e( 'Enter your license key to activate automatic updates and premium support.', 'pdf-embed-seo-optimize' ); ?></p>
+						</td>
+					</tr>
+				</table>
+				<?php submit_button( __( 'Save License Key', 'pdf-embed-seo-optimize' ) ); ?>
+			</form>
+
+			<p>
+				<?php
+				printf(
+					/* translators: %s: link to purchase page */
+					esc_html__( 'Don\'t have a license key? %s', 'pdf-embed-seo-optimize' ),
+					'<a href="https://pdfviewer.drossmedia.de" target="_blank">' . esc_html__( 'Purchase a license', 'pdf-embed-seo-optimize' ) . '</a>'
+				);
+				?>
+			</p>
+		</div>
+		<?php
 	}
 
 	/**
