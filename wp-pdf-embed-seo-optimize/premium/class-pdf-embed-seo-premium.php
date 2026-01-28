@@ -34,10 +34,25 @@ final class PDF_Embed_SEO_Premium {
 
 	/**
 	 * License status.
+	 * Possible values: 'valid', 'expired', 'invalid', 'inactive'
 	 *
 	 * @var string
 	 */
 	private $license_status = 'valid';
+
+	/**
+	 * License expiration date.
+	 *
+	 * @var string|null
+	 */
+	private $license_expires = null;
+
+	/**
+	 * Grace period in days after license expiration.
+	 *
+	 * @var int
+	 */
+	const GRACE_PERIOD_DAYS = 14;
 
 	/**
 	 * Taxonomies instance.
@@ -212,35 +227,189 @@ final class PDF_Embed_SEO_Premium {
 	/**
 	 * Check if license is valid.
 	 *
-	 * @return bool
+	 * Validates license status and expiration date.
+	 * If license is expired, premium features are disabled and
+	 * the plugin falls back to free version functionality.
+	 *
+	 * @return bool True if license is valid, false otherwise.
 	 */
 	public function is_license_valid() {
-		// For now, always return true (license system to be implemented).
-		// In production, this would check against a license server.
-		$this->license_status = get_option( 'pdf_embed_seo_premium_license_status', 'valid' );
-		return 'valid' === $this->license_status;
+		$this->license_status  = get_option( 'pdf_embed_seo_premium_license_status', 'inactive' );
+		$this->license_expires = get_option( 'pdf_embed_seo_premium_license_expires', null );
+
+		// If license was never activated, run in free mode.
+		if ( 'inactive' === $this->license_status || empty( $this->license_status ) ) {
+			return false;
+		}
+
+		// If license is marked as invalid, run in free mode.
+		if ( 'invalid' === $this->license_status ) {
+			return false;
+		}
+
+		// Check expiration date if license was previously valid.
+		if ( 'valid' === $this->license_status && ! empty( $this->license_expires ) ) {
+			$expires_timestamp = strtotime( $this->license_expires );
+			$current_timestamp = current_time( 'timestamp' );
+
+			// Check if license has expired.
+			if ( $expires_timestamp < $current_timestamp ) {
+				// Check if within grace period.
+				$grace_end = $expires_timestamp + ( self::GRACE_PERIOD_DAYS * DAY_IN_SECONDS );
+
+				if ( $current_timestamp > $grace_end ) {
+					// Grace period ended - mark as expired and disable premium.
+					update_option( 'pdf_embed_seo_premium_license_status', 'expired' );
+					$this->license_status = 'expired';
+					return false;
+				}
+
+				// Within grace period - show warning but allow premium.
+				$this->license_status = 'grace_period';
+				return true;
+			}
+		}
+
+		// License is expired (manually set or detected).
+		if ( 'expired' === $this->license_status ) {
+			return false;
+		}
+
+		return 'valid' === $this->license_status || 'grace_period' === $this->license_status;
+	}
+
+	/**
+	 * Get license status.
+	 *
+	 * @return string License status.
+	 */
+	public function get_license_status() {
+		return $this->license_status;
+	}
+
+	/**
+	 * Get license expiration date.
+	 *
+	 * @return string|null Expiration date or null if not set.
+	 */
+	public function get_license_expires() {
+		return $this->license_expires;
+	}
+
+	/**
+	 * Get days remaining until license expires.
+	 *
+	 * @return int|null Days remaining or null if no expiration.
+	 */
+	public function get_days_remaining() {
+		if ( empty( $this->license_expires ) ) {
+			return null;
+		}
+
+		$expires_timestamp = strtotime( $this->license_expires );
+		$current_timestamp = current_time( 'timestamp' );
+		$diff              = $expires_timestamp - $current_timestamp;
+
+		if ( $diff <= 0 ) {
+			return 0;
+		}
+
+		return ceil( $diff / DAY_IN_SECONDS );
 	}
 
 	/**
 	 * Display license notices.
 	 *
+	 * Shows appropriate notices based on license status:
+	 * - Expired: Premium features disabled, fallback to free version.
+	 * - Grace period: Warning with days remaining.
+	 * - Inactive: Prompt to enter license key.
+	 * - Invalid: Error message.
+	 *
 	 * @return void
 	 */
 	public function license_notices() {
-		if ( 'valid' !== $this->license_status ) {
-			?>
-			<div class="notice notice-warning is-dismissible">
-				<p>
-					<?php
-					printf(
-						/* translators: %s: Settings page URL. */
-						esc_html__( 'PDF Embed & SEO Optimize Pro: Please enter a valid license key to enable premium features. %s', 'wp-pdf-embed-seo-optimize' ),
-						'<a href="' . esc_url( admin_url( 'edit.php?post_type=pdf_document&page=pdf-embed-seo-settings' ) ) . '">' . esc_html__( 'Enter License', 'wp-pdf-embed-seo-optimize' ) . '</a>'
-					);
+		$license_url = admin_url( 'edit.php?post_type=pdf_document&page=pdf-license' );
+		$renew_url   = 'https://pdfviewer.drossmedia.de/renew/';
+
+		switch ( $this->license_status ) {
+			case 'expired':
+				?>
+				<div class="notice notice-error">
+					<p>
+						<strong><?php esc_html_e( 'PDF Embed & SEO Optimize:', 'wp-pdf-embed-seo-optimize' ); ?></strong>
+						<?php esc_html_e( 'Your premium license has expired. Premium features have been disabled and the plugin is now running in free mode.', 'wp-pdf-embed-seo-optimize' ); ?>
+						<a href="<?php echo esc_url( $renew_url ); ?>" target="_blank"><?php esc_html_e( 'Renew License', 'wp-pdf-embed-seo-optimize' ); ?></a>
+					</p>
+				</div>
+				<?php
+				break;
+
+			case 'grace_period':
+				$days_remaining = $this->get_days_remaining();
+				$grace_days     = self::GRACE_PERIOD_DAYS - abs( $days_remaining );
+				?>
+				<div class="notice notice-warning">
+					<p>
+						<strong><?php esc_html_e( 'PDF Embed & SEO Optimize:', 'wp-pdf-embed-seo-optimize' ); ?></strong>
+						<?php
+						printf(
+							/* translators: %d: Number of grace period days remaining. */
+							esc_html__( 'Your license has expired! You have %d days remaining in your grace period before premium features are disabled.', 'wp-pdf-embed-seo-optimize' ),
+							$grace_days
+						);
+						?>
+						<a href="<?php echo esc_url( $renew_url ); ?>" target="_blank"><?php esc_html_e( 'Renew Now', 'wp-pdf-embed-seo-optimize' ); ?></a>
+					</p>
+				</div>
+				<?php
+				break;
+
+			case 'inactive':
+				?>
+				<div class="notice notice-info is-dismissible">
+					<p>
+						<strong><?php esc_html_e( 'PDF Embed & SEO Optimize:', 'wp-pdf-embed-seo-optimize' ); ?></strong>
+						<?php esc_html_e( 'Enter your license key to activate premium features.', 'wp-pdf-embed-seo-optimize' ); ?>
+						<a href="<?php echo esc_url( $license_url ); ?>"><?php esc_html_e( 'Enter License', 'wp-pdf-embed-seo-optimize' ); ?></a>
+					</p>
+				</div>
+				<?php
+				break;
+
+			case 'invalid':
+				?>
+				<div class="notice notice-error is-dismissible">
+					<p>
+						<strong><?php esc_html_e( 'PDF Embed & SEO Optimize:', 'wp-pdf-embed-seo-optimize' ); ?></strong>
+						<?php esc_html_e( 'Your license key is invalid. Please check your license key or contact support.', 'wp-pdf-embed-seo-optimize' ); ?>
+						<a href="<?php echo esc_url( $license_url ); ?>"><?php esc_html_e( 'Update License', 'wp-pdf-embed-seo-optimize' ); ?></a>
+					</p>
+				</div>
+				<?php
+				break;
+
+			case 'valid':
+				// Check if license expires soon (within 30 days).
+				$days_remaining = $this->get_days_remaining();
+				if ( null !== $days_remaining && $days_remaining <= 30 ) {
 					?>
-				</p>
-			</div>
-			<?php
+					<div class="notice notice-warning is-dismissible">
+						<p>
+							<strong><?php esc_html_e( 'PDF Embed & SEO Optimize:', 'wp-pdf-embed-seo-optimize' ); ?></strong>
+							<?php
+							printf(
+								/* translators: %d: Number of days until license expires. */
+								esc_html__( 'Your license will expire in %d days. Renew now to maintain premium features.', 'wp-pdf-embed-seo-optimize' ),
+								$days_remaining
+							);
+							?>
+							<a href="<?php echo esc_url( $renew_url ); ?>" target="_blank"><?php esc_html_e( 'Renew License', 'wp-pdf-embed-seo-optimize' ); ?></a>
+						</p>
+					</div>
+					<?php
+				}
+				break;
 		}
 	}
 

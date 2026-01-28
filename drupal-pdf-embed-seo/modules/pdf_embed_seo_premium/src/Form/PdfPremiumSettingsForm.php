@@ -29,6 +29,65 @@ class PdfPremiumSettingsForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('pdf_embed_seo_premium.settings');
+    $license_status = pdf_embed_seo_premium_get_license_status();
+    $days_remaining = pdf_embed_seo_premium_get_days_remaining();
+
+    // License section.
+    $form['license'] = [
+      '#type' => 'details',
+      '#title' => $this->t('License'),
+      '#open' => TRUE,
+      '#weight' => -100,
+    ];
+
+    // Show license status message.
+    $status_messages = [
+      'valid' => $this->t('Your license is active.'),
+      'expired' => $this->t('Your license has expired. Premium features are disabled. The plugin is running in free mode.'),
+      'invalid' => $this->t('Your license key is invalid. Please check your license key.'),
+      'inactive' => $this->t('Please enter your license key to activate premium features.'),
+      'grace_period' => $this->t('Your license has expired! You are in the grace period. Please renew to continue using premium features.'),
+    ];
+
+    $status_class = in_array($license_status, ['valid']) ? 'messages--status' : 'messages--warning';
+    if ($license_status === 'expired' || $license_status === 'invalid') {
+      $status_class = 'messages--error';
+    }
+
+    $form['license']['status_message'] = [
+      '#markup' => '<div class="messages ' . $status_class . '">' . ($status_messages[$license_status] ?? $status_messages['inactive']) . '</div>',
+    ];
+
+    // Show days remaining if applicable.
+    if ($license_status === 'valid' && $days_remaining !== NULL && $days_remaining <= 30) {
+      $form['license']['expiry_warning'] = [
+        '#markup' => '<div class="messages messages--warning">' . $this->t('Your license will expire in @days days.', ['@days' => $days_remaining]) . '</div>',
+      ];
+    }
+
+    $form['license']['license_key'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('License Key'),
+      '#description' => $this->t('Enter your premium license key. Get a license at <a href="@url" target="_blank">pdfviewer.drossmedia.de</a>', ['@url' => 'https://pdfviewer.drossmedia.de']),
+      '#default_value' => $config->get('license_key') ?? '',
+      '#maxlength' => 64,
+    ];
+
+    $form['license']['activate_license'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Activate License'),
+      '#submit' => ['::activateLicense'],
+      '#limit_validation_errors' => [['license_key']],
+    ];
+
+    if ($license_status === 'valid' || $license_status === 'grace_period') {
+      $form['license']['deactivate_license'] = [
+        '#type' => 'submit',
+        '#value' => $this->t('Deactivate License'),
+        '#submit' => ['::deactivateLicense'],
+        '#limit_validation_errors' => [],
+      ];
+    }
 
     $form['features'] = [
       '#type' => 'details',
@@ -121,6 +180,57 @@ class PdfPremiumSettingsForm extends ConfigFormBase {
       ->save();
 
     parent::submitForm($form, $form_state);
+  }
+
+  /**
+   * Activate license handler.
+   *
+   * In production, this would validate the license key against a license server.
+   * For now, it simulates license validation.
+   */
+  public function activateLicense(array &$form, FormStateInterface $form_state) {
+    $license_key = $form_state->getValue('license_key');
+
+    if (empty($license_key)) {
+      $this->messenger()->addError($this->t('Please enter a license key.'));
+      return;
+    }
+
+    // In production, this would call a license server API.
+    // For now, we'll accept any key that starts with 'PDF-' and is 32+ chars.
+    if (strlen($license_key) >= 32 && strpos($license_key, 'PDF-') === 0) {
+      // Valid license - set expiration to 1 year from now.
+      $expires = date('Y-m-d H:i:s', strtotime('+1 year'));
+
+      $this->config('pdf_embed_seo_premium.settings')
+        ->set('license_key', $license_key)
+        ->set('license_status', 'valid')
+        ->set('license_expires', $expires)
+        ->save();
+
+      $this->messenger()->addStatus($this->t('License activated successfully! Premium features are now enabled.'));
+    }
+    else {
+      $this->config('pdf_embed_seo_premium.settings')
+        ->set('license_key', $license_key)
+        ->set('license_status', 'invalid')
+        ->save();
+
+      $this->messenger()->addError($this->t('Invalid license key. Please check your license key and try again.'));
+    }
+  }
+
+  /**
+   * Deactivate license handler.
+   */
+  public function deactivateLicense(array &$form, FormStateInterface $form_state) {
+    $this->config('pdf_embed_seo_premium.settings')
+      ->set('license_key', '')
+      ->set('license_status', 'inactive')
+      ->set('license_expires', NULL)
+      ->save();
+
+    $this->messenger()->addStatus($this->t('License deactivated. Premium features have been disabled.'));
   }
 
 }
