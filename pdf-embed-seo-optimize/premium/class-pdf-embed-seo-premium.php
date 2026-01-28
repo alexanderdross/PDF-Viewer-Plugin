@@ -111,6 +111,13 @@ final class PDF_Embed_SEO_Premium {
 	public $rest_api = null;
 
 	/**
+	 * Schema enhancements instance.
+	 *
+	 * @var PDF_Embed_SEO_Premium_Schema|null
+	 */
+	public $schema = null;
+
+	/**
 	 * Get the single instance of the class.
 	 *
 	 * @return PDF_Embed_SEO_Premium
@@ -158,6 +165,7 @@ final class PDF_Embed_SEO_Premium {
 		require_once PDF_EMBED_SEO_PREMIUM_DIR . 'includes/class-pdf-embed-seo-premium-bulk.php';
 		require_once PDF_EMBED_SEO_PREMIUM_DIR . 'includes/class-pdf-embed-seo-premium-sitemap.php';
 		require_once PDF_EMBED_SEO_PREMIUM_DIR . 'includes/class-pdf-embed-seo-premium-rest-api.php';
+		require_once PDF_EMBED_SEO_PREMIUM_DIR . 'includes/class-pdf-embed-seo-premium-schema.php';
 
 		// Admin classes (only in admin context).
 		if ( is_admin() ) {
@@ -276,6 +284,9 @@ final class PDF_Embed_SEO_Premium {
 
 		// Initialize premium REST API.
 		$this->rest_api = new PDF_Embed_SEO_Premium_REST_API();
+
+		// Initialize premium schema enhancements (GEO/AEO/LLM optimization).
+		$this->schema = new PDF_Embed_SEO_Premium_Schema();
 
 		// Initialize admin (only in admin context).
 		if ( is_admin() ) {
