@@ -190,21 +190,40 @@ function pdf_embed_seo_page_attachments(array &$attachments) {
   $route_match = \Drupal::routeMatch();
 
   // Add Schema.org markup for PDF documents.
+  // Skip if Metatag module handles schema (to avoid duplicates).
   if ($route_match->getRouteName() === 'entity.pdf_document.canonical') {
+    // Check if Metatag module with Schema.org support is handling this.
+    $metatag_schema_active = \Drupal::moduleHandler()->moduleExists('schema_metatag');
+    if ($metatag_schema_active) {
+      // Let Metatag handle schema output.
+      return;
+    }
+
     $pdf_document = $route_match->getParameter('pdf_document');
 
     if ($pdf_document) {
+      $document_url = Url::fromRoute('entity.pdf_document.canonical', [
+        'pdf_document' => $pdf_document->id(),
+      ], ['absolute' => TRUE])->toString();
+      $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+
       $schema = [
         '@context' => 'https://schema.org',
         '@type' => 'DigitalDocument',
+        '@id' => $document_url . '#digitaldocument',
         'name' => $pdf_document->label(),
-        'description' => $pdf_document->get('description')->value ?? '',
-        'url' => Url::fromRoute('entity.pdf_document.canonical', [
-          'pdf_document' => $pdf_document->id(),
-        ], ['absolute' => TRUE])->toString(),
+        'url' => $document_url,
+        'encodingFormat' => 'application/pdf',
         'datePublished' => date('c', $pdf_document->getCreatedTime()),
         'dateModified' => date('c', $pdf_document->getChangedTime()),
+        'inLanguage' => $language,
       ];
+
+      // Add description if available.
+      $description = $pdf_document->get('description')->value ?? '';
+      if (!empty($description)) {
+        $schema['description'] = strip_tags($description);
+      }
 
       // Add thumbnail if available.
       if ($pdf_document->hasField('thumbnail') && !$pdf_document->get('thumbnail')->isEmpty()) {
@@ -214,12 +233,33 @@ function pdf_embed_seo_page_attachments(array &$attachments) {
         }
       }
 
+      // Add author if available.
+      if ($pdf_document->hasField('uid') && !$pdf_document->get('uid')->isEmpty()) {
+        $author = $pdf_document->get('uid')->entity;
+        if ($author) {
+          $schema['author'] = [
+            '@type' => 'Person',
+            'name' => $author->getDisplayName(),
+          ];
+        }
+      }
+
+      // Add publisher (site).
+      $site_name = \Drupal::config('system.site')->get('name');
+      $schema['publisher'] = [
+        '@type' => 'Organization',
+        'name' => $site_name,
+      ];
+
+      // Allow other modules to alter the schema.
+      \Drupal::moduleHandler()->alter('pdf_embed_seo_schema', $schema);
+
       $attachments['#attached']['html_head'][] = [
         [
           '#type' => 'html_tag',
           '#tag' => 'script',
           '#attributes' => ['type' => 'application/ld+json'],
-          '#value' => json_encode($schema),
+          '#value' => json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
         ],
         'pdf_embed_seo_schema',
       ];
@@ -227,20 +267,45 @@ function pdf_embed_seo_page_attachments(array &$attachments) {
   }
 
   // Add Schema.org markup for archive page.
+  // Skip if Metatag module handles schema (to avoid duplicates).
   if ($route_match->getRouteName() === 'pdf_embed_seo.archive') {
+    // Check if Metatag module with Schema.org support is handling this.
+    $metatag_schema_active = \Drupal::moduleHandler()->moduleExists('schema_metatag');
+    if ($metatag_schema_active) {
+      // Let Metatag handle schema output.
+      return;
+    }
+
+    $archive_url = Url::fromRoute('pdf_embed_seo.archive', [], ['absolute' => TRUE])->toString();
+    $site_name = \Drupal::config('system.site')->get('name');
+    $site_url = Url::fromRoute('<front>', [], ['absolute' => TRUE])->toString();
+    $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+
     $schema = [
       '@context' => 'https://schema.org',
       '@type' => 'CollectionPage',
+      '@id' => $archive_url . '#collectionpage',
       'name' => t('PDF Documents'),
-      'url' => Url::fromRoute('pdf_embed_seo.archive', [], ['absolute' => TRUE])->toString(),
+      'description' => t('Browse all available PDF documents.'),
+      'url' => $archive_url,
+      'inLanguage' => $language,
+      'isPartOf' => [
+        '@type' => 'WebSite',
+        '@id' => $site_url . '#website',
+        'name' => $site_name,
+        'url' => $site_url,
+      ],
     ];
+
+    // Allow other modules to alter the schema.
+    \Drupal::moduleHandler()->alter('pdf_embed_seo_schema', $schema);
 
     $attachments['#attached']['html_head'][] = [
       [
         '#type' => 'html_tag',
         '#tag' => 'script',
         '#attributes' => ['type' => 'application/ld+json'],
-        '#value' => json_encode($schema),
+        '#value' => json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
       ],
       'pdf_embed_seo_archive_schema',
     ];

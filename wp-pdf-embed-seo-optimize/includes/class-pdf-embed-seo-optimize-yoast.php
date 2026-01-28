@@ -49,12 +49,18 @@ class PDF_Embed_SEO_Yoast {
 	/**
 	 * Output JSON-LD schema in the head.
 	 *
-	 * This outputs schema markup for PDF documents and archive page, independent of Yoast SEO.
+	 * This outputs schema markup for PDF documents and archive page.
+	 * When Yoast SEO is active, we skip our output to avoid duplicates.
 	 *
 	 * @return void
 	 */
 	public function output_json_ld_schema() {
-		// Handle archive page.
+		// If Yoast is active, let it handle all schema output to avoid duplicates.
+		if ( $this->is_yoast_active() ) {
+			return;
+		}
+
+		// Handle archive page (only when Yoast is not active).
 		if ( is_post_type_archive( 'pdf_document' ) ) {
 			$this->output_archive_schema();
 			return;
@@ -62,11 +68,6 @@ class PDF_Embed_SEO_Yoast {
 
 		// Handle single PDF document pages.
 		if ( ! is_singular( 'pdf_document' ) ) {
-			return;
-		}
-
-		// If Yoast is active, it will handle schema output via its own system.
-		if ( $this->is_yoast_active() ) {
 			return;
 		}
 
@@ -87,12 +88,16 @@ class PDF_Embed_SEO_Yoast {
 	/**
 	 * Output JSON-LD schema for the PDF archive page.
 	 *
+	 * Only outputs when Yoast SEO is not active to avoid duplicate schemas.
+	 *
 	 * @return void
 	 */
 	public function output_archive_schema() {
 		$archive_url = get_post_type_archive_link( 'pdf_document' );
 		$site_name   = get_bloginfo( 'name' );
+		$site_url    = home_url( '/' );
 
+		// Build clean CollectionPage schema.
 		$schema = array(
 			'@context'    => 'https://schema.org',
 			'@type'       => 'CollectionPage',
@@ -100,19 +105,30 @@ class PDF_Embed_SEO_Yoast {
 			'name'        => __( 'PDF Documents', 'wp-pdf-embed-seo-optimize' ),
 			'description' => __( 'Browse all available PDF documents.', 'wp-pdf-embed-seo-optimize' ),
 			'url'         => $archive_url,
+			'inLanguage'  => get_bloginfo( 'language' ),
 			'isPartOf'    => array(
 				'@type' => 'WebSite',
-				'@id'   => home_url( '/' ) . '#website',
+				'@id'   => $site_url . '#website',
 				'name'  => $site_name,
-				'url'   => home_url( '/' ),
-			),
-			'mentions'    => array(
-				'@type'       => 'Organization',
-				'name'        => 'Dross:Media',
-				'url'         => 'https://dross.net/#media',
-				'description' => 'AI Search, GEO & SEO Strategy for the search of tomorrow – directly from the Web & Search Lead of a pharmaceutical company.',
+				'url'   => $site_url,
 			),
 		);
+
+		// Add publisher if site has logo.
+		$custom_logo_id = get_theme_mod( 'custom_logo' );
+		if ( $custom_logo_id ) {
+			$logo_url = wp_get_attachment_image_url( $custom_logo_id, 'full' );
+			if ( $logo_url ) {
+				$schema['publisher'] = array(
+					'@type' => 'Organization',
+					'name'  => $site_name,
+					'logo'  => array(
+						'@type' => 'ImageObject',
+						'url'   => $logo_url,
+					),
+				);
+			}
+		}
 
 		/**
 		 * Filter the archive page schema data.
