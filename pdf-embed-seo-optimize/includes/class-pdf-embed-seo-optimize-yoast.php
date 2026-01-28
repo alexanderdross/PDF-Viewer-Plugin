@@ -34,6 +34,9 @@ class PDF_Embed_SEO_Yoast {
 
 			// Prevent duplicate schema when Yoast is active.
 			add_filter( 'wpseo_schema_graph_pieces', array( $this, 'add_schema_pieces' ), 10, 2 );
+		} else {
+			// Output Open Graph and Twitter Card meta tags when Yoast is not active.
+			add_action( 'wp_head', array( $this, 'output_social_meta_tags' ), 5 );
 		}
 	}
 
@@ -331,6 +334,136 @@ class PDF_Embed_SEO_Yoast {
 		echo '<script type="application/ld+json">' . "\n";
 		echo wp_json_encode( $schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
 		echo "\n</script>\n";
+	}
+
+	/**
+	 * Output Open Graph and Twitter Card meta tags.
+	 *
+	 * This method outputs social media meta tags when Yoast SEO is not active.
+	 * For single PDF pages and archive pages.
+	 *
+	 * @return void
+	 */
+	public function output_social_meta_tags() {
+		// Only output for PDF document pages.
+		if ( ! is_singular( 'pdf_document' ) && ! is_post_type_archive( 'pdf_document' ) ) {
+			return;
+		}
+
+		$site_name = get_bloginfo( 'name' );
+		$locale    = get_locale();
+
+		echo "\n<!-- PDF Embed & SEO Optimize - Open Graph & Twitter Card Meta -->\n";
+
+		if ( is_singular( 'pdf_document' ) ) {
+			$this->output_single_pdf_social_meta( $site_name, $locale );
+		} elseif ( is_post_type_archive( 'pdf_document' ) ) {
+			$this->output_archive_social_meta( $site_name, $locale );
+		}
+	}
+
+	/**
+	 * Output social meta tags for single PDF page.
+	 *
+	 * @param string $site_name The site name.
+	 * @param string $locale    The site locale.
+	 * @return void
+	 */
+	private function output_single_pdf_social_meta( $site_name, $locale ) {
+		$post_id     = get_the_ID();
+		$title       = get_the_title( $post_id );
+		$url         = get_permalink( $post_id );
+		$description = get_the_excerpt( $post_id );
+
+		if ( empty( $description ) ) {
+			$description = wp_trim_words( get_the_content( null, false, $post_id ), 30 );
+		}
+
+		$description = wp_strip_all_tags( $description );
+
+		// Open Graph meta tags.
+		echo '<meta property="og:type" content="article" />' . "\n";
+		echo '<meta property="og:title" content="' . esc_attr( $title ) . '" />' . "\n";
+		echo '<meta property="og:description" content="' . esc_attr( $description ) . '" />' . "\n";
+		echo '<meta property="og:url" content="' . esc_url( $url ) . '" />' . "\n";
+		echo '<meta property="og:site_name" content="' . esc_attr( $site_name ) . '" />' . "\n";
+		echo '<meta property="og:locale" content="' . esc_attr( $locale ) . '" />' . "\n";
+		echo '<meta property="article:published_time" content="' . esc_attr( get_the_date( 'c', $post_id ) ) . '" />' . "\n";
+		echo '<meta property="article:modified_time" content="' . esc_attr( get_the_modified_date( 'c', $post_id ) ) . '" />' . "\n";
+
+		// Add image if available.
+		if ( has_post_thumbnail( $post_id ) ) {
+			$thumbnail_id   = get_post_thumbnail_id( $post_id );
+			$thumbnail_data = wp_get_attachment_image_src( $thumbnail_id, 'large' );
+			if ( $thumbnail_data ) {
+				echo '<meta property="og:image" content="' . esc_url( $thumbnail_data[0] ) . '" />' . "\n";
+				echo '<meta property="og:image:width" content="' . esc_attr( $thumbnail_data[1] ) . '" />' . "\n";
+				echo '<meta property="og:image:height" content="' . esc_attr( $thumbnail_data[2] ) . '" />' . "\n";
+				echo '<meta property="og:image:type" content="image/jpeg" />' . "\n";
+			}
+		}
+
+		// Twitter Card meta tags.
+		echo '<meta name="twitter:card" content="summary_large_image" />' . "\n";
+		echo '<meta name="twitter:title" content="' . esc_attr( $title ) . '" />' . "\n";
+		echo '<meta name="twitter:description" content="' . esc_attr( $description ) . '" />' . "\n";
+
+		if ( has_post_thumbnail( $post_id ) ) {
+			$thumbnail_url = get_the_post_thumbnail_url( $post_id, 'large' );
+			if ( $thumbnail_url ) {
+				echo '<meta name="twitter:image" content="' . esc_url( $thumbnail_url ) . '" />' . "\n";
+			}
+		}
+
+		// Additional meta tags for AI/search engines.
+		echo '<meta name="description" content="' . esc_attr( $description ) . '" />' . "\n";
+		echo '<link rel="canonical" href="' . esc_url( $url ) . '" />' . "\n";
+	}
+
+	/**
+	 * Output social meta tags for archive page.
+	 *
+	 * @param string $site_name The site name.
+	 * @param string $locale    The site locale.
+	 * @return void
+	 */
+	private function output_archive_social_meta( $site_name, $locale ) {
+		$archive_url   = get_post_type_archive_link( 'pdf_document' );
+		$title         = __( 'PDF Documents', 'pdf-embed-seo-optimize' );
+		$description   = __( 'Browse all available PDF documents.', 'pdf-embed-seo-optimize' );
+
+		// Open Graph meta tags.
+		echo '<meta property="og:type" content="website" />' . "\n";
+		echo '<meta property="og:title" content="' . esc_attr( $title . ' - ' . $site_name ) . '" />' . "\n";
+		echo '<meta property="og:description" content="' . esc_attr( $description ) . '" />' . "\n";
+		echo '<meta property="og:url" content="' . esc_url( $archive_url ) . '" />' . "\n";
+		echo '<meta property="og:site_name" content="' . esc_attr( $site_name ) . '" />' . "\n";
+		echo '<meta property="og:locale" content="' . esc_attr( $locale ) . '" />' . "\n";
+
+		// Add site logo as image if available.
+		$custom_logo_id = get_theme_mod( 'custom_logo' );
+		if ( $custom_logo_id ) {
+			$logo_data = wp_get_attachment_image_src( $custom_logo_id, 'full' );
+			if ( $logo_data ) {
+				echo '<meta property="og:image" content="' . esc_url( $logo_data[0] ) . '" />' . "\n";
+			}
+		}
+
+		// Twitter Card meta tags.
+		echo '<meta name="twitter:card" content="summary" />' . "\n";
+		echo '<meta name="twitter:title" content="' . esc_attr( $title . ' - ' . $site_name ) . '" />' . "\n";
+		echo '<meta name="twitter:description" content="' . esc_attr( $description ) . '" />' . "\n";
+
+		if ( $custom_logo_id ) {
+			$logo_url = wp_get_attachment_image_url( $custom_logo_id, 'full' );
+			if ( $logo_url ) {
+				echo '<meta name="twitter:image" content="' . esc_url( $logo_url ) . '" />' . "\n";
+			}
+		}
+
+		// Additional meta tags for AI/search engines.
+		echo '<meta name="description" content="' . esc_attr( $description ) . '" />' . "\n";
+		echo '<link rel="canonical" href="' . esc_url( $archive_url ) . '" />' . "\n";
 	}
 
 	/**
