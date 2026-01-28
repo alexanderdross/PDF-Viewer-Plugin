@@ -458,6 +458,18 @@ class PDF_Embed_SEO_Admin {
 		);
 
 		add_settings_field(
+			'default_standalone_mode',
+			__( 'Standalone Mode by Default', 'pdf-embed-seo-optimize' ),
+			array( $this, 'render_standalone_field' ),
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_defaults',
+			array(
+				'label_for' => 'default_standalone_mode',
+				'key'       => 'default_standalone_mode',
+			)
+		);
+
+		add_settings_field(
 			'auto_generate_thumbnails',
 			__( 'Auto-generate Thumbnails', 'pdf-embed-seo-optimize' ),
 			array( $this, 'render_thumbnail_field' ),
@@ -598,6 +610,7 @@ class PDF_Embed_SEO_Admin {
 
 		$sanitized['default_allow_download']    = ! empty( $input['default_allow_download'] );
 		$sanitized['default_allow_print']       = ! empty( $input['default_allow_print'] );
+		$sanitized['default_standalone_mode']   = ! empty( $input['default_standalone_mode'] );
 		$sanitized['auto_generate_thumbnails']  = ! empty( $input['auto_generate_thumbnails'] );
 		$sanitized['viewer_theme']              = isset( $input['viewer_theme'] ) && in_array( $input['viewer_theme'], array( 'light', 'dark' ), true )
 			? $input['viewer_theme']
@@ -748,6 +761,29 @@ class PDF_Embed_SEO_Admin {
 		/>
 		<p class="description">
 			<?php esc_html_e( 'Display visible breadcrumb navigation on PDF pages. The JSON-LD breadcrumb schema for SEO is always included regardless of this setting.', 'pdf-embed-seo-optimize' ); ?>
+		</p>
+		<?php
+	}
+
+	/**
+	 * Render the standalone mode settings field.
+	 *
+	 * @param array $args Field arguments.
+	 * @return void
+	 */
+	public function render_standalone_field( $args ) {
+		$settings = PDF_Embed_SEO::get_setting();
+		$value    = isset( $settings[ $args['key'] ] ) ? $settings[ $args['key'] ] : false;
+		?>
+		<input
+			type="checkbox"
+			id="<?php echo esc_attr( $args['key'] ); ?>"
+			name="pdf_embed_seo_settings[<?php echo esc_attr( $args['key'] ); ?>]"
+			value="1"
+			<?php checked( $value, true ); ?>
+		/>
+		<p class="description">
+			<?php esc_html_e( 'Open PDFs in standalone mode (fullscreen without header/footer). When enabled, clicking a PDF link opens it in a new tab with only the PDF viewer visible.', 'pdf-embed-seo-optimize' ); ?>
 		</p>
 		<?php
 	}
