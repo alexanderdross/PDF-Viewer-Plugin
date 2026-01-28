@@ -35,6 +35,16 @@ All notable changes to this project will be documented in this file.
 - Updated all documentation for consistency between platforms
 - Version bump to 1.2.5 across all modules
 
+### Fixed
+- **Cross-Platform License Validation** - Drupal now accepts WordPress-style license keys
+  - Support for `PDF$PRO#`, `PDF$UNLIMITED#`, `PDF$DEV#` patterns
+  - Backwards compatible with Drupal-style `PDF-` keys
+- **Bulk Import Status API** - Unified route across platforms
+  - WordPress-compatible `/bulk/import/status` endpoint added to Drupal
+  - Legacy route preserved for backwards compatibility
+- **Analytics Response Parity** - Added `date_range` field to Drupal analytics
+- **Documentation Parity** - Updated Drupal help text with all 13 premium features
+
 ---
 
 ## [1.2.4] - 2025-01-28

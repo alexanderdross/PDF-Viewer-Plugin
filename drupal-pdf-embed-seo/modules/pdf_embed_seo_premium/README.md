@@ -25,6 +25,24 @@ Premium features submodule for PDF Embed & SEO Optimize.
 2. Enable the premium module via Drush: `drush en pdf_embed_seo_premium`
 3. Or enable via the admin UI: Admin > Extend > PDF Embed & SEO Optimize Premium
 4. Configure premium settings at Admin > Configuration > Content > PDF Premium Settings
+5. Enter your license key to activate premium features
+
+## License Activation
+
+Navigate to **Admin > Configuration > Content > PDF Premium Settings** to enter your license key.
+
+### Supported License Key Formats
+
+The module accepts both WordPress-style and Drupal-style license keys:
+
+| Format | Pattern | Example |
+|--------|---------|---------|
+| WordPress Pro | `PDF$PRO#XXXX-XXXX@XXXX-XXXX!XXXX` | `PDF$PRO#A1B2-C3D4@E5F6-G7H8!I9J0` |
+| WordPress Dev | `PDF$DEV#XXXX-XXXX@XXXX!XXXX` | `PDF$DEV#TEST-KEY1@ABCD!EFGH` |
+| WordPress Unlimited | `PDF$UNLIMITED#XXXX@XXXX!XXXX` | `PDF$UNLIMITED#TEST@ABCD!EFGH` |
+| Drupal Style | `PDF-` + 32+ chars | `PDF-DRUPAL-PREMIUM-2026-ABCD-EFGH-IJKL` |
+
+**Note:** The same license key can be used on both WordPress and Drupal installations.
 
 ---
 
