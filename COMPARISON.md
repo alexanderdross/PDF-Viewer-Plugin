@@ -128,6 +128,9 @@ A detailed comparison of features available in the Free and Premium versions.
 | **`GET /analytics/export`** | - | ✓ |
 | **`GET/POST /documents/{id}/progress`** | - | ✓ |
 | **`POST /documents/{id}/verify-password`** | - | ✓ |
+| **`POST /documents/{id}/download`** | - | ✓ |
+| **`POST /documents/{id}/expiring-link`** | - | ✓ |
+| **`GET /documents/{id}/expiring-link/{token}`** | - | ✓ |
 | **`GET /categories`** | - | ✓ |
 | **`GET /tags`** | - | ✓ |
 | **`POST /bulk/import`** | - | ✓ |
@@ -140,6 +143,7 @@ A detailed comparison of features available in the Free and Premium versions.
 | View Count Display | ✓ | ✓ |
 | **Analytics Dashboard** | - | ✓ |
 | **Detailed View Tracking** | - | ✓ |
+| **Download Tracking** | - | ✓ |
 | **IP Address Logging** | - | ✓ |
 | **User Agent Tracking** | - | ✓ |
 | **Referrer Tracking** | - | ✓ |
@@ -166,6 +170,9 @@ A detailed comparison of features available in the Free and Premium versions.
 | **Brute-Force Protection** | - | ✓ |
 | **Login Requirement Option** | - | ✓ |
 | **Role Restrictions** | - | ✓ |
+| **Expiring Access Links** | - | ✓ |
+| **Time-Limited URLs** | - | ✓ |
+| **Max Uses per Link** | - | ✓ |
 
 ### Reading Experience
 

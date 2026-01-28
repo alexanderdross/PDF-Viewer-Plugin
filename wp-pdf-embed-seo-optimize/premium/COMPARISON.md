@@ -41,10 +41,13 @@
 | Password Protection | ❌ | ✅ |
 | User Role Restrictions | ❌ | ✅ |
 | Expiring Access Links | ❌ | ✅ |
+| Time-Limited URLs | ❌ | ✅ |
+| Max Uses per Link | ❌ | ✅ |
 | Dynamic Watermarks | ❌ | ✅ |
 | | | |
 | **Analytics** | | |
 | Basic View Count | ✅ | ✅ |
+| Download Tracking | ❌ | ✅ |
 | Dashboard Widget | ❌ | ✅ |
 | Page-by-Page Tracking | ❌ | ✅ |
 | User View History | ❌ | ✅ |
@@ -79,7 +82,8 @@
 | | | |
 | **Developer** | | |
 | WordPress Hooks | Basic | Extended |
-| REST API | ❌ | ✅ |
+| REST API (5 public endpoints) | ✅ | ✅ |
+| REST API (14+ premium endpoints) | ❌ | ✅ |
 | Webhooks | ❌ | ✅ |
 | | | |
 | **Support** | | |

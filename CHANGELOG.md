@@ -8,6 +8,35 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.2.5] - 2026-01-28
+
+### Added
+- **Download Tracking** - Track PDF downloads separately from views
+  - Separate download counter per document (`_pdf_download_count`)
+  - Download analytics in dashboard
+  - REST API endpoint: `POST /documents/{id}/download`
+  - User attribution for authenticated downloads
+
+- **Expiring Access Links** - Generate time-limited URLs for PDFs
+  - Configurable expiration time (5 min to 30 days)
+  - Maximum usage limits per link
+  - Secure token-based access
+  - REST endpoints: `POST /documents/{id}/expiring-link`, `GET /documents/{id}/expiring-link/{token}`
+  - Admin-only link generation
+
+- **Drupal Premium Feature Parity** - Complete WordPress/Drupal consistency
+  - PdfSchemaEnhancer service for GEO/AEO/LLM optimization
+  - PdfAccessManager service for role-based access control
+  - PdfBulkOperations service for CSV import and bulk updates
+  - PdfViewerEnhancer service for text search, bookmarks, reading progress UI
+  - Extended REST API with 14+ endpoints matching WordPress
+
+### Changed
+- Updated all documentation for consistency between platforms
+- Version bump to 1.2.5 across all modules
+
+---
+
 ## [1.2.4] - 2025-01-28
 
 ### Added
