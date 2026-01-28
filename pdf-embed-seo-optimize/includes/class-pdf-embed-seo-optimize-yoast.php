@@ -143,6 +143,53 @@ class PDF_Embed_SEO_Yoast {
 			}
 		}
 
+		// GEO/AEO/LLM Optimization: Speakable property for voice assistants and AI.
+		$schema['speakable'] = array(
+			'@type'       => 'SpeakableSpecification',
+			'cssSelector' => array(
+				'.pdf-embed-seo-optimize-archive-title',
+				'.pdf-embed-seo-optimize-archive-description',
+				'.pdf-embed-seo-optimize-card-title',
+				'.pdf-embed-seo-optimize-list-title',
+				'.page-title',
+			),
+		);
+
+		// GEO/AEO: Potential actions for AI assistants.
+		$schema['potentialAction'] = array(
+			array(
+				'@type'       => 'SearchAction',
+				'target'      => array(
+					'@type'       => 'EntryPoint',
+					'urlTemplate' => $archive_url . '?s={search_term_string}',
+				),
+				'query-input' => 'required name=search_term_string',
+				'name'        => __( 'Search PDF Documents', 'pdf-embed-seo-optimize' ),
+			),
+			array(
+				'@type'  => 'ViewAction',
+				'target' => $archive_url,
+				'name'   => __( 'Browse PDF Documents', 'pdf-embed-seo-optimize' ),
+			),
+		);
+
+		// GEO/AEO: Access properties for AI understanding.
+		$schema['accessMode']           = array( 'textual', 'visual' );
+		$schema['accessibilityFeature'] = array( 'structuredNavigation', 'readingOrder' );
+		$schema['accessibilityHazard']  = array( 'none' );
+
+		// GEO/AEO: Content characteristics for better AI classification.
+		$schema['genre']                = 'Document Library';
+		$schema['learningResourceType'] = 'Document Collection';
+		$schema['keywords']             = __( 'PDF documents, PDF viewer, digital documents, PDF library', 'pdf-embed-seo-optimize' );
+
+		// GEO/AEO: About topic for AI context understanding.
+		$schema['about'] = array(
+			'@type'       => 'Thing',
+			'name'        => __( 'PDF Documents', 'pdf-embed-seo-optimize' ),
+			'description' => __( 'A collection of PDF documents available for viewing and download.', 'pdf-embed-seo-optimize' ),
+		);
+
 		// Add PDF documents as ItemList with detailed DigitalDocument schema.
 		$pdf_query = new WP_Query(
 			array(
@@ -230,6 +277,28 @@ class PDF_Embed_SEO_Yoast {
 					'@type' => 'Organization',
 					'name'  => $site_name,
 					'url'   => $site_url,
+				);
+
+				// GEO/AEO: Add speakable for each document.
+				$document['speakable'] = array(
+					'@type'       => 'SpeakableSpecification',
+					'cssSelector' => array( '.entry-title', '.entry-content' ),
+				);
+
+				// GEO/AEO: Access and content properties.
+				$document['accessMode']           = array( 'textual', 'visual' );
+				$document['genre']                = 'PDF Document';
+				$document['learningResourceType'] = 'Document';
+
+				// GEO/AEO: Potential action for this document.
+				$document['potentialAction'] = array(
+					'@type'  => 'ReadAction',
+					'target' => $pdf_url,
+					'name'   => sprintf(
+						/* translators: %s: Document title */
+						__( 'Read %s', 'pdf-embed-seo-optimize' ),
+						get_the_title( $post_id )
+					),
 				);
 
 				$items[] = array(
@@ -403,6 +472,90 @@ class PDF_Embed_SEO_Yoast {
 			'@type' => 'WebPage',
 			'@id'   => get_permalink( $post_id ),
 		);
+
+		// GEO/AEO/LLM Optimization: Speakable property for voice assistants and AI.
+		// Identifies content suitable for text-to-speech and AI consumption.
+		$schema['speakable'] = array(
+			'@type'       => 'SpeakableSpecification',
+			'cssSelector' => array(
+				'.pdf-embed-seo-optimize-title',
+				'.pdf-embed-seo-optimize-excerpt',
+				'.pdf-embed-seo-optimize-description',
+				'.entry-title',
+				'.entry-content',
+			),
+		);
+
+		// GEO/AEO: Access and interaction properties for AI understanding.
+		$schema['accessMode']            = array( 'textual', 'visual' );
+		$schema['accessModeSufficient']  = array(
+			array(
+				'@type'      => 'ItemList',
+				'itemListElement' => array( 'textual', 'visual' ),
+			),
+		);
+		$schema['accessibilityFeature']  = array( 'structuredNavigation', 'readingOrder', 'tableOfContents' );
+		$schema['accessibilityHazard']   = array( 'none' );
+
+		// GEO/AEO: Potential actions for AI assistants.
+		$schema['potentialAction'] = array(
+			array(
+				'@type'  => 'ReadAction',
+				'target' => get_permalink( $post_id ),
+				'name'   => sprintf(
+					/* translators: %s: Document title */
+					__( 'Read %s', 'pdf-embed-seo-optimize' ),
+					get_the_title( $post_id )
+				),
+			),
+		);
+
+		// Add download action if allowed.
+		if ( $allow_download ) {
+			$schema['potentialAction'][] = array(
+				'@type'  => 'DownloadAction',
+				'target' => get_permalink( $post_id ),
+				'name'   => sprintf(
+					/* translators: %s: Document title */
+					__( 'Download %s', 'pdf-embed-seo-optimize' ),
+					get_the_title( $post_id )
+				),
+			);
+		}
+
+		// GEO/AEO: Learning resource type for educational content discovery.
+		$schema['learningResourceType'] = 'Document';
+
+		// GEO/AEO: Content category for better AI classification.
+		$schema['genre'] = 'PDF Document';
+
+		// GEO/AEO: Add keywords from post tags if available.
+		$tags = get_the_tags( $post_id );
+		if ( $tags && ! is_wp_error( $tags ) ) {
+			$keywords = array();
+			foreach ( $tags as $tag ) {
+				$keywords[] = $tag->name;
+			}
+			if ( ! empty( $keywords ) ) {
+				$schema['keywords'] = implode( ', ', $keywords );
+			}
+		}
+
+		// GEO/AEO: Add category as 'about' topic.
+		$categories = get_the_category( $post_id );
+		if ( $categories && ! is_wp_error( $categories ) ) {
+			$about_items = array();
+			foreach ( $categories as $category ) {
+				$about_items[] = array(
+					'@type' => 'Thing',
+					'name'  => $category->name,
+					'url'   => get_category_link( $category->term_id ),
+				);
+			}
+			if ( ! empty( $about_items ) ) {
+				$schema['about'] = $about_items;
+			}
+		}
 
 		/**
 		 * Filter the DigitalDocument schema data.
@@ -659,6 +812,60 @@ class PDF_Embed_SEO_Schema_Piece {
 		$schema['mainEntityOfPage'] = array(
 			'@id' => get_permalink( $post_id ),
 		);
+
+		// GEO/AEO/LLM Optimization: Speakable property for voice assistants and AI.
+		$schema['speakable'] = array(
+			'@type'       => 'SpeakableSpecification',
+			'cssSelector' => array(
+				'.pdf-embed-seo-optimize-title',
+				'.pdf-embed-seo-optimize-excerpt',
+				'.pdf-embed-seo-optimize-description',
+				'.entry-title',
+				'.entry-content',
+			),
+		);
+
+		// GEO/AEO: Access properties for AI understanding.
+		$schema['accessMode']            = array( 'textual', 'visual' );
+		$schema['accessModeSufficient']  = array(
+			array(
+				'@type'           => 'ItemList',
+				'itemListElement' => array( 'textual', 'visual' ),
+			),
+		);
+		$schema['accessibilityFeature']  = array( 'structuredNavigation', 'readingOrder', 'tableOfContents' );
+		$schema['accessibilityHazard']   = array( 'none' );
+
+		// GEO/AEO: Potential actions for AI assistants.
+		$allow_download = PDF_Embed_SEO_Post_Type::is_download_allowed( $post_id );
+
+		$schema['potentialAction'] = array(
+			array(
+				'@type'  => 'ReadAction',
+				'target' => get_permalink( $post_id ),
+				'name'   => sprintf(
+					/* translators: %s: Document title */
+					__( 'Read %s', 'pdf-embed-seo-optimize' ),
+					get_the_title( $post_id )
+				),
+			),
+		);
+
+		if ( $allow_download ) {
+			$schema['potentialAction'][] = array(
+				'@type'  => 'DownloadAction',
+				'target' => get_permalink( $post_id ),
+				'name'   => sprintf(
+					/* translators: %s: Document title */
+					__( 'Download %s', 'pdf-embed-seo-optimize' ),
+					get_the_title( $post_id )
+				),
+			);
+		}
+
+		// GEO/AEO: Content classification for AI.
+		$schema['genre']                = 'PDF Document';
+		$schema['learningResourceType'] = 'Document';
 
 		return $schema;
 	}
