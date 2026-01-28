@@ -72,6 +72,10 @@ A detailed comparison of features available in the Free and Premium versions.
 | Yoast SEO Integration (WP) | ✓ | ✓ |
 | OpenGraph Meta Tags | ✓ | ✓ |
 | Twitter Card Support | ✓ | ✓ |
+| GEO/AEO/LLM Schema Optimization | ✓ | ✓ |
+| SpeakableSpecification (Voice Assistants) | ✓ | ✓ |
+| potentialAction Schema (ReadAction, etc.) | ✓ | ✓ |
+| Standalone Social Meta (without Yoast) | ✓ | ✓ |
 | **XML Sitemap (`/pdf/sitemap.xml`)** | - | ✓ |
 | **Sitemap XSL Stylesheet** | - | ✓ |
 | **Search Engine Ping** | - | ✓ |

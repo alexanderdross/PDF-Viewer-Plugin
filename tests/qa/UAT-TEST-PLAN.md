@@ -1,6 +1,6 @@
 # User Acceptance Testing (UAT) Plan
 
-## PDF Embed & SEO Optimize - Version 1.2.2
+## PDF Embed & SEO Optimize - Version 1.2.3
 
 **Date:** 2025-01-28
 **Modules:** WP Free, WP Premium, Drupal Free, Drupal Premium
@@ -124,6 +124,39 @@ This UAT plan validates that the PDF Embed & SEO Optimize plugin meets business 
 | 3 | OpenGraph meta tags present | ☐ | ☐ | |
 | 4 | Twitter Card meta tags present | ☐ | ☐ | |
 | 5 | Yoast SEO fields are editable | ☐ | ☐ | |
+
+---
+
+#### US-WPF-007: GEO/AEO/LLM Optimization
+**As a** site administrator
+**I want** PDFs optimized for AI and voice search
+**So that** they appear in voice assistants and AI-generated results
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | SpeakableSpecification present in schema | ☐ | ☐ | |
+| 2 | potentialAction (ReadAction) present | ☐ | ☐ | |
+| 3 | accessMode and accessibilityFeature present | ☐ | ☐ | |
+| 4 | fileFormat shows application/pdf | ☐ | ☐ | |
+| 5 | inLanguage matches site language | ☐ | ☐ | |
+| 6 | publisher schema includes site name | ☐ | ☐ | |
+
+---
+
+#### US-WPF-008: Social Sharing Without Yoast
+**As a** site administrator without Yoast SEO
+**I want** proper social sharing meta tags
+**So that** PDFs display correctly when shared on social media
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | og:title present without Yoast | ☐ | ☐ | |
+| 2 | og:description present without Yoast | ☐ | ☐ | |
+| 3 | og:image uses featured image | ☐ | ☐ | |
+| 4 | twitter:card present without Yoast | ☐ | ☐ | |
+| 5 | Archive page has og:type=website | ☐ | ☐ | |
+| 6 | PDF preview displays on Facebook share | ☐ | ☐ | |
+| 7 | PDF preview displays on Twitter share | ☐ | ☐ | |
 
 ---
 
@@ -410,4 +443,4 @@ This UAT plan validates that the PDF Embed & SEO Optimize plugin meets business 
 
 ---
 
-*PDF Embed & SEO Optimize v1.2.1 - UAT Test Plan*
+*PDF Embed & SEO Optimize v1.2.3 - UAT Test Plan*

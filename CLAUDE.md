@@ -2,7 +2,7 @@
 
 A comprehensive PDF management solution available for WordPress and Drupal that uses Mozilla's PDF.js library to securely display PDFs with SEO optimization.
 
-**Current Version:** 1.2.2
+**Current Version:** 1.2.3
 **Platforms:** WordPress (Free & Premium), Drupal 10/11
 **License:** GPL v2 or later
 
@@ -683,7 +683,13 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 
 ## Changelog
 
-### 1.2.2 (Current)
+### 1.2.3 (Current)
+- GEO/AEO/LLM schema optimization (SpeakableSpecification, potentialAction, accessMode)
+- Standalone Open Graph and Twitter Card meta tags (without Yoast)
+- Enhanced DigitalDocument schema (identifier, fileFormat, inLanguage, publisher)
+- Plugin Check compliance fixes (escaping, direct file access protection)
+
+### 1.2.2
 - Archive display options (list/grid views)
 - Schema.org BreadcrumbList markup
 - Visible breadcrumb navigation with accessibility support

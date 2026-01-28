@@ -1,6 +1,6 @@
 # QA Test Plan - PDF Embed & SEO Optimize
 
-**Version:** 1.2.2
+**Version:** 1.2.3
 **Date:** 2025-01-28
 **Modules:** WP Free, WP Premium, Drupal Free, Drupal Premium
 
@@ -95,50 +95,59 @@
 | WPF-053 | Yoast Integration | Edit with Yoast | SEO fields editable | ☐ |
 | WPF-054 | Canonical URL | Check canonical | Points to PDF page | ☐ |
 | WPF-055 | Archive Schema | View archive source | CollectionPage schema present | ☐ |
+| WPF-056 | SpeakableSpecification | View page source | speakable property with cssSelector | ☐ |
+| WPF-057 | potentialAction Schema | View page source | ReadAction, ViewAction present | ☐ |
+| WPF-058 | accessMode Properties | View page source | accessMode, accessibilityFeature present | ☐ |
+| WPF-059 | OG Tags Without Yoast | Disable Yoast, check source | og:tags still present | ☐ |
+| WPF-060 | Twitter Tags Without Yoast | Disable Yoast, check source | twitter:tags still present | ☐ |
+| WPF-061 | Archive OG Tags | View archive source | og:type=website present | ☐ |
+| WPF-062 | fileFormat Schema | View page source | fileFormat=application/pdf | ☐ |
+| WPF-063 | inLanguage Schema | View page source | inLanguage matches site lang | ☐ |
+| WPF-064 | publisher Schema | View page source | publisher with name and logo | ☐ |
 
 ### 1.6 REST API Tests
 
 | ID | Test Case | Steps | Expected Result | Status |
 |----|-----------|-------|-----------------|--------|
-| WPF-060 | GET /documents | API request | Returns document list | ☐ |
-| WPF-061 | GET /documents/{id} | Request single doc | Returns document details | ☐ |
-| WPF-062 | GET /documents/{id}/data | Request data | Returns PDF URL | ☐ |
-| WPF-063 | POST /documents/{id}/view | Track view | View count increments | ☐ |
-| WPF-064 | GET /settings | Request settings | Returns public settings | ☐ |
-| WPF-065 | Pagination Params | Use page, per_page | Returns correct subset | ☐ |
-| WPF-066 | Search Param | Use search param | Returns matching results | ☐ |
-| WPF-067 | Invalid ID | Request non-existent | Returns 404 error | ☐ |
-| WPF-068 | Unpublished Doc | Request draft | Returns 404 error | ☐ |
+| WPF-070 | GET /documents | API request | Returns document list | ☐ |
+| WPF-071 | GET /documents/{id} | Request single doc | Returns document details | ☐ |
+| WPF-072 | GET /documents/{id}/data | Request data | Returns PDF URL | ☐ |
+| WPF-073 | POST /documents/{id}/view | Track view | View count increments | ☐ |
+| WPF-074 | GET /settings | Request settings | Returns public settings | ☐ |
+| WPF-075 | Pagination Params | Use page, per_page | Returns correct subset | ☐ |
+| WPF-076 | Search Param | Use search param | Returns matching results | ☐ |
+| WPF-077 | Invalid ID | Request non-existent | Returns 404 error | ☐ |
+| WPF-078 | Unpublished Doc | Request draft | Returns 404 error | ☐ |
 
 ### 1.7 Shortcode Tests
 
 | ID | Test Case | Steps | Expected Result | Status |
 |----|-----------|-------|-----------------|--------|
-| WPF-070 | Basic Shortcode | [pdf_viewer id="123"] | Viewer embeds in page | ☐ |
-| WPF-071 | Custom Height | [pdf_viewer id="123" height="500px"] | Custom height applied | ☐ |
-| WPF-072 | Sitemap Shortcode | [pdf_viewer_sitemap] | Lists all PDFs | ☐ |
-| WPF-073 | Invalid ID | [pdf_viewer id="99999"] | Shows error message | ☐ |
+| WPF-080 | Basic Shortcode | [pdf_viewer id="123"] | Viewer embeds in page | ☐ |
+| WPF-081 | Custom Height | [pdf_viewer id="123" height="500px"] | Custom height applied | ☐ |
+| WPF-082 | Sitemap Shortcode | [pdf_viewer_sitemap] | Lists all PDFs | ☐ |
+| WPF-083 | Invalid ID | [pdf_viewer id="99999"] | Shows error message | ☐ |
 
 ### 1.8 Gutenberg Block Tests
 
 | ID | Test Case | Steps | Expected Result | Status |
 |----|-----------|-------|-----------------|--------|
-| WPF-080 | Add Block | Search "PDF Viewer" | Block available | ☐ |
-| WPF-081 | Select PDF | Choose from dropdown | PDF selected | ☐ |
-| WPF-082 | Block Preview | View in editor | Preview renders | ☐ |
-| WPF-083 | Block Settings | Adjust height, width | Settings applied | ☐ |
-| WPF-084 | Block Frontend | View published page | Viewer displays correctly | ☐ |
+| WPF-090 | Add Block | Search "PDF Viewer" | Block available | ☐ |
+| WPF-091 | Select PDF | Choose from dropdown | PDF selected | ☐ |
+| WPF-092 | Block Preview | View in editor | Preview renders | ☐ |
+| WPF-093 | Block Settings | Adjust height, width | Settings applied | ☐ |
+| WPF-094 | Block Frontend | View published page | Viewer displays correctly | ☐ |
 
 ### 1.9 Admin Tests
 
 | ID | Test Case | Steps | Expected Result | Status |
 |----|-----------|-------|-----------------|--------|
-| WPF-090 | Admin Menu | Check admin menu | "PDF Documents" menu present | ☐ |
-| WPF-091 | Settings Page | Go to Settings | Settings page loads | ☐ |
-| WPF-092 | Save Settings | Change and save | Settings persist | ☐ |
-| WPF-093 | Documentation Page | Go to Docs | Docs page loads | ☐ |
-| WPF-094 | Plugin Links | Check plugins page | "Get Premium" link shows | ☐ |
-| WPF-095 | View Count Column | Check list table | View count column visible | ☐ |
+| WPF-100 | Admin Menu | Check admin menu | "PDF Documents" menu present | ☐ |
+| WPF-101 | Settings Page | Go to Settings | Settings page loads | ☐ |
+| WPF-102 | Save Settings | Change and save | Settings persist | ☐ |
+| WPF-103 | Documentation Page | Go to Docs | Docs page loads | ☐ |
+| WPF-104 | Plugin Links | Check plugins page | "Get Premium" link shows | ☐ |
+| WPF-105 | View Count Column | Check list table | View count column visible | ☐ |
 
 ---
 
@@ -422,4 +431,4 @@ Run after each code change:
 
 ---
 
-*PDF Embed & SEO Optimize v1.2.1 - QA Test Plan*
+*PDF Embed & SEO Optimize v1.2.3 - QA Test Plan*

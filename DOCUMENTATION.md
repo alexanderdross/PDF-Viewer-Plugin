@@ -6,7 +6,7 @@
 
 Complete guide for installing, configuring, and using the PDF Embed & SEO Optimize plugin.
 
-**Website:** [pdfviewer.drossmedia.de](https://pdfviewer.drossmedia.de) | **Version:** 1.2.2
+**Website:** [pdfviewer.drossmedia.de](https://pdfviewer.drossmedia.de) | **Version:** 1.2.3
 
 ---
 
@@ -162,8 +162,33 @@ Features:
 Each PDF has its own SEO-friendly page:
 - **URL**: `yoursite.com/pdf/document-slug/`
 - Full PDF viewer with PDF.js
-- Schema.org markup
-- Social sharing meta tags
+- Schema.org DigitalDocument markup
+- GEO/AEO/LLM optimized schema
+- Social sharing meta tags (Open Graph & Twitter Cards)
+
+### SEO & AI Optimization
+
+The plugin includes comprehensive SEO and AI optimization:
+
+#### Schema.org Structured Data
+- **DigitalDocument** with full metadata (name, description, author, dates)
+- **SpeakableSpecification** for voice assistants (Alexa, Google Assistant)
+- **potentialAction** (ReadAction, DownloadAction, ViewAction, SearchAction)
+- **accessibilityFeature** and **accessMode** for accessibility
+
+#### Social Meta Tags
+Open Graph and Twitter Card meta tags are output automatically:
+- With Yoast SEO: Uses Yoast's output
+- Without Yoast: Plugin outputs standalone meta tags
+  - `og:type`, `og:title`, `og:description`, `og:url`, `og:image`
+  - `twitter:card`, `twitter:title`, `twitter:description`, `twitter:image`
+
+#### GEO/AEO/LLM Optimization
+Optimized for generative and answer engines:
+- Speakable content selectors for voice search
+- Learning resource type and genre classification
+- Keywords from tags, topics from categories
+- Structured actions for AI understanding
 
 ### Shortcodes (WordPress)
 

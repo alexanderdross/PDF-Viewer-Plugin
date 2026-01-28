@@ -8,6 +8,33 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.2.3] - 2025-01-28
+
+### Added
+- **GEO/AEO/LLM Schema Optimization** - Enhanced schema markup for AI and voice assistants
+  - SpeakableSpecification with CSS selectors for voice assistants
+  - accessMode, accessModeSufficient, accessibilityFeature properties
+  - potentialAction (ReadAction, DownloadAction, SearchAction, ViewAction)
+  - learningResourceType and genre properties
+  - keywords from tags, about from categories
+- **Standalone Social Meta Tags** - Open Graph and Twitter Cards when Yoast is not active
+  - og:type, og:title, og:description, og:url, og:image
+  - twitter:card, twitter:title, twitter:description, twitter:image
+  - Works for both single PDF pages and archive page
+- **Enhanced DigitalDocument Schema** - Richer structured data
+  - identifier (canonical URL)
+  - fileFormat (application/pdf)
+  - inLanguage (site language)
+  - mainEntityOfPage
+  - publisher with logo
+  - Meta description from Yoast SEO in archive ItemList
+
+### Fixed
+- Plugin Check compliance: Fixed escaping issues in premium license notices
+- Plugin Check compliance: Added direct file access protection to test files
+
+---
+
 ## [1.2.2] - 2025-01-28
 
 ### Added
