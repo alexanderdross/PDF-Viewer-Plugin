@@ -68,12 +68,37 @@ A detailed comparison of features available in the Free and Premium versions.
 | Auto Path/Slug Generation | ✓ | ✓ |
 | Schema.org DigitalDocument | ✓ | ✓ |
 | Schema.org CollectionPage (Archive) | ✓ | ✓ |
+| Schema.org BreadcrumbList | ✓ | ✓ |
 | Yoast SEO Integration (WP) | ✓ | ✓ |
 | OpenGraph Meta Tags | ✓ | ✓ |
 | Twitter Card Support | ✓ | ✓ |
+| GEO/AEO/LLM Schema Optimization | ✓ | ✓ |
+| SpeakableSpecification (Voice Assistants) | ✓ | ✓ |
+| potentialAction Schema (ReadAction, etc.) | ✓ | ✓ |
+| Standalone Social Meta (without Yoast) | ✓ | ✓ |
 | **XML Sitemap (`/pdf/sitemap.xml`)** | - | ✓ |
 | **Sitemap XSL Stylesheet** | - | ✓ |
 | **Search Engine Ping** | - | ✓ |
+
+### AI & Voice Search Optimization (Premium)
+
+| Feature | Free | Premium |
+|---------|:----:|:-------:|
+| Basic Speakable Schema (WebPage) | ✓ | ✓ |
+| potentialAction (ReadAction, DownloadAction) | ✓ | ✓ |
+| accessMode & accessibilityFeature | ✓ | ✓ |
+| **AI Summary / TL;DR Field** | - | ✓ |
+| **Key Points & Takeaways** | - | ✓ |
+| **FAQ Schema (FAQPage for Rich Results)** | - | ✓ |
+| **Table of Contents Schema (hasPart)** | - | ✓ |
+| **Reading Time Estimate (timeRequired)** | - | ✓ |
+| **Difficulty Level (educationalLevel)** | - | ✓ |
+| **Document Type Classification** | - | ✓ |
+| **Target Audience Schema** | - | ✓ |
+| **Custom Speakable Content** | - | ✓ |
+| **Related Documents (isRelatedTo)** | - | ✓ |
+| **Prerequisites (coursePrerequisites)** | - | ✓ |
+| **Learning Outcomes (teaches)** | - | ✓ |
 
 ### Archive & Listing
 
@@ -84,8 +109,10 @@ A detailed comparison of features available in the Free and Premium versions.
 | Grid/List Display Modes | ✓ | ✓ |
 | Sorting Options | ✓ | ✓ |
 | Search Filtering | ✓ | ✓ |
+| Visible Breadcrumb Navigation | ✓ | ✓ |
 | **Category Filter** | - | ✓ |
 | **Tag Filter** | - | ✓ |
+| **Archive Page Redirect (301/302)** | - | ✓ |
 
 ### REST API
 

@@ -8,6 +8,102 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.2.4] - 2025-01-28
+
+### Added
+- **Premium AI & Schema Optimization Meta Box** - Comprehensive GEO/AEO/LLM optimization for PDF documents
+  - AI Summary (TL;DR) field for voice assistants → `abstract` schema
+  - Key Points & Takeaways → `ItemList` schema for quick answers
+  - FAQ Schema (FAQPage) for Google rich results
+  - Table of Contents Schema (`hasPart`) with deep links
+  - Reading Time estimate → `timeRequired` schema (e.g., PT10M)
+  - Difficulty Level → `educationalLevel` schema
+  - Document Type classification → `additionalType` schema
+  - Target Audience → `audience` schema
+  - Custom Speakable Content for voice search priority
+  - Related Documents → `isRelatedTo` schema for content relationships
+  - Prerequisites → `coursePrerequisites` schema
+  - Learning Outcomes → `teaches` schema
+- **AI Optimization Preview Meta Box (Free)** - Preview of premium AI features with Get Premium CTA
+- **Premium Settings Preview (Free Settings Page)** - Shows disabled premium features for upgrade awareness
+
+### Changed
+- Updated documentation across all markdown files
+- Enhanced premium feature visibility for free users
+
+### Fixed
+- Schema validation: Properly separated WebPage schema from DigitalDocument
+- Premium settings now correctly display when license is valid
+
+---
+
+## [1.2.3] - 2025-01-28
+
+### Added
+- **GEO/AEO/LLM Schema Optimization** - Enhanced schema markup for AI and voice assistants
+  - SpeakableSpecification with CSS selectors for voice assistants
+  - accessMode, accessModeSufficient, accessibilityFeature properties
+  - potentialAction (ReadAction, DownloadAction, SearchAction, ViewAction)
+  - learningResourceType and genre properties
+  - keywords from tags, about from categories
+- **Standalone Social Meta Tags** - Open Graph and Twitter Cards when Yoast is not active
+  - og:type, og:title, og:description, og:url, og:image
+  - twitter:card, twitter:title, twitter:description, twitter:image
+  - Works for both single PDF pages and archive page
+- **Enhanced DigitalDocument Schema** - Richer structured data
+  - identifier (canonical URL)
+  - fileFormat (application/pdf)
+  - inLanguage (site language)
+  - mainEntityOfPage
+  - publisher with logo
+  - Meta description from Yoast SEO in archive ItemList
+- **Premium: AI & Voice Search Optimization Meta Box** - Advanced schema features
+  - AI Summary (TL;DR) for voice assistants → `abstract` schema
+  - Key Points & Takeaways → `ItemList` schema
+  - FAQ Schema (FAQPage) for Google rich results
+  - Table of Contents Schema (`hasPart`) with deep links
+  - Reading Time estimate → `timeRequired` schema
+  - Difficulty Level → `educationalLevel` schema
+  - Document Type classification → `additionalType` schema
+  - Target Audience → `audience` schema
+  - Custom Speakable Content for voice search
+  - Related Documents → `isRelatedTo` schema
+  - Prerequisites → `coursePrerequisites` schema
+  - Learning Outcomes → `teaches` schema
+- **AI Optimization Preview** - Preview meta box for free users with Get Premium CTA
+
+### Fixed
+- Plugin Check compliance: Fixed escaping issues in premium license notices
+- Plugin Check compliance: Added direct file access protection to test files
+- Schema validation: Moved speakable to separate WebPage schema (only valid on WebPage/Article)
+
+---
+
+## [1.2.2] - 2025-01-28
+
+### Added
+- **Archive Display Options** - Configurable list/grid views for PDF archives
+  - List view with condensed layout
+  - Grid/card view with thumbnails
+  - Toggle description and view count visibility
+  - WordPress and Drupal support
+- **Breadcrumb Schema** - Schema.org BreadcrumbList markup
+  - JSON-LD structured data for breadcrumbs
+  - 3-level breadcrumbs (Home > PDF Documents > Document Title)
+  - Visible breadcrumb navigation with accessibility support
+  - ARIA labels and proper focus states
+- **Archive Page Redirect** (Premium) - Redirect /pdf archive to custom URL
+  - 301 (permanent) or 302 (temporary) redirect options
+  - Configurable target URL
+  - License validation integration
+
+### Changed
+- Improved archive templates with accessibility attributes
+- Enhanced CSS with high contrast and reduced motion support
+- Better mobile responsiveness for archive pages
+
+---
+
 ## [1.2.1] - 2025-01-27
 
 ### Added

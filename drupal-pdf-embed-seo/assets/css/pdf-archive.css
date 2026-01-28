@@ -1,60 +1,130 @@
 /**
  * @file
- * Styles for PDF archive page.
+ * Styles for PDF archive page and single PDF documents.
+ *
+ * Features:
+ * - Grid and list view layouts
+ * - Breadcrumb navigation
+ * - Accessibility support (focus states, screen reader text, high contrast, reduced motion)
  */
 
-.pdf-archive {
+/* ==========================================================================
+   Breadcrumb Navigation
+   ========================================================================== */
+
+.pdf-embed-seo-breadcrumb {
+  padding: 12px 0;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.pdf-embed-seo-breadcrumb-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pdf-embed-seo-breadcrumb-item {
+  display: flex;
+  align-items: center;
+}
+
+.pdf-embed-seo-breadcrumb-item:not(:last-child)::after {
+  content: "\203A";
+  margin-left: 8px;
+  color: #666;
+  font-size: 16px;
+}
+
+.pdf-embed-seo-breadcrumb-item a {
+  color: #0066cc;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.pdf-embed-seo-breadcrumb-item a:hover {
+  color: #004499;
+  text-decoration: underline;
+}
+
+.pdf-embed-seo-breadcrumb-item a:focus {
+  outline: 2px solid #0066cc;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.pdf-embed-seo-breadcrumb-current {
+  color: #333;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   Archive Container
+   ========================================================================== */
+
+.pdf-embed-seo-archive {
   padding: 20px 0;
 }
 
+.pdf-embed-seo-archive-header {
+  margin-bottom: 30px;
+}
+
+.pdf-embed-seo-archive-title {
+  margin: 0 0 10px;
+  font-size: 2em;
+  font-weight: 700;
+  color: #333;
+}
+
+.pdf-embed-seo-archive-description {
+  color: #666;
+  font-size: 16px;
+  margin: 0;
+}
+
+.pdf-embed-seo-archive-description p {
+  margin: 0;
+}
+
 /* Filters */
-.pdf-archive-filters-wrapper {
+.pdf-embed-seo-filters-wrapper {
   margin-bottom: 30px;
   padding: 15px;
   background: #f5f5f5;
   border-radius: 4px;
 }
 
-.pdf-archive-filters form {
+.pdf-embed-seo-filters form {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
   align-items: flex-end;
 }
 
-.pdf-archive-filters select {
+.pdf-embed-seo-filters select {
   padding: 8px 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 14px;
 }
 
-/* Grid layout */
-.pdf-archive-grid {
+/* ==========================================================================
+   Grid View (Thumbnail Cards)
+   ========================================================================== */
+
+.pdf-embed-seo-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 30px;
 }
 
-/* List layout */
-.pdf-archive--list .pdf-archive-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.pdf-archive--list .pdf-archive-item {
-  display: flex;
-  flex-direction: row;
-}
-
-.pdf-archive--list .pdf-archive-item-thumbnail {
-  width: 150px;
-  flex-shrink: 0;
-}
-
-/* Archive item */
-.pdf-archive-item {
+/* Card Styles */
+.pdf-embed-seo-card {
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -62,26 +132,34 @@
   transition: box-shadow 0.3s, transform 0.3s;
 }
 
-.pdf-archive-item:hover {
+.pdf-embed-seo-card:hover {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   transform: translateY(-2px);
 }
 
-.pdf-archive-item-link {
-  display: block;
-  color: inherit;
-  text-decoration: none;
+.pdf-embed-seo-card:focus-within {
+  outline: 2px solid #0066cc;
+  outline-offset: 2px;
 }
 
-/* Thumbnail */
-.pdf-archive-item-thumbnail {
+/* Card Thumbnail */
+.pdf-embed-seo-card-thumbnail {
   position: relative;
   padding-top: 130%;
   background: #f0f0f0;
   overflow: hidden;
 }
 
-.pdf-archive-item-thumbnail img {
+.pdf-embed-seo-card-thumbnail a {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.pdf-embed-seo-card-thumbnail img {
   position: absolute;
   top: 0;
   left: 0;
@@ -90,87 +168,406 @@
   object-fit: cover;
 }
 
-.pdf-archive-item-placeholder {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.pdf-embed-seo-card-thumbnail-placeholder {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-.pdf-archive-item-icon {
-  font-size: 48px;
-  opacity: 0.8;
+.pdf-embed-seo-card-thumbnail-placeholder a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Content */
-.pdf-archive-item-content {
+.pdf-embed-seo-card-icon {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Card Content */
+.pdf-embed-seo-card-content {
   padding: 15px;
 }
 
-.pdf-archive-item-title {
+.pdf-embed-seo-card-title {
   margin: 0 0 10px;
   font-size: 18px;
   font-weight: 600;
   line-height: 1.3;
-  color: #333;
 }
 
-.pdf-archive-item-description {
+.pdf-embed-seo-card-title a {
+  color: #333;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.pdf-embed-seo-card-title a:hover {
+  color: #0066cc;
+}
+
+.pdf-embed-seo-card-title a:focus {
+  outline: 2px solid #0066cc;
+  outline-offset: 2px;
+}
+
+.pdf-embed-seo-card-excerpt {
   margin: 0 0 12px;
   font-size: 14px;
   color: #666;
   line-height: 1.5;
 }
 
-/* Meta */
-.pdf-archive-item-meta {
+.pdf-embed-seo-card-excerpt p {
+  margin: 0;
+}
+
+/* Card Meta */
+.pdf-embed-seo-card-meta {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
   font-size: 12px;
   color: #999;
 }
 
-.pdf-archive-item-views,
-.pdf-archive-item-date {
+.pdf-embed-seo-card-date,
+.pdf-embed-seo-card-views {
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-/* Pager */
-.pdf-archive-pager {
+/* Card Link Button */
+.pdf-embed-seo-card-link {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #0066cc;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.pdf-embed-seo-card-link:hover {
+  background: #0052a3;
+  color: #fff;
+}
+
+.pdf-embed-seo-card-link:focus {
+  outline: 2px solid #004499;
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   List View (Simple Bullet-Style List)
+   ========================================================================== */
+
+.pdf-embed-seo-list-nav {
+  margin: 0;
+}
+
+.pdf-embed-seo-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pdf-embed-seo-list-item {
+  padding: 16px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.pdf-embed-seo-list-item:first-child {
+  padding-top: 0;
+}
+
+.pdf-embed-seo-list-item:last-child {
+  border-bottom: none;
+}
+
+.pdf-embed-seo-list-item article {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pdf-embed-seo-list-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #0066cc;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.pdf-embed-seo-list-link:hover {
+  color: #004499;
+  text-decoration: underline;
+}
+
+.pdf-embed-seo-list-link:focus {
+  outline: 2px solid #0066cc;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.pdf-embed-seo-list-icon {
+  flex-shrink: 0;
+  color: #c62828;
+}
+
+.pdf-embed-seo-list-icon svg {
+  display: block;
+}
+
+.pdf-embed-seo-list-title {
+  color: inherit;
+}
+
+.pdf-embed-seo-list-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: #666;
+}
+
+.pdf-embed-seo-list-date {
+  color: inherit;
+}
+
+.pdf-embed-seo-list-views {
+  color: #888;
+}
+
+.pdf-embed-seo-list-description {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   Pagination
+   ========================================================================== */
+
+.pdf-embed-seo-pagination {
   margin-top: 40px;
 }
 
-/* Empty state */
-.pdf-archive-empty {
+.pdf-embed-seo-pagination .pager {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pdf-embed-seo-pagination .pager__item a {
+  display: inline-block;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #333;
+  transition: all 0.2s;
+}
+
+.pdf-embed-seo-pagination .pager__item a:hover {
+  background: #f5f5f5;
+  border-color: #ccc;
+}
+
+.pdf-embed-seo-pagination .pager__item a:focus {
+  outline: 2px solid #0066cc;
+  outline-offset: 2px;
+}
+
+.pdf-embed-seo-pagination .pager__item--active a {
+  background: #0066cc;
+  border-color: #0066cc;
+  color: #fff;
+}
+
+/* ==========================================================================
+   No Results
+   ========================================================================== */
+
+.pdf-embed-seo-no-results {
   text-align: center;
   padding: 60px 20px;
   color: #666;
 }
 
-.pdf-archive-empty p {
+.pdf-embed-seo-no-results p {
   font-size: 18px;
   margin: 0;
 }
 
-/* Responsive */
+/* ==========================================================================
+   Single PDF Document Styles
+   ========================================================================== */
+
+.pdf-embed-seo-single {
+  padding: 20px 0;
+}
+
+.pdf-embed-seo-header {
+  margin-bottom: 20px;
+}
+
+.pdf-embed-seo-title {
+  margin: 0 0 10px;
+  font-size: 2em;
+  font-weight: 700;
+  color: #333;
+}
+
+.pdf-embed-seo-excerpt {
+  color: #666;
+  font-size: 16px;
+}
+
+.pdf-embed-seo-excerpt p {
+  margin: 0;
+}
+
+.pdf-embed-seo-content {
+  margin-bottom: 20px;
+}
+
+.pdf-embed-seo-description {
+  margin-top: 20px;
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 4px;
+}
+
+.pdf-embed-seo-actions {
+  margin-top: 15px;
+}
+
+.pdf-embed-seo-footer {
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.pdf-embed-seo-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+.pdf-embed-seo-meta time {
+  color: inherit;
+}
+
+/* ==========================================================================
+   Accessibility
+   ========================================================================== */
+
+/* Screen reader text */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Focus visible styles for keyboard navigation */
+.pdf-embed-seo-archive a:focus-visible,
+.pdf-embed-seo-archive button:focus-visible,
+.pdf-embed-seo-single a:focus-visible,
+.pdf-embed-seo-single button:focus-visible {
+  outline: 2px solid #0066cc;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .pdf-embed-seo-card {
+    border-width: 2px;
+    border-color: #000;
+  }
+
+  .pdf-embed-seo-card-link {
+    border: 2px solid #000;
+  }
+
+  .pdf-embed-seo-breadcrumb-item a,
+  .pdf-embed-seo-list-link,
+  .pdf-embed-seo-card-title a {
+    text-decoration: underline;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .pdf-embed-seo-card,
+  .pdf-embed-seo-card-link,
+  .pdf-embed-seo-breadcrumb-item a,
+  .pdf-embed-seo-list-link {
+    transition: none;
+  }
+
+  .pdf-embed-seo-card:hover {
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
 @media (max-width: 768px) {
-  .pdf-archive-grid {
+  .pdf-embed-seo-grid {
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 20px;
   }
 
-  .pdf-archive--list .pdf-archive-item {
-    flex-direction: column;
+  .pdf-embed-seo-archive-title,
+  .pdf-embed-seo-title {
+    font-size: 1.5em;
   }
 
-  .pdf-archive--list .pdf-archive-item-thumbnail {
-    width: 100%;
+  .pdf-embed-seo-breadcrumb {
+    font-size: 13px;
+  }
+
+  .pdf-embed-seo-card-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .pdf-embed-seo-meta {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pdf-embed-seo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pdf-embed-seo-breadcrumb-list {
+    gap: 4px;
+  }
+
+  .pdf-embed-seo-breadcrumb-item:not(:last-child)::after {
+    margin-left: 4px;
   }
 }

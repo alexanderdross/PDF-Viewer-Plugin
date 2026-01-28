@@ -6,7 +6,7 @@
 
 Complete guide for installing, configuring, and using the PDF Embed & SEO Optimize plugin.
 
-**Website:** [pdfviewer.drossmedia.de](https://pdfviewer.drossmedia.de) | **Version:** 1.2.1
+**Website:** [pdfviewer.drossmedia.de](https://pdfviewer.drossmedia.de) | **Version:** 1.2.4
 
 ---
 
@@ -162,8 +162,33 @@ Features:
 Each PDF has its own SEO-friendly page:
 - **URL**: `yoursite.com/pdf/document-slug/`
 - Full PDF viewer with PDF.js
-- Schema.org markup
-- Social sharing meta tags
+- Schema.org DigitalDocument markup
+- GEO/AEO/LLM optimized schema
+- Social sharing meta tags (Open Graph & Twitter Cards)
+
+### SEO & AI Optimization
+
+The plugin includes comprehensive SEO and AI optimization:
+
+#### Schema.org Structured Data
+- **DigitalDocument** with full metadata (name, description, author, dates)
+- **SpeakableSpecification** for voice assistants (Alexa, Google Assistant)
+- **potentialAction** (ReadAction, DownloadAction, ViewAction, SearchAction)
+- **accessibilityFeature** and **accessMode** for accessibility
+
+#### Social Meta Tags
+Open Graph and Twitter Card meta tags are output automatically:
+- With Yoast SEO: Uses Yoast's output
+- Without Yoast: Plugin outputs standalone meta tags
+  - `og:type`, `og:title`, `og:description`, `og:url`, `og:image`
+  - `twitter:card`, `twitter:title`, `twitter:description`, `twitter:image`
+
+#### GEO/AEO/LLM Optimization
+Optimized for generative and answer engines:
+- Speakable content selectors for voice search
+- Learning resource type and genre classification
+- Keywords from tags, topics from categories
+- Structured actions for AI understanding
 
 ### Shortcodes (WordPress)
 
@@ -494,6 +519,44 @@ Available at: `/pdf/sitemap.xml`
 - All published PDFs included
 - XSL-styled browser view
 - Submit to Google Search Console
+
+### AI & Voice Search Optimization (GEO/AEO/LLM)
+
+Premium users get access to an advanced "AI & Schema Optimization" meta box when editing PDFs:
+
+#### AI Summary & Key Points
+- **AI Summary (TL;DR)**: A concise 1-2 sentence summary for AI assistants
+- **Key Points**: Bullet points that AI can use for quick answers
+- Schema: `abstract`, `ItemList` with key takeaways
+
+#### Document Metadata
+- **Reading Time**: Estimated minutes to read → `timeRequired: PT10M`
+- **Difficulty Level**: Beginner/Intermediate/Advanced/Expert → `educationalLevel`
+- **Document Type**: Guide, Whitepaper, Report, E-Book, etc. → `additionalType`
+- **Target Audience**: Who the document is for → `audience` schema
+
+#### FAQ Schema
+- Add Question/Answer pairs
+- Outputs separate `FAQPage` schema
+- Appears in Google FAQ rich results
+- Voice assistants can directly answer questions
+
+#### Table of Contents
+- Add sections with page numbers
+- Creates `hasPart` schema with deep links
+- Enables structured navigation for AI crawlers
+
+#### Educational Content
+- **Prerequisites**: What readers should know first → `coursePrerequisites`
+- **Learning Outcomes**: What readers will learn → `teaches`
+
+#### Custom Speakable
+- Define priority content for voice search
+- Takes precedence over auto-detected content
+
+#### Related Documents
+- Link to related PDFs → `isRelatedTo` schema
+- Helps AI understand content relationships
 
 ---
 
