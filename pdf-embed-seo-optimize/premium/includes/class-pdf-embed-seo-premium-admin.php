@@ -93,7 +93,17 @@ class PDF_Embed_SEO_Premium_Admin {
 		register_setting( 'pdf_embed_seo_premium_settings', 'pdf_embed_seo_premium_settings', array( $this, 'sanitize_settings' ) );
 
 		// Register license settings.
-		register_setting( 'pdf_embed_seo_license', 'pdf_embed_seo_premium_license_key', 'sanitize_text_field' );
+		register_setting(
+			'pdf_embed_seo_license',
+			'pdf_embed_seo_premium_license_key',
+			array(
+				'type'              => 'string',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+
+		// Add capability filter for license settings page.
+		add_filter( 'option_page_capability_pdf_embed_seo_license', array( $this, 'get_license_page_capability' ) );
 
 		// Premium features section.
 		add_settings_section(
@@ -395,6 +405,15 @@ class PDF_Embed_SEO_Premium_Admin {
 			PDF_EMBED_SEO_PREMIUM_VERSION,
 			true
 		);
+	}
+
+	/**
+	 * Get capability for license settings page.
+	 *
+	 * @return string Capability required.
+	 */
+	public function get_license_page_capability() {
+		return 'manage_options';
 	}
 
 	/**
