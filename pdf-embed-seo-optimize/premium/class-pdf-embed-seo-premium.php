@@ -177,6 +177,30 @@ final class PDF_Embed_SEO_Premium {
 
 		// Archive redirect (premium feature).
 		add_action( 'template_redirect', array( $this, 'maybe_redirect_archive' ) );
+
+		// Always initialize admin for license page (regardless of license status).
+		if ( is_admin() ) {
+			add_action( 'admin_init', array( $this, 'init_admin_always' ) );
+		}
+	}
+
+	/**
+	 * Initialize admin components that should always be available.
+	 * This ensures the license page is accessible even when license is inactive.
+	 *
+	 * @return void
+	 */
+	public function init_admin_always() {
+		static $admin_initialized = false;
+
+		// Only initialize once and only if license is NOT valid.
+		// (If license is valid, admin is initialized in init() method).
+		if ( $admin_initialized || $this->is_license_valid() ) {
+			return;
+		}
+
+		$admin_initialized = true;
+		new PDF_Embed_SEO_Premium_Admin();
 	}
 
 	/**
