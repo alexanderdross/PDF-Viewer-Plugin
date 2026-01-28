@@ -45,6 +45,10 @@ class PDF_Embed_SEO_Premium_Admin {
 
 		// Modify plugin action links for premium.
 		add_filter( 'plugin_action_links_' . PDF_EMBED_SEO_PLUGIN_BASENAME, array( $this, 'modify_plugin_action_links' ), 20 );
+
+		// Handle license activation on save.
+		add_action( 'update_option_pdf_embed_seo_premium_license_key', array( $this, 'validate_license_key' ), 10, 2 );
+		add_action( 'add_option_pdf_embed_seo_premium_license_key', array( $this, 'validate_license_key_on_add' ), 10, 2 );
 	}
 
 	/**
@@ -417,6 +421,81 @@ class PDF_Embed_SEO_Premium_Admin {
 	}
 
 	/**
+	 * Validate license key when option is added.
+	 *
+	 * @param string $option Option name.
+	 * @param mixed  $value  Option value.
+	 * @return void
+	 */
+	public function validate_license_key_on_add( $option, $value ) {
+		$this->process_license_validation( $value );
+	}
+
+	/**
+	 * Validate license key when updated.
+	 *
+	 * @param mixed $old_value Old value.
+	 * @param mixed $new_value New value.
+	 * @return void
+	 */
+	public function validate_license_key( $old_value, $new_value ) {
+		$this->process_license_validation( $new_value );
+	}
+
+	/**
+	 * Process license key validation.
+	 *
+	 * Validates the license key and updates the license status accordingly.
+	 * Accepts test/development keys for unlimited validity.
+	 *
+	 * @param string $license_key The license key to validate.
+	 * @return void
+	 */
+	private function process_license_validation( $license_key ) {
+		if ( empty( $license_key ) ) {
+			update_option( 'pdf_embed_seo_premium_license_status', 'inactive' );
+			delete_option( 'pdf_embed_seo_premium_license_expires' );
+			return;
+		}
+
+		// Test/Development license keys for unlimited validity.
+		// Format: PDFPRO-DEV-XXXX-XXXX or PDFPRO-TEST-XXXX-XXXX.
+		$test_key_patterns = array(
+			'/^PDFPRO-DEV-[A-Z0-9]{4}-[A-Z0-9]{4}$/i',
+			'/^PDFPRO-TEST-[A-Z0-9]{4}-[A-Z0-9]{4}$/i',
+			'/^PDFPRO-UNLIMITED-[A-Z0-9]{4}$/i',
+		);
+
+		$is_test_key = false;
+		foreach ( $test_key_patterns as $pattern ) {
+			if ( preg_match( $pattern, $license_key ) ) {
+				$is_test_key = true;
+				break;
+			}
+		}
+
+		if ( $is_test_key ) {
+			// Test keys are valid with no expiration.
+			update_option( 'pdf_embed_seo_premium_license_status', 'valid' );
+			delete_option( 'pdf_embed_seo_premium_license_expires' );
+			return;
+		}
+
+		// Standard license key validation.
+		// Format: PDFPRO-XXXX-XXXX-XXXX-XXXX.
+		if ( preg_match( '/^PDFPRO-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/i', $license_key ) ) {
+			// Valid format - activate for 1 year.
+			update_option( 'pdf_embed_seo_premium_license_status', 'valid' );
+			update_option( 'pdf_embed_seo_premium_license_expires', gmdate( 'Y-m-d', strtotime( '+1 year' ) ) );
+			return;
+		}
+
+		// Invalid key format.
+		update_option( 'pdf_embed_seo_premium_license_status', 'invalid' );
+		delete_option( 'pdf_embed_seo_premium_license_expires' );
+	}
+
+	/**
 	 * Add license page.
 	 *
 	 * @return void
@@ -439,7 +518,7 @@ class PDF_Embed_SEO_Premium_Admin {
 	 */
 	public function render_license_page() {
 		$license_key    = get_option( 'pdf_embed_seo_premium_license_key', '' );
-		$license_status = get_option( 'pdf_embed_seo_premium_license_status', 'valid' );
+		$license_status = get_option( 'pdf_embed_seo_premium_license_status', 'inactive' );
 		?>
 		<div class="wrap">
 			<h1><?php esc_html_e( 'License Settings', 'pdf-embed-seo-optimize' ); ?></h1>
