@@ -28,10 +28,25 @@ All notable changes to this project will be documented in this file.
   - mainEntityOfPage
   - publisher with logo
   - Meta description from Yoast SEO in archive ItemList
+- **Premium: AI & Voice Search Optimization Meta Box** - Advanced schema features
+  - AI Summary (TL;DR) for voice assistants → `abstract` schema
+  - Key Points & Takeaways → `ItemList` schema
+  - FAQ Schema (FAQPage) for Google rich results
+  - Table of Contents Schema (`hasPart`) with deep links
+  - Reading Time estimate → `timeRequired` schema
+  - Difficulty Level → `educationalLevel` schema
+  - Document Type classification → `additionalType` schema
+  - Target Audience → `audience` schema
+  - Custom Speakable Content for voice search
+  - Related Documents → `isRelatedTo` schema
+  - Prerequisites → `coursePrerequisites` schema
+  - Learning Outcomes → `teaches` schema
+- **AI Optimization Preview** - Preview meta box for free users with Get Premium CTA
 
 ### Fixed
 - Plugin Check compliance: Fixed escaping issues in premium license notices
 - Plugin Check compliance: Added direct file access protection to test files
+- Schema validation: Moved speakable to separate WebPage schema (only valid on WebPage/Article)
 
 ---
 

@@ -63,6 +63,26 @@ class PDF_Embed_SEO_Admin {
 			'side',
 			'default'
 		);
+
+		// Show AI optimization preview if premium is not active or no valid license.
+		$show_ai_preview = true;
+		if ( defined( 'PDF_EMBED_SEO_PREMIUM_VERSION' ) ) {
+			$license_status = get_option( 'pdf_embed_seo_premium_license_status', 'inactive' );
+			if ( 'valid' === $license_status ) {
+				$show_ai_preview = false; // Premium handles this with full functionality.
+			}
+		}
+
+		if ( $show_ai_preview ) {
+			add_meta_box(
+				'pdf_embed_seo_ai_preview',
+				__( 'AI & Schema Optimization', 'pdf-embed-seo-optimize' ) . ' <span class="dashicons dashicons-lock" style="color: #dba617; font-size: 16px; vertical-align: middle;"></span>',
+				array( $this, 'render_ai_preview_meta_box' ),
+				'pdf_document',
+				'normal',
+				'low'
+			);
+		}
 	}
 
 	/**
@@ -115,6 +135,92 @@ class PDF_Embed_SEO_Admin {
 		$view_count = PDF_Embed_SEO_Post_Type::get_view_count( $post->ID );
 
 		include PDF_EMBED_SEO_PLUGIN_DIR . 'admin/views/meta-box-pdf-stats.php';
+	}
+
+	/**
+	 * Render AI optimization preview meta box (for free users).
+	 *
+	 * @param WP_Post $post The current post object.
+	 * @return void
+	 */
+	public function render_ai_preview_meta_box( $post ) {
+		$has_premium    = defined( 'PDF_EMBED_SEO_PREMIUM_VERSION' );
+		$license_status = get_option( 'pdf_embed_seo_premium_license_status', 'inactive' );
+		?>
+		<div style="opacity: 0.6; pointer-events: none;">
+			<p class="description" style="margin-bottom: 15px;">
+				<?php esc_html_e( 'Optimize your PDF for AI assistants, voice search, and generative engines with advanced schema markup.', 'pdf-embed-seo-optimize' ); ?>
+			</p>
+
+			<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+				<div>
+					<h4 style="margin: 0 0 8px;"><?php esc_html_e( 'AI Summary (TL;DR)', 'pdf-embed-seo-optimize' ); ?></h4>
+					<textarea disabled rows="2" style="width: 100%;" placeholder="<?php esc_attr_e( 'A concise summary for AI assistants...', 'pdf-embed-seo-optimize' ); ?>"></textarea>
+				</div>
+				<div>
+					<h4 style="margin: 0 0 8px;"><?php esc_html_e( 'Key Points', 'pdf-embed-seo-optimize' ); ?></h4>
+					<textarea disabled rows="2" style="width: 100%;" placeholder="<?php esc_attr_e( 'Key takeaways, one per line...', 'pdf-embed-seo-optimize' ); ?>"></textarea>
+				</div>
+			</div>
+
+			<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 15px;">
+				<div>
+					<label style="font-weight: 600;"><?php esc_html_e( 'Reading Time', 'pdf-embed-seo-optimize' ); ?></label><br>
+					<input type="number" disabled placeholder="10" style="width: 80px;"> <?php esc_html_e( 'min', 'pdf-embed-seo-optimize' ); ?>
+				</div>
+				<div>
+					<label style="font-weight: 600;"><?php esc_html_e( 'Difficulty', 'pdf-embed-seo-optimize' ); ?></label><br>
+					<select disabled style="width: 100%;">
+						<option><?php esc_html_e( 'Intermediate', 'pdf-embed-seo-optimize' ); ?></option>
+					</select>
+				</div>
+				<div>
+					<label style="font-weight: 600;"><?php esc_html_e( 'Document Type', 'pdf-embed-seo-optimize' ); ?></label><br>
+					<select disabled style="width: 100%;">
+						<option><?php esc_html_e( 'Guide / Tutorial', 'pdf-embed-seo-optimize' ); ?></option>
+					</select>
+				</div>
+			</div>
+
+			<div style="margin-top: 15px;">
+				<h4 style="margin: 0 0 8px;"><?php esc_html_e( 'FAQ Schema (for Google Rich Results)', 'pdf-embed-seo-optimize' ); ?></h4>
+				<div style="background: #f9f9f9; padding: 10px; border-radius: 4px;">
+					<input type="text" disabled placeholder="<?php esc_attr_e( 'Question: What is covered in this PDF?', 'pdf-embed-seo-optimize' ); ?>" style="width: 100%; margin-bottom: 5px;">
+					<textarea disabled rows="1" style="width: 100%;" placeholder="<?php esc_attr_e( 'Answer: This PDF covers...', 'pdf-embed-seo-optimize' ); ?>"></textarea>
+				</div>
+			</div>
+
+			<div style="margin-top: 15px;">
+				<h4 style="margin: 0 0 8px;"><?php esc_html_e( 'Table of Contents Schema', 'pdf-embed-seo-optimize' ); ?></h4>
+				<div style="background: #f9f9f9; padding: 10px; border-radius: 4px; display: flex; gap: 10px;">
+					<input type="text" disabled placeholder="<?php esc_attr_e( 'Section Title', 'pdf-embed-seo-optimize' ); ?>" style="flex: 3;">
+					<input type="number" disabled placeholder="<?php esc_attr_e( 'Page', 'pdf-embed-seo-optimize' ); ?>" style="flex: 1;">
+				</div>
+			</div>
+		</div>
+
+		<?php if ( $has_premium && 'valid' !== $license_status ) : ?>
+			<div style="text-align: center; padding: 15px; background: #fff3cd; border-radius: 4px; margin-top: 15px;">
+				<p style="margin: 0 0 10px;">
+					<strong><?php esc_html_e( 'License Required', 'pdf-embed-seo-optimize' ); ?></strong><br>
+					<?php esc_html_e( 'Activate your premium license to use AI optimization features.', 'pdf-embed-seo-optimize' ); ?>
+				</p>
+				<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=pdf_document&page=pdf-license' ) ); ?>" class="button button-primary">
+					<?php esc_html_e( 'Activate License', 'pdf-embed-seo-optimize' ); ?>
+				</a>
+			</div>
+		<?php else : ?>
+			<div style="text-align: center; padding: 15px; background: #f0f0f1; border-radius: 4px; margin-top: 15px;">
+				<p style="margin: 0 0 10px;">
+					<strong><?php esc_html_e( 'Unlock AI & Voice Search Optimization', 'pdf-embed-seo-optimize' ); ?></strong><br>
+					<?php esc_html_e( 'Get FAQ schema, reading time, difficulty level, and more for better AI visibility!', 'pdf-embed-seo-optimize' ); ?>
+				</p>
+				<a href="https://pdfviewer.drossmedia.de" target="_blank" class="button button-primary">
+					<?php esc_html_e( 'Get Premium', 'pdf-embed-seo-optimize' ); ?>
+				</a>
+			</div>
+		<?php endif; ?>
+		<?php
 	}
 
 	/**

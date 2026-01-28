@@ -80,6 +80,26 @@ A detailed comparison of features available in the Free and Premium versions.
 | **Sitemap XSL Stylesheet** | - | ✓ |
 | **Search Engine Ping** | - | ✓ |
 
+### AI & Voice Search Optimization (Premium)
+
+| Feature | Free | Premium |
+|---------|:----:|:-------:|
+| Basic Speakable Schema (WebPage) | ✓ | ✓ |
+| potentialAction (ReadAction, DownloadAction) | ✓ | ✓ |
+| accessMode & accessibilityFeature | ✓ | ✓ |
+| **AI Summary / TL;DR Field** | - | ✓ |
+| **Key Points & Takeaways** | - | ✓ |
+| **FAQ Schema (FAQPage for Rich Results)** | - | ✓ |
+| **Table of Contents Schema (hasPart)** | - | ✓ |
+| **Reading Time Estimate (timeRequired)** | - | ✓ |
+| **Difficulty Level (educationalLevel)** | - | ✓ |
+| **Document Type Classification** | - | ✓ |
+| **Target Audience Schema** | - | ✓ |
+| **Custom Speakable Content** | - | ✓ |
+| **Related Documents (isRelatedTo)** | - | ✓ |
+| **Prerequisites (coursePrerequisites)** | - | ✓ |
+| **Learning Outcomes (teaches)** | - | ✓ |
+
 ### Archive & Listing
 
 | Feature | Free | Premium |

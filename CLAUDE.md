@@ -456,9 +456,22 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 | `_pdf_file_url` | string | Direct PDF URL (internal) |
 | `_pdf_allow_download` | bool | Allow download |
 | `_pdf_allow_print` | bool | Allow print |
+| `_pdf_standalone_mode` | bool | Standalone fullscreen mode |
 | `_pdf_view_count` | int | View count |
 | `_pdf_password_protected` | bool | Password enabled (Premium) |
 | `_pdf_password` | string | Hashed password (Premium) |
+| `_pdf_ai_summary` | string | AI summary/TL;DR (Premium) |
+| `_pdf_key_points` | string | Key takeaways (Premium) |
+| `_pdf_reading_time` | int | Reading time in minutes (Premium) |
+| `_pdf_difficulty_level` | string | Difficulty level (Premium) |
+| `_pdf_document_type` | string | Document type (Premium) |
+| `_pdf_target_audience` | string | Target audience (Premium) |
+| `_pdf_faq_items` | array | FAQ Q&A pairs (Premium) |
+| `_pdf_toc_items` | array | Table of contents (Premium) |
+| `_pdf_custom_speakable` | string | Custom speakable content (Premium) |
+| `_pdf_related_documents` | array | Related PDF IDs (Premium) |
+| `_pdf_prerequisites` | string | Prerequisites (Premium) |
+| `_pdf_learning_outcomes` | string | Learning outcomes (Premium) |
 
 ### WordPress Options
 
@@ -554,9 +567,29 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 | Yoast SEO Integration (WP) | ✓ | ✓ |
 | OpenGraph Meta Tags | ✓ | ✓ |
 | Twitter Card Support | ✓ | ✓ |
+| GEO/AEO Basic (speakable, potentialAction) | ✓ | ✓ |
 | XML Sitemap (`/pdf/sitemap.xml`) | - | ✓ |
 | Sitemap XSL Stylesheet | - | ✓ |
 | Search Engine Ping | - | ✓ |
+
+### GEO/AEO/LLM Optimization (Premium)
+
+| Feature | Free | Premium |
+|---------|:----:|:-------:|
+| Basic Speakable Schema | ✓ | ✓ |
+| potentialAction (Read/Download) | ✓ | ✓ |
+| accessMode & accessibilityFeature | ✓ | ✓ |
+| **AI Summary (TL;DR)** | - | ✓ |
+| **Key Points / Takeaways** | - | ✓ |
+| **FAQ Schema (FAQPage)** | - | ✓ |
+| **Table of Contents Schema** | - | ✓ |
+| **Reading Time Estimate** | - | ✓ |
+| **Difficulty Level** | - | ✓ |
+| **Document Type Classification** | - | ✓ |
+| **Target Audience** | - | ✓ |
+| **Custom Speakable Content** | - | ✓ |
+| **Related Documents Schema** | - | ✓ |
+| **Prerequisites & Learning Outcomes** | - | ✓ |
 
 ### Archive & Listing
 
