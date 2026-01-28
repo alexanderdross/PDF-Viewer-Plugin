@@ -173,10 +173,24 @@ class PDF_Embed_SEO_Yoast {
 					'dateModified'   => get_the_modified_date( 'c', $post_id ),
 				);
 
-				// Add description if available.
-				$excerpt = get_the_excerpt( $post_id );
-				if ( ! empty( $excerpt ) ) {
-					$document['description'] = wp_strip_all_tags( $excerpt );
+				// Add description - prefer Yoast SEO meta description if available.
+				$description = '';
+
+				// Try Yoast SEO meta description first.
+				if ( class_exists( 'WPSEO_Meta' ) ) {
+					$yoast_desc = WPSEO_Meta::get_value( 'metadesc', $post_id );
+					if ( ! empty( $yoast_desc ) ) {
+						$description = $yoast_desc;
+					}
+				}
+
+				// Fall back to excerpt if no Yoast description.
+				if ( empty( $description ) ) {
+					$description = get_the_excerpt( $post_id );
+				}
+
+				if ( ! empty( $description ) ) {
+					$document['description'] = wp_strip_all_tags( $description );
 				}
 
 				// Add thumbnail if available.
