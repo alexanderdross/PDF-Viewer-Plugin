@@ -49,12 +49,18 @@ class PDF_Embed_SEO_Yoast {
 	/**
 	 * Output JSON-LD schema in the head.
 	 *
-	 * This outputs schema markup for PDF documents and archive page, independent of Yoast SEO.
+	 * This outputs schema markup for PDF documents and archive page.
+	 * When Yoast SEO is active, we skip our output to avoid duplicates.
 	 *
 	 * @return void
 	 */
 	public function output_json_ld_schema() {
-		// Handle archive page.
+		// If Yoast is active, let it handle all schema output to avoid duplicates.
+		if ( $this->is_yoast_active() ) {
+			return;
+		}
+
+		// Handle archive page (only when Yoast is not active).
 		if ( is_post_type_archive( 'pdf_document' ) ) {
 			$this->output_archive_schema();
 			return;
@@ -62,11 +68,6 @@ class PDF_Embed_SEO_Yoast {
 
 		// Handle single PDF document pages.
 		if ( ! is_singular( 'pdf_document' ) ) {
-			return;
-		}
-
-		// If Yoast is active, it will handle schema output via its own system.
-		if ( $this->is_yoast_active() ) {
 			return;
 		}
 
@@ -87,12 +88,16 @@ class PDF_Embed_SEO_Yoast {
 	/**
 	 * Output JSON-LD schema for the PDF archive page.
 	 *
+	 * Only outputs when Yoast SEO is not active to avoid duplicate schemas.
+	 *
 	 * @return void
 	 */
 	public function output_archive_schema() {
 		$archive_url = get_post_type_archive_link( 'pdf_document' );
 		$site_name   = get_bloginfo( 'name' );
+		$site_url    = home_url( '/' );
 
+		// Build clean CollectionPage schema.
 		$schema = array(
 			'@context'    => 'https://schema.org',
 			'@type'       => 'CollectionPage',
@@ -100,19 +105,42 @@ class PDF_Embed_SEO_Yoast {
 			'name'        => __( 'PDF Documents', 'wp-pdf-embed-seo-optimize' ),
 			'description' => __( 'Browse all available PDF documents.', 'wp-pdf-embed-seo-optimize' ),
 			'url'         => $archive_url,
+			'inLanguage'  => get_bloginfo( 'language' ),
 			'isPartOf'    => array(
 				'@type' => 'WebSite',
-				'@id'   => home_url( '/' ) . '#website',
+				'@id'   => $site_url . '#website',
 				'name'  => $site_name,
-				'url'   => home_url( '/' ),
+				'url'   => $site_url,
 			),
 			'mentions'    => array(
-				'@type'       => 'Organization',
-				'name'        => 'Dross:Media',
-				'url'         => 'https://dross.net/#media',
-				'description' => 'AI Search, GEO & SEO Strategy for the search of tomorrow – directly from the Web & Search Lead of a pharmaceutical company.',
+				array(
+					'@type' => 'Organization',
+					'name'  => 'Dross:Media',
+					'url'   => 'https://dross.net/media/',
+				),
+				array(
+					'@type' => 'SoftwareApplication',
+					'name'  => 'WP & Drupal PDF Embed & SEO Optimize',
+					'url'   => 'https://pdfviewer.drossmedia.de',
+				),
 			),
 		);
+
+		// Add publisher if site has logo.
+		$custom_logo_id = get_theme_mod( 'custom_logo' );
+		if ( $custom_logo_id ) {
+			$logo_url = wp_get_attachment_image_url( $custom_logo_id, 'full' );
+			if ( $logo_url ) {
+				$schema['publisher'] = array(
+					'@type' => 'Organization',
+					'name'  => $site_name,
+					'logo'  => array(
+						'@type' => 'ImageObject',
+						'url'   => $logo_url,
+					),
+				);
+			}
+		}
 
 		/**
 		 * Filter the archive page schema data.
@@ -161,11 +189,25 @@ class PDF_Embed_SEO_Yoast {
 			'inLanguage'      => get_bloginfo( 'language' ),
 		);
 
-		// Add description if available.
-		$excerpt = get_the_excerpt( $post_id );
-		if ( ! empty( $excerpt ) ) {
-			$schema['description'] = wp_strip_all_tags( $excerpt );
-			$schema['abstract']    = wp_strip_all_tags( $excerpt );
+		// Add description - prefer Yoast SEO meta description if available.
+		$description = '';
+
+		// Try Yoast SEO meta description first.
+		if ( class_exists( 'WPSEO_Meta' ) ) {
+			$yoast_desc = WPSEO_Meta::get_value( 'metadesc', $post_id );
+			if ( ! empty( $yoast_desc ) ) {
+				$description = $yoast_desc;
+			}
+		}
+
+		// Fall back to excerpt if no Yoast description.
+		if ( empty( $description ) ) {
+			$description = get_the_excerpt( $post_id );
+		}
+
+		if ( ! empty( $description ) ) {
+			$schema['description'] = wp_strip_all_tags( $description );
+			$schema['abstract']    = wp_strip_all_tags( $description );
 		}
 
 		// Add author information.
@@ -453,12 +495,24 @@ class PDF_Embed_SEO_Schema_Piece {
 		$file_id  = get_post_meta( $post_id, '_pdf_file_id', true );
 		$file_url = get_post_meta( $post_id, '_pdf_file_url', true );
 
+		// Get description - prefer Yoast SEO meta description.
+		$description = '';
+		if ( class_exists( 'WPSEO_Meta' ) ) {
+			$yoast_desc = WPSEO_Meta::get_value( 'metadesc', $post_id );
+			if ( ! empty( $yoast_desc ) ) {
+				$description = $yoast_desc;
+			}
+		}
+		if ( empty( $description ) ) {
+			$description = get_the_excerpt( $post_id );
+		}
+
 		$schema = array(
 			'@type'          => 'DigitalDocument',
 			'@id'            => get_permalink( $post_id ) . '#digitaldocument',
 			'name'           => get_the_title( $post_id ),
 			'headline'       => get_the_title( $post_id ),
-			'description'    => wp_strip_all_tags( get_the_excerpt( $post_id ) ),
+			'description'    => wp_strip_all_tags( $description ),
 			'url'            => get_permalink( $post_id ),
 			'encodingFormat' => 'application/pdf',
 			'fileFormat'     => 'application/pdf',

@@ -2,7 +2,7 @@
 
 A comprehensive PDF management solution available for WordPress and Drupal that uses Mozilla's PDF.js library to securely display PDFs with SEO optimization.
 
-**Current Version:** 1.2.1
+**Current Version:** 1.2.2
 **Platforms:** WordPress (Free & Premium), Drupal 10/11
 **License:** GPL v2 or later
 
@@ -18,6 +18,75 @@ This project provides four modules:
 | WP Premium | `wp-wp-pdf-embed-seo-optimize/premium/` | WordPress 5.8+ | Analytics, passwords, progress, sitemap |
 | Drupal Free | `drupal-pdf-embed-seo/` | Drupal 10/11 | Core PDF viewer, SEO, REST API |
 | Drupal Premium | `drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/` | Drupal 10/11 | Analytics, passwords, progress, sitemap |
+
+---
+
+## User Guide (WordPress)
+
+### Creating a PDF Document
+
+When you create a new PDF Document (**PDF Documents → Add New**), use the **PDF File** meta box to upload or select your PDF file.
+
+**Important:** The PDF is automatically displayed on its dedicated page (e.g., `/pdf/your-document-title/`). You do NOT need to add any shortcode in the content area.
+
+| Element | Purpose |
+|---------|---------|
+| **Title** | The document title (appears in URL, breadcrumbs, and SEO) |
+| **Content Editor** | Optional description text shown below the PDF viewer |
+| **PDF File Meta Box** | Upload/select the PDF file to display |
+| **PDF Settings** | Control download/print permissions |
+| **PDF Cover Image** | Featured image for archive listings and social sharing |
+| **Excerpt** | Short description for archive listings |
+
+### Embedding PDFs on Other Pages (Shortcodes)
+
+Use shortcodes to embed an **existing PDF Document** into any page, post, or widget area.
+
+#### `[pdf_viewer]` - Embed a PDF Viewer
+
+```
+[pdf_viewer id="123"]
+[pdf_viewer id="123" width="100%" height="600px"]
+```
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `id` | (required) | The PDF Document post ID |
+| `width` | `100%` | Viewer width (CSS value) |
+| `height` | `800px` | Viewer height (CSS value) |
+
+**Example:** To embed PDF Document #561 on your homepage:
+1. Go to **Pages → Edit Homepage**
+2. Add the shortcode: `[pdf_viewer id="561"]`
+3. Save the page
+
+**Note:** The `id` must be a PDF Document ID (found in the URL when editing: `post.php?post=561`), not a Media Library attachment ID.
+
+#### `[pdf_viewer_sitemap]` - List All PDF Documents
+
+```
+[pdf_viewer_sitemap]
+[pdf_viewer_sitemap orderby="date" order="DESC" limit="10"]
+```
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `orderby` | `title` | Sort by: `title`, `date`, `modified`, `menu_order` |
+| `order` | `ASC` | Sort direction: `ASC` or `DESC` |
+| `limit` | `-1` | Number of documents (-1 for all) |
+
+### Quick Reference: When to Use What
+
+| Scenario | Solution |
+|----------|----------|
+| Create a standalone PDF page with its own URL | Create a **PDF Document** (PDF Documents → Add New) |
+| Embed a PDF viewer on an existing page/post | Use `[pdf_viewer id="123"]` shortcode |
+| Show a list of all PDFs on a page | Use `[pdf_viewer_sitemap]` shortcode |
+| Link to the PDF archive | Link to `/pdf/` |
+
+### Common Mistake to Avoid
+
+**Do NOT add `[pdf_viewer]` shortcode inside a PDF Document's content area.** The PDF is already displayed automatically via the PDF File meta box. Adding the shortcode would show the PDF twice.
 
 ---
 
@@ -614,7 +683,13 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 
 ## Changelog
 
-### 1.2.1 (Current)
+### 1.2.2 (Current)
+- Archive display options (list/grid views)
+- Schema.org BreadcrumbList markup
+- Visible breadcrumb navigation with accessibility support
+- Archive page redirect feature (Premium)
+
+### 1.2.1
 - Version bump for release
 - Documentation improvements
 

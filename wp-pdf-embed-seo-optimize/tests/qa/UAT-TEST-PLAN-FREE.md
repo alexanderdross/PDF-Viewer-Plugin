@@ -143,6 +143,8 @@
 
 ## 6. Archive Page Testing
 
+### 6.1 Archive Display Options
+
 | Test ID | Test Case | Steps | Expected Result | Status |
 |---------|-----------|-------|-----------------|--------|
 | ARC-001 | Archive Page Loads | 1. Visit /pdf/ | Archive page displays | [ ] Pass [ ] Fail |
@@ -151,6 +153,39 @@
 | ARC-004 | Pagination | 1. Create 20+ PDFs<br>2. Check pagination | Pagination works | [ ] Pass [ ] Fail |
 | ARC-005 | Click to View | 1. Click PDF title | Navigates to viewer | [ ] Pass [ ] Fail |
 | ARC-006 | Empty State | 1. Delete all PDFs<br>2. Visit archive | Shows "No PDFs found" | [ ] Pass [ ] Fail |
+| ARC-007 | Grid View Display | 1. Set display style to Grid<br>2. Visit archive | Cards with thumbnails shown | [ ] Pass [ ] Fail |
+| ARC-008 | List View Display | 1. Set display style to List<br>2. Visit archive | Simple list with icons shown | [ ] Pass [ ] Fail |
+| ARC-009 | Show Description Toggle | 1. Enable "Show descriptions"<br>2. Visit archive | Descriptions visible | [ ] Pass [ ] Fail |
+| ARC-010 | Hide Description Toggle | 1. Disable "Show descriptions"<br>2. Visit archive | Descriptions hidden | [ ] Pass [ ] Fail |
+| ARC-011 | Show View Count Toggle | 1. Enable "Show view counts"<br>2. Visit archive | View counts visible | [ ] Pass [ ] Fail |
+| ARC-012 | Hide View Count Toggle | 1. Disable "Show view counts"<br>2. Visit archive | View counts hidden | [ ] Pass [ ] Fail |
+
+### 6.2 Archive Breadcrumbs
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| ARC-013 | Breadcrumb Navigation | 1. Visit archive<br>2. Check breadcrumb | Home > PDF Documents shown | [ ] Pass [ ] Fail |
+| ARC-014 | Breadcrumb Schema | 1. View archive source<br>2. Check JSON-LD | BreadcrumbList schema present | [ ] Pass [ ] Fail |
+| ARC-015 | Breadcrumb Links Work | 1. Click Home in breadcrumb | Navigates to homepage | [ ] Pass [ ] Fail |
+| ARC-016 | Current Page Indicator | 1. Check archive breadcrumb | aria-current="page" on current | [ ] Pass [ ] Fail |
+
+### 6.3 Single PDF Breadcrumbs
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| ARC-017 | Single PDF Breadcrumb | 1. Visit single PDF<br>2. Check breadcrumb | Home > PDF Documents > Title | [ ] Pass [ ] Fail |
+| ARC-018 | Single PDF Schema | 1. View single PDF source<br>2. Check JSON-LD | BreadcrumbList with 3 items | [ ] Pass [ ] Fail |
+| ARC-019 | Archive Link Works | 1. Click PDF Documents in breadcrumb | Navigates to archive | [ ] Pass [ ] Fail |
+| ARC-020 | Breadcrumb A11Y | 1. Inspect breadcrumb nav | aria-label="Breadcrumb" present | [ ] Pass [ ] Fail |
+
+### 6.4 Archive Accessibility
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| ARC-021 | List View Title Attr | 1. Set list view<br>2. Hover over links | Title attributes shown | [ ] Pass [ ] Fail |
+| ARC-022 | Grid View Aria Labels | 1. Set grid view<br>2. Inspect card links | aria-label on links | [ ] Pass [ ] Fail |
+| ARC-023 | View PDF Button A11Y | 1. Inspect "View PDF" button | aria-label includes title | [ ] Pass [ ] Fail |
+| ARC-024 | Focus Styles | 1. Tab through archive | Focus indicators visible | [ ] Pass [ ] Fail |
 
 ---
 

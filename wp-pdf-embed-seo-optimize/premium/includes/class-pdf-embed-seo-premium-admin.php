@@ -54,7 +54,8 @@ class PDF_Embed_SEO_Premium_Admin {
 	 * @return array Modified plugins.
 	 */
 	public function modify_plugin_name( $plugins ) {
-		$plugin_file = 'wp-pdf-embed-seo-optimize/pdf-embed-seo-optimize.php';
+		// Use the actual plugin basename constant.
+		$plugin_file = PDF_EMBED_SEO_PLUGIN_BASENAME;
 		if ( isset( $plugins[ $plugin_file ] ) ) {
 			$plugins[ $plugin_file ]['Name'] = 'PDF Embed & SEO Optimize (Premium)';
 			$plugins[ $plugin_file ]['Title'] = 'PDF Embed & SEO Optimize (Premium)';
@@ -90,6 +91,9 @@ class PDF_Embed_SEO_Premium_Admin {
 	 */
 	public function register_settings() {
 		register_setting( 'pdf_embed_seo_premium_settings', 'pdf_embed_seo_premium_settings', array( $this, 'sanitize_settings' ) );
+
+		// Register license settings.
+		register_setting( 'pdf_embed_seo_license', 'pdf_embed_seo_premium_license_key', 'sanitize_text_field' );
 
 		// Premium features section.
 		add_settings_section(
@@ -195,6 +199,42 @@ class PDF_Embed_SEO_Premium_Admin {
 				'description' => __( 'Generate dedicated XML sitemap for PDFs.', 'wp-pdf-embed-seo-optimize' ),
 			)
 		);
+
+		// Archive Redirect section (Premium).
+		add_settings_section(
+			'pdf_premium_redirect',
+			__( 'Archive Page Redirect', 'wp-pdf-embed-seo-optimize' ),
+			array( $this, 'render_redirect_section' ),
+			'pdf-embed-seo-premium'
+		);
+
+		add_settings_field(
+			'archive_redirect_enabled',
+			__( 'Enable Archive Redirect', 'wp-pdf-embed-seo-optimize' ),
+			array( $this, 'render_toggle_field' ),
+			'pdf-embed-seo-premium',
+			'pdf_premium_redirect',
+			array(
+				'id'          => 'archive_redirect_enabled',
+				'description' => __( 'Redirect the PDF archive page (/pdf/) to another URL.', 'wp-pdf-embed-seo-optimize' ),
+			)
+		);
+
+		add_settings_field(
+			'archive_redirect_type',
+			__( 'Redirect Type', 'wp-pdf-embed-seo-optimize' ),
+			array( $this, 'render_redirect_type_field' ),
+			'pdf-embed-seo-premium',
+			'pdf_premium_redirect'
+		);
+
+		add_settings_field(
+			'archive_redirect_url',
+			__( 'Redirect URL', 'wp-pdf-embed-seo-optimize' ),
+			array( $this, 'render_redirect_url_field' ),
+			'pdf-embed-seo-premium',
+			'pdf_premium_redirect'
+		);
 	}
 
 	/**
@@ -215,11 +255,22 @@ class PDF_Embed_SEO_Premium_Admin {
 			'enable_bookmarks',
 			'enable_progress',
 			'enable_sitemap',
+			'archive_redirect_enabled',
 		);
 
 		foreach ( $toggles as $key ) {
 			$sanitized[ $key ] = isset( $input[ $key ] ) ? '1' : '';
 		}
+
+		// Redirect type.
+		$sanitized['archive_redirect_type'] = isset( $input['archive_redirect_type'] ) && in_array( $input['archive_redirect_type'], array( '301', '302' ), true )
+			? $input['archive_redirect_type']
+			: '301';
+
+		// Redirect URL.
+		$sanitized['archive_redirect_url'] = isset( $input['archive_redirect_url'] )
+			? esc_url_raw( $input['archive_redirect_url'] )
+			: home_url( '/' );
 
 		return $sanitized;
 	}
@@ -231,6 +282,60 @@ class PDF_Embed_SEO_Premium_Admin {
 	 */
 	public function render_features_section() {
 		echo '<p>' . esc_html__( 'Enable or disable premium features as needed.', 'wp-pdf-embed-seo-optimize' ) . '</p>';
+	}
+
+	/**
+	 * Render redirect section description.
+	 *
+	 * @return void
+	 */
+	public function render_redirect_section() {
+		echo '<p>' . esc_html__( 'Configure automatic redirect from the PDF archive page (/pdf/) to another URL. Useful if you want to direct visitors to your homepage or a custom landing page instead of the archive.', 'wp-pdf-embed-seo-optimize' ) . '</p>';
+	}
+
+	/**
+	 * Render redirect type field.
+	 *
+	 * @return void
+	 */
+	public function render_redirect_type_field() {
+		$settings = get_option( 'pdf_embed_seo_premium_settings', array() );
+		$value    = isset( $settings['archive_redirect_type'] ) ? $settings['archive_redirect_type'] : '301';
+		?>
+		<select name="pdf_embed_seo_premium_settings[archive_redirect_type]" id="archive_redirect_type">
+			<option value="301" <?php selected( $value, '301' ); ?>>
+				<?php esc_html_e( '301 - Permanent Redirect (recommended for SEO)', 'wp-pdf-embed-seo-optimize' ); ?>
+			</option>
+			<option value="302" <?php selected( $value, '302' ); ?>>
+				<?php esc_html_e( '302 - Temporary Redirect', 'wp-pdf-embed-seo-optimize' ); ?>
+			</option>
+		</select>
+		<p class="description">
+			<?php esc_html_e( '301 is permanent and passes SEO value. Use 302 for temporary redirects.', 'wp-pdf-embed-seo-optimize' ); ?>
+		</p>
+		<?php
+	}
+
+	/**
+	 * Render redirect URL field.
+	 *
+	 * @return void
+	 */
+	public function render_redirect_url_field() {
+		$settings = get_option( 'pdf_embed_seo_premium_settings', array() );
+		$value    = isset( $settings['archive_redirect_url'] ) ? $settings['archive_redirect_url'] : home_url( '/' );
+		?>
+		<input type="url"
+			   name="pdf_embed_seo_premium_settings[archive_redirect_url]"
+			   id="archive_redirect_url"
+			   value="<?php echo esc_url( $value ); ?>"
+			   class="regular-text"
+			   placeholder="<?php echo esc_attr( home_url( '/' ) ); ?>"
+		/>
+		<p class="description">
+			<?php esc_html_e( 'Enter the URL where visitors should be redirected (e.g., your homepage).', 'wp-pdf-embed-seo-optimize' ); ?>
+		</p>
+		<?php
 	}
 
 	/**

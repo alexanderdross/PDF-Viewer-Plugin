@@ -28,6 +28,7 @@ class PDF_Embed_SEO_Admin {
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_filter( 'manage_pdf_document_posts_columns', array( $this, 'add_custom_columns' ) );
 		add_action( 'manage_pdf_document_posts_custom_column', array( $this, 'render_custom_columns' ), 10, 2 );
+		add_action( 'edit_form_after_title', array( $this, 'render_editor_help_notice' ) );
 	}
 
 	/**
@@ -113,6 +114,36 @@ class PDF_Embed_SEO_Admin {
 		$view_count = PDF_Embed_SEO_Post_Type::get_view_count( $post->ID );
 
 		include PDF_EMBED_SEO_PLUGIN_DIR . 'admin/views/meta-box-pdf-stats.php';
+	}
+
+	/**
+	 * Render help notice above the editor for PDF documents.
+	 *
+	 * @param WP_Post $post The current post object.
+	 * @return void
+	 */
+	public function render_editor_help_notice( $post ) {
+		if ( 'pdf_document' !== $post->post_type ) {
+			return;
+		}
+		?>
+		<div class="notice notice-info inline" style="margin: 15px 0;">
+			<p>
+				<strong><?php esc_html_e( 'Content Editor:', 'wp-pdf-embed-seo-optimize' ); ?></strong>
+				<?php esc_html_e( 'Use this area for optional descriptions or additional content. The PDF viewer is displayed automatically from the PDF File you select below.', 'wp-pdf-embed-seo-optimize' ); ?>
+			</p>
+			<p>
+				<strong><?php esc_html_e( 'Want to embed this PDF elsewhere?', 'wp-pdf-embed-seo-optimize' ); ?></strong>
+				<?php
+				printf(
+					/* translators: %s: shortcode example */
+					esc_html__( 'Use the shortcode %s on any page or post.', 'wp-pdf-embed-seo-optimize' ),
+					'<code>[pdf_viewer id="' . esc_html( $post->ID ) . '"]</code>'
+				);
+				?>
+			</p>
+		</div>
+		<?php
 	}
 
 	/**
@@ -368,6 +399,59 @@ class PDF_Embed_SEO_Admin {
 				'max'       => 100,
 			)
 		);
+
+		add_settings_field(
+			'archive_display_style',
+			__( 'Archive Display Style', 'wp-pdf-embed-seo-optimize' ),
+			array( $this, 'render_select_field' ),
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_archive',
+			array(
+				'label_for'   => 'archive_display_style',
+				'key'         => 'archive_display_style',
+				'options'     => array(
+					'list' => __( 'List View (Simple bullet-style list)', 'wp-pdf-embed-seo-optimize' ),
+					'grid' => __( 'Grid View (Thumbnail cards)', 'wp-pdf-embed-seo-optimize' ),
+				),
+				'description' => __( 'Choose how PDF documents are displayed on the archive page.', 'wp-pdf-embed-seo-optimize' ),
+			)
+		);
+
+		add_settings_field(
+			'archive_show_description',
+			__( 'Show Description in Archive', 'wp-pdf-embed-seo-optimize' ),
+			array( $this, 'render_checkbox_field' ),
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_archive',
+			array(
+				'label_for' => 'archive_show_description',
+				'key'       => 'archive_show_description',
+			)
+		);
+
+		add_settings_field(
+			'archive_show_view_count',
+			__( 'Show View Count in Archive', 'wp-pdf-embed-seo-optimize' ),
+			array( $this, 'render_checkbox_field' ),
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_archive',
+			array(
+				'label_for' => 'archive_show_view_count',
+				'key'       => 'archive_show_view_count',
+			)
+		);
+
+		add_settings_field(
+			'show_breadcrumbs',
+			__( 'Show Visible Breadcrumbs', 'wp-pdf-embed-seo-optimize' ),
+			array( $this, 'render_breadcrumb_field' ),
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_archive',
+			array(
+				'label_for' => 'show_breadcrumbs',
+				'key'       => 'show_breadcrumbs',
+			)
+		);
 	}
 
 	/**
@@ -388,6 +472,12 @@ class PDF_Embed_SEO_Admin {
 		$sanitized['archive_posts_per_page']    = isset( $input['archive_posts_per_page'] )
 			? absint( $input['archive_posts_per_page'] )
 			: 12;
+		$sanitized['archive_display_style']     = isset( $input['archive_display_style'] ) && in_array( $input['archive_display_style'], array( 'list', 'grid' ), true )
+			? $input['archive_display_style']
+			: 'grid';
+		$sanitized['archive_show_description']  = ! empty( $input['archive_show_description'] );
+		$sanitized['archive_show_view_count']   = ! empty( $input['archive_show_view_count'] );
+		$sanitized['show_breadcrumbs']          = ! empty( $input['show_breadcrumbs'] );
 
 		return $sanitized;
 	}
@@ -494,6 +584,29 @@ class PDF_Embed_SEO_Admin {
 			max="<?php echo esc_attr( $args['max'] ); ?>"
 			class="small-text"
 		/>
+		<?php
+	}
+
+	/**
+	 * Render the breadcrumb visibility field.
+	 *
+	 * @param array $args Field arguments.
+	 * @return void
+	 */
+	public function render_breadcrumb_field( $args ) {
+		$settings = PDF_Embed_SEO::get_setting();
+		$value    = isset( $settings[ $args['key'] ] ) ? $settings[ $args['key'] ] : true;
+		?>
+		<input
+			type="checkbox"
+			id="<?php echo esc_attr( $args['key'] ); ?>"
+			name="pdf_embed_seo_settings[<?php echo esc_attr( $args['key'] ); ?>]"
+			value="1"
+			<?php checked( $value, true ); ?>
+		/>
+		<p class="description">
+			<?php esc_html_e( 'Display visible breadcrumb navigation on PDF pages. The JSON-LD breadcrumb schema for SEO is always included regardless of this setting.', 'wp-pdf-embed-seo-optimize' ); ?>
+		</p>
 		<?php
 	}
 
