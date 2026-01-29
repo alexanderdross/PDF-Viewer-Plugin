@@ -72,8 +72,8 @@ class PDF_Embed_SEO_Frontend {
 			return;
 		}
 
-		// PDF.js library - bundled locally.
-		$pdfjs_version = '4.0.379';
+		// PDF.js library - bundled locally (v3.x for UMD compatibility).
+		$pdfjs_version = '3.11.174';
 
 		wp_enqueue_script(
 			'pdfjs',
