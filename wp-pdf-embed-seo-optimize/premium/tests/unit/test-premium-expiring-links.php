@@ -7,6 +7,11 @@
  * @since 1.2.5
  */
 
+// Prevent direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Test Premium Expiring Access Links functionality.
  */
