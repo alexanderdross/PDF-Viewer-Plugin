@@ -14,8 +14,8 @@ This project provides four modules:
 
 | Module | Directory | Platform | Features |
 |--------|-----------|----------|----------|
-| WP Free | `wp-pdf-embed-seo-optimize/` | WordPress 5.8+ | Core PDF viewer, SEO, REST API |
-| WP Premium | `wp-pdf-embed-seo-optimize/premium/` | WordPress 5.8+ | Analytics, passwords, progress, sitemap |
+| WP Free | `pdf-embed-seo-optimize/` | WordPress 5.8+ | Core PDF viewer, SEO, REST API |
+| WP Premium | `pdf-embed-seo-optimize/premium/` | WordPress 5.8+ | Analytics, passwords, progress, sitemap |
 | Drupal Free | `drupal-pdf-embed-seo/` | Drupal 10/11 | Core PDF viewer, SEO, REST API |
 | Drupal Premium | `drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/` | Drupal 10/11 | Analytics, passwords, progress, sitemap |
 

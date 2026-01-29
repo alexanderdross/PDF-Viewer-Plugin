@@ -30,7 +30,7 @@
 
 ---
 
-## Module 1: WP Free (`wp-pdf-embed-seo-optimize/`)
+## Module 1: WP Free (`pdf-embed-seo-optimize/`)
 
 ### 1.1 Installation Tests
 
@@ -151,7 +151,7 @@
 
 ---
 
-## Module 2: WP Premium (`wp-pdf-embed-seo-optimize/premium/`)
+## Module 2: WP Premium (`pdf-embed-seo-optimize/premium/`)
 
 ### 2.1 Premium Activation Tests
 

@@ -12,353 +12,353 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: Manual extraction\n"
-"X-Domain: wp-pdf-embed-seo-optimize\n"
+"X-Domain: pdf-embed-seo-optimize\n"
 
-#: wp-pdf-embed-seo-optimize.php
+#: pdf-embed-seo-optimize.php
 msgid "PDF Embed & SEO Optimize requires WordPress %s or higher."
 msgstr ""
 
-#: wp-pdf-embed-seo-optimize.php
+#: pdf-embed-seo-optimize.php
 msgid "PDF Embed & SEO Optimize requires PHP %s or higher."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-post-type.php
+#: includes/class-pdf-embed-seo-optimize-post-type.php
 msgid "PDF Documents"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-post-type.php
+#: includes/class-pdf-embed-seo-optimize-post-type.php
 msgid "PDF Document"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-post-type.php
+#: includes/class-pdf-embed-seo-optimize-post-type.php
 msgid "Add New"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-post-type.php
+#: includes/class-pdf-embed-seo-optimize-post-type.php
 msgid "Add New PDF Document"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-post-type.php
+#: includes/class-pdf-embed-seo-optimize-post-type.php
 msgid "Edit PDF Document"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-post-type.php
+#: includes/class-pdf-embed-seo-optimize-post-type.php
 msgid "New PDF Document"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-post-type.php
+#: includes/class-pdf-embed-seo-optimize-post-type.php
 msgid "View PDF Document"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-post-type.php
+#: includes/class-pdf-embed-seo-optimize-post-type.php
 msgid "All PDF Documents"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-post-type.php
+#: includes/class-pdf-embed-seo-optimize-post-type.php
 msgid "Search PDF Documents"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-post-type.php
+#: includes/class-pdf-embed-seo-optimize-post-type.php
 msgid "No PDF documents found."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-post-type.php
+#: includes/class-pdf-embed-seo-optimize-post-type.php
 msgid "No PDF documents found in Trash."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "PDF File"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "PDF Settings"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "View Statistics"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Select PDF File"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Use this PDF"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Remove PDF"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "No PDF selected"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Allow Download"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Allow users to download the PDF file."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Allow Print"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Allow users to print the PDF document."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Docs & Usage"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Docs"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "PDF Viewer Settings"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Settings"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Default Settings"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Set default permissions for new PDF documents."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Allow Download by Default"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Allow Print by Default"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Auto-generate Thumbnails"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Automatically generate a thumbnail from the first page of the PDF when no featured image is set."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Viewer Settings"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Customize the PDF viewer appearance."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Viewer Theme"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Light"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Dark"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Archive Settings"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Configure the PDF archive page."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "PDFs per Page"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Permissions"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Views"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Download"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "Print"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "View only"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-admin.php
+#: includes/class-pdf-embed-seo-optimize-admin.php
 msgid "No file attached"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-frontend.php
+#: includes/class-pdf-embed-seo-optimize-frontend.php
 msgid "Loading PDF..."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-frontend.php
+#: includes/class-pdf-embed-seo-optimize-frontend.php
 msgid "Error loading PDF"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-frontend.php
+#: includes/class-pdf-embed-seo-optimize-frontend.php
 msgid "Page"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-frontend.php
+#: includes/class-pdf-embed-seo-optimize-frontend.php
 msgid "of"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-frontend.php
+#: includes/class-pdf-embed-seo-optimize-frontend.php
 msgid "Zoom In"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-frontend.php
+#: includes/class-pdf-embed-seo-optimize-frontend.php
 msgid "Zoom Out"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-frontend.php
+#: includes/class-pdf-embed-seo-optimize-frontend.php
 msgid "Previous Page"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-frontend.php
+#: includes/class-pdf-embed-seo-optimize-frontend.php
 msgid "Next Page"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-frontend.php
+#: includes/class-pdf-embed-seo-optimize-frontend.php
 msgid "Fullscreen"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-frontend.php
+#: includes/class-pdf-embed-seo-optimize-frontend.php
 msgid "Security check failed."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-frontend.php
+#: includes/class-pdf-embed-seo-optimize-frontend.php
 msgid "Invalid request."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-frontend.php
+#: includes/class-pdf-embed-seo-optimize-frontend.php
 msgid "PDF not found."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-frontend.php
+#: includes/class-pdf-embed-seo-optimize-frontend.php
 msgid "No PDF file attached."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-shortcodes.php
+#: includes/class-pdf-embed-seo-optimize-shortcodes.php
 msgid "PDF document not found."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-shortcodes.php
+#: includes/class-pdf-embed-seo-optimize-shortcodes.php
 msgid "No PDF file attached to this document."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-block.php
+#: includes/class-pdf-embed-seo-optimize-block.php
 msgid "PDF Viewer"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-block.php
+#: includes/class-pdf-embed-seo-optimize-block.php
 msgid "Embed a PDF document from your library."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-block.php
+#: includes/class-pdf-embed-seo-optimize-block.php
 msgid "Select a PDF Document"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-block.php
+#: includes/class-pdf-embed-seo-optimize-block.php
 msgid "No PDF selected. Choose a PDF document from the dropdown."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-block.php
+#: includes/class-pdf-embed-seo-optimize-block.php
 msgid "No PDF documents available. Create one first."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-block.php
+#: includes/class-pdf-embed-seo-optimize-block.php
 msgid "Width"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-block.php
+#: includes/class-pdf-embed-seo-optimize-block.php
 msgid "Height"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-block.php
+#: includes/class-pdf-embed-seo-optimize-block.php
 msgid "Dimensions"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-block.php
+#: includes/class-pdf-embed-seo-optimize-block.php
 msgid "Preview"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-block.php
+#: includes/class-pdf-embed-seo-optimize-block.php
 msgid "View PDF"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-thumbnail.php
+#: includes/class-pdf-embed-seo-optimize-thumbnail.php
 msgid "ImageMagick with PDF support available."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-thumbnail.php
+#: includes/class-pdf-embed-seo-optimize-thumbnail.php
 msgid "Ghostscript %s available."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-thumbnail.php
+#: includes/class-pdf-embed-seo-optimize-thumbnail.php
 msgid "Neither ImageMagick with PDF support nor Ghostscript is available. Thumbnails must be uploaded manually."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-thumbnail.php
+#: includes/class-pdf-embed-seo-optimize-thumbnail.php
 msgid "PDF file not found."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-thumbnail.php
+#: includes/class-pdf-embed-seo-optimize-thumbnail.php
 msgid "Failed to generate thumbnail."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-thumbnail.php
+#: includes/class-pdf-embed-seo-optimize-thumbnail.php
 msgid "Failed to copy thumbnail to uploads directory."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-thumbnail.php
+#: includes/class-pdf-embed-seo-optimize-thumbnail.php
 msgid "%s - Thumbnail"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-thumbnail.php
+#: includes/class-pdf-embed-seo-optimize-thumbnail.php
 msgid "Permission denied."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-thumbnail.php
+#: includes/class-pdf-embed-seo-optimize-thumbnail.php
 msgid "Thumbnail generated successfully!"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-thumbnail.php
+#: includes/class-pdf-embed-seo-optimize-thumbnail.php
 msgid "Generate from PDF"
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-thumbnail.php
+#: includes/class-pdf-embed-seo-optimize-thumbnail.php
 msgid "Auto-generation unavailable. Upload thumbnail manually."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-thumbnail.php
+#: includes/class-pdf-embed-seo-optimize-thumbnail.php
 msgid "Please select a PDF file first."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-thumbnail.php
+#: includes/class-pdf-embed-seo-optimize-thumbnail.php
 msgid "Generating thumbnail..."
 msgstr ""
 
-#: includes/class-wp-pdf-embed-seo-optimize-thumbnail.php
+#: includes/class-pdf-embed-seo-optimize-thumbnail.php
 msgid "An error occurred. Please try again."
 msgstr ""
 

@@ -16,6 +16,6 @@
 		</testsuite>
 	</testsuites>
 	<php>
-		<const name="WP_TEST_ACTIVATED_PLUGIN" value="wp-pdf-embed-seo-optimize/pdf-embed-seo-optimize.php"/>
+		<const name="WP_TEST_ACTIVATED_PLUGIN" value="pdf-embed-seo-optimize/pdf-embed-seo-optimize.php"/>
 	</php>
 </phpunit>
