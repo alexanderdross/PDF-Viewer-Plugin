@@ -151,12 +151,12 @@
 .pdf-embed-seo-optimize-viewer {
     position: relative;
     min-height: 600px;
-    max-height: 800px;
+    max-height: 85vh;
     overflow: auto;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 20px;
+    padding: 15px;
     background: #525659;
 }
 
@@ -251,14 +251,34 @@
    ========================================================================== */
 
 .pdf-embed-seo-optimize-single {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Override theme sidebar constraints on PDF pages */
+.single-pdf_document .site-content,
+.single-pdf_document .content-area,
+.single-pdf_document #primary,
+.single-pdf_document .entry-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    float: none !important;
+    margin: 0 auto !important;
+}
+
+/* Hide sidebar on PDF document pages for full-width viewer */
+.single-pdf_document .widget-area,
+.single-pdf_document #secondary,
+.single-pdf_document aside.sidebar {
+    display: none !important;
 }
 
 .pdf-embed-seo-optimize-article {
     background: #fff;
-    padding: 30px;
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }

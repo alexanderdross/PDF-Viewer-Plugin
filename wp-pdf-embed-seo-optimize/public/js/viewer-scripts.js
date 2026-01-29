@@ -139,6 +139,14 @@
             // Get post ID from shortcode container or use global
             var postId = this.container.closest('.pdf-embed-seo-optimize-shortcode').data('post-id') || pdfEmbedSeo.postId;
 
+            if (!postId) {
+                console.error('PDF Viewer: No post ID found');
+                self.showError('No PDF document ID specified.');
+                return;
+            }
+
+            console.log('PDF Viewer: Loading PDF for post ID:', postId);
+
             $.ajax({
                 url: pdfEmbedSeo.ajaxUrl,
                 type: 'POST',
@@ -148,16 +156,21 @@
                     post_id: postId
                 },
                 success: function(response) {
+                    console.log('PDF Viewer: AJAX response:', response);
                     if (response.success) {
                         self.pdfUrl = response.data.url;
                         self.pdfTitle = response.data.title;
+                        console.log('PDF Viewer: PDF URL:', self.pdfUrl);
                         self.initPDF();
                     } else {
+                        console.error('PDF Viewer: AJAX error:', response.data.message);
                         self.showError(response.data.message || pdfEmbedSeo.strings.error);
                     }
                 },
-                error: function() {
-                    self.showError(pdfEmbedSeo.strings.error);
+                error: function(xhr, status, error) {
+                    console.error('PDF Viewer: AJAX request failed:', status, error);
+                    console.error('PDF Viewer: Response:', xhr.responseText);
+                    self.showError(pdfEmbedSeo.strings.error + ' (AJAX failed: ' + status + ')');
                 }
             });
         },
@@ -168,10 +181,26 @@
         initPDF: function() {
             var self = this;
 
+            if (!this.pdfUrl) {
+                console.error('PDF Viewer: No PDF URL provided');
+                self.showError('No PDF file URL available.');
+                return;
+            }
+
+            console.log('PDF Viewer: Initializing PDF.js with URL:', this.pdfUrl);
+
+            // Check if pdfjsLib is available
+            if (typeof pdfjsLib === 'undefined') {
+                console.error('PDF Viewer: PDF.js library not loaded');
+                self.showError('PDF.js library failed to load.');
+                return;
+            }
+
             // Load the PDF
             var loadingTask = pdfjsLib.getDocument(this.pdfUrl);
 
             loadingTask.promise.then(function(pdf) {
+                console.log('PDF Viewer: PDF loaded successfully, pages:', pdf.numPages);
                 self.pdfDoc = pdf;
                 self.numPages = pdf.numPages;
                 self.totalPages.text(self.numPages);
@@ -184,8 +213,18 @@
                 self.updateNavigation();
 
             }).catch(function(error) {
-                console.error('PDF loading error:', error);
-                self.showError(pdfEmbedSeo.strings.error);
+                console.error('PDF Viewer: PDF.js loading error:', error);
+                var errorMsg = pdfEmbedSeo.strings.error;
+                if (error.message) {
+                    errorMsg += ' (' + error.message + ')';
+                }
+                // Check for common errors
+                if (error.name === 'MissingPDFException') {
+                    errorMsg = 'PDF file not found or inaccessible.';
+                } else if (error.message && error.message.indexOf('CORS') !== -1) {
+                    errorMsg = 'PDF blocked by browser security (CORS).';
+                }
+                self.showError(errorMsg);
             });
         },
 
