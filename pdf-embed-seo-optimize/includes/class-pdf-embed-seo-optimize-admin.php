@@ -363,11 +363,30 @@ class PDF_Embed_SEO_Admin {
 
 		// Load on settings page.
 		if ( 'pdf_document_page_pdf-embed-seo-optimize-settings' === $hook ) {
+			wp_enqueue_media();
+
 			wp_enqueue_style(
 				'pdf-embed-seo-optimize-admin',
 				PDF_EMBED_SEO_PLUGIN_URL . 'admin/css/admin-styles.css',
 				array(),
 				PDF_EMBED_SEO_VERSION
+			);
+
+			wp_enqueue_script(
+				'pdf-embed-seo-optimize-settings',
+				PDF_EMBED_SEO_PLUGIN_URL . 'admin/js/settings-scripts.js',
+				array( 'jquery', 'media-upload' ),
+				PDF_EMBED_SEO_VERSION,
+				true
+			);
+
+			wp_localize_script(
+				'pdf-embed-seo-optimize-settings',
+				'pdfEmbedSeoSettings',
+				array(
+					'selectFavicon' => __( 'Select Favicon', 'pdf-embed-seo-optimize' ),
+					'useFavicon'    => __( 'Use this image', 'pdf-embed-seo-optimize' ),
+				)
 			);
 		}
 	}
@@ -581,6 +600,26 @@ class PDF_Embed_SEO_Admin {
 			)
 		);
 
+		// Branding Settings Section.
+		add_settings_section(
+			'pdf_embed_seo_branding',
+			__( 'Branding Settings', 'pdf-embed-seo-optimize' ),
+			array( $this, 'render_branding_section' ),
+			'pdf-embed-seo-optimize-settings'
+		);
+
+		add_settings_field(
+			'favicon_url',
+			__( 'Custom Favicon', 'pdf-embed-seo-optimize' ),
+			array( $this, 'render_favicon_field' ),
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_branding',
+			array(
+				'label_for' => 'favicon_url',
+				'key'       => 'favicon_url',
+			)
+		);
+
 		// Premium Preview Section (only show if premium is not active).
 		if ( ! defined( 'PDF_EMBED_SEO_IS_PREMIUM' ) || ! PDF_EMBED_SEO_IS_PREMIUM ) {
 			add_settings_section(
@@ -625,6 +664,9 @@ class PDF_Embed_SEO_Admin {
 		$sanitized['archive_show_description']  = ! empty( $input['archive_show_description'] );
 		$sanitized['archive_show_view_count']   = ! empty( $input['archive_show_view_count'] );
 		$sanitized['show_breadcrumbs']          = ! empty( $input['show_breadcrumbs'] );
+
+		// Branding settings.
+		$sanitized['favicon_url'] = isset( $input['favicon_url'] ) ? esc_url_raw( $input['favicon_url'] ) : '';
 
 		return $sanitized;
 	}
@@ -676,6 +718,15 @@ class PDF_Embed_SEO_Admin {
 	 */
 	public function render_archive_section() {
 		echo '<p>' . esc_html__( 'Configure the PDF archive page.', 'pdf-embed-seo-optimize' ) . '</p>';
+	}
+
+	/**
+	 * Render branding section description.
+	 *
+	 * @return void
+	 */
+	public function render_branding_section() {
+		echo '<p>' . esc_html__( 'Customize the branding for PDF pages.', 'pdf-embed-seo-optimize' ) . '</p>';
 	}
 
 	/**
@@ -820,6 +871,45 @@ class PDF_Embed_SEO_Admin {
 					<?php echo esc_html( $availability['message'] ); ?>
 				</span>
 			<?php endif; ?>
+		</p>
+		<?php
+	}
+
+	/**
+	 * Render the favicon upload settings field.
+	 *
+	 * @param array $args Field arguments.
+	 * @return void
+	 */
+	public function render_favicon_field( $args ) {
+		$settings    = PDF_Embed_SEO::get_setting();
+		$favicon_url = isset( $settings[ $args['key'] ] ) ? $settings[ $args['key'] ] : '';
+		?>
+		<div class="pdf-embed-seo-favicon-field">
+			<input
+				type="url"
+				id="<?php echo esc_attr( $args['key'] ); ?>"
+				name="pdf_embed_seo_settings[<?php echo esc_attr( $args['key'] ); ?>]"
+				value="<?php echo esc_url( $favicon_url ); ?>"
+				class="regular-text pdf-embed-seo-favicon-url"
+				placeholder="<?php esc_attr_e( 'https://example.com/favicon.ico', 'pdf-embed-seo-optimize' ); ?>"
+			/>
+			<button type="button" class="button pdf-embed-seo-favicon-upload">
+				<?php esc_html_e( 'Upload Favicon', 'pdf-embed-seo-optimize' ); ?>
+			</button>
+			<button type="button" class="button pdf-embed-seo-favicon-remove" <?php echo empty( $favicon_url ) ? 'style="display:none;"' : ''; ?>>
+				<?php esc_html_e( 'Remove', 'pdf-embed-seo-optimize' ); ?>
+			</button>
+		</div>
+		<?php if ( ! empty( $favicon_url ) ) : ?>
+			<div class="pdf-embed-seo-favicon-preview" style="margin-top: 10px;">
+				<img src="<?php echo esc_url( $favicon_url ); ?>" alt="<?php esc_attr_e( 'Favicon Preview', 'pdf-embed-seo-optimize' ); ?>" style="max-width: 32px; max-height: 32px; border: 1px solid #ddd; padding: 4px; background: #fff;">
+			</div>
+		<?php endif; ?>
+		<p class="description">
+			<?php esc_html_e( 'Upload a custom favicon for PDF pages. Recommended size: 32x32 pixels. Supported formats: ICO, PNG, GIF, SVG.', 'pdf-embed-seo-optimize' ); ?>
+			<br>
+			<?php esc_html_e( 'This favicon will be displayed when viewing PDF documents, including in standalone mode.', 'pdf-embed-seo-optimize' ); ?>
 		</p>
 		<?php
 	}

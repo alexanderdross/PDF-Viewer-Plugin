@@ -27,6 +27,7 @@ class PDF_Embed_SEO_Frontend {
 		add_action( 'wp', array( $this, 'track_view' ) );
 		add_action( 'wp_ajax_pdf_embed_seo_get_pdf', array( $this, 'ajax_get_pdf' ) );
 		add_action( 'wp_ajax_nopriv_pdf_embed_seo_get_pdf', array( $this, 'ajax_get_pdf' ) );
+		add_action( 'wp_head', array( $this, 'output_favicon' ), 5 );
 	}
 
 	/**
@@ -179,6 +180,53 @@ class PDF_Embed_SEO_Frontend {
 			}
 
 			PDF_Embed_SEO_Post_Type::increment_view_count( $post_id );
+		}
+	}
+
+	/**
+	 * Output custom favicon for PDF pages.
+	 *
+	 * @return void
+	 */
+	public function output_favicon() {
+		// Only output on PDF document pages.
+		if ( ! is_singular( 'pdf_document' ) && ! is_post_type_archive( 'pdf_document' ) ) {
+			return;
+		}
+
+		$favicon_url = PDF_Embed_SEO::get_setting( 'favicon_url', '' );
+
+		if ( empty( $favicon_url ) ) {
+			return;
+		}
+
+		// Determine the favicon type based on file extension.
+		$extension = strtolower( pathinfo( wp_parse_url( $favicon_url, PHP_URL_PATH ), PATHINFO_EXTENSION ) );
+		$type      = 'image/x-icon';
+
+		switch ( $extension ) {
+			case 'png':
+				$type = 'image/png';
+				break;
+			case 'gif':
+				$type = 'image/gif';
+				break;
+			case 'svg':
+				$type = 'image/svg+xml';
+				break;
+			case 'ico':
+			default:
+				$type = 'image/x-icon';
+				break;
+		}
+
+		// Output the favicon link tags.
+		echo '<link rel="icon" href="' . esc_url( $favicon_url ) . '" type="' . esc_attr( $type ) . '">' . "\n";
+		echo '<link rel="shortcut icon" href="' . esc_url( $favicon_url ) . '" type="' . esc_attr( $type ) . '">' . "\n";
+
+		// Also add apple-touch-icon for iOS devices if it's a PNG.
+		if ( 'image/png' === $type ) {
+			echo '<link rel="apple-touch-icon" href="' . esc_url( $favicon_url ) . '">' . "\n";
 		}
 	}
 

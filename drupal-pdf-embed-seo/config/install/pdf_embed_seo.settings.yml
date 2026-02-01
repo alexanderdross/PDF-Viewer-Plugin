@@ -7,11 +7,18 @@ thumbnail_width: 300
 thumbnail_height: 400
 archive_posts_per_page: 12
 archive_display: 'grid'
+archive_show_description: true
+archive_show_view_count: true
+show_breadcrumbs: true
 viewer_theme: 'light'
 viewer_height: '800px'
 enable_schema: true
 archive_title: 'PDF Documents'
 archive_description: ''
+
+# Branding settings.
+favicon_url: ''
+favicon_fid: null
 
 # Premium settings.
 enable_analytics: true
