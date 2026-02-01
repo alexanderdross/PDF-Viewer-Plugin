@@ -307,12 +307,14 @@ class PDF_Embed_SEO_Admin {
 		/**
 		 * Fires when PDF settings are saved.
 		 *
+		 * @since 1.0.0
+		 * @since 1.2.6 Renamed from 'pdf_embed_seo_settings_saved' to include plugin prefix.
+		 *
 		 * @param int   $post_id  The post ID.
 		 * @param array $settings The saved settings.
 		 */
-		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
 		do_action(
-			'pdf_embed_seo_settings_saved',
+			'pdf_embed_seo_optimize_settings_saved',
 			$post_id,
 			array(
 				'allow_download' => $allow_download,

@@ -24,7 +24,7 @@ class PDF_Embed_SEO_Thumbnail {
 	 */
 	public function __construct() {
 		// Hook into PDF save to generate thumbnail.
-		add_action( 'pdf_embed_seo_settings_saved', array( $this, 'maybe_generate_thumbnail' ), 10, 2 );
+		add_action( 'pdf_embed_seo_optimize_settings_saved', array( $this, 'maybe_generate_thumbnail' ), 10, 2 );
 
 		// Add AJAX handler for manual regeneration.
 		add_action( 'wp_ajax_pdf_embed_seo_generate_thumbnail', array( $this, 'ajax_generate_thumbnail' ) );

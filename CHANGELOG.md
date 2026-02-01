@@ -8,6 +8,33 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.2.6] - 2026-02-01
+
+### Fixed
+- **WordPress Plugin Check Compliance** - Resolved all Plugin Check warnings and errors
+  - Fixed unescaped SQL table name parameters in premium REST API (`class-pdf-embed-seo-premium-rest-api.php`)
+  - Fixed interpolated SQL variables in premium analytics (`class-pdf-embed-seo-premium-analytics.php`)
+  - Updated `get_posts()` to use `post__not_in` instead of deprecated `exclude` parameter
+  - Added proper `esc_sql()` sanitization for all database table names
+  - Added comprehensive `phpcs:disable/enable` blocks for approved code patterns
+
+- **Hook Naming Convention** - Renamed hook for WordPress coding standards compliance
+  - `pdf_embed_seo_settings_saved` → `pdf_embed_seo_optimize_settings_saved`
+  - Updated in admin, bulk import, thumbnail generator, and documentation
+  - Breaking change: Update any custom code using the old hook name
+
+- **Drupal Security Fixes** - Critical security improvements
+  - **Password Hashing**: Implemented proper password hashing using Drupal's password service
+    - Passwords now hashed on save in `PdfDocumentForm`
+    - Password verification uses `\Drupal::service('password')->check()`
+  - **XSS Prevention**: Fixed potential XSS in `PdfViewerBlock`
+    - Document titles now properly escaped with `Html::escape()`
+
+### Changed
+- Version bump to 1.2.6 across all modules (WordPress Free, WordPress Premium, Drupal Free, Drupal Premium)
+
+---
+
 ## [1.2.5] - 2026-01-28
 
 ### Added

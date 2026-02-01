@@ -30,7 +30,8 @@ class PDF_Embed_SEO_Premium_Analytics {
 	 */
 	public function __construct() {
 		global $wpdb;
-		$this->table_name = $wpdb->prefix . 'pdf_analytics';
+		// Table name is safely constructed from $wpdb->prefix constant + literal string, escaped for SQL safety.
+		$this->table_name = esc_sql( $wpdb->prefix . 'pdf_analytics' );
 
 		// Create table on activation.
 		add_action( 'admin_init', array( $this, 'maybe_create_table' ) );
@@ -286,32 +287,31 @@ class PDF_Embed_SEO_Premium_Analytics {
 		$week_ago  = gmdate( 'Y-m-d', strtotime( '-7 days' ) );
 		$month_ago = gmdate( 'Y-m-d', strtotime( '-30 days' ) );
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is safe class property.
-		$total = $wpdb->get_var( "SELECT COUNT(*) FROM {$this->table_name}" );
+		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Table name is escaped in constructor via esc_sql().
+		$total = $wpdb->get_var( "SELECT COUNT(*) FROM `{$this->table_name}`" );
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is safe class property.
 		$today_views = $wpdb->get_var(
 			$wpdb->prepare(
-				"SELECT COUNT(*) FROM {$this->table_name} WHERE DATE(view_date) = %s",
+				"SELECT COUNT(*) FROM `{$this->table_name}` WHERE DATE(view_date) = %s",
 				$today
 			)
 		);
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is safe class property.
 		$week_views = $wpdb->get_var(
 			$wpdb->prepare(
-				"SELECT COUNT(*) FROM {$this->table_name} WHERE DATE(view_date) >= %s",
+				"SELECT COUNT(*) FROM `{$this->table_name}` WHERE DATE(view_date) >= %s",
 				$week_ago
 			)
 		);
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is safe class property.
 		$month_views = $wpdb->get_var(
 			$wpdb->prepare(
-				"SELECT COUNT(*) FROM {$this->table_name} WHERE DATE(view_date) >= %s",
+				"SELECT COUNT(*) FROM `{$this->table_name}` WHERE DATE(view_date) >= %s",
 				$month_ago
 			)
 		);
+		// phpcs:enable
 
 		return array(
 			'total_views' => (int) $total,
@@ -333,11 +333,12 @@ class PDF_Embed_SEO_Premium_Analytics {
 
 		$date_from = gmdate( 'Y-m-d', strtotime( "-{$days} days" ) );
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is safe class property.
-		return $wpdb->get_results(
+		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Table name is escaped in constructor via esc_sql().
+		$results = $wpdb->get_results(
 			$wpdb->prepare(
 				"SELECT post_id, COUNT(*) as views
-				FROM {$this->table_name}
+				FROM `{$this->table_name}`
 				WHERE DATE(view_date) >= %s
 				GROUP BY post_id
 				ORDER BY views DESC
@@ -346,6 +347,8 @@ class PDF_Embed_SEO_Premium_Analytics {
 				$limit
 			)
 		);
+		// phpcs:enable
+		return $results;
 	}
 
 	/**
@@ -360,19 +363,23 @@ class PDF_Embed_SEO_Premium_Analytics {
 
 		$date_from = gmdate( 'Y-m-d', strtotime( "-{$days} days" ) );
 
+		// Build WHERE clause safely using $wpdb->prepare().
 		$where = $wpdb->prepare( 'WHERE DATE(view_date) >= %s', $date_from );
 		if ( $post_id ) {
 			$where .= $wpdb->prepare( ' AND post_id = %d', $post_id );
 		}
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name and where clause are safely constructed.
-		return $wpdb->get_results(
+		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Table name escaped via esc_sql(), WHERE clause built with $wpdb->prepare().
+		$results = $wpdb->get_results(
 			"SELECT DATE(view_date) as date, COUNT(*) as views
-			FROM {$this->table_name}
+			FROM `{$this->table_name}`
 			{$where}
 			GROUP BY DATE(view_date)
 			ORDER BY date ASC"
 		);
+		// phpcs:enable
+		return $results;
 	}
 
 	/**

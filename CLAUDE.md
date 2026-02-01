@@ -2,7 +2,7 @@
 
 A comprehensive PDF management solution available for WordPress and Drupal that uses Mozilla's PDF.js library to securely display PDFs with SEO optimization.
 
-**Current Version:** 1.2.5
+**Current Version:** 1.2.6
 **Platforms:** WordPress (Free & Premium), Drupal 10/11
 **License:** GPL v2 or later
 
@@ -399,7 +399,7 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 |------|------------|-------------|
 | `pdf_embed_seo_pdf_viewed` | `$post_id, $count` | PDF was viewed |
 | `pdf_embed_seo_premium_init` | - | Premium features initialized |
-| `pdf_embed_seo_settings_saved` | `$post_id, $settings` | Settings saved |
+| `pdf_embed_seo_optimize_settings_saved` | `$post_id, $settings` | Settings saved (renamed in v1.2.6) |
 
 ### Filters
 
@@ -727,7 +727,17 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 
 ## Changelog
 
-### 1.2.5 (Current)
+### 1.2.6 (Current)
+- WordPress Plugin Check compliance fixes:
+  - Fixed unescaped SQL table name parameters in premium REST API and analytics
+  - Fixed interpolated SQL variables with proper `esc_sql()` sanitization
+  - Updated `get_posts()` to use `post__not_in` instead of deprecated `exclude` parameter
+- Hook renamed: `pdf_embed_seo_settings_saved` → `pdf_embed_seo_optimize_settings_saved`
+- Drupal security fixes:
+  - Implemented proper password hashing using Drupal's password service
+  - Fixed XSS vulnerability in PdfViewerBlock with proper HTML escaping
+
+### 1.2.5
 - Download Tracking - Track PDF downloads separately from views
 - Expiring Access Links - Generate time-limited URLs for PDFs with max usage limits
 - Drupal Premium feature parity with WordPress:
