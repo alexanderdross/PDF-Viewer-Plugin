@@ -10,6 +10,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals -- Test bootstrap file uses standard WP test conventions.
+
 // Load WordPress test environment.
 $_tests_dir = getenv( 'WP_TESTS_DIR' );
 

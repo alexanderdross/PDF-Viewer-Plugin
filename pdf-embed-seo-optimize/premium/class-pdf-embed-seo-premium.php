@@ -464,6 +464,7 @@ final class PDF_Embed_SEO_Premium {
 		 *
 		 * @since 1.0.0
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
 		do_action( 'pdf_embed_seo_premium_init' );
 	}
 
@@ -689,6 +690,7 @@ final class PDF_Embed_SEO_Premium {
  *
  * @return PDF_Embed_SEO_Premium
  */
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Part of established public API.
 function pdf_embed_seo_premium() {
 	return PDF_Embed_SEO_Premium::get_instance();
 }

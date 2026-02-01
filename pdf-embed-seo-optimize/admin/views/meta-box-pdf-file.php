@@ -10,6 +10,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template file with scoped variables.
+
 $file_name = '';
 if ( $file_id ) {
 	$file_path = get_attached_file( $file_id );

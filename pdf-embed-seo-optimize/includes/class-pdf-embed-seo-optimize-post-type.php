@@ -97,6 +97,7 @@ class PDF_Embed_SEO_Post_Type {
 		 *
 		 * @param array $args Post type arguments.
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
 		$args = apply_filters( 'pdf_embed_seo_post_type_args', $args );
 
 		register_post_type( self::POST_TYPE, $args );
@@ -265,6 +266,7 @@ class PDF_Embed_SEO_Post_Type {
 		 * @param int $post_id   The post ID.
 		 * @param int $count     The new view count.
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
 		do_action( 'pdf_embed_seo_pdf_viewed', $post_id, $count );
 
 		return $count;

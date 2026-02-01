@@ -512,6 +512,7 @@ class PDF_Embed_SEO_Premium_Bulk {
 				 * @param int   $post_id  Post ID.
 				 * @param array $settings PDF settings.
 				 */
+				// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
 				do_action(
 					'pdf_embed_seo_settings_saved',
 					$post_id,

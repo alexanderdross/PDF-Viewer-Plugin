@@ -356,6 +356,7 @@ final class PDF_Embed_SEO {
  *
  * @return PDF_Embed_SEO
  */
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Part of established public API.
 function pdf_embed_seo() {
 	return PDF_Embed_SEO::get_instance();
 }
@@ -370,6 +371,7 @@ pdf_embed_seo();
  * This allows the premium version to extend the free version
  * with additional functionality.
  */
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Part of established public API.
 function pdf_embed_seo_load_premium() {
 	$premium_file = PDF_EMBED_SEO_PLUGIN_DIR . 'premium/class-pdf-embed-seo-premium.php';
 
@@ -384,6 +386,7 @@ add_action( 'plugins_loaded', 'pdf_embed_seo_load_premium', 15 );
  *
  * @return bool
  */
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Part of established public API.
 function pdf_embed_seo_is_premium() {
 	return defined( 'PDF_EMBED_SEO_IS_PREMIUM' ) && PDF_EMBED_SEO_IS_PREMIUM;
 }

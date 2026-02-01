@@ -18,6 +18,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template file with scoped variables.
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hooks.
+
 // Get settings.
 $settings          = PDF_Embed_SEO::get_setting();
 $display_style     = isset( $settings['archive_display_style'] ) ? $settings['archive_display_style'] : 'grid';

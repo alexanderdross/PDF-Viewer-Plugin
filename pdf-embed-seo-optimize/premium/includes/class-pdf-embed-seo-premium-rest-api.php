@@ -406,6 +406,7 @@ class PDF_Embed_SEO_Premium_REST_API {
 		$table_name = $wpdb->prefix . 'pdf_analytics';
 
 		// Check if table exists.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Checking table existence, caching not applicable.
 		$table_exists = $wpdb->get_var(
 			$wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name )
 		);
@@ -429,7 +430,9 @@ class PDF_Embed_SEO_Premium_REST_API {
 		$date_range = $this->get_date_range( $period );
 
 		// Get analytics data.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Custom analytics table, real-time data required.
 		$stats = $wpdb->get_row(
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is safely constructed from $wpdb->prefix.
 			$wpdb->prepare(
 				"SELECT
 					COUNT(*) as total_views,
@@ -460,6 +463,7 @@ class PDF_Embed_SEO_Premium_REST_API {
 		 * @param array  $data   Analytics data.
 		 * @param string $period Time period.
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
 		return rest_ensure_response( apply_filters( 'pdf_embed_seo_rest_analytics', $data, $period ) );
 	}
 
@@ -656,6 +660,7 @@ class PDF_Embed_SEO_Premium_REST_API {
 		 * @param int    $post_id  Document ID.
 		 * @param string $password Submitted password.
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
 		$is_valid = apply_filters( 'pdf_embed_seo_verify_password', $is_valid, $post_id, $password );
 
 		if ( $is_valid ) {
@@ -860,6 +865,7 @@ class PDF_Embed_SEO_Premium_REST_API {
 	private function get_total_views_from_meta() {
 		global $wpdb;
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Aggregate query for real-time analytics.
 		$total = $wpdb->get_var(
 			"SELECT SUM(meta_value) FROM {$wpdb->postmeta}
 			WHERE meta_key = '_pdf_view_count'"
@@ -880,6 +886,7 @@ class PDF_Embed_SEO_Premium_REST_API {
 			'post_type'      => 'pdf_document',
 			'post_status'    => 'publish',
 			'posts_per_page' => $limit,
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Required for sorting by view count; limited result set.
 			'meta_key'       => '_pdf_view_count',
 			'orderby'        => 'meta_value_num',
 			'order'          => 'DESC',
@@ -952,6 +959,7 @@ class PDF_Embed_SEO_Premium_REST_API {
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'pdf_analytics';
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Checking table existence.
 		$table_exists = $wpdb->get_var(
 			$wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name )
 		);
@@ -961,6 +969,7 @@ class PDF_Embed_SEO_Premium_REST_API {
 			$user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
 			$referrer   = isset( $_SERVER['HTTP_REFERER'] ) ? esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
 
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Inserting analytics data.
 			$wpdb->insert(
 				$table_name,
 				array(
@@ -984,6 +993,7 @@ class PDF_Embed_SEO_Premium_REST_API {
 		 * @param int $post_id        Document ID.
 		 * @param int $download_count New download count.
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
 		do_action( 'pdf_embed_seo_download_tracked', $post_id, $download_count + 1 );
 
 		// Get the PDF file URL.
@@ -1062,6 +1072,7 @@ class PDF_Embed_SEO_Premium_REST_API {
 		 * @param string $token      Access token.
 		 * @param array  $token_data Token data.
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
 		do_action( 'pdf_embed_seo_expiring_link_generated', $post_id, $token, $token_data );
 
 		return rest_ensure_response(
@@ -1160,6 +1171,7 @@ class PDF_Embed_SEO_Premium_REST_API {
 		 * @param string $token      Access token.
 		 * @param array  $token_data Token data.
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
 		do_action( 'pdf_embed_seo_expiring_link_validated', $post_id, $token, $token_data );
 
 		return rest_ensure_response(

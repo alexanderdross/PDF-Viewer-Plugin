@@ -331,6 +331,7 @@ class PDF_Embed_SEO_REST_API {
 		 * @param array $data    PDF data.
 		 * @param int   $post_id Post ID.
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
 		$data = apply_filters( 'pdf_embed_seo_rest_document_data', $data, $post_id );
 
 		return rest_ensure_response( $data );
@@ -367,6 +368,7 @@ class PDF_Embed_SEO_REST_API {
 		 * @param int $post_id Post ID.
 		 * @param int $count   New view count.
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
 		do_action( 'pdf_embed_seo_pdf_viewed', $post_id, $new_count );
 
 		return rest_ensure_response(
@@ -403,6 +405,7 @@ class PDF_Embed_SEO_REST_API {
 		 *
 		 * @param array $settings Settings data.
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
 		$settings = apply_filters( 'pdf_embed_seo_rest_settings', $settings );
 
 		return rest_ensure_response( $settings );
@@ -431,6 +434,7 @@ class PDF_Embed_SEO_REST_API {
 		);
 
 		if ( $detailed ) {
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WordPress core filter.
 			$data['content']  = apply_filters( 'the_content', $post->post_content );
 			$data['data_url'] = rest_url( self::API_NAMESPACE . '/documents/' . $post->ID . '/data' );
 
@@ -452,6 +456,7 @@ class PDF_Embed_SEO_REST_API {
 		 * @param WP_Post $post     Post object.
 		 * @param bool    $detailed Whether detailed info is included.
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
 		return apply_filters( 'pdf_embed_seo_rest_document', $data, $post, $detailed );
 	}
 }

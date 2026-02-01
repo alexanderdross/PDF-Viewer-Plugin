@@ -155,6 +155,7 @@ class PDF_Embed_SEO_Frontend {
 			 *
 			 * @param array $query_args The query arguments.
 			 */
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
 			$posts_per_page = apply_filters( 'pdf_embed_seo_archive_query', $posts_per_page );
 
 			$query->set( 'posts_per_page', $posts_per_page );

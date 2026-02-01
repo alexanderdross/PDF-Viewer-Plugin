@@ -293,6 +293,7 @@ class PDF_Embed_SEO_Premium_Password {
 	 * @return string
 	 */
 	public static function get_password_form( $post_id ) {
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
 		$error = apply_filters( 'pdf_embed_seo_password_error', false );
 
 		ob_start();

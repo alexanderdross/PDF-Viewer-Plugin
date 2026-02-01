@@ -125,6 +125,7 @@ class PDF_Embed_SEO_Shortcodes {
 		 * @param array $query_args The query arguments.
 		 * @param array $atts       The shortcode attributes.
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
 		$query_args = apply_filters( 'pdf_embed_seo_sitemap_query_args', $query_args, $atts );
 
 		$pdfs = new WP_Query( $query_args );

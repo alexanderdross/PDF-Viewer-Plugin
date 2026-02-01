@@ -341,6 +341,7 @@ class PDF_Embed_SEO_Yoast {
 		 *
 		 * @param array $schema The schema data.
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
 		$schema = apply_filters( 'pdf_embed_seo_archive_schema_data', $schema );
 
 		// Output JSON-LD for CollectionPage.
@@ -353,6 +354,7 @@ class PDF_Embed_SEO_Yoast {
 		$archive_url = get_post_type_archive_link( 'pdf_document' );
 		$site_name   = get_bloginfo( 'name' );
 
+		// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hooks.
 		$webpage_schema = array(
 			'@context'    => 'https://schema.org',
 			'@type'       => 'WebPage',
@@ -360,6 +362,7 @@ class PDF_Embed_SEO_Yoast {
 			'url'         => $archive_url,
 			'name'        => apply_filters( 'pdf_embed_seo_archive_title', __( 'PDF Documents', 'pdf-embed-seo-optimize' ) ),
 			'description' => apply_filters( 'pdf_embed_seo_archive_description', __( 'Browse our collection of PDF documents.', 'pdf-embed-seo-optimize' ) ),
+		// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 			'isPartOf'    => array(
 				'@type' => 'WebSite',
 				'name'  => $site_name,
@@ -727,6 +730,7 @@ class PDF_Embed_SEO_Yoast {
 		 * @param array $schema  The schema data.
 		 * @param int   $post_id The post ID.
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
 		return apply_filters( 'pdf_embed_seo_schema_data', $schema, $post_id );
 	}
 

@@ -6,6 +6,8 @@
  * @subpackage Tests
  */
 
+// phpcs:disable WordPress.DB.DirectDatabaseQuery -- Test file validating database functionality.
+
 /**
  * Test Premium Analytics functionality.
  */

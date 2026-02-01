@@ -16,6 +16,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 /**
  * Clean up plugin data on uninstall.
  */
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Uninstall function, follows WP convention.
 function pdf_embed_seo_uninstall() {
 	global $wpdb;
 

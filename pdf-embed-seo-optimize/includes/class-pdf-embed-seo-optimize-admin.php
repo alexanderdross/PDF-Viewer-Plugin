@@ -310,6 +310,7 @@ class PDF_Embed_SEO_Admin {
 		 * @param int   $post_id  The post ID.
 		 * @param array $settings The saved settings.
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
 		do_action(
 			'pdf_embed_seo_settings_saved',
 			$post_id,
@@ -919,6 +920,7 @@ class PDF_Embed_SEO_Admin {
 
 		// Calculate total views across all PDFs.
 		global $wpdb;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Aggregate query for dashboard widget, caching not beneficial for real-time stats.
 		$total_views = $wpdb->get_var(
 			$wpdb->prepare(
 				"SELECT SUM(CAST(meta_value AS UNSIGNED)) FROM {$wpdb->postmeta} WHERE meta_key = %s",
@@ -932,6 +934,7 @@ class PDF_Embed_SEO_Admin {
 			array(
 				'post_type'      => 'pdf_document',
 				'posts_per_page' => 3,
+				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Required for sorting by view count; limited result set of 3.
 				'meta_key'       => '_pdf_view_count',
 				'orderby'        => 'meta_value_num',
 				'order'          => 'DESC',

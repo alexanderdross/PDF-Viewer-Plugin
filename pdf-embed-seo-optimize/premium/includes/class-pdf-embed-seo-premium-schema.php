@@ -246,10 +246,11 @@ class PDF_Embed_SEO_Premium_Schema {
 				<div class="pdf-schema-row">
 					<label for="pdf_related_documents"><?php esc_html_e( 'Related PDF Documents', 'pdf-embed-seo-optimize' ); ?></label>
 					<?php
+					// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Admin-only context with limited dataset; excluding current post for UX.
 					$all_pdfs = get_posts(
 						array(
 							'post_type'      => 'pdf_document',
-							'posts_per_page' => -1,
+							'posts_per_page' => 100, // Limit to prevent performance issues.
 							'post_status'    => 'publish',
 							'exclude'        => array( $post->ID ),
 							'orderby'        => 'title',
@@ -308,7 +309,7 @@ class PDF_Embed_SEO_Premium_Schema {
 	 */
 	public function save_schema_meta( $post_id, $post ) {
 		// Verify nonce.
-		if ( ! isset( $_POST['pdf_premium_schema_nonce'] ) || ! wp_verify_nonce( $_POST['pdf_premium_schema_nonce'], 'pdf_premium_schema_nonce' ) ) {
+		if ( ! isset( $_POST['pdf_premium_schema_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['pdf_premium_schema_nonce'] ) ), 'pdf_premium_schema_nonce' ) ) {
 			return;
 		}
 
@@ -334,16 +335,17 @@ class PDF_Embed_SEO_Premium_Schema {
 
 		foreach ( $text_fields as $field ) {
 			if ( isset( $_POST[ $field ] ) ) {
-				update_post_meta( $post_id, '_' . $field, sanitize_textarea_field( $_POST[ $field ] ) );
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized via sanitize_textarea_field.
+				update_post_meta( $post_id, '_' . $field, sanitize_textarea_field( wp_unslash( $_POST[ $field ] ) ) );
 			}
 		}
 
 		// Save select fields.
 		if ( isset( $_POST['pdf_difficulty_level'] ) ) {
-			update_post_meta( $post_id, '_pdf_difficulty_level', sanitize_text_field( $_POST['pdf_difficulty_level'] ) );
+			update_post_meta( $post_id, '_pdf_difficulty_level', sanitize_text_field( wp_unslash( $_POST['pdf_difficulty_level'] ) ) );
 		}
 		if ( isset( $_POST['pdf_document_type'] ) ) {
-			update_post_meta( $post_id, '_pdf_document_type', sanitize_text_field( $_POST['pdf_document_type'] ) );
+			update_post_meta( $post_id, '_pdf_document_type', sanitize_text_field( wp_unslash( $_POST['pdf_document_type'] ) ) );
 		}
 
 		// Save numeric fields.
@@ -353,8 +355,10 @@ class PDF_Embed_SEO_Premium_Schema {
 
 		// Save FAQ items.
 		if ( isset( $_POST['pdf_faq_items'] ) && is_array( $_POST['pdf_faq_items'] ) ) {
-			$faq_items = array();
-			foreach ( $_POST['pdf_faq_items'] as $faq ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Array elements are sanitized individually below.
+			$raw_faq_items = wp_unslash( $_POST['pdf_faq_items'] );
+			$faq_items     = array();
+			foreach ( $raw_faq_items as $faq ) {
 				if ( ! empty( $faq['question'] ) && ! empty( $faq['answer'] ) ) {
 					$faq_items[] = array(
 						'question' => sanitize_text_field( $faq['question'] ),
@@ -369,8 +373,10 @@ class PDF_Embed_SEO_Premium_Schema {
 
 		// Save TOC items.
 		if ( isset( $_POST['pdf_toc_items'] ) && is_array( $_POST['pdf_toc_items'] ) ) {
-			$toc_items = array();
-			foreach ( $_POST['pdf_toc_items'] as $toc ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Array elements are sanitized individually below.
+			$raw_toc_items = wp_unslash( $_POST['pdf_toc_items'] );
+			$toc_items     = array();
+			foreach ( $raw_toc_items as $toc ) {
 				if ( ! empty( $toc['title'] ) ) {
 					$toc_items[] = array(
 						'title' => sanitize_text_field( $toc['title'] ),
