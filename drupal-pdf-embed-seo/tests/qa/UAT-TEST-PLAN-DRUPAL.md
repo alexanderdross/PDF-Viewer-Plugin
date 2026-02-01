@@ -1,7 +1,7 @@
 # UAT/QA Test Plan: PDF Embed & SEO Optimize (Drupal Module)
 
-**Version:** 1.1.0
-**Last Updated:** 2026-01-27
+**Version:** 1.2.5
+**Last Updated:** 2026-01-28
 **Test Environment:** Drupal 10.x/11.x, PHP 8.1+
 
 ---
@@ -354,6 +354,62 @@
 | PRM-020 | Redirect URL | 1. Set custom redirect URL<br>2. Visit /pdf | Redirects to custom URL | [ ] Pass [ ] Fail |
 | PRM-021 | Redirect Disabled | 1. Disable redirect<br>2. Visit /pdf | Archive page displays normally | [ ] Pass [ ] Fail |
 | PRM-022 | License Required | 1. Invalidate license<br>2. Enable redirect<br>3. Visit /pdf | Redirect disabled (free fallback) | [ ] Pass [ ] Fail |
+
+### 9.7 Download Tracking (v1.2.5)
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| PRM-023 | Download Count Display | 1. Edit PDF<br>2. Check statistics | Download count visible | [ ] Pass [ ] Fail |
+| PRM-024 | Download Tracking | 1. Download a PDF<br>2. Check admin | Download count increments | [ ] Pass [ ] Fail |
+| PRM-025 | Download API | 1. POST to /download endpoint | Returns success | [ ] Pass [ ] Fail |
+| PRM-026 | Download Analytics | 1. View Analytics | Downloads shown separately | [ ] Pass [ ] Fail |
+
+### 9.8 Expiring Access Links (v1.2.5)
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| PRM-027 | Generate Link | 1. As admin, generate link | Token URL returned | [ ] Pass [ ] Fail |
+| PRM-028 | Custom Expiration | 1. Set 1 hour expiration | Link expires correctly | [ ] Pass [ ] Fail |
+| PRM-029 | Max Uses | 1. Set max uses to 5 | Limit enforced | [ ] Pass [ ] Fail |
+| PRM-030 | Valid Link Access | 1. Use valid link | PDF accessible | [ ] Pass [ ] Fail |
+| PRM-031 | Expired Link | 1. Use expired link | Access denied | [ ] Pass [ ] Fail |
+| PRM-032 | Max Uses Exceeded | 1. Exceed max uses | Access denied | [ ] Pass [ ] Fail |
+
+### 9.9 Schema Optimization (v1.2.5)
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| PRM-033 | AI Summary | 1. Add TL;DR<br>2. View source | abstract in schema | [ ] Pass [ ] Fail |
+| PRM-034 | FAQ Schema | 1. Add FAQ items<br>2. View source | FAQPage schema | [ ] Pass [ ] Fail |
+| PRM-035 | Reading Time | 1. Set reading time | timeRequired in schema | [ ] Pass [ ] Fail |
+| PRM-036 | Difficulty Level | 1. Set difficulty | educationalLevel in schema | [ ] Pass [ ] Fail |
+
+### 9.10 Role-Based Access Control (v1.2.5)
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| PRM-037 | Role Restriction Field | 1. Edit PDF<br>2. Check access section | Role selection visible | [ ] Pass [ ] Fail |
+| PRM-038 | Restrict to Admin | 1. Restrict to admin<br>2. View as anon | Access denied | [ ] Pass [ ] Fail |
+| PRM-039 | Multiple Roles | 1. Allow multiple roles | Correct access | [ ] Pass [ ] Fail |
+| PRM-040 | Logged-In Only | 1. Require login<br>2. Test | Login required | [ ] Pass [ ] Fail |
+
+### 9.11 Bulk Import (v1.2.5)
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| PRM-041 | Bulk Import Page | 1. Visit bulk import | Page loads | [ ] Pass [ ] Fail |
+| PRM-042 | Import Multiple PDFs | 1. Select PDFs<br>2. Import | Documents created | [ ] Pass [ ] Fail |
+| PRM-043 | Skip Duplicates | 1. Import same PDF twice | Duplicate skipped | [ ] Pass [ ] Fail |
+| PRM-044 | Progress Display | 1. Import 10 PDFs | Progress shown | [ ] Pass [ ] Fail |
+
+### 9.12 Viewer Enhancements (v1.2.5)
+
+| Test ID | Test Case | Steps | Expected Result | Status |
+|---------|-----------|-------|-----------------|--------|
+| PRM-045 | Text Search | 1. Enable search<br>2. Use Ctrl+F | Search works | [ ] Pass [ ] Fail |
+| PRM-046 | Search Results | 1. Search term | Results highlighted | [ ] Pass [ ] Fail |
+| PRM-047 | Bookmarks Panel | 1. View PDF with bookmarks | Bookmarks visible | [ ] Pass [ ] Fail |
+| PRM-048 | Navigate Bookmarks | 1. Click bookmark | Navigates to section | [ ] Pass [ ] Fail |
 
 ---
 

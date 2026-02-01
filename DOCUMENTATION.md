@@ -6,7 +6,7 @@
 
 Complete guide for installing, configuring, and using the PDF Embed & SEO Optimize plugin.
 
-**Website:** [pdfviewer.drossmedia.de](https://pdfviewer.drossmedia.de) | **Version:** 1.2.4
+**Website:** [pdfviewer.drossmedia.de](https://pdfviewer.drossmedia.de) | **Version:** 1.2.5
 
 ---
 
@@ -480,6 +480,72 @@ Verify password for protected PDF.
 
 ---
 
+#### POST /documents/{id}/download
+
+Track a PDF download (requires downloads enabled).
+
+**Example Request:**
+```bash
+curl -X POST "https://example.com/wp-json/pdf-embed-seo/v1/documents/123/download"
+```
+
+**Example Response:**
+```json
+{
+  "success": true,
+  "document_id": 123,
+  "download_count": 45,
+  "file_url": "https://example.com/wp-content/uploads/document.pdf"
+}
+```
+
+---
+
+#### POST /documents/{id}/expiring-link
+
+Generate a time-limited access link (requires admin authentication).
+
+**Request Body:**
+```json
+{
+  "expires_in": 3600,
+  "max_uses": 5
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "token": "abc123xyz...",
+  "access_url": "https://example.com/pdf/document/?pdf_access=abc123xyz",
+  "expires_at": "2024-06-21T14:45:00+00:00",
+  "max_uses": 5
+}
+```
+
+---
+
+#### GET /documents/{id}/expiring-link/{token}
+
+Validate an expiring link and get PDF access.
+
+**Response:**
+```json
+{
+  "success": true,
+  "document_id": 123,
+  "title": "Annual Report",
+  "file_url": "https://example.com/wp-content/uploads/document.pdf",
+  "uses": 2,
+  "max_uses": 5,
+  "expires_at": "2024-06-21T14:45:00+00:00",
+  "remaining_uses": 3
+}
+```
+
+---
+
 ## Premium Features
 
 ### Analytics Dashboard
@@ -519,6 +585,30 @@ Available at: `/pdf/sitemap.xml`
 - All published PDFs included
 - XSL-styled browser view
 - Submit to Google Search Console
+
+### Download Tracking
+
+Track PDF downloads separately from views:
+- Separate download counter per document
+- View download statistics in Analytics Dashboard
+- REST API endpoint for tracking: `POST /documents/{id}/download`
+- User attribution for authenticated downloads
+
+### Expiring Access Links
+
+Generate time-limited URLs for sharing PDFs:
+
+1. Go to **PDF Documents > Edit** a document
+2. Use REST API or admin UI to generate link
+3. Configure expiration time (5 min to 30 days)
+4. Set maximum uses (0 = unlimited)
+5. Share the generated URL
+
+Features:
+- Secure token-based access
+- Configurable expiration and max uses
+- Usage tracking
+- Admin-only link generation
 
 ### AI & Voice Search Optimization (GEO/AEO/LLM)
 

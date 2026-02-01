@@ -151,6 +151,7 @@ function pdf_embed_seo_pdf_document_view(array &$build, EntityInterface $entity,
               'pdfUrl' => Url::fromRoute('pdf_embed_seo.pdf_data', [
                 'pdf_document' => $entity->id(),
               ])->toString(),
+              'workerSrc' => '/' . \Drupal::service('extension.list.module')->getPath('pdf_embed_seo') . '/assets/pdfjs/pdf.worker.min.js',
               'allowDownload' => (bool) ($entity->get('allow_download')->value ?? $config->get('default_allow_download')),
               'allowPrint' => (bool) ($entity->get('allow_print')->value ?? $config->get('default_allow_print')),
             ],
@@ -200,6 +201,80 @@ function pdf_embed_seo_pdf_document_view(array &$build, EntityInterface $entity,
  */
 function pdf_embed_seo_page_attachments(array &$attachments) {
   $route_match = \Drupal::routeMatch();
+
+  // Add custom favicon for PDF pages.
+  $pdf_routes = ['entity.pdf_document.canonical', 'pdf_embed_seo.archive'];
+  if (in_array($route_match->getRouteName(), $pdf_routes)) {
+    $config = \Drupal::config('pdf_embed_seo.settings');
+    $favicon_url = $config->get('favicon_url');
+
+    if (!empty($favicon_url)) {
+      // Determine the favicon type based on file extension.
+      $extension = strtolower(pathinfo(parse_url($favicon_url, PHP_URL_PATH), PATHINFO_EXTENSION));
+      $type = 'image/x-icon';
+
+      switch ($extension) {
+        case 'png':
+          $type = 'image/png';
+          break;
+
+        case 'gif':
+          $type = 'image/gif';
+          break;
+
+        case 'svg':
+          $type = 'image/svg+xml';
+          break;
+
+        case 'ico':
+        default:
+          $type = 'image/x-icon';
+          break;
+      }
+
+      // Add favicon link tags.
+      $attachments['#attached']['html_head'][] = [
+        [
+          '#type' => 'html_tag',
+          '#tag' => 'link',
+          '#attributes' => [
+            'rel' => 'icon',
+            'href' => $favicon_url,
+            'type' => $type,
+          ],
+        ],
+        'pdf_embed_seo_favicon',
+      ];
+
+      $attachments['#attached']['html_head'][] = [
+        [
+          '#type' => 'html_tag',
+          '#tag' => 'link',
+          '#attributes' => [
+            'rel' => 'shortcut icon',
+            'href' => $favicon_url,
+            'type' => $type,
+          ],
+        ],
+        'pdf_embed_seo_favicon_shortcut',
+      ];
+
+      // Add apple-touch-icon for PNG favicons.
+      if ($type === 'image/png') {
+        $attachments['#attached']['html_head'][] = [
+          [
+            '#type' => 'html_tag',
+            '#tag' => 'link',
+            '#attributes' => [
+              'rel' => 'apple-touch-icon',
+              'href' => $favicon_url,
+            ],
+          ],
+          'pdf_embed_seo_favicon_apple',
+        ];
+      }
+    }
+  }
 
   // Add Schema.org markup for PDF documents.
   // Skip if Metatag module handles schema (to avoid duplicates).

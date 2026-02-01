@@ -152,7 +152,41 @@ GPL v2 or later - https://www.gnu.org/licenses/gpl-2.0.html
 
 **Dross:Media** - [GitHub](https://github.com/alexanderdross)
 
+## Premium Features
+
+Upgrade to Premium for advanced features:
+
+- **Analytics Dashboard** - Detailed view/download statistics
+- **Download Tracking** - Track downloads separately from views
+- **Password Protection** - Secure PDFs with passwords
+- **Reading Progress** - Resume where users left off
+- **Expiring Access Links** - Time-limited URLs for PDFs
+- **Role-Based Access** - Restrict by user role
+- **AI Schema Optimization** - GEO/AEO/LLM optimization
+- **XML Sitemap** - Dedicated PDF sitemap
+- **Categories & Tags** - Organize PDFs
+- **Bulk Import** - Import multiple PDFs from CSV
+- **REST API** - 14+ premium endpoints
+
+**Get Premium:** [pdfviewer.drossmedia.de](https://pdfviewer.drossmedia.de)
+
 ## Changelog
+
+### 1.2.5 (Current)
+- Download Tracking - Track PDF downloads separately from views
+- Expiring Access Links - Generate time-limited URLs with max usage limits
+- Drupal Premium feature parity with WordPress
+- Extended REST API with 14+ endpoints
+
+### 1.2.4
+- Premium AI & Schema Optimization meta box for GEO/AEO/LLM optimization
+- AI Summary, FAQ Schema, Table of Contents, Reading Time, Difficulty Level
+
+### 1.2.0
+- REST API endpoints for all platforms
+- Reading progress tracking (Premium)
+- XML Sitemap at `/pdf/sitemap.xml` (Premium)
+- Analytics dashboard (Premium)
 
 ### 1.0.0
 - Initial release

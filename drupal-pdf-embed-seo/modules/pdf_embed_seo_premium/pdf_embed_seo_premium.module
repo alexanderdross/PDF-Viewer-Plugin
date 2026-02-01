@@ -17,11 +17,19 @@ function pdf_embed_seo_premium_help($route_name, RouteMatchInterface $route_matc
       $output .= '<p>' . t('PDF Embed & SEO Optimize Premium adds advanced features to the base PDF Embed module.') . '</p>';
       $output .= '<h3>' . t('Premium Features') . '</h3>';
       $output .= '<ul>';
-      $output .= '<li>' . t('Analytics Dashboard - Detailed view statistics and reports') . '</li>';
+      $output .= '<li>' . t('Analytics Dashboard - Detailed view and download statistics with reports') . '</li>';
+      $output .= '<li>' . t('Download Tracking - Track PDF downloads separately from views') . '</li>';
       $output .= '<li>' . t('Password Protection - Protect individual PDFs with passwords') . '</li>';
       $output .= '<li>' . t('Reading Progress - Remember and restore user reading position') . '</li>';
-      $output .= '<li>' . t('CSV Export - Export analytics data for external analysis') . '</li>';
-      $output .= '<li>' . t('Premium REST API - Additional API endpoints for integrations') . '</li>';
+      $output .= '<li>' . t('Expiring Access Links - Generate time-limited access URLs for PDFs') . '</li>';
+      $output .= '<li>' . t('Role-Based Access Control - Restrict PDF access by user role') . '</li>';
+      $output .= '<li>' . t('GEO/AEO/LLM Schema Optimization - AI-optimized metadata for voice search and AI') . '</li>';
+      $output .= '<li>' . t('Bulk Import - Import multiple PDFs at once from CSV or ZIP') . '</li>';
+      $output .= '<li>' . t('Viewer Enhancements - Text search and bookmark navigation') . '</li>';
+      $output .= '<li>' . t('XML Sitemap - Dedicated PDF sitemap at /pdf/sitemap.xml') . '</li>';
+      $output .= '<li>' . t('Categories & Tags - Organize PDFs with taxonomies') . '</li>';
+      $output .= '<li>' . t('CSV/JSON Export - Export analytics data for external analysis') . '</li>';
+      $output .= '<li>' . t('Premium REST API - 14+ additional API endpoints for integrations') . '</li>';
       $output .= '</ul>';
       return $output;
   }

@@ -25,6 +25,15 @@ pdf_embed_seo.settings:
     archive_display:
       type: string
       label: 'Archive display mode'
+    archive_show_description:
+      type: boolean
+      label: 'Show descriptions on archive page'
+    archive_show_view_count:
+      type: boolean
+      label: 'Show view counts on archive page'
+    show_breadcrumbs:
+      type: boolean
+      label: 'Show visible breadcrumbs'
     viewer_theme:
       type: string
       label: 'Viewer theme'
@@ -40,6 +49,13 @@ pdf_embed_seo.settings:
     archive_description:
       type: text
       label: 'Archive page meta description'
+    # Branding settings.
+    favicon_url:
+      type: string
+      label: 'Custom favicon URL'
+    favicon_fid:
+      type: integer
+      label: 'Favicon file ID'
     # Premium settings.
     enable_analytics:
       type: boolean

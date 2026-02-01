@@ -186,6 +186,36 @@ class PdfEmbedSeoSettingsForm extends ConfigFormBase {
       '#rows' => 3,
     ];
 
+    // Branding settings.
+    $form['branding'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Branding Settings'),
+      '#open' => TRUE,
+    ];
+
+    $form['branding']['favicon_url'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Custom Favicon URL'),
+      '#description' => $this->t('Enter the URL of a custom favicon for PDF pages. Recommended size: 32x32 pixels. Supported formats: ICO, PNG, GIF, SVG. This favicon will be displayed when viewing PDF documents.'),
+      '#default_value' => $config->get('favicon_url') ?? '',
+      '#maxlength' => 2048,
+      '#attributes' => [
+        'placeholder' => 'https://example.com/favicon.ico',
+      ],
+    ];
+
+    $form['branding']['favicon_upload'] = [
+      '#type' => 'managed_file',
+      '#title' => $this->t('Or Upload Favicon'),
+      '#description' => $this->t('Upload a favicon image. If both URL and upload are provided, the URL takes precedence.'),
+      '#upload_location' => 'public://pdf-embed-seo/',
+      '#upload_validators' => [
+        'file_validate_extensions' => ['ico png gif svg'],
+        'file_validate_size' => [1024 * 1024], // 1MB max.
+      ],
+      '#default_value' => $config->get('favicon_fid') ? [$config->get('favicon_fid')] : NULL,
+    ];
+
     // Premium settings (only show if premium is active).
     if (\Drupal::moduleHandler()->moduleExists('pdf_embed_seo_premium')) {
       $form['premium'] = [
@@ -269,6 +299,30 @@ class PdfEmbedSeoSettingsForm extends ConfigFormBase {
     $config->set('enable_schema', $form_state->getValue('enable_schema'));
     $config->set('archive_title', $form_state->getValue('archive_title'));
     $config->set('archive_description', $form_state->getValue('archive_description'));
+
+    // Branding settings.
+    $favicon_url = $form_state->getValue('favicon_url');
+    $favicon_upload = $form_state->getValue('favicon_upload');
+
+    // If a file was uploaded, use its URL.
+    if (!empty($favicon_upload)) {
+      $file = \Drupal\file\Entity\File::load(reset($favicon_upload));
+      if ($file) {
+        // Make the file permanent.
+        $file->setPermanent();
+        $file->save();
+        // Use the uploaded file URL if no manual URL is provided.
+        if (empty($favicon_url)) {
+          $favicon_url = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+        }
+        $config->set('favicon_fid', $file->id());
+      }
+    }
+    else {
+      $config->set('favicon_fid', NULL);
+    }
+
+    $config->set('favicon_url', $favicon_url);
 
     // Premium settings.
     if (\Drupal::moduleHandler()->moduleExists('pdf_embed_seo_premium')) {

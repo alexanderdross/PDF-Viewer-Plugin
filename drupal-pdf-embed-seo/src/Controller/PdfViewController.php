@@ -56,6 +56,7 @@ class PdfViewController extends ControllerBase {
         'drupalSettings' => [
           'pdfEmbedSeo' => [
             'pdfUrl' => $this->getPdfDataUrl($pdf_document),
+            'workerSrc' => '/' . \Drupal::service('extension.list.module')->getPath('pdf_embed_seo') . '/assets/pdfjs/pdf.worker.min.js',
             'allowDownload' => $allow_download,
             'allowPrint' => $allow_print,
             'documentId' => $pdf_document->id(),

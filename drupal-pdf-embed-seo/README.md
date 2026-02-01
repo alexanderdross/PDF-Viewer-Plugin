@@ -6,7 +6,7 @@
 
 A powerful Drupal module that integrates Mozilla's PDF.js viewer to display PDFs with clean URLs, SEO optimization, and access controls.
 
-**Current Version:** 1.2.2
+**Current Version:** 1.2.5
 **Platforms:** Drupal 10, Drupal 11
 **License:** GPL v2 or later
 **Website:** [pdfviewer.drossmedia.de](https://pdfviewer.drossmedia.de)
@@ -85,11 +85,16 @@ Get premium at: **https://pdfviewer.drossmedia.de**
 | Password Verification API | - | ✓ |
 | Reading Progress Tracking | - | ✓ |
 | Resume Reading Feature | - | ✓ |
+| Download Tracking | - | ✓ |
+| Expiring Access Links | - | ✓ |
+| Role-Based Access Control | - | ✓ |
+| AI Schema Optimization (GEO/AEO/LLM) | - | ✓ |
+| Bulk Import (CSV) | - | ✓ |
+| Text Search in Viewer | - | ✓ |
+| Bookmarks Navigation | - | ✓ |
 | XML Sitemap (`/pdf/sitemap.xml`) | - | ✓ |
 | Sitemap XSL Stylesheet | - | ✓ |
-| GET /analytics endpoint | - | ✓ |
-| GET/POST /progress endpoints | - | ✓ |
-| POST /verify-password endpoint | - | ✓ |
+| 14+ Premium REST API Endpoints | - | ✓ |
 
 ---
 
@@ -222,9 +227,18 @@ Override these templates in your theme:
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | `GET` | `/analytics` | Get analytics overview |
+| `GET` | `/analytics/documents` | Per-document analytics |
+| `GET` | `/analytics/export` | Export analytics CSV/JSON |
 | `GET` | `/documents/{id}/progress` | Get reading progress |
 | `POST` | `/documents/{id}/progress` | Save reading progress |
 | `POST` | `/documents/{id}/verify-password` | Verify PDF password |
+| `POST` | `/documents/{id}/download` | Track PDF download |
+| `POST` | `/documents/{id}/expiring-link` | Generate expiring link |
+| `GET` | `/documents/{id}/expiring-link/{token}` | Validate expiring link |
+| `GET` | `/categories` | List PDF categories |
+| `GET` | `/tags` | List PDF tags |
+| `POST` | `/bulk/import` | Start bulk import |
+| `GET` | `/bulk/import/{id}/status` | Get import status |
 
 ### Query Parameters for /documents
 
@@ -328,10 +342,29 @@ The PDF viewer triggers these JavaScript events:
 |---------|-------------|
 | `pdf_embed_seo.analytics_tracker` | Track and query view statistics |
 | `pdf_embed_seo.progress_tracker` | Save and retrieve reading progress |
+| `pdf_embed_seo.schema_enhancer` | GEO/AEO/LLM schema optimization |
+| `pdf_embed_seo.access_manager` | Role-based access control |
+| `pdf_embed_seo.viewer_enhancer` | Enhanced viewer features |
+| `pdf_embed_seo.bulk_operations` | Bulk import and update operations |
 
 ---
 
 ## Changelog
+
+### 1.2.5
+- Download Tracking - Track PDF downloads separately from views
+- Expiring Access Links - Generate time-limited URLs with max usage limits
+- Drupal Premium feature parity with WordPress:
+  - PdfSchemaEnhancer service for GEO/AEO/LLM optimization
+  - PdfAccessManager service for role-based access control
+  - PdfBulkOperations service for CSV import and bulk updates
+  - PdfViewerEnhancer service for text search, bookmarks, reading progress UI
+- Extended REST API with 14+ premium endpoints matching WordPress
+- New endpoints: `/download`, `/expiring-link`, `/categories`, `/tags`, `/bulk/import`
+
+### 1.2.4
+- Premium AI & Schema Optimization for GEO/AEO/LLM
+- AI Summary, FAQ Schema, Table of Contents, Reading Time fields
 
 ### 1.2.1
 - Version bump for release

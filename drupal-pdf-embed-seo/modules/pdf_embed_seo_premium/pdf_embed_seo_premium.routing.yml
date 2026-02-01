@@ -47,6 +47,19 @@ pdf_embed_seo_premium.sitemap_style:
   requirements:
     _access: 'TRUE'
 
+# Expiring access link page.
+pdf_embed_seo_premium.expiring_access:
+  path: '/pdf/{pdf_document}/access/{token}'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfPremiumApiController::validateExpiringLink'
+    _title: 'PDF Access'
+  requirements:
+    _access: 'TRUE'
+  options:
+    parameters:
+      pdf_document:
+        type: entity:pdf_document
+
 # ==========================================
 # Premium REST API Endpoints
 # ==========================================
@@ -59,6 +72,109 @@ pdf_embed_seo_premium.api.analytics:
   requirements:
     _permission: 'view pdf analytics'
   methods: [GET]
+
+# API: Get per-document analytics (Premium).
+pdf_embed_seo_premium.api.analytics.documents:
+  path: '/api/pdf-embed-seo/v1/analytics/documents'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfPremiumApiController::getDocumentAnalytics'
+  requirements:
+    _permission: 'view pdf analytics'
+  methods: [GET]
+
+# API: Export analytics (Premium).
+pdf_embed_seo_premium.api.analytics.export:
+  path: '/api/pdf-embed-seo/v1/analytics/export'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfPremiumApiController::exportAnalytics'
+  requirements:
+    _permission: 'export pdf analytics'
+  methods: [GET]
+
+# API: Get PDF categories (Premium).
+pdf_embed_seo_premium.api.categories:
+  path: '/api/pdf-embed-seo/v1/categories'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfPremiumApiController::getCategories'
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
+
+# API: Get PDF tags (Premium).
+pdf_embed_seo_premium.api.tags:
+  path: '/api/pdf-embed-seo/v1/tags'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfPremiumApiController::getTags'
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
+
+# API: Start bulk import (Premium).
+pdf_embed_seo_premium.api.bulk.import:
+  path: '/api/pdf-embed-seo/v1/bulk/import'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfPremiumApiController::startBulkImport'
+  requirements:
+    _permission: 'administer pdf embed seo'
+  methods: [POST]
+
+# API: Get bulk import status (Premium) - WordPress-compatible route.
+pdf_embed_seo_premium.api.bulk.import.status:
+  path: '/api/pdf-embed-seo/v1/bulk/import/status'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfPremiumApiController::getBulkImportStatus'
+    batch_id: NULL
+  requirements:
+    _permission: 'administer pdf embed seo'
+  methods: [GET]
+
+# API: Get bulk import status by ID (Premium) - Legacy route for backwards compatibility.
+pdf_embed_seo_premium.api.bulk.import.status.byid:
+  path: '/api/pdf-embed-seo/v1/bulk/import/{batch_id}/status'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfPremiumApiController::getBulkImportStatus'
+  requirements:
+    _permission: 'administer pdf embed seo'
+  methods: [GET]
+
+# API: Track download (Premium).
+pdf_embed_seo_premium.api.track_download:
+  path: '/api/pdf-embed-seo/v1/documents/{pdf_document}/download'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfPremiumApiController::trackDownload'
+  requirements:
+    _access: 'TRUE'
+  methods: [POST]
+  options:
+    parameters:
+      pdf_document:
+        type: entity:pdf_document
+
+# API: Generate expiring link (Premium).
+pdf_embed_seo_premium.api.expiring_link.generate:
+  path: '/api/pdf-embed-seo/v1/documents/{pdf_document}/expiring-link'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfPremiumApiController::generateExpiringLink'
+  requirements:
+    _permission: 'administer pdf embed seo'
+  methods: [POST]
+  options:
+    parameters:
+      pdf_document:
+        type: entity:pdf_document
+
+# API: Validate expiring link (Premium).
+pdf_embed_seo_premium.api.expiring_link.validate:
+  path: '/api/pdf-embed-seo/v1/documents/{pdf_document}/expiring-link/{token}'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfPremiumApiController::validateExpiringLink'
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
+  options:
+    parameters:
+      pdf_document:
+        type: entity:pdf_document
 
 # API: Get reading progress (Premium).
 pdf_embed_seo_premium.api.progress.get:
