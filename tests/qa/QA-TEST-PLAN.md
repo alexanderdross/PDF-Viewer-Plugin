@@ -1,7 +1,7 @@
 # QA Test Plan - PDF Embed & SEO Optimize
 
-**Version:** 1.2.6
-**Date:** 2026-02-01
+**Version:** 1.2.7
+**Date:** 2026-02-02
 **Modules:** WP Free, WP Premium, Drupal Free, Drupal Premium
 
 ---
@@ -514,6 +514,40 @@
 
 ---
 
+## Sidebar Removal Tests (v1.2.7)
+
+### WordPress Sidebar Tests
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| SBW-001 | Archive No Sidebar | Visit /pdf/ archive page | No widget area/sidebar displayed | ☐ |
+| SBW-002 | Single No Sidebar | Visit /pdf/slug/ single page | No widget area/sidebar displayed | ☐ |
+| SBW-003 | Grid View No Sidebar | Set grid display, visit /pdf/ | Full-width grid, no sidebar | ☐ |
+| SBW-004 | List View No Sidebar | Set list display, visit /pdf/ | Full-width list, no sidebar | ☐ |
+| SBW-005 | Theme Compatibility | Test with Twenty Twenty-Four | No sidebar visible | ☐ |
+| SBW-006 | Theme Compatibility 2 | Test with Astra theme | No sidebar visible | ☐ |
+| SBW-007 | CSS Override | Inspect computed styles | width: 100% on content area | ☐ |
+| SBW-008 | Header/Footer Present | Visit /pdf/ | Header and footer still visible | ☐ |
+| SBW-009 | Mobile View | Test on mobile device | Full-width responsive | ☐ |
+| SBW-010 | Template Comment | Check archive-pdf-document.php | Comment about intentional sidebar removal | ☐ |
+
+### Drupal Sidebar Tests
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| SBD-001 | Archive No Sidebar | Visit /pdf archive page | No sidebar regions displayed | ☐ |
+| SBD-002 | Single No Sidebar | Visit /pdf/slug single page | No sidebar regions displayed | ☐ |
+| SBD-003 | Body Class Present | Inspect body tag | .page-pdf class present | ☐ |
+| SBD-004 | Body Class No-Sidebar | Inspect body tag | .page-pdf-no-sidebar class present | ☐ |
+| SBD-005 | Theme Suggestion | Enable twig debug | page--pdf suggestion available | ☐ |
+| SBD-006 | Sidebar First Cleared | Inspect page.html.twig | sidebar_first region empty | ☐ |
+| SBD-007 | Sidebar Second Cleared | Inspect page.html.twig | sidebar_second region empty | ☐ |
+| SBD-008 | Bartik Theme | Test with Bartik theme | No sidebars visible | ☐ |
+| SBD-009 | Olivero Theme | Test with Olivero theme | No sidebars visible | ☐ |
+| SBD-010 | CSS Full Width | Inspect computed styles | Content area 100% width | ☐ |
+
+---
+
 ## Regression Tests
 
 Run after each code change:
@@ -540,6 +574,7 @@ Run after each code change:
 - [ ] Security tests passed (including v1.2.6 tests)
 - [ ] Plugin Check compliance tests passed (v1.2.6)
 - [ ] Hook migration tests passed (v1.2.6)
+- [ ] Sidebar removal tests passed (v1.2.7)
 - [ ] Regression tests passed
 
 **Sign-off:**
@@ -552,4 +587,4 @@ Run after each code change:
 
 ---
 
-*PDF Embed & SEO Optimize v1.2.6 - QA Test Plan*
+*PDF Embed & SEO Optimize v1.2.7 - QA Test Plan*

@@ -2,7 +2,7 @@
 
 A comprehensive PDF management solution available for WordPress and Drupal that uses Mozilla's PDF.js library to securely display PDFs with SEO optimization.
 
-**Current Version:** 1.2.6
+**Current Version:** 1.2.7
 **Platforms:** WordPress (Free & Premium), Drupal 10/11
 **License:** GPL v2 or later
 
@@ -727,7 +727,17 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 
 ## Changelog
 
-### 1.2.6 (Current)
+### 1.2.7 (Current)
+- Sidebar/Widget Area Removal - PDF pages now display full-width without sidebars
+  - WordPress: Removed `get_sidebar()` from archive and single templates
+  - WordPress: Added CSS to hide sidebars on archive pages (`.post-type-archive-pdf_document`)
+  - Drupal: Added `hook_theme_suggestions_page_alter()` for full-width page templates
+  - Drupal: Added `hook_preprocess_page()` to clear sidebar regions on PDF routes
+  - Drupal: Added `hook_preprocess_html()` to add `.page-pdf` body classes for CSS targeting
+  - Drupal: Added CSS rules to hide common sidebar selectors
+- Unit tests for sidebar removal (WordPress and Drupal)
+
+### 1.2.6
 - WordPress Plugin Check compliance fixes:
   - Fixed unescaped SQL table name parameters in premium REST API and analytics
   - Fixed interpolated SQL variables with proper `esc_sql()` sanitization

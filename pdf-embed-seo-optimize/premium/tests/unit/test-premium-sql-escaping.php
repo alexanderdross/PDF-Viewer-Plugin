@@ -1,13 +1,13 @@
 <?php
 /**
- * Unit tests for Premium SQL Escaping (v1.2.6).
+ * Unit tests for Premium SQL Escaping (v1.2.7).
  *
  * Tests that SQL queries properly escape table names and parameters
  * to comply with WordPress Plugin Check requirements.
  *
  * @package PDF_Embed_SEO_Premium
  * @subpackage Tests
- * @since 1.2.6
+ * @since 1.2.7
  */
 
 // phpcs:disable WordPress.DB.DirectDatabaseQuery -- Test file validating database functionality.

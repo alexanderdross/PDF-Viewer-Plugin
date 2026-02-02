@@ -1,12 +1,12 @@
 <?php
 /**
- * Unit tests for Hook Naming Conventions (v1.2.6).
+ * Unit tests for Hook Naming Conventions (v1.2.7).
  *
  * Tests that hooks follow WordPress naming conventions with proper plugin prefix.
  *
  * @package PDF_Embed_SEO
  * @subpackage Tests
- * @since 1.2.6
+ * @since 1.2.7
  */
 
 /**

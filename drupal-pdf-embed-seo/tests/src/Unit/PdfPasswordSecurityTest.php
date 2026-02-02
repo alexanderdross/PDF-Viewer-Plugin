@@ -5,13 +5,13 @@ namespace Drupal\Tests\pdf_embed_seo\Unit;
 use Drupal\Tests\UnitTestCase;
 
 /**
- * Tests for PDF Password Security (v1.2.6).
+ * Tests for PDF Password Security (v1.2.7).
  *
  * Validates that passwords are properly hashed and verified
  * using Drupal's password service.
  *
  * @group pdf_embed_seo
- * @since 1.2.6
+ * @since 1.2.7
  */
 class PdfPasswordSecurityTest extends UnitTestCase {
 
@@ -92,7 +92,7 @@ class PdfPasswordSecurityTest extends UnitTestCase {
     $password = 'testPassword';
     $stored_password = 'testPassword';
 
-    // This is the WRONG way (what we fixed in v1.2.6).
+    // This is the WRONG way (what we fixed in v1.2.7).
     $wrong_comparison = ($password === $stored_password);
 
     // Document that plain text comparison was the vulnerability.

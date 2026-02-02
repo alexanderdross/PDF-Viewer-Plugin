@@ -8,6 +8,34 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.2.7] - 2026-02-02
+
+### Fixed
+- **Sidebar/Widget Area Removal** - PDF archive and single pages now display full-width without sidebars
+
+  **WordPress:**
+  - Removed `get_sidebar()` calls from `archive-pdf-document.php` and `single-pdf-document.php`
+  - Added CSS rules to hide sidebars on archive pages (`.post-type-archive-pdf_document`)
+  - Extended existing single page sidebar hiding to archive pages
+  - PDF pages now display optimally in full-width for better PDF viewing experience
+
+  **Drupal:**
+  - Added `hook_theme_suggestions_page_alter()` for full-width page templates (`page__pdf`, `page__pdf__archive`, `page__pdf__document`)
+  - Added `hook_preprocess_page()` to programmatically clear sidebar regions on PDF routes
+  - Added `hook_preprocess_html()` to add `.page-pdf` and `.page-pdf-no-sidebar` body classes
+  - Added CSS rules to hide common Drupal sidebar selectors (`.layout-sidebar-*`, `.region-sidebar-*`, `#sidebar-*`)
+  - Themes can now provide custom full-width templates by implementing `page--pdf.html.twig`
+
+### Added
+- **Unit Tests for Sidebar Removal** - Comprehensive test coverage for v1.2.7 changes
+  - WordPress: `test-template-sidebar.php` - Tests template sidebar removal and CSS rules
+  - Drupal: `PdfSidebarRemovalTest.php` - Tests hook implementations and CSS rules
+
+### Changed
+- Version bump to 1.2.7 across all modules (WordPress Free, WordPress Premium, Drupal Free, Drupal Premium)
+
+---
+
 ## [1.2.6] - 2026-02-01
 
 ### Fixed

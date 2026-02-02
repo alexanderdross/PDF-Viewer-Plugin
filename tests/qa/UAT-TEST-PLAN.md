@@ -1,6 +1,6 @@
 # User Acceptance Testing (UAT) Plan
 
-## PDF Embed & SEO Optimize - Version 1.2.6
+## PDF Embed & SEO Optimize - Version 1.2.7
 
 **Date:** 2026-02-01
 **Modules:** WP Free, WP Premium, Drupal Free, Drupal Premium
@@ -532,7 +532,7 @@ This UAT plan validates that the PDF Embed & SEO Optimize plugin meets business 
 
 ---
 
-## Version 1.2.6 User Stories
+## Version 1.2.7 User Stories
 
 ### US-SEC-001: Secure Password Storage (Drupal)
 **As a** site administrator
@@ -592,6 +592,66 @@ This UAT plan validates that the PDF Embed & SEO Optimize plugin meets business 
 
 ---
 
+## Version 1.2.7 User Stories (New)
+
+### US-FW-001: Full-Width PDF Archive (WordPress)
+**As a** website visitor
+**I want** the PDF archive page to display full-width
+**So that** I can see the PDF listings without distracting sidebars
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | No widget area visible on /pdf/ archive | ☐ | ☐ | |
+| 2 | Content area spans full width | ☐ | ☐ | |
+| 3 | Grid view displays correctly without sidebar | ☐ | ☐ | |
+| 4 | List view displays correctly without sidebar | ☐ | ☐ | |
+| 5 | Header and footer still visible | ☐ | ☐ | |
+
+---
+
+### US-FW-002: Full-Width PDF Single Page (WordPress)
+**As a** website visitor
+**I want** individual PDF pages to display full-width
+**So that** I can view PDFs with maximum screen space
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | No widget area visible on /pdf/slug/ | ☐ | ☐ | |
+| 2 | PDF viewer has maximum width available | ☐ | ☐ | |
+| 3 | Works with different WordPress themes | ☐ | ☐ | |
+| 4 | Responsive on mobile devices | ☐ | ☐ | |
+
+---
+
+### US-FW-003: Full-Width PDF Pages (Drupal)
+**As a** website visitor
+**I want** Drupal PDF pages to display full-width
+**So that** I have optimal viewing experience
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | No sidebar regions on /pdf archive | ☐ | ☐ | |
+| 2 | No sidebar regions on /pdf/slug single page | ☐ | ☐ | |
+| 3 | Body has .page-pdf class for theming | ☐ | ☐ | |
+| 4 | Works with Bartik theme | ☐ | ☐ | |
+| 5 | Works with Olivero theme | ☐ | ☐ | |
+
+---
+
+### US-DEV-002: Custom Page Template (Drupal)
+**As a** theme developer
+**I want** page template suggestions for PDF pages
+**So that** I can create custom full-width layouts
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | page--pdf.html.twig suggestion available | ☐ | ☐ | |
+| 2 | page--pdf--archive.html.twig suggestion available | ☐ | ☐ | |
+| 3 | page--pdf--document.html.twig suggestion available | ☐ | ☐ | |
+| 4 | Custom template overrides work correctly | ☐ | ☐ | |
+
+---
+
 ### Approval
 
 | Role | Name | Date | Approved |
@@ -608,4 +668,4 @@ This UAT plan validates that the PDF Embed & SEO Optimize plugin meets business 
 
 ---
 
-*PDF Embed & SEO Optimize v1.2.6 - UAT Test Plan*
+*PDF Embed & SEO Optimize v1.2.7 - UAT Test Plan*

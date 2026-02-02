@@ -6,12 +6,12 @@ use Drupal\Tests\UnitTestCase;
 use Drupal\Component\Utility\Html;
 
 /**
- * Tests for PDF XSS Prevention (v1.2.6).
+ * Tests for PDF XSS Prevention (v1.2.7).
  *
  * Validates that user content is properly escaped to prevent XSS attacks.
  *
  * @group pdf_embed_seo
- * @since 1.2.6
+ * @since 1.2.7
  */
 class PdfXssPreventionTest extends UnitTestCase {
 
