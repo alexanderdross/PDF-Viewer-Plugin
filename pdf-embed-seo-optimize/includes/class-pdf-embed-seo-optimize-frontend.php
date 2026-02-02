@@ -117,8 +117,8 @@ class PDF_Embed_SEO_Frontend {
 				'pdf-embed-seo-optimize-viewer',
 				'pdfEmbedSeo',
 				array(
-					'ajaxUrl'       => admin_url( 'admin-ajax.php' ),
-					'nonce'         => wp_create_nonce( 'pdf_embed_seo_get_pdf' ),
+					'restUrl'       => rest_url( 'pdf-embed-seo/v1/documents/' ),
+					'restNonce'     => wp_create_nonce( 'wp_rest' ),
 					'postId'        => $post_id,
 					'allowDownload' => $allow_download,
 					'allowPrint'    => $allow_print,

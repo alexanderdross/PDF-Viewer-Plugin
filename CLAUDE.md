@@ -742,6 +742,10 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
   - Custom font color for archive header
   - Custom background color for archive header
   - Custom heading also updates 2nd breadcrumb item (HTML and Schema.org BreadcrumbList)
+- Fix "Security check failed" error on cached pages
+  - Switched PDF viewer from AJAX to REST API endpoint (`/documents/{id}/data`)
+  - REST API doesn't require nonces for public read operations, fixing cache compatibility
+  - Updated both single page viewer and shortcode implementations
 
 ### 1.2.6
 - WordPress Plugin Check compliance fixes:
