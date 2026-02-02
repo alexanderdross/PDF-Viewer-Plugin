@@ -6,6 +6,11 @@
  * @subpackage Tests
  */
 
+// Prevent direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Test Premium REST API functionality.
  */
