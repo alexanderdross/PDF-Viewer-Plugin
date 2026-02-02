@@ -28,12 +28,34 @@ $show_description  = isset( $settings['archive_show_description'] ) ? $settings[
 $show_view_count   = isset( $settings['archive_show_view_count'] ) ? $settings['archive_show_view_count'] : true;
 $show_breadcrumbs  = isset( $settings['show_breadcrumbs'] ) ? $settings['show_breadcrumbs'] : true;
 
+// Archive styling settings.
+$custom_heading      = isset( $settings['archive_heading'] ) && ! empty( $settings['archive_heading'] ) ? $settings['archive_heading'] : __( 'PDF Documents', 'pdf-embed-seo-optimize' );
+$heading_alignment   = isset( $settings['archive_heading_alignment'] ) ? $settings['archive_heading_alignment'] : 'center';
+$font_color          = isset( $settings['archive_font_color'] ) ? $settings['archive_font_color'] : '';
+$background_color    = isset( $settings['archive_background_color'] ) ? $settings['archive_background_color'] : '';
+
 // Archive info.
 $archive_url   = get_post_type_archive_link( 'pdf_document' );
-$archive_title = apply_filters( 'pdf_embed_seo_archive_title', __( 'PDF Documents', 'pdf-embed-seo-optimize' ) );
+$archive_title = apply_filters( 'pdf_embed_seo_archive_title', $custom_heading );
 $archive_desc  = apply_filters( 'pdf_embed_seo_archive_description', __( 'Browse all available PDF documents.', 'pdf-embed-seo-optimize' ) );
 $site_name     = get_bloginfo( 'name' );
 $site_url      = home_url( '/' );
+
+// Build header inline styles.
+$header_styles = array();
+if ( ! empty( $heading_alignment ) ) {
+	$header_styles[] = 'text-align: ' . esc_attr( $heading_alignment );
+}
+if ( ! empty( $font_color ) ) {
+	$header_styles[] = 'color: ' . esc_attr( $font_color );
+}
+if ( ! empty( $background_color ) ) {
+	$header_styles[] = 'background-color: ' . esc_attr( $background_color );
+	$header_styles[] = 'padding: 20px';
+	$header_styles[] = 'border-radius: 8px';
+	$header_styles[] = 'margin-bottom: 20px';
+}
+$header_style_attr = ! empty( $header_styles ) ? ' style="' . esc_attr( implode( '; ', $header_styles ) ) . '"' : '';
 
 get_header();
 ?>
@@ -80,7 +102,7 @@ get_header();
 			</nav>
 		<?php endif; ?>
 
-		<header class="page-header pdf-embed-seo-optimize-archive-header">
+		<header class="page-header pdf-embed-seo-optimize-archive-header"<?php echo $header_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during construction. ?>>
 			<h1 class="page-title pdf-embed-seo-optimize-archive-title">
 				<?php echo esc_html( $archive_title ); ?>
 			</h1>

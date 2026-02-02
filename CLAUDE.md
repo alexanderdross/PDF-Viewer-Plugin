@@ -736,6 +736,12 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
   - Drupal: Added `hook_preprocess_html()` to add `.page-pdf` body classes for CSS targeting
   - Drupal: Added CSS rules to hide common sidebar selectors
 - Unit tests for sidebar removal (WordPress and Drupal)
+- Archive Page Styling Settings (WordPress)
+  - Custom H1 heading for archive page (default: "PDF Documents")
+  - Heading alignment options: left, center (default), right
+  - Custom font color for archive header
+  - Custom background color for archive header
+  - Custom heading also updates 2nd breadcrumb item (HTML and Schema.org BreadcrumbList)
 
 ### 1.2.6
 - WordPress Plugin Check compliance fixes:

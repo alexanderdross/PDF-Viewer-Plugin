@@ -603,6 +603,64 @@ class PDF_Embed_SEO_Admin {
 			)
 		);
 
+		add_settings_field(
+			'archive_heading',
+			__( 'Archive Page Heading', 'pdf-embed-seo-optimize' ),
+			array( $this, 'render_archive_heading_field' ),
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_archive',
+			array(
+				'label_for' => 'archive_heading',
+				'key'       => 'archive_heading',
+			)
+		);
+
+		add_settings_field(
+			'archive_heading_alignment',
+			__( 'Heading Alignment', 'pdf-embed-seo-optimize' ),
+			array( $this, 'render_select_field' ),
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_archive',
+			array(
+				'label_for'   => 'archive_heading_alignment',
+				'key'         => 'archive_heading_alignment',
+				'options'     => array(
+					'center' => __( 'Center', 'pdf-embed-seo-optimize' ),
+					'left'   => __( 'Left', 'pdf-embed-seo-optimize' ),
+					'right'  => __( 'Right', 'pdf-embed-seo-optimize' ),
+				),
+				'description' => __( 'Alignment for the archive page heading and description.', 'pdf-embed-seo-optimize' ),
+			)
+		);
+
+		add_settings_field(
+			'archive_font_color',
+			__( 'Archive Font Color', 'pdf-embed-seo-optimize' ),
+			array( $this, 'render_color_field' ),
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_archive',
+			array(
+				'label_for'   => 'archive_font_color',
+				'key'         => 'archive_font_color',
+				'default'     => '',
+				'description' => __( 'Text color for the archive page heading and description. Leave empty to use theme default.', 'pdf-embed-seo-optimize' ),
+			)
+		);
+
+		add_settings_field(
+			'archive_background_color',
+			__( 'Archive Background Color', 'pdf-embed-seo-optimize' ),
+			array( $this, 'render_color_field' ),
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_archive',
+			array(
+				'label_for'   => 'archive_background_color',
+				'key'         => 'archive_background_color',
+				'default'     => '',
+				'description' => __( 'Background color for the archive page header section. Leave empty to use theme default.', 'pdf-embed-seo-optimize' ),
+			)
+		);
+
 		// Branding Settings Section.
 		add_settings_section(
 			'pdf_embed_seo_branding',
@@ -667,6 +725,20 @@ class PDF_Embed_SEO_Admin {
 		$sanitized['archive_show_description']  = ! empty( $input['archive_show_description'] );
 		$sanitized['archive_show_view_count']   = ! empty( $input['archive_show_view_count'] );
 		$sanitized['show_breadcrumbs']          = ! empty( $input['show_breadcrumbs'] );
+
+		// Archive styling settings.
+		$sanitized['archive_heading'] = isset( $input['archive_heading'] )
+			? sanitize_text_field( $input['archive_heading'] )
+			: '';
+		$sanitized['archive_heading_alignment'] = isset( $input['archive_heading_alignment'] ) && in_array( $input['archive_heading_alignment'], array( 'left', 'center', 'right' ), true )
+			? $input['archive_heading_alignment']
+			: 'center';
+		$sanitized['archive_font_color'] = isset( $input['archive_font_color'] )
+			? sanitize_hex_color( $input['archive_font_color'] )
+			: '';
+		$sanitized['archive_background_color'] = isset( $input['archive_background_color'] )
+			? sanitize_hex_color( $input['archive_background_color'] )
+			: '';
 
 		// Branding settings.
 		$sanitized['favicon_url'] = isset( $input['favicon_url'] ) ? esc_url_raw( $input['favicon_url'] ) : '';
@@ -914,6 +986,81 @@ class PDF_Embed_SEO_Admin {
 			<br>
 			<?php esc_html_e( 'This favicon will be displayed when viewing PDF documents, including in standalone mode.', 'pdf-embed-seo-optimize' ); ?>
 		</p>
+		<?php
+	}
+
+	/**
+	 * Render the archive heading settings field.
+	 *
+	 * @param array $args Field arguments.
+	 * @return void
+	 */
+	public function render_archive_heading_field( $args ) {
+		$settings = PDF_Embed_SEO::get_setting();
+		$value    = isset( $settings[ $args['key'] ] ) ? $settings[ $args['key'] ] : '';
+		?>
+		<input
+			type="text"
+			id="<?php echo esc_attr( $args['key'] ); ?>"
+			name="pdf_embed_seo_settings[<?php echo esc_attr( $args['key'] ); ?>]"
+			value="<?php echo esc_attr( $value ); ?>"
+			class="regular-text"
+			placeholder="<?php esc_attr_e( 'PDF Documents', 'pdf-embed-seo-optimize' ); ?>"
+		/>
+		<p class="description">
+			<?php esc_html_e( 'Custom heading (H1) for the PDF archive page. Leave empty to use "PDF Documents". This also updates the 2nd breadcrumb item.', 'pdf-embed-seo-optimize' ); ?>
+		</p>
+		<?php
+	}
+
+	/**
+	 * Render a color picker field.
+	 *
+	 * @param array $args Field arguments.
+	 * @return void
+	 */
+	public function render_color_field( $args ) {
+		$settings = PDF_Embed_SEO::get_setting();
+		$value    = isset( $settings[ $args['key'] ] ) ? $settings[ $args['key'] ] : '';
+		$default  = isset( $args['default'] ) ? $args['default'] : '';
+		?>
+		<input
+			type="color"
+			id="<?php echo esc_attr( $args['key'] ); ?>"
+			name="pdf_embed_seo_settings[<?php echo esc_attr( $args['key'] ); ?>]"
+			value="<?php echo esc_attr( ! empty( $value ) ? $value : '#000000' ); ?>"
+			class="pdf-embed-seo-color-picker"
+		/>
+		<label for="<?php echo esc_attr( $args['key'] ); ?>_clear">
+			<input
+				type="checkbox"
+				id="<?php echo esc_attr( $args['key'] ); ?>_clear"
+				class="pdf-embed-seo-color-clear"
+				data-target="<?php echo esc_attr( $args['key'] ); ?>"
+				<?php checked( empty( $value ) ); ?>
+			/>
+			<?php esc_html_e( 'Use theme default', 'pdf-embed-seo-optimize' ); ?>
+		</label>
+		<?php if ( ! empty( $args['description'] ) ) : ?>
+			<p class="description">
+				<?php echo esc_html( $args['description'] ); ?>
+			</p>
+		<?php endif; ?>
+		<script>
+		(function() {
+			var checkbox = document.getElementById('<?php echo esc_js( $args['key'] ); ?>_clear');
+			var colorInput = document.getElementById('<?php echo esc_js( $args['key'] ); ?>');
+			if (checkbox && colorInput) {
+				checkbox.addEventListener('change', function() {
+					colorInput.disabled = this.checked;
+					if (this.checked) {
+						colorInput.value = '#000000';
+					}
+				});
+				colorInput.disabled = checkbox.checked;
+			}
+		})();
+		</script>
 		<?php
 	}
 

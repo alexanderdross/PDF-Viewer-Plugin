@@ -32,6 +32,10 @@ $site_url    = home_url( '/' );
 $settings         = PDF_Embed_SEO::get_setting();
 $show_breadcrumbs = isset( $settings['show_breadcrumbs'] ) ? $settings['show_breadcrumbs'] : true;
 
+// Get custom archive heading for breadcrumbs (2nd crumb).
+$archive_heading  = isset( $settings['archive_heading'] ) && ! empty( $settings['archive_heading'] ) ? $settings['archive_heading'] : __( 'PDF Documents', 'pdf-embed-seo-optimize' );
+$archive_heading  = apply_filters( 'pdf_embed_seo_archive_title', $archive_heading );
+
 // Check for standalone mode.
 $standalone_mode = get_post_meta( $post_id, '_pdf_standalone_mode', true );
 
@@ -155,7 +159,7 @@ get_header();
 		{
 			"@type": "ListItem",
 			"position": 2,
-			"name": <?php echo wp_json_encode( __( 'PDF Documents', 'pdf-embed-seo-optimize' ) ); ?>,
+			"name": <?php echo wp_json_encode( $archive_heading ); ?>,
 			"item": <?php echo wp_json_encode( $archive_url ); ?>
 		},
 		{
@@ -183,7 +187,7 @@ get_header();
 					</li>
 					<li class="pdf-embed-seo-optimize-breadcrumb-item">
 						<a href="<?php echo esc_url( $archive_url ); ?>" title="<?php esc_attr_e( 'View all PDF documents', 'pdf-embed-seo-optimize' ); ?>">
-							<?php esc_html_e( 'PDF Documents', 'pdf-embed-seo-optimize' ); ?>
+							<?php echo esc_html( $archive_heading ); ?>
 						</a>
 					</li>
 					<li class="pdf-embed-seo-optimize-breadcrumb-item pdf-embed-seo-optimize-breadcrumb-current" aria-current="page">
