@@ -8,6 +8,21 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.2.8] - 2026-02-02
+
+### Fixed
+- **WordPress Plugin Check Compliance** - Added direct file access protection to all test files
+  - Added `if ( ! defined( 'ABSPATH' ) ) exit;` check to 10 PHP test files
+  - Fixes `missing_direct_file_access_protection` errors in Plugin Check
+  - Files updated: Free tests (6 files), Premium tests (4 files)
+
+### Changed
+- Version bump to 1.2.8 across all modules (WordPress Free, WordPress Premium, Drupal Free, Drupal Premium)
+- WordPress Premium Sitemap URL changed from `/pdf-sitemap.xml` to `/pdf/sitemap.xml`
+- Archive Page styling improvements (Content Alignment renamed from Heading Alignment)
+
+---
+
 ## [1.2.7] - 2026-02-02
 
 ### Fixed

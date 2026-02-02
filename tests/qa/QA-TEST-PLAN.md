@@ -1,8 +1,8 @@
 # QA Test Plan - PDF Embed & SEO Optimize
 
-**Version:** 1.2.7
+**Version:** 1.2.8
 **Date:** 2026-02-02
-**Updated:** 2026-02-02 (Archive Styling, REST API Fix)
+**Updated:** 2026-02-02 (Direct File Access Protection, Archive Styling, REST API Fix)
 **Modules:** WP Free, WP Premium, Drupal Free, Drupal Premium
 
 ---
@@ -515,6 +515,18 @@
 
 ---
 
+## Direct File Access Protection Tests (v1.2.8)
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| DAP-001 | Test file direct access | Try to access test-archive-styling.php directly via URL | Returns blank/exit (no output) | ☐ |
+| DAP-002 | Test file via PHPUnit | Run PHPUnit test suite | Tests execute normally | ☐ |
+| DAP-003 | Plugin Check scan | Run WordPress Plugin Check | No missing_direct_file_access_protection errors | ☐ |
+| DAP-004 | Free test files | Check all 6 free test files | Each has ABSPATH check | ☐ |
+| DAP-005 | Premium test files | Check all 4 premium test files | Each has ABSPATH check | ☐ |
+
+---
+
 ## Sidebar Removal Tests (v1.2.7)
 
 ### WordPress Sidebar Tests
@@ -631,6 +643,7 @@ Run after each code change:
 - [ ] Sidebar removal tests passed (v1.2.7)
 - [ ] Archive styling settings tests passed (v1.2.7)
 - [ ] REST API security fix tests passed (v1.2.7)
+- [ ] Direct file access protection tests passed (v1.2.8)
 - [ ] Regression tests passed
 
 **Sign-off:**
@@ -643,4 +656,4 @@ Run after each code change:
 
 ---
 
-*PDF Embed & SEO Optimize v1.2.7 - QA Test Plan*
+*PDF Embed & SEO Optimize v1.2.8 - QA Test Plan*

@@ -7,6 +7,25 @@
 
 ## What's New in v1.2.8
 
+### WordPress Plugin Check Compliance
+
+#### Direct File Access Protection
+- **All PHP test files** now include `if ( ! defined( 'ABSPATH' ) ) exit;` check
+- Fixes the `missing_direct_file_access_protection` error reported by WordPress Plugin Check
+- **10 test files updated:**
+  - `tests/unit/test-archive-styling.php`
+  - `tests/unit/test-hook-naming.php`
+  - `tests/unit/test-post-type.php`
+  - `tests/unit/test-rest-api.php`
+  - `tests/unit/test-shortcodes.php`
+  - `tests/unit/test-template-sidebar.php`
+  - `premium/tests/unit/test-premium-analytics.php`
+  - `premium/tests/unit/test-premium-progress.php`
+  - `premium/tests/unit/test-premium-rest-api.php`
+  - `premium/tests/unit/test-premium-sql-escaping.php`
+
+---
+
 ### WordPress Premium: Sitemap URL & Yoast Integration
 
 #### Sitemap URL Change
