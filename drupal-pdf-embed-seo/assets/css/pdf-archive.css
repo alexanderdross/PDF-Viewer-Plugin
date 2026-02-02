@@ -102,6 +102,12 @@
   padding: 20px 0;
 }
 
+/* Full-width archive layout */
+.pdf-embed-seo-archive-full-width {
+  max-width: none;
+  width: 100%;
+}
+
 .pdf-embed-seo-archive-header {
   margin-bottom: 30px;
 }

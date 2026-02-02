@@ -195,6 +195,30 @@ class PdfEmbedSeoSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('archive_background_color_use_default') ?? TRUE,
     ];
 
+    $form['archive']['archive_item_background_color'] = [
+      '#type' => 'color',
+      '#title' => $this->t('Item List Background Color'),
+      '#description' => $this->t('Background color for the PDF list/grid container. Leave empty to use white (#ffffff).'),
+      '#default_value' => $config->get('archive_item_background_color') ?? '#ffffff',
+    ];
+
+    $form['archive']['archive_item_background_color_use_default'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Use default item background color (white)'),
+      '#default_value' => $config->get('archive_item_background_color_use_default') ?? TRUE,
+    ];
+
+    $form['archive']['archive_layout_width'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Archive Layout Width'),
+      '#description' => $this->t('Choose whether the archive page content uses the site container or spans full width.'),
+      '#options' => [
+        'boxed' => $this->t('Boxed (use site container)'),
+        'full-width' => $this->t('Full Width'),
+      ],
+      '#default_value' => $config->get('archive_layout_width') ?? 'boxed',
+    ];
+
     // SEO settings.
     $form['seo'] = [
       '#type' => 'details',
@@ -337,6 +361,9 @@ class PdfEmbedSeoSettingsForm extends ConfigFormBase {
     $config->set('archive_font_color_use_default', $form_state->getValue('archive_font_color_use_default'));
     $config->set('archive_background_color', $form_state->getValue('archive_background_color'));
     $config->set('archive_background_color_use_default', $form_state->getValue('archive_background_color_use_default'));
+    $config->set('archive_item_background_color', $form_state->getValue('archive_item_background_color'));
+    $config->set('archive_item_background_color_use_default', $form_state->getValue('archive_item_background_color_use_default'));
+    $config->set('archive_layout_width', $form_state->getValue('archive_layout_width'));
 
     // SEO settings.
     $config->set('enable_schema', $form_state->getValue('enable_schema'));

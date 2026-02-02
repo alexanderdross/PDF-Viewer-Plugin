@@ -335,6 +335,12 @@
     padding: 20px;
 }
 
+/* Full-width archive layout */
+.pdf-embed-seo-optimize-archive-full-width {
+    max-width: none;
+    width: 100%;
+}
+
 .pdf-embed-seo-optimize-archive-header {
     margin-bottom: 30px;
     text-align: center;
@@ -672,9 +678,9 @@
 }
 
 .pdf-embed-seo-optimize-list-link {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     color: #333;
     text-decoration: none;
     font-weight: 500;

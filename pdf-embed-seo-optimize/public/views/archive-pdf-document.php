@@ -29,10 +29,12 @@ $show_view_count   = isset( $settings['archive_show_view_count'] ) ? $settings['
 $show_breadcrumbs  = isset( $settings['show_breadcrumbs'] ) ? $settings['show_breadcrumbs'] : true;
 
 // Archive styling settings.
-$custom_heading      = isset( $settings['archive_heading'] ) && ! empty( $settings['archive_heading'] ) ? $settings['archive_heading'] : __( 'PDF Documents', 'pdf-embed-seo-optimize' );
-$content_alignment   = isset( $settings['archive_heading_alignment'] ) ? $settings['archive_heading_alignment'] : 'center';
-$font_color          = isset( $settings['archive_font_color'] ) ? $settings['archive_font_color'] : '';
-$background_color    = isset( $settings['archive_background_color'] ) ? $settings['archive_background_color'] : '';
+$custom_heading           = isset( $settings['archive_heading'] ) && ! empty( $settings['archive_heading'] ) ? $settings['archive_heading'] : __( 'PDF Documents', 'pdf-embed-seo-optimize' );
+$content_alignment        = isset( $settings['archive_heading_alignment'] ) ? $settings['archive_heading_alignment'] : 'center';
+$font_color               = isset( $settings['archive_font_color'] ) ? $settings['archive_font_color'] : '';
+$background_color         = isset( $settings['archive_background_color'] ) ? $settings['archive_background_color'] : '';
+$item_background_color    = isset( $settings['archive_item_background_color'] ) ? $settings['archive_item_background_color'] : '';
+$layout_width             = isset( $settings['archive_layout_width'] ) ? $settings['archive_layout_width'] : 'boxed';
 
 // Archive info.
 $archive_url   = get_post_type_archive_link( 'pdf_document' );
@@ -72,6 +74,19 @@ if ( ! empty( $background_color ) ) {
 }
 $content_style_attr = ! empty( $content_styles ) ? ' style="' . esc_attr( implode( '; ', $content_styles ) ) . '"' : '';
 
+// Build item container style (list/grid background).
+$item_container_styles = array();
+if ( ! empty( $item_background_color ) ) {
+	$item_container_styles[] = 'background-color: ' . esc_attr( $item_background_color );
+}
+$item_container_style_attr = ! empty( $item_container_styles ) ? ' style="' . esc_attr( implode( '; ', $item_container_styles ) ) . '"' : '';
+
+// Archive container classes.
+$archive_classes = array( 'content-area', 'pdf-embed-seo-optimize-archive' );
+if ( 'full-width' === $layout_width ) {
+	$archive_classes[] = 'pdf-embed-seo-optimize-archive-full-width';
+}
+
 get_header();
 ?>
 
@@ -97,7 +112,7 @@ get_header();
 }
 </script>
 
-<div id="primary" class="content-area pdf-embed-seo-optimize-archive">
+<div id="primary" class="<?php echo esc_attr( implode( ' ', $archive_classes ) ); ?>">
 	<main id="main" class="site-main" role="main">
 
 		<?php // Visible breadcrumb navigation (JSON-LD schema is always output above for SEO). ?>
@@ -132,8 +147,19 @@ get_header();
 		<?php if ( have_posts() ) : ?>
 
 			<?php if ( 'list' === $display_style ) : ?>
-				<?php // List View - Simple clean list with PDF icon and title only. ?>
-				<nav class="pdf-embed-seo-optimize-list-nav"<?php echo $content_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during construction. ?> aria-label="<?php esc_attr_e( 'PDF Documents List', 'pdf-embed-seo-optimize' ); ?>">
+				<?php
+				// List View - Simple clean list with PDF icon and title only.
+				// Build list nav styles.
+				$list_nav_styles = array();
+				if ( ! empty( $content_alignment ) ) {
+					$list_nav_styles[] = 'text-align: ' . esc_attr( $content_alignment );
+				}
+				if ( ! empty( $item_background_color ) ) {
+					$list_nav_styles[] = 'background-color: ' . esc_attr( $item_background_color );
+				}
+				$list_nav_style_attr = ! empty( $list_nav_styles ) ? ' style="' . esc_attr( implode( '; ', $list_nav_styles ) ) . '"' : '';
+				?>
+				<nav class="pdf-embed-seo-optimize-list-nav"<?php echo $list_nav_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during construction. ?> aria-label="<?php esc_attr_e( 'PDF Documents List', 'pdf-embed-seo-optimize' ); ?>">
 					<ul class="pdf-embed-seo-optimize-list" role="list">
 						<?php
 						while ( have_posts() ) :
@@ -177,15 +203,12 @@ get_header();
 					$grid_justify = 'flex-end';
 				}
 				$grid_styles[] = 'justify-content: ' . esc_attr( $grid_justify );
-				if ( ! empty( $font_color ) ) {
-					$grid_styles[] = 'color: ' . esc_attr( $font_color );
-				}
-				if ( ! empty( $background_color ) ) {
-					$grid_styles[] = 'background-color: ' . esc_attr( $background_color );
+				if ( ! empty( $item_background_color ) ) {
+					$grid_styles[] = 'background-color: ' . esc_attr( $item_background_color );
 					$grid_styles[] = 'padding: 20px';
 					$grid_styles[] = 'border-radius: 8px';
 				}
-				$grid_style = ' style="' . esc_attr( implode( '; ', $grid_styles ) ) . '"';
+				$grid_style = ! empty( $grid_styles ) ? ' style="' . esc_attr( implode( '; ', $grid_styles ) ) . '"' : '';
 				?>
 				<section class="pdf-embed-seo-optimize-grid"<?php echo $grid_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during construction. ?> aria-label="<?php esc_attr_e( 'PDF Documents Gallery', 'pdf-embed-seo-optimize' ); ?>">
 					<?php

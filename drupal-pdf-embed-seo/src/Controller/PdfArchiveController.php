@@ -35,8 +35,11 @@ class PdfArchiveController extends ControllerBase {
     $content_alignment = $config->get('content_alignment') ?? 'center';
     $font_color_use_default = $config->get('archive_font_color_use_default') ?? TRUE;
     $background_color_use_default = $config->get('archive_background_color_use_default') ?? TRUE;
+    $item_background_use_default = $config->get('archive_item_background_color_use_default') ?? TRUE;
     $font_color = !$font_color_use_default ? $config->get('archive_font_color') : '';
     $background_color = !$background_color_use_default ? $config->get('archive_background_color') : '';
+    $item_background_color = !$item_background_use_default ? $config->get('archive_item_background_color') : '';
+    $layout_width = $config->get('archive_layout_width') ?? 'boxed';
 
     // Load published PDF documents.
     $storage = $this->entityTypeManager()->getStorage('pdf_document');
@@ -117,6 +120,8 @@ class PdfArchiveController extends ControllerBase {
       '#content_alignment' => $content_alignment,
       '#font_color' => $font_color,
       '#background_color' => $background_color,
+      '#item_background_color' => $item_background_color,
+      '#layout_width' => $layout_width,
       '#attached' => [
         'library' => ['pdf_embed_seo/archive'],
       ],

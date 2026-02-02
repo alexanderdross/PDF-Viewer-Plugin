@@ -661,6 +661,37 @@ class PDF_Embed_SEO_Admin {
 			)
 		);
 
+		add_settings_field(
+			'archive_item_background_color',
+			__( 'Item List Background Color', 'pdf-embed-seo-optimize' ),
+			array( $this, 'render_color_field' ),
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_archive',
+			array(
+				'label_for'   => 'archive_item_background_color',
+				'key'         => 'archive_item_background_color',
+				'default'     => '',
+				'description' => __( 'Background color for the PDF list/grid container. Leave empty to use white (#ffffff).', 'pdf-embed-seo-optimize' ),
+			)
+		);
+
+		add_settings_field(
+			'archive_layout_width',
+			__( 'Archive Layout Width', 'pdf-embed-seo-optimize' ),
+			array( $this, 'render_select_field' ),
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_archive',
+			array(
+				'label_for'   => 'archive_layout_width',
+				'key'         => 'archive_layout_width',
+				'options'     => array(
+					'boxed'      => __( 'Boxed (use site container)', 'pdf-embed-seo-optimize' ),
+					'full-width' => __( 'Full Width', 'pdf-embed-seo-optimize' ),
+				),
+				'description' => __( 'Choose whether the archive page content uses the site container or spans full width.', 'pdf-embed-seo-optimize' ),
+			)
+		);
+
 		// Branding Settings Section.
 		add_settings_section(
 			'pdf_embed_seo_branding',
@@ -739,6 +770,12 @@ class PDF_Embed_SEO_Admin {
 		$sanitized['archive_background_color'] = isset( $input['archive_background_color'] )
 			? sanitize_hex_color( $input['archive_background_color'] )
 			: '';
+		$sanitized['archive_item_background_color'] = isset( $input['archive_item_background_color'] )
+			? sanitize_hex_color( $input['archive_item_background_color'] )
+			: '';
+		$sanitized['archive_layout_width'] = isset( $input['archive_layout_width'] ) && in_array( $input['archive_layout_width'], array( 'boxed', 'full-width' ), true )
+			? $input['archive_layout_width']
+			: 'boxed';
 
 		// Branding settings.
 		$sanitized['favicon_url'] = isset( $input['favicon_url'] ) ? esc_url_raw( $input['favicon_url'] ) : '';

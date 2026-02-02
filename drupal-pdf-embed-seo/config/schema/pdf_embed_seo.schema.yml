@@ -49,6 +49,15 @@ pdf_embed_seo.settings:
     archive_background_color_use_default:
       type: boolean
       label: 'Use theme default background color'
+    archive_item_background_color:
+      type: string
+      label: 'Item list background color'
+    archive_item_background_color_use_default:
+      type: boolean
+      label: 'Use default item background color'
+    archive_layout_width:
+      type: string
+      label: 'Archive layout width'
     viewer_theme:
       type: string
       label: 'Viewer theme'
