@@ -1,7 +1,7 @@
 # QA Test Plan - PDF Embed & SEO Optimize
 
-**Version:** 1.2.5
-**Date:** 2026-01-28
+**Version:** 1.2.6
+**Date:** 2026-02-01
 **Modules:** WP Free, WP Premium, Drupal Free, Drupal Premium
 
 ---
@@ -475,6 +475,43 @@
 | SEC-005 | Permission Check | Access admin as subscriber | Access denied | ☐ |
 | SEC-006 | Password Hash | Check stored password | bcrypt hashed | ☐ |
 
+### Security Tests v1.2.6
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| SEC-010 | SQL Table Name Escaping | Review analytics queries | Table names use esc_sql() | ☐ |
+| SEC-011 | Prepared Statements | Review DB queries | All params use $wpdb->prepare() | ☐ |
+| SEC-012 | WP Drupal Password Hash | Create PDF with password | Password stored as hash (starts with $) | ☐ |
+| SEC-013 | Drupal Password Verify | Unlock protected PDF | Uses password service check() | ☐ |
+| SEC-014 | Drupal XSS Block Title | Create PDF with <script> in title | Title escaped in block | ☐ |
+| SEC-015 | Drupal Block Html::escape | View PDF viewer block | Title uses Html::escape() | ☐ |
+
+---
+
+## WordPress Plugin Check Compliance Tests (v1.2.6)
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| WPC-001 | Run Plugin Check | Use WP Plugin Check tool | No errors | ☐ |
+| WPC-002 | SQL Escaping Warnings | Check premium REST API | No InterpolatedNotPrepared warnings | ☐ |
+| WPC-003 | SQL Escaping Analytics | Check premium analytics | No DirectDB.UnescapedDBParameter | ☐ |
+| WPC-004 | Hook Naming Prefix | Check all hooks | All start with pdf_embed_seo_ | ☐ |
+| WPC-005 | get_posts Parameters | Check schema.php | Uses post__not_in not exclude | ☐ |
+| WPC-006 | phpcs Compliance | Run phpcs on plugin | All rules pass or suppressed | ☐ |
+
+---
+
+## Hook Migration Tests (v1.2.6)
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| HK-001 | New Hook Fires | Save PDF settings | pdf_embed_seo_optimize_settings_saved fires | ☐ |
+| HK-002 | Hook Parameters | Add listener, save | Receives $post_id and $settings array | ☐ |
+| HK-003 | Thumbnail Listener | Save PDF with file | Thumbnail generator triggered | ☐ |
+| HK-004 | Old Hook Removed | Search codebase | pdf_embed_seo_settings_saved not used | ☐ |
+| HK-005 | Documentation Updated | Check docs-page.php | New hook name documented | ☐ |
+| HK-006 | Custom Code Migration | Test old hook code | Needs update to new hook name | ☐ |
+
 ---
 
 ## Regression Tests
@@ -500,7 +537,9 @@ Run after each code change:
 - [ ] All DRP tests passed
 - [ ] Cross-platform tests passed
 - [ ] Performance tests passed
-- [ ] Security tests passed
+- [ ] Security tests passed (including v1.2.6 tests)
+- [ ] Plugin Check compliance tests passed (v1.2.6)
+- [ ] Hook migration tests passed (v1.2.6)
 - [ ] Regression tests passed
 
 **Sign-off:**
@@ -513,4 +552,4 @@ Run after each code change:
 
 ---
 
-*PDF Embed & SEO Optimize v1.2.5 - QA Test Plan*
+*PDF Embed & SEO Optimize v1.2.6 - QA Test Plan*

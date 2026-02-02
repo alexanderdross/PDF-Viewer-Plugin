@@ -1,8 +1,8 @@
 # User Acceptance Testing (UAT) Plan
 
-## PDF Embed & SEO Optimize - Version 1.2.5
+## PDF Embed & SEO Optimize - Version 1.2.6
 
-**Date:** 2026-01-28
+**Date:** 2026-02-01
 **Modules:** WP Free, WP Premium, Drupal Free, Drupal Premium
 
 ---
@@ -530,6 +530,68 @@ This UAT plan validates that the PDF Embed & SEO Optimize plugin meets business 
 |----|-------------|----------|--------|
 | | | | |
 
+---
+
+## Version 1.2.6 User Stories
+
+### US-SEC-001: Secure Password Storage (Drupal)
+**As a** site administrator
+**I want** PDF passwords to be stored securely hashed
+**So that** user data is protected if the database is compromised
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | Password is hashed when saving PDF document | ☐ | ☐ | |
+| 2 | Stored password starts with $ (hash format) | ☐ | ☐ | |
+| 3 | Cannot see plain text password in database | ☐ | ☐ | |
+| 4 | Password verification still works correctly | ☐ | ☐ | |
+| 5 | Existing plain text passwords still work | ☐ | ☐ | |
+
+---
+
+### US-SEC-002: XSS Prevention in PDF Titles (Drupal)
+**As a** website visitor
+**I want** PDF titles to be safely displayed
+**So that** malicious scripts cannot execute on my browser
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | Title with <script> tags displays as text | ☐ | ☐ | |
+| 2 | Title with HTML event handlers is escaped | ☐ | ☐ | |
+| 3 | Normal titles display correctly unchanged | ☐ | ☐ | |
+| 4 | Unicode characters in titles preserved | ☐ | ☐ | |
+
+---
+
+### US-DEV-001: Hook Migration
+**As a** developer with custom code
+**I want** clear documentation on hook changes
+**So that** I can update my integration code
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | New hook pdf_embed_seo_optimize_settings_saved works | ☐ | ☐ | |
+| 2 | Hook receives $post_id and $settings array | ☐ | ☐ | |
+| 3 | Documentation shows new hook name | ☐ | ☐ | |
+| 4 | Migration instructions provided | ☐ | ☐ | |
+| 5 | Thumbnail generation triggered on save | ☐ | ☐ | |
+
+---
+
+### US-QA-001: WordPress Plugin Check Compliance
+**As a** plugin developer
+**I want** the plugin to pass WordPress Plugin Check
+**So that** it can be listed on WordPress.org
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | No SQL escaping warnings in Plugin Check | ☐ | ☐ | |
+| 2 | No hook naming warnings | ☐ | ☐ | |
+| 3 | No unescaped output warnings | ☐ | ☐ | |
+| 4 | All critical issues resolved | ☐ | ☐ | |
+
+---
+
 ### Approval
 
 | Role | Name | Date | Approved |
@@ -546,4 +608,4 @@ This UAT plan validates that the PDF Embed & SEO Optimize plugin meets business 
 
 ---
 
-*PDF Embed & SEO Optimize v1.2.5 - UAT Test Plan*
+*PDF Embed & SEO Optimize v1.2.6 - UAT Test Plan*
