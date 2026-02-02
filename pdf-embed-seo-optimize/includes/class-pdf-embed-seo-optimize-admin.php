@@ -313,6 +313,7 @@ class PDF_Embed_SEO_Admin {
 		 * @param int   $post_id  The post ID.
 		 * @param array $settings The saved settings.
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Hook uses plugin slug prefix 'pdf_embed_seo_optimize_'.
 		do_action(
 			'pdf_embed_seo_optimize_settings_saved',
 			$post_id,
