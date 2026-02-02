@@ -310,7 +310,8 @@ Before running premium tests:
 
 | Test ID | Test Case | Steps | Expected Result | Status |
 |---------|-----------|-------|-----------------|--------|
-| SMP-002 | Sitemap Accessible | 1. Visit /pdf-sitemap.xml | XML sitemap displays | [ ] Pass [ ] Fail |
+| SMP-002 | Sitemap Accessible | 1. Visit /pdf/sitemap.xml | XML sitemap displays (or redirects to Yoast) | [ ] Pass [ ] Fail |
+| SMP-002a | Legacy URL Redirect | 1. Visit /pdf-sitemap.xml | 301 redirect to /pdf/sitemap.xml | [ ] Pass [ ] Fail |
 | SMP-003 | PDFs Listed | 1. Check sitemap content | All published PDFs included | [ ] Pass [ ] Fail |
 | SMP-004 | Correct URLs | 1. Check <loc> tags | Clean URLs (/pdf/slug/) | [ ] Pass [ ] Fail |
 | SMP-005 | Last Modified | 1. Check <lastmod> tags | Dates present | [ ] Pass [ ] Fail |
@@ -337,6 +338,9 @@ Before running premium tests:
 |---------|-----------|-------|-----------------|--------|
 | SMP-012 | Yoast Index | 1. Install Yoast<br>2. Check sitemap index | PDF sitemap included | [ ] Pass [ ] Fail |
 | SMP-013 | WP Core Sitemap | 1. Check /wp-sitemap.xml | PDF documents included | [ ] Pass [ ] Fail |
+| SMP-014 | Yoast Redirect | 1. Install Yoast SEO<br>2. Visit /pdf/sitemap.xml | 302 redirect to /pdf_document-sitemap.xml | [ ] Pass [ ] Fail |
+| SMP-015 | Yoast Disabled Fallback | 1. Disable Yoast SEO<br>2. Visit /pdf/sitemap.xml | Custom sitemap renders directly | [ ] Pass [ ] Fail |
+| SMP-016 | Yoast PDF Noindex | 1. Install Yoast<br>2. Set pdf_document to noindex<br>3. Visit /pdf/sitemap.xml | Custom sitemap renders (no redirect) | [ ] Pass [ ] Fail |
 
 ---
 

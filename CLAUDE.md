@@ -727,7 +727,15 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 
 ## Changelog
 
-### 1.2.7 (Current)
+### 1.2.8 (Current)
+- WordPress Premium Sitemap improvements
+  - Changed sitemap URL from `/pdf-sitemap.xml` to `/pdf/sitemap.xml` to match documentation and Drupal
+  - Added 301 redirect from legacy `/pdf-sitemap.xml` to new `/pdf/sitemap.xml` for backwards compatibility
+  - Added automatic redirect to Yoast SEO's `pdf_document-sitemap.xml` when Yoast is active
+  - Custom sitemap renders as fallback when Yoast is not active or pdf_document is set to noindex
+  - Updated UAT test plan with new sitemap test cases
+
+### 1.2.7
 - Sidebar/Widget Area Removal - PDF pages now display full-width without sidebars
   - WordPress: Removed `get_sidebar()` from archive and single templates
   - WordPress: Added CSS to hide sidebars on archive pages (`.post-type-archive-pdf_document`)
