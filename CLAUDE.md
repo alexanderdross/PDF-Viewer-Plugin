@@ -734,6 +734,11 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
   - Added automatic redirect to Yoast SEO's `pdf_document-sitemap.xml` when Yoast is active
   - Custom sitemap renders as fallback when Yoast is not active or pdf_document is set to noindex
   - Updated UAT test plan with new sitemap test cases
+- Archive Settings improvements (WordPress and Drupal)
+  - Renamed "Heading Alignment" to "Content Alignment" with updated help text
+  - Content alignment now applies to entire archive page (header, list, and grid)
+  - Font color and background color settings now apply to content items, not just header
+  - Added Content Alignment, Font Color, and Background Color settings to Drupal
 
 ### 1.2.7
 - Sidebar/Widget Area Removal - PDF pages now display full-width without sidebars

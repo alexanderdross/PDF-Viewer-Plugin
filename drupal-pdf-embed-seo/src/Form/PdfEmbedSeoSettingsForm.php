@@ -157,6 +157,44 @@ class PdfEmbedSeoSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('show_breadcrumbs') ?? TRUE,
     ];
 
+    $form['archive']['content_alignment'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Content Alignment'),
+      '#description' => $this->t('Change format and position of HTML sitemap at /pdf/'),
+      '#options' => [
+        'center' => $this->t('Center'),
+        'left' => $this->t('Left'),
+        'right' => $this->t('Right'),
+      ],
+      '#default_value' => $config->get('content_alignment') ?? 'center',
+    ];
+
+    $form['archive']['archive_font_color'] = [
+      '#type' => 'color',
+      '#title' => $this->t('Archive Font Color'),
+      '#description' => $this->t('Text color for the archive page heading, description, and content. Leave empty to use theme default.'),
+      '#default_value' => $config->get('archive_font_color') ?? '#000000',
+    ];
+
+    $form['archive']['archive_font_color_use_default'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Use theme default font color'),
+      '#default_value' => $config->get('archive_font_color_use_default') ?? TRUE,
+    ];
+
+    $form['archive']['archive_background_color'] = [
+      '#type' => 'color',
+      '#title' => $this->t('Archive Background Color'),
+      '#description' => $this->t('Background color for the archive page header and content sections. Leave empty to use theme default.'),
+      '#default_value' => $config->get('archive_background_color') ?? '#ffffff',
+    ];
+
+    $form['archive']['archive_background_color_use_default'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Use theme default background color'),
+      '#default_value' => $config->get('archive_background_color_use_default') ?? TRUE,
+    ];
+
     // SEO settings.
     $form['seo'] = [
       '#type' => 'details',
@@ -294,6 +332,11 @@ class PdfEmbedSeoSettingsForm extends ConfigFormBase {
     $config->set('archive_show_description', $form_state->getValue('archive_show_description'));
     $config->set('archive_show_view_count', $form_state->getValue('archive_show_view_count'));
     $config->set('show_breadcrumbs', $form_state->getValue('show_breadcrumbs'));
+    $config->set('content_alignment', $form_state->getValue('content_alignment'));
+    $config->set('archive_font_color', $form_state->getValue('archive_font_color'));
+    $config->set('archive_font_color_use_default', $form_state->getValue('archive_font_color_use_default'));
+    $config->set('archive_background_color', $form_state->getValue('archive_background_color'));
+    $config->set('archive_background_color_use_default', $form_state->getValue('archive_background_color_use_default'));
 
     // SEO settings.
     $config->set('enable_schema', $form_state->getValue('enable_schema'));

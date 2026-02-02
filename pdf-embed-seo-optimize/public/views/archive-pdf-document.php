@@ -30,7 +30,7 @@ $show_breadcrumbs  = isset( $settings['show_breadcrumbs'] ) ? $settings['show_br
 
 // Archive styling settings.
 $custom_heading      = isset( $settings['archive_heading'] ) && ! empty( $settings['archive_heading'] ) ? $settings['archive_heading'] : __( 'PDF Documents', 'pdf-embed-seo-optimize' );
-$heading_alignment   = isset( $settings['archive_heading_alignment'] ) ? $settings['archive_heading_alignment'] : 'center';
+$content_alignment   = isset( $settings['archive_heading_alignment'] ) ? $settings['archive_heading_alignment'] : 'center';
 $font_color          = isset( $settings['archive_font_color'] ) ? $settings['archive_font_color'] : '';
 $background_color    = isset( $settings['archive_background_color'] ) ? $settings['archive_background_color'] : '';
 
@@ -43,8 +43,8 @@ $site_url      = home_url( '/' );
 
 // Build header inline styles.
 $header_styles = array();
-if ( ! empty( $heading_alignment ) ) {
-	$header_styles[] = 'text-align: ' . esc_attr( $heading_alignment );
+if ( ! empty( $content_alignment ) ) {
+	$header_styles[] = 'text-align: ' . esc_attr( $content_alignment );
 }
 if ( ! empty( $font_color ) ) {
 	$header_styles[] = 'color: ' . esc_attr( $font_color );
@@ -56,6 +56,21 @@ if ( ! empty( $background_color ) ) {
 	$header_styles[] = 'margin-bottom: 20px';
 }
 $header_style_attr = ! empty( $header_styles ) ? ' style="' . esc_attr( implode( '; ', $header_styles ) ) . '"' : '';
+
+// Build content style for list/grid (alignment, font color, background color).
+$content_styles = array();
+if ( ! empty( $content_alignment ) ) {
+	$content_styles[] = 'text-align: ' . esc_attr( $content_alignment );
+}
+if ( ! empty( $font_color ) ) {
+	$content_styles[] = 'color: ' . esc_attr( $font_color );
+}
+if ( ! empty( $background_color ) ) {
+	$content_styles[] = 'background-color: ' . esc_attr( $background_color );
+	$content_styles[] = 'padding: 20px';
+	$content_styles[] = 'border-radius: 8px';
+}
+$content_style_attr = ! empty( $content_styles ) ? ' style="' . esc_attr( implode( '; ', $content_styles ) ) . '"' : '';
 
 get_header();
 ?>
@@ -118,7 +133,7 @@ get_header();
 
 			<?php if ( 'list' === $display_style ) : ?>
 				<?php // List View - Simple clean list with PDF icon and title only. ?>
-				<nav class="pdf-embed-seo-optimize-list-nav" aria-label="<?php esc_attr_e( 'PDF Documents List', 'pdf-embed-seo-optimize' ); ?>">
+				<nav class="pdf-embed-seo-optimize-list-nav"<?php echo $content_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during construction. ?> aria-label="<?php esc_attr_e( 'PDF Documents List', 'pdf-embed-seo-optimize' ); ?>">
 					<ul class="pdf-embed-seo-optimize-list" role="list">
 						<?php
 						while ( have_posts() ) :
@@ -151,8 +166,28 @@ get_header();
 				</nav>
 
 			<?php else : ?>
-				<?php // Grid View - Card layout with thumbnails. ?>
-				<section class="pdf-embed-seo-optimize-grid" aria-label="<?php esc_attr_e( 'PDF Documents Gallery', 'pdf-embed-seo-optimize' ); ?>">
+				<?php
+				// Grid View - Card layout with thumbnails.
+				// Map text-align to justify-content for grid layout.
+				$grid_styles = array();
+				$grid_justify = 'center';
+				if ( 'left' === $content_alignment ) {
+					$grid_justify = 'flex-start';
+				} elseif ( 'right' === $content_alignment ) {
+					$grid_justify = 'flex-end';
+				}
+				$grid_styles[] = 'justify-content: ' . esc_attr( $grid_justify );
+				if ( ! empty( $font_color ) ) {
+					$grid_styles[] = 'color: ' . esc_attr( $font_color );
+				}
+				if ( ! empty( $background_color ) ) {
+					$grid_styles[] = 'background-color: ' . esc_attr( $background_color );
+					$grid_styles[] = 'padding: 20px';
+					$grid_styles[] = 'border-radius: 8px';
+				}
+				$grid_style = ' style="' . esc_attr( implode( '; ', $grid_styles ) ) . '"';
+				?>
+				<section class="pdf-embed-seo-optimize-grid"<?php echo $grid_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during construction. ?> aria-label="<?php esc_attr_e( 'PDF Documents Gallery', 'pdf-embed-seo-optimize' ); ?>">
 					<?php
 					while ( have_posts() ) :
 						the_post();

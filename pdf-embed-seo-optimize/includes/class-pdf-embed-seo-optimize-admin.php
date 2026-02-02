@@ -617,7 +617,7 @@ class PDF_Embed_SEO_Admin {
 
 		add_settings_field(
 			'archive_heading_alignment',
-			__( 'Heading Alignment', 'pdf-embed-seo-optimize' ),
+			__( 'Content Alignment', 'pdf-embed-seo-optimize' ),
 			array( $this, 'render_select_field' ),
 			'pdf-embed-seo-optimize-settings',
 			'pdf_embed_seo_archive',
@@ -629,7 +629,7 @@ class PDF_Embed_SEO_Admin {
 					'left'   => __( 'Left', 'pdf-embed-seo-optimize' ),
 					'right'  => __( 'Right', 'pdf-embed-seo-optimize' ),
 				),
-				'description' => __( 'Alignment for the archive page heading and description.', 'pdf-embed-seo-optimize' ),
+				'description' => __( 'Change format and position of HTML sitemap at /pdf/', 'pdf-embed-seo-optimize' ),
 			)
 		);
 

@@ -34,6 +34,21 @@ pdf_embed_seo.settings:
     show_breadcrumbs:
       type: boolean
       label: 'Show visible breadcrumbs'
+    content_alignment:
+      type: string
+      label: 'Content alignment'
+    archive_font_color:
+      type: string
+      label: 'Archive font color'
+    archive_font_color_use_default:
+      type: boolean
+      label: 'Use theme default font color'
+    archive_background_color:
+      type: string
+      label: 'Archive background color'
+    archive_background_color_use_default:
+      type: boolean
+      label: 'Use theme default background color'
     viewer_theme:
       type: string
       label: 'Viewer theme'

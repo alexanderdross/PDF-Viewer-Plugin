@@ -23,9 +23,54 @@
  * - site_name: The site name.
  * - site_url: The site homepage URL.
  * - archive_url: The archive page URL.
+ * - content_alignment: Content alignment ('left', 'center', 'right').
+ * - font_color: Custom font color (empty for theme default).
+ * - background_color: Custom background color (empty for theme default).
  * - attributes: HTML attributes for the container.
  */
 #}
+
+{# Build inline styles for header and content sections #}
+{% set header_styles = [] %}
+{% if content_alignment %}
+  {% set header_styles = header_styles|merge(['text-align: ' ~ content_alignment]) %}
+{% endif %}
+{% if font_color %}
+  {% set header_styles = header_styles|merge(['color: ' ~ font_color]) %}
+{% endif %}
+{% if background_color %}
+  {% set header_styles = header_styles|merge(['background-color: ' ~ background_color, 'padding: 20px', 'border-radius: 8px', 'margin-bottom: 20px']) %}
+{% endif %}
+{% set header_style_attr = header_styles ? ' style="' ~ header_styles|join('; ') ~ '"' : '' %}
+
+{# Build content styles for list/grid #}
+{% set content_styles = [] %}
+{% if content_alignment %}
+  {% set content_styles = content_styles|merge(['text-align: ' ~ content_alignment]) %}
+{% endif %}
+{% if font_color %}
+  {% set content_styles = content_styles|merge(['color: ' ~ font_color]) %}
+{% endif %}
+{% if background_color %}
+  {% set content_styles = content_styles|merge(['background-color: ' ~ background_color, 'padding: 20px', 'border-radius: 8px']) %}
+{% endif %}
+{% set content_style_attr = content_styles ? ' style="' ~ content_styles|join('; ') ~ '"' : '' %}
+
+{# Build grid justify-content based on alignment #}
+{% set grid_justify = 'center' %}
+{% if content_alignment == 'left' %}
+  {% set grid_justify = 'flex-start' %}
+{% elseif content_alignment == 'right' %}
+  {% set grid_justify = 'flex-end' %}
+{% endif %}
+{% set grid_styles = ['justify-content: ' ~ grid_justify] %}
+{% if font_color %}
+  {% set grid_styles = grid_styles|merge(['color: ' ~ font_color]) %}
+{% endif %}
+{% if background_color %}
+  {% set grid_styles = grid_styles|merge(['background-color: ' ~ background_color, 'padding: 20px', 'border-radius: 8px']) %}
+{% endif %}
+{% set grid_style_attr = ' style="' ~ grid_styles|join('; ') ~ '"' %}
 
 {# Breadcrumb Schema.org markup #}
 <script type="application/ld+json">
@@ -66,7 +111,7 @@
     </nav>
   {% endif %}
 
-  <header class="pdf-embed-seo-archive-header">
+  <header class="pdf-embed-seo-archive-header"{{ header_style_attr|raw }}>
     <h1 class="pdf-embed-seo-archive-title">{{ archive_title }}</h1>
     {% if archive_description %}
       <div class="pdf-embed-seo-archive-description">
@@ -84,7 +129,7 @@
   {% if documents %}
     {% if display_style == 'list' %}
       {# List View - Simple accessible list #}
-      <nav class="pdf-embed-seo-list-nav" aria-label="{{ 'PDF Documents List'|t }}">
+      <nav class="pdf-embed-seo-list-nav"{{ content_style_attr|raw }} aria-label="{{ 'PDF Documents List'|t }}">
         <ul class="pdf-embed-seo-list" role="list">
           {% for item in documents %}
             {{ item }}
@@ -93,7 +138,7 @@
       </nav>
     {% else %}
       {# Grid View - Card layout with thumbnails #}
-      <section class="pdf-embed-seo-grid" aria-label="{{ 'PDF Documents Gallery'|t }}">
+      <section class="pdf-embed-seo-grid"{{ grid_style_attr|raw }} aria-label="{{ 'PDF Documents Gallery'|t }}">
         {% for item in documents %}
           {{ item }}
         {% endfor %}
