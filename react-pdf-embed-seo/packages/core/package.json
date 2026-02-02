@@ -1,0 +1,71 @@
+{
+  "name": "@pdf-embed-seo/core",
+  "version": "1.3.0",
+  "description": "Core utilities and types for PDF Embed & SEO Optimize",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./types": {
+      "import": "./dist/types/index.mjs",
+      "require": "./dist/types/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./utils": {
+      "import": "./dist/utils/index.mjs",
+      "require": "./dist/utils/index.js",
+      "types": "./dist/utils/index.d.ts"
+    },
+    "./api": {
+      "import": "./dist/api/index.mjs",
+      "require": "./dist/api/index.js",
+      "types": "./dist/api/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "lint": "eslint src --ext .ts,.tsx",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist node_modules"
+  },
+  "dependencies": {
+    "pdfjs-dist": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.0.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drossmedia/pdf-embed-seo-optimize.git",
+    "directory": "react-pdf-embed-seo/packages/core"
+  },
+  "keywords": [
+    "pdf",
+    "pdf.js",
+    "react",
+    "seo",
+    "schema.org",
+    "typescript"
+  ],
+  "author": "Dross:Media <info@drossmedia.de>",
+  "license": "MIT",
+  "homepage": "https://pdfviewer.drossmedia.de"
+}

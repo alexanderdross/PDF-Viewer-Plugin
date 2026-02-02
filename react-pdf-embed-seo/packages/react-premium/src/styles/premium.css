@@ -1,0 +1,458 @@
+/**
+ * Premium component styles
+ * @pdf-embed-seo/react-premium
+ */
+
+/* Password Modal */
+.pdf-password-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pdf-modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.pdf-modal-content {
+  position: relative;
+  background: #fff;
+  border-radius: 8px;
+  padding: 32px;
+  max-width: 400px;
+  width: 100%;
+  margin: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.pdf-modal-title {
+  margin: 0 0 8px 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.pdf-modal-document-title {
+  margin: 0 0 16px 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.pdf-modal-description {
+  margin: 0 0 20px 0;
+  color: #666;
+}
+
+.pdf-password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pdf-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pdf-form-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.pdf-form-input {
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.15s;
+}
+
+.pdf-form-input:focus {
+  outline: none;
+  border-color: #0066cc;
+}
+
+.pdf-form-error {
+  padding: 12px;
+  background: #fff5f5;
+  border: 1px solid #ffcccc;
+  border-radius: 6px;
+  color: #cc0000;
+  font-size: 0.9rem;
+}
+
+.pdf-modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.pdf-button {
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.pdf-button-primary {
+  background: #0066cc;
+  color: #fff;
+  border: none;
+}
+
+.pdf-button-primary:hover:not(:disabled) {
+  background: #0055aa;
+}
+
+.pdf-button-secondary {
+  background: #fff;
+  color: #666;
+  border: 1px solid #ddd;
+}
+
+.pdf-button-secondary:hover:not(:disabled) {
+  background: #f5f5f5;
+}
+
+.pdf-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.pdf-button-loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pdf-spinner-small {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: pdf-spin 0.8s linear infinite;
+}
+
+@keyframes pdf-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Progress Bar */
+.pdf-progress-bar {
+  padding: 8px 16px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+}
+
+.pdf-progress-bar.pdf-progress-bottom {
+  border-bottom: none;
+  border-top: 1px solid #ddd;
+}
+
+.pdf-progress-track {
+  height: 4px;
+  background: #e0e0e0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.pdf-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0066cc, #0088ff);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.pdf-progress-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* Analytics Dashboard */
+.pdf-analytics {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.pdf-analytics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.pdf-analytics-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.pdf-analytics-controls {
+  display: flex;
+  gap: 12px;
+}
+
+.pdf-period-select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #fff;
+}
+
+.pdf-export-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.pdf-button-small {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.pdf-button-small:hover {
+  background: #f5f5f5;
+}
+
+.pdf-analytics-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.pdf-stat-card {
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.pdf-stat-value {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0066cc;
+}
+
+.pdf-stat-label {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.pdf-analytics-section h3 {
+  margin: 0 0 16px 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.pdf-analytics-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.pdf-analytics-table th,
+.pdf-analytics-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.pdf-analytics-table th {
+  background: #f5f5f5;
+  font-weight: 600;
+  color: #333;
+}
+
+.pdf-analytics-table tr:hover {
+  background: #fafafa;
+}
+
+.pdf-analytics-loading,
+.pdf-analytics-error {
+  padding: 60px;
+  text-align: center;
+}
+
+.pdf-analytics-error {
+  color: #cc0000;
+}
+
+/* Search Bar */
+.pdf-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.pdf-search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.pdf-search-icon {
+  position: absolute;
+  left: 12px;
+  color: #999;
+}
+
+.pdf-search-bar .pdf-search-input {
+  width: 100%;
+  padding: 8px 36px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.pdf-search-clear {
+  position: absolute;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: #e0e0e0;
+  border-radius: 50%;
+  font-size: 14px;
+  cursor: pointer;
+  color: #666;
+}
+
+.pdf-search-results-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #666;
+}
+
+.pdf-search-nav {
+  display: flex;
+  gap: 4px;
+}
+
+.pdf-search-nav-button {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.pdf-search-nav-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Bookmarks */
+.pdf-bookmarks {
+  padding: 16px;
+  background: #fff;
+  border-right: 1px solid #ddd;
+  overflow-y: auto;
+}
+
+.pdf-bookmark-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pdf-bookmark-item {
+  margin-bottom: 2px;
+}
+
+.pdf-bookmark-content {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.pdf-bookmark-content:hover {
+  background: #f5f5f5;
+}
+
+.pdf-bookmark-active {
+  background: #e6f2ff !important;
+}
+
+.pdf-bookmark-toggle {
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 4px;
+}
+
+.pdf-bookmark-title {
+  flex: 1;
+  font-size: 14px;
+  color: #333;
+}
+
+.pdf-bookmark-page {
+  font-size: 12px;
+  color: #999;
+  margin-left: 8px;
+}
+
+.pdf-bookmark-children {
+  list-style: none;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.pdf-bookmarks-empty {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .pdf-analytics-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pdf-analytics-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}

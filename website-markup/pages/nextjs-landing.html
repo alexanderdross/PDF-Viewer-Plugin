@@ -1,0 +1,665 @@
+<!--
+  Next.js / React Landing Page
+  URL: /nextjs-pdf-viewer/
+
+  Complete landing page for the React/Next.js PDF viewer module
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React/Next.js PDF Viewer - PDF Embed & SEO Optimize</title>
+  <meta name="description" content="Modern React components for PDF viewing with full TypeScript support, SSR/SSG, and SEO optimization. Works with Next.js App Router and Pages Router.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="React/Next.js PDF Viewer - PDF Embed & SEO Optimize">
+  <meta property="og:description" content="Modern React components for PDF viewing with TypeScript, SSR/SSG, and SEO optimization.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pdfviewer.drossmedia.de/nextjs-pdf-viewer/">
+</head>
+<body>
+  <!-- Hero Section -->
+  <section class="hero hero-nextjs">
+    <div class="container">
+      <div class="hero-badge">
+        <span>NEW</span> Version 1.3.0 Released
+      </div>
+
+      <h1>React/Next.js PDF Viewer</h1>
+      <p class="hero-subtitle">
+        Modern, type-safe React components for displaying PDFs with full SEO optimization.
+        Works seamlessly with Next.js App Router and Pages Router.
+      </p>
+
+      <div class="hero-packages">
+        <code>npm install @pdf-embed-seo/react</code>
+      </div>
+
+      <div class="hero-cta">
+        <a href="#get-started" class="btn btn-primary btn-large">Get Started</a>
+        <a href="https://github.com/drossmedia/pdf-embed-seo-optimize" class="btn btn-secondary btn-large">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+
+      <div class="hero-tech-stack">
+        <span>Built for:</span>
+        <div class="tech-logos">
+          <img src="/assets/icons/react.svg" alt="React" title="React 18+">
+          <img src="/assets/icons/nextjs.svg" alt="Next.js" title="Next.js 13+">
+          <img src="/assets/icons/typescript.svg" alt="TypeScript" title="TypeScript">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="container">
+      <h2 class="section-title">Everything You Need for PDFs in React</h2>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="32" height="32"><path fill="#0066cc" d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/></svg>
+          </div>
+          <h3>PDF.js Viewer</h3>
+          <p>Built on Mozilla PDF.js v4.0 for reliable, high-quality PDF rendering in any browser.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="32" height="32"><path fill="#0066cc" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3>React Components</h3>
+          <p>Ready-to-use components: PdfViewer, PdfArchive, PdfCard, PdfBreadcrumbs, and more.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="32" height="32"><path fill="#0066cc" d="M3 3v18h18"/><path fill="#0066cc" d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/></svg>
+          </div>
+          <h3>SEO Optimized</h3>
+          <p>Schema.org JSON-LD, OpenGraph, Twitter Cards - all handled automatically.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="32" height="32"><path fill="#0066cc" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          </div>
+          <h3>TypeScript Native</h3>
+          <p>100% TypeScript with strict mode. Full type safety and IntelliSense support.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="32" height="32"><path fill="#0066cc" d="M12 2L2 19.5h20L12 2zm0 4l6.5 11.5h-13L12 6z"/></svg>
+          </div>
+          <h3>Next.js Integration</h3>
+          <p>First-class support for App Router, generateMetadata, generateStaticParams, and more.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="32" height="32"><path fill="#0066cc" d="M4 6h16v12H4z"/><path fill="#fff" d="M6 8h12v8H6z"/></svg>
+          </div>
+          <h3>Headless CMS Ready</h3>
+          <p>Connect to WordPress, Drupal, or any backend with built-in API adapters.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Code Examples Section -->
+  <section class="code-examples" id="get-started">
+    <div class="container">
+      <h2 class="section-title">Quick Start</h2>
+
+      <div class="code-tabs">
+        <div class="code-tabs-nav">
+          <button class="code-tab active" data-tab="basic">Basic Usage</button>
+          <button class="code-tab" data-tab="nextjs">Next.js App Router</button>
+          <button class="code-tab" data-tab="archive">Archive Page</button>
+          <button class="code-tab" data-tab="hooks">With Hooks</button>
+        </div>
+
+        <div class="code-content active" id="basic-code">
+          <h4>Basic PDF Viewer</h4>
+          <pre><code class="language-tsx">import { PdfViewer, PdfProvider } from '@pdf-embed-seo/react';
+import '@pdf-embed-seo/react/styles';
+
+function App() {
+  return (
+    &lt;PdfProvider config={{ siteUrl: 'https://example.com' }}&gt;
+      &lt;PdfViewer
+        src="/documents/report.pdf"
+        height="600px"
+        theme="light"
+        allowDownload
+        onPageChange={(page) => console.log(`Page: ${page}`)}
+      /&gt;
+    &lt;/PdfProvider&gt;
+  );
+}</code></pre>
+        </div>
+
+        <div class="code-content" id="nextjs-code">
+          <h4>Next.js App Router Integration</h4>
+          <pre><code class="language-tsx">// app/pdf/[slug]/page.tsx
+import { PdfViewer, PdfJsonLd, PdfBreadcrumbs } from '@pdf-embed-seo/react';
+import { generatePdfMetadata } from '@pdf-embed-seo/react/nextjs';
+
+// Generate metadata for SEO
+export async function generateMetadata({ params }) {
+  const document = await getPdfDocument(params.slug);
+  return generatePdfMetadata(document, {
+    siteUrl: process.env.NEXT_PUBLIC_SITE_URL,
+  });
+}
+
+// Generate static paths
+export async function generateStaticParams() {
+  const documents = await getAllPdfDocuments();
+  return documents.map((doc) => ({ slug: doc.slug }));
+}
+
+export default async function PdfPage({ params }) {
+  const document = await getPdfDocument(params.slug);
+
+  return (
+    &lt;main&gt;
+      &lt;PdfJsonLd document={document} includeBreadcrumbs /&gt;
+      &lt;PdfBreadcrumbs document={document} /&gt;
+      &lt;h1&gt;{document.title}&lt;/h1&gt;
+      &lt;PdfViewer src={document} height="800px" /&gt;
+    &lt;/main&gt;
+  );
+}</code></pre>
+        </div>
+
+        <div class="code-content" id="archive-code">
+          <h4>PDF Archive Page</h4>
+          <pre><code class="language-tsx">import { PdfArchive, PdfProvider } from '@pdf-embed-seo/react';
+
+function ArchivePage() {
+  return (
+    &lt;PdfProvider
+      config={{
+        mode: 'wordpress',
+        apiUrl: 'https://example.com/wp-json/pdf-embed-seo/v1',
+      }}
+    &gt;
+      &lt;h1&gt;PDF Documents&lt;/h1>
+      &lt;PdfArchive
+        view="grid"
+        columns={3}
+        perPage={12}
+        showSearch
+        showSort
+        onDocumentClick={(doc) => router.push(`/pdf/${doc.slug}`)}
+      /&gt;
+    &lt;/PdfProvider&gt;
+  );
+}</code></pre>
+        </div>
+
+        <div class="code-content" id="hooks-code">
+          <h4>Using React Hooks</h4>
+          <pre><code class="language-tsx">import {
+  usePdfDocument,
+  usePdfViewer,
+  usePdfSeo,
+} from '@pdf-embed-seo/react';
+
+function CustomPdfPage({ slug }) {
+  // Fetch document
+  const { document, isLoading, error } = usePdfDocumentBySlug(slug);
+
+  // Viewer controls
+  const {
+    currentPage,
+    totalPages,
+    zoom,
+    nextPage,
+    prevPage,
+    zoomIn,
+    zoomOut,
+  } = usePdfViewer();
+
+  // SEO metadata
+  const { jsonLd, metaTags } = usePdfSeo(document);
+
+  if (isLoading) return &lt;Loading /&gt;;
+  if (error) return &lt;Error message={error.message} /&gt;;
+
+  return (
+    &lt;&gt;
+      &lt;script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      /&gt;
+      &lt;div className="viewer-controls"&gt;
+        &lt;button onClick={prevPage}&gt;Prev&lt;/button&gt;
+        &lt;span&gt;{currentPage} / {totalPages}&lt;/span&gt;
+        &lt;button onClick={nextPage}&gt;Next&lt;/button&gt;
+        &lt;button onClick={zoomIn}&gt;+&lt;/button&gt;
+        &lt;button onClick={zoomOut}&gt;-&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;PdfViewer src={document} /&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Packages Section -->
+  <section class="packages">
+    <div class="container">
+      <h2 class="section-title">Available Packages</h2>
+
+      <div class="packages-grid">
+        <div class="package-card">
+          <div class="package-header">
+            <h3>@pdf-embed-seo/core</h3>
+            <span class="package-license">MIT</span>
+          </div>
+          <p>Shared utilities, types, and API clients. Used by other packages.</p>
+          <div class="package-stats">
+            <span>TypeScript</span>
+            <span>~15KB gzipped</span>
+          </div>
+          <pre><code>npm i @pdf-embed-seo/core</code></pre>
+        </div>
+
+        <div class="package-card package-card-primary">
+          <div class="package-header">
+            <h3>@pdf-embed-seo/react</h3>
+            <span class="package-license">MIT</span>
+          </div>
+          <p>React components, hooks, and Next.js utilities. Everything you need for free features.</p>
+          <div class="package-stats">
+            <span>React 18+</span>
+            <span>~50KB gzipped</span>
+          </div>
+          <pre><code>npm i @pdf-embed-seo/react</code></pre>
+        </div>
+
+        <div class="package-card">
+          <div class="package-badge">PRO</div>
+          <div class="package-header">
+            <h3>@pdf-embed-seo/react-premium</h3>
+            <span class="package-license">Commercial</span>
+          </div>
+          <p>Premium features: password protection, reading progress, analytics, search, and more.</p>
+          <div class="package-stats">
+            <span>Premium License</span>
+            <span>~30KB gzipped</span>
+          </div>
+          <a href="/pro/" class="btn btn-primary">Get Premium</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Comparison -->
+  <section class="comparison">
+    <div class="container">
+      <h2 class="section-title">Free vs Premium</h2>
+
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Free</th>
+              <th>Premium</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>PdfViewer Component</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr><td>PdfArchive Component</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr><td>Light/Dark/System Theme</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr><td>Print/Download Controls</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr><td>Schema.org SEO</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr><td>Next.js Metadata API</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr><td>React Hooks</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr><td>API Client (WP/Drupal)</td><td class="check">✓</td><td class="check">✓</td></tr>
+            <tr class="separator"><td colspan="3"></td></tr>
+            <tr><td>Text Search in PDF</td><td class="cross">-</td><td class="check">✓</td></tr>
+            <tr><td>Bookmark Navigation</td><td class="cross">-</td><td class="check">✓</td></tr>
+            <tr><td>Password Protection</td><td class="cross">-</td><td class="check">✓</td></tr>
+            <tr><td>Reading Progress</td><td class="cross">-</td><td class="check">✓</td></tr>
+            <tr><td>Analytics Dashboard</td><td class="cross">-</td><td class="check">✓</td></tr>
+            <tr><td>XML Sitemap Generation</td><td class="cross">-</td><td class="check">✓</td></tr>
+            <tr><td>Middleware Helpers</td><td class="cross">-</td><td class="check">✓</td></tr>
+            <tr><td>Priority Support</td><td class="cross">-</td><td class="check">✓</td></tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td></td>
+              <td>
+                <a href="https://www.npmjs.com/package/@pdf-embed-seo/react" class="btn btn-outline">Install Free</a>
+              </td>
+              <td>
+                <a href="/pro/" class="btn btn-primary">Get Premium</a>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="container">
+      <h2>Ready to Get Started?</h2>
+      <p>Install the package and have a working PDF viewer in minutes.</p>
+
+      <div class="cta-install">
+        <pre><code>npm install @pdf-embed-seo/react</code></pre>
+      </div>
+
+      <div class="cta-buttons">
+        <a href="/documentation/#react" class="btn btn-primary btn-large">Read the Docs</a>
+        <a href="https://github.com/drossmedia/pdf-embed-seo-optimize/tree/main/react-pdf-embed-seo" class="btn btn-secondary btn-large">View Source</a>
+      </div>
+    </div>
+  </section>
+
+  <style>
+  /* Hero */
+  .hero-nextjs {
+    background: linear-gradient(135deg, #000 0%, #1a1a2e 100%);
+    color: #fff;
+    padding: 120px 0 80px;
+    text-align: center;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    padding: 8px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .hero-badge span {
+    background: #0066cc;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    margin-right: 8px;
+  }
+
+  .hero-nextjs h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+  }
+
+  .hero-packages {
+    margin: 32px 0;
+  }
+
+  .hero-packages code {
+    display: inline-block;
+    padding: 16px 32px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    font-size: 18px;
+    font-family: 'Fira Code', monospace;
+  }
+
+  .hero-tech-stack {
+    margin-top: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .tech-logos {
+    display: flex;
+    gap: 12px;
+  }
+
+  .tech-logos img {
+    width: 32px;
+    height: 32px;
+    opacity: 0.8;
+  }
+
+  /* Features */
+  .features {
+    padding: 100px 0;
+    background: #f8f9fa;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 60px;
+  }
+
+  .feature-card {
+    padding: 32px;
+    background: #fff;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  .feature-icon {
+    margin-bottom: 20px;
+  }
+
+  .feature-card h3 {
+    margin: 0 0 12px 0;
+    font-size: 1.25rem;
+  }
+
+  .feature-card p {
+    color: #666;
+    line-height: 1.6;
+  }
+
+  /* Code Examples */
+  .code-examples {
+    padding: 100px 0;
+  }
+
+  .code-tabs-nav {
+    display: flex;
+    gap: 4px;
+    background: #f0f0f0;
+    padding: 4px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+  }
+
+  .code-tab {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+
+  .code-tab.active {
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .code-content {
+    display: none;
+  }
+
+  .code-content.active {
+    display: block;
+  }
+
+  .code-content h4 {
+    margin-bottom: 16px;
+    color: #666;
+  }
+
+  .code-content pre {
+    background: #1e1e1e;
+    color: #e0e0e0;
+    padding: 24px;
+    border-radius: 12px;
+    overflow-x: auto;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* Packages */
+  .packages {
+    padding: 100px 0;
+    background: #f8f9fa;
+  }
+
+  .packages-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+  }
+
+  .package-card {
+    position: relative;
+    padding: 32px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+  }
+
+  .package-card-primary {
+    border-color: #0066cc;
+    box-shadow: 0 4px 20px rgba(0, 102, 204, 0.15);
+  }
+
+  .package-badge {
+    position: absolute;
+    top: -12px;
+    right: 24px;
+    padding: 4px 12px;
+    background: #ff6b00;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 20px;
+  }
+
+  .package-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .package-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-family: monospace;
+    color: #333;
+  }
+
+  .package-license {
+    font-size: 12px;
+    color: #666;
+    background: #f5f5f5;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+
+  .package-stats {
+    display: flex;
+    gap: 16px;
+    margin: 16px 0;
+    font-size: 13px;
+    color: #888;
+  }
+
+  .package-card pre {
+    margin: 0;
+    padding: 12px;
+    background: #f5f5f5;
+    border-radius: 6px;
+    font-size: 13px;
+  }
+
+  /* CTA */
+  .cta {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #0066cc 0%, #0044aa 100%);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta h2 {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+  }
+
+  .cta p {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    margin-bottom: 32px;
+  }
+
+  .cta-install {
+    margin-bottom: 32px;
+  }
+
+  .cta-install pre {
+    display: inline-block;
+    padding: 16px 32px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    font-size: 18px;
+  }
+
+  .cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  /* Responsive */
+  @media (max-width: 992px) {
+    .features-grid,
+    .packages-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-nextjs h1 {
+      font-size: 2.5rem;
+    }
+  }
+  </style>
+
+  <script>
+  // Code tabs
+  document.querySelectorAll('.code-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.code-content').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(`${tab.dataset.tab}-code`).classList.add('active');
+    });
+  });
+  </script>
+</body>
+</html>

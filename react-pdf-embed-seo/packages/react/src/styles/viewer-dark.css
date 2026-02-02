@@ -1,0 +1,79 @@
+/**
+ * PDF Viewer Dark Theme
+ * @pdf-embed-seo/react
+ */
+
+.pdf-viewer-theme-dark {
+  background-color: #1e1e1e;
+  border-color: #333;
+}
+
+.pdf-viewer-theme-dark .pdf-viewer-toolbar {
+  background-color: #2d2d2d;
+  border-bottom-color: #444;
+}
+
+.pdf-viewer-theme-dark .pdf-toolbar-button {
+  color: #ccc;
+}
+
+.pdf-viewer-theme-dark .pdf-toolbar-button:hover {
+  background-color: #3d3d3d;
+  color: #fff;
+}
+
+.pdf-viewer-theme-dark .pdf-viewer-container {
+  background-color: #1a1a1a;
+}
+
+.pdf-viewer-theme-dark .pdf-viewer-controls {
+  background-color: #2d2d2d;
+  border-top-color: #444;
+}
+
+.pdf-viewer-theme-dark .pdf-nav-button,
+.pdf-viewer-theme-dark .pdf-zoom-button {
+  background-color: #3d3d3d;
+  border-color: #555;
+  color: #ccc;
+}
+
+.pdf-viewer-theme-dark .pdf-nav-button:hover:not(:disabled),
+.pdf-viewer-theme-dark .pdf-zoom-button:hover:not(:disabled) {
+  background-color: #4d4d4d;
+  border-color: #666;
+}
+
+.pdf-viewer-theme-dark .pdf-page-input-wrapper {
+  color: #ccc;
+}
+
+.pdf-viewer-theme-dark .pdf-page-input {
+  background-color: #3d3d3d;
+  border-color: #555;
+  color: #fff;
+}
+
+.pdf-viewer-theme-dark .pdf-page-input:focus {
+  border-color: #0088ff;
+}
+
+.pdf-viewer-theme-dark .pdf-zoom-select {
+  background-color: #3d3d3d;
+  border-color: #555;
+  color: #ccc;
+}
+
+.pdf-viewer-theme-dark .pdf-viewer-loading {
+  color: #ccc;
+}
+
+.pdf-viewer-theme-dark .pdf-viewer-spinner {
+  border-color: #444;
+  border-top-color: #0088ff;
+}
+
+.pdf-viewer-theme-dark .pdf-viewer-error {
+  background-color: #3d1a1a;
+  color: #ff6666;
+}

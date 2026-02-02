@@ -1,0 +1,46 @@
+/**
+ * Main stylesheet for @pdf-embed-seo/react
+ * Import this file to include all styles
+ */
+
+@import './viewer.css';
+@import './viewer-dark.css';
+@import './archive.css';
+
+/* Breadcrumbs */
+.pdf-breadcrumbs {
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+.pdf-breadcrumbs-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pdf-breadcrumb-item {
+  display: flex;
+  align-items: center;
+}
+
+.pdf-breadcrumb-item a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.pdf-breadcrumb-item a:hover {
+  text-decoration: underline;
+}
+
+.pdf-breadcrumb-separator {
+  margin: 0 8px;
+  color: #999;
+}
+
+.pdf-breadcrumb-current {
+  color: #666;
+}
