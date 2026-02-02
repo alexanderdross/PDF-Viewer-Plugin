@@ -2,7 +2,8 @@
 
 ## PDF Embed & SEO Optimize - Version 1.2.7
 
-**Date:** 2026-02-01
+**Date:** 2026-02-02
+**Updated:** 2026-02-02 (Archive Styling, Cache Fix)
 **Modules:** WP Free, WP Premium, Drupal Free, Drupal Premium
 
 ---
@@ -649,6 +650,56 @@ This UAT plan validates that the PDF Embed & SEO Optimize plugin meets business 
 | 2 | page--pdf--archive.html.twig suggestion available | ☐ | ☐ | |
 | 3 | page--pdf--document.html.twig suggestion available | ☐ | ☐ | |
 | 4 | Custom template overrides work correctly | ☐ | ☐ | |
+
+---
+
+---
+
+### US-STYLE-001: Customize Archive Page Heading
+**As a** site administrator
+**I want to** customize the archive page heading
+**So that** I can match my site's branding and terminology
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | Can find "Archive Page Heading" in Settings | ☐ | ☐ | |
+| 2 | Default placeholder shows "PDF Documents" | ☐ | ☐ | |
+| 3 | Custom heading displays on /pdf/ archive | ☐ | ☐ | |
+| 4 | Breadcrumb updates with custom heading | ☐ | ☐ | |
+| 5 | Schema.org breadcrumb updates | ☐ | ☐ | |
+| 6 | Empty field uses default "PDF Documents" | ☐ | ☐ | |
+
+---
+
+### US-STYLE-002: Style Archive Page Header
+**As a** site administrator
+**I want to** customize the archive page styling
+**So that** it matches my website design
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | Can set heading alignment (left/center/right) | ☐ | ☐ | |
+| 2 | Center alignment is default | ☐ | ☐ | |
+| 3 | Can set custom font color | ☐ | ☐ | |
+| 4 | Can use theme default color | ☐ | ☐ | |
+| 5 | Can set custom background color | ☐ | ☐ | |
+| 6 | Background adds padding automatically | ☐ | ☐ | |
+
+---
+
+### US-CACHE-001: PDF Viewer on Cached Pages
+**As a** website visitor
+**I want** PDF viewers to work on cached pages
+**So that** I can view PDFs even when pages are served from cache
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | PDF loads on first visit | ☐ | ☐ | |
+| 2 | PDF loads on cached page (same session) | ☐ | ☐ | |
+| 3 | PDF loads on cached page (different day) | ☐ | ☐ | |
+| 4 | No "Security check failed" error | ☐ | ☐ | |
+| 5 | Works with page caching plugin enabled | ☐ | ☐ | |
+| 6 | Works with CDN caching enabled | ☐ | ☐ | |
 
 ---
 

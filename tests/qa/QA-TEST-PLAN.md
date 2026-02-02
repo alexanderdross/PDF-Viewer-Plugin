@@ -2,6 +2,7 @@
 
 **Version:** 1.2.7
 **Date:** 2026-02-02
+**Updated:** 2026-02-02 (Archive Styling, REST API Fix)
 **Modules:** WP Free, WP Premium, Drupal Free, Drupal Premium
 
 ---
@@ -548,6 +549,59 @@
 
 ---
 
+## Archive Styling Settings Tests (v1.2.7)
+
+### WordPress Archive Styling
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| ASW-001 | Custom Heading Setting | Set "Archive Page Heading" to "My PDFs" | Heading displays "My PDFs" on /pdf/ | ☐ |
+| ASW-002 | Default Heading | Leave heading empty | Heading displays "PDF Documents" | ☐ |
+| ASW-003 | Heading in Breadcrumb | Set custom heading | 2nd breadcrumb shows custom heading | ☐ |
+| ASW-004 | Heading in Schema | Set custom heading, view source | BreadcrumbList position 2 has custom name | ☐ |
+| ASW-005 | Alignment Left | Set alignment to "Left" | Header text-align: left | ☐ |
+| ASW-006 | Alignment Center | Set alignment to "Center" | Header text-align: center | ☐ |
+| ASW-007 | Alignment Right | Set alignment to "Right" | Header text-align: right | ☐ |
+| ASW-008 | Font Color | Set font color to #ff0000 | Header color: #ff0000 | ☐ |
+| ASW-009 | Font Color Default | Check "Use theme default" | No inline color style | ☐ |
+| ASW-010 | Background Color | Set background to #f0f0f0 | Header has background-color | ☐ |
+| ASW-011 | Background with Padding | Set background color | Header has padding and border-radius | ☐ |
+| ASW-012 | Single Page Breadcrumb | Visit /pdf/slug/ | 2nd crumb shows custom heading | ☐ |
+| ASW-013 | Single Page Schema | View /pdf/slug/ source | Schema breadcrumb position 2 has custom name | ☐ |
+| ASW-014 | Settings Sanitization | Enter <script> in heading | Tags stripped/escaped | ☐ |
+| ASW-015 | Color Picker Disabled | Check "Use theme default" | Color picker input disabled | ☐ |
+
+---
+
+## REST API Security Fix Tests (v1.2.7)
+
+### PDF Viewer Loading
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| RSF-001 | REST API URL in Page | View page source | pdfEmbedSeo.restUrl present | ☐ |
+| RSF-002 | No AJAX URL | View page source | pdfEmbedSeo.ajaxUrl not present | ☐ |
+| RSF-003 | PDF Loads via REST | Open PDF page | PDF renders without errors | ☐ |
+| RSF-004 | Cached Page Works | Clear cache, wait 24h, view | PDF loads (no nonce expiry) | ☐ |
+| RSF-005 | Console No Errors | Open DevTools Console | No "Security check failed" error | ☐ |
+| RSF-006 | Network Request | Check DevTools Network | GET request to /documents/{id}/data | ☐ |
+| RSF-007 | Response Data | Check API response | Contains pdf_url field | ☐ |
+| RSF-008 | Shortcode Viewer | Embed [pdf_viewer id="X"] | Viewer loads via REST API | ☐ |
+| RSF-009 | Multiple Viewers | Page with 2+ shortcodes | All viewers load correctly | ☐ |
+| RSF-010 | Standalone Mode | View PDF in standalone | PDF loads correctly | ☐ |
+
+### Cache Compatibility
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| RSF-020 | WP Super Cache | Enable caching, view PDF | PDF works on cached page | ☐ |
+| RSF-021 | W3 Total Cache | Enable caching, view PDF | PDF works on cached page | ☐ |
+| RSF-022 | LiteSpeed Cache | Enable caching, view PDF | PDF works on cached page | ☐ |
+| RSF-023 | Cloudflare CDN | Cache HTML, view PDF | PDF works on CDN-cached page | ☐ |
+| RSF-024 | Browser Cache | Refresh cached page | PDF loads correctly | ☐ |
+
+---
+
 ## Regression Tests
 
 Run after each code change:
@@ -575,6 +629,8 @@ Run after each code change:
 - [ ] Plugin Check compliance tests passed (v1.2.6)
 - [ ] Hook migration tests passed (v1.2.6)
 - [ ] Sidebar removal tests passed (v1.2.7)
+- [ ] Archive styling settings tests passed (v1.2.7)
+- [ ] REST API security fix tests passed (v1.2.7)
 - [ ] Regression tests passed
 
 **Sign-off:**
