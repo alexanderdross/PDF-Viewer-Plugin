@@ -1,8 +1,9 @@
 # User Acceptance Testing (UAT) Plan
 
-## PDF Embed & SEO Optimize - Version 1.2.5
+## PDF Embed & SEO Optimize - Version 1.2.7
 
-**Date:** 2026-01-28
+**Date:** 2026-02-02
+**Updated:** 2026-02-02 (Archive Styling, Cache Fix)
 **Modules:** WP Free, WP Premium, Drupal Free, Drupal Premium
 
 ---
@@ -530,6 +531,178 @@ This UAT plan validates that the PDF Embed & SEO Optimize plugin meets business 
 |----|-------------|----------|--------|
 | | | | |
 
+---
+
+## Version 1.2.7 User Stories
+
+### US-SEC-001: Secure Password Storage (Drupal)
+**As a** site administrator
+**I want** PDF passwords to be stored securely hashed
+**So that** user data is protected if the database is compromised
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | Password is hashed when saving PDF document | ☐ | ☐ | |
+| 2 | Stored password starts with $ (hash format) | ☐ | ☐ | |
+| 3 | Cannot see plain text password in database | ☐ | ☐ | |
+| 4 | Password verification still works correctly | ☐ | ☐ | |
+| 5 | Existing plain text passwords still work | ☐ | ☐ | |
+
+---
+
+### US-SEC-002: XSS Prevention in PDF Titles (Drupal)
+**As a** website visitor
+**I want** PDF titles to be safely displayed
+**So that** malicious scripts cannot execute on my browser
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | Title with <script> tags displays as text | ☐ | ☐ | |
+| 2 | Title with HTML event handlers is escaped | ☐ | ☐ | |
+| 3 | Normal titles display correctly unchanged | ☐ | ☐ | |
+| 4 | Unicode characters in titles preserved | ☐ | ☐ | |
+
+---
+
+### US-DEV-001: Hook Migration
+**As a** developer with custom code
+**I want** clear documentation on hook changes
+**So that** I can update my integration code
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | New hook pdf_embed_seo_optimize_settings_saved works | ☐ | ☐ | |
+| 2 | Hook receives $post_id and $settings array | ☐ | ☐ | |
+| 3 | Documentation shows new hook name | ☐ | ☐ | |
+| 4 | Migration instructions provided | ☐ | ☐ | |
+| 5 | Thumbnail generation triggered on save | ☐ | ☐ | |
+
+---
+
+### US-QA-001: WordPress Plugin Check Compliance
+**As a** plugin developer
+**I want** the plugin to pass WordPress Plugin Check
+**So that** it can be listed on WordPress.org
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | No SQL escaping warnings in Plugin Check | ☐ | ☐ | |
+| 2 | No hook naming warnings | ☐ | ☐ | |
+| 3 | No unescaped output warnings | ☐ | ☐ | |
+| 4 | All critical issues resolved | ☐ | ☐ | |
+
+---
+
+## Version 1.2.7 User Stories (New)
+
+### US-FW-001: Full-Width PDF Archive (WordPress)
+**As a** website visitor
+**I want** the PDF archive page to display full-width
+**So that** I can see the PDF listings without distracting sidebars
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | No widget area visible on /pdf/ archive | ☐ | ☐ | |
+| 2 | Content area spans full width | ☐ | ☐ | |
+| 3 | Grid view displays correctly without sidebar | ☐ | ☐ | |
+| 4 | List view displays correctly without sidebar | ☐ | ☐ | |
+| 5 | Header and footer still visible | ☐ | ☐ | |
+
+---
+
+### US-FW-002: Full-Width PDF Single Page (WordPress)
+**As a** website visitor
+**I want** individual PDF pages to display full-width
+**So that** I can view PDFs with maximum screen space
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | No widget area visible on /pdf/slug/ | ☐ | ☐ | |
+| 2 | PDF viewer has maximum width available | ☐ | ☐ | |
+| 3 | Works with different WordPress themes | ☐ | ☐ | |
+| 4 | Responsive on mobile devices | ☐ | ☐ | |
+
+---
+
+### US-FW-003: Full-Width PDF Pages (Drupal)
+**As a** website visitor
+**I want** Drupal PDF pages to display full-width
+**So that** I have optimal viewing experience
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | No sidebar regions on /pdf archive | ☐ | ☐ | |
+| 2 | No sidebar regions on /pdf/slug single page | ☐ | ☐ | |
+| 3 | Body has .page-pdf class for theming | ☐ | ☐ | |
+| 4 | Works with Bartik theme | ☐ | ☐ | |
+| 5 | Works with Olivero theme | ☐ | ☐ | |
+
+---
+
+### US-DEV-002: Custom Page Template (Drupal)
+**As a** theme developer
+**I want** page template suggestions for PDF pages
+**So that** I can create custom full-width layouts
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | page--pdf.html.twig suggestion available | ☐ | ☐ | |
+| 2 | page--pdf--archive.html.twig suggestion available | ☐ | ☐ | |
+| 3 | page--pdf--document.html.twig suggestion available | ☐ | ☐ | |
+| 4 | Custom template overrides work correctly | ☐ | ☐ | |
+
+---
+
+---
+
+### US-STYLE-001: Customize Archive Page Heading
+**As a** site administrator
+**I want to** customize the archive page heading
+**So that** I can match my site's branding and terminology
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | Can find "Archive Page Heading" in Settings | ☐ | ☐ | |
+| 2 | Default placeholder shows "PDF Documents" | ☐ | ☐ | |
+| 3 | Custom heading displays on /pdf/ archive | ☐ | ☐ | |
+| 4 | Breadcrumb updates with custom heading | ☐ | ☐ | |
+| 5 | Schema.org breadcrumb updates | ☐ | ☐ | |
+| 6 | Empty field uses default "PDF Documents" | ☐ | ☐ | |
+
+---
+
+### US-STYLE-002: Style Archive Page Header
+**As a** site administrator
+**I want to** customize the archive page styling
+**So that** it matches my website design
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | Can set heading alignment (left/center/right) | ☐ | ☐ | |
+| 2 | Center alignment is default | ☐ | ☐ | |
+| 3 | Can set custom font color | ☐ | ☐ | |
+| 4 | Can use theme default color | ☐ | ☐ | |
+| 5 | Can set custom background color | ☐ | ☐ | |
+| 6 | Background adds padding automatically | ☐ | ☐ | |
+
+---
+
+### US-CACHE-001: PDF Viewer on Cached Pages
+**As a** website visitor
+**I want** PDF viewers to work on cached pages
+**So that** I can view PDFs even when pages are served from cache
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | PDF loads on first visit | ☐ | ☐ | |
+| 2 | PDF loads on cached page (same session) | ☐ | ☐ | |
+| 3 | PDF loads on cached page (different day) | ☐ | ☐ | |
+| 4 | No "Security check failed" error | ☐ | ☐ | |
+| 5 | Works with page caching plugin enabled | ☐ | ☐ | |
+| 6 | Works with CDN caching enabled | ☐ | ☐ | |
+
+---
+
 ### Approval
 
 | Role | Name | Date | Approved |
@@ -546,4 +719,4 @@ This UAT plan validates that the PDF Embed & SEO Optimize plugin meets business 
 
 ---
 
-*PDF Embed & SEO Optimize v1.2.5 - UAT Test Plan*
+*PDF Embed & SEO Optimize v1.2.7 - UAT Test Plan*

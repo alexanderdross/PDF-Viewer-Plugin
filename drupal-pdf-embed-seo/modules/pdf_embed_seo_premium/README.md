@@ -6,7 +6,7 @@
 
 Premium features submodule for PDF Embed & SEO Optimize.
 
-**Current Version:** 1.2.5
+**Current Version:** 1.2.7
 **Platforms:** Drupal 10, Drupal 11
 **License:** GPL v2 or later
 **Purchase:** [pdfviewer.drossmedia.de](https://pdfviewer.drossmedia.de)

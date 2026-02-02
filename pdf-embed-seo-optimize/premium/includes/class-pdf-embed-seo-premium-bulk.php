@@ -509,12 +509,14 @@ class PDF_Embed_SEO_Premium_Bulk {
 				/**
 				 * Fires after PDF settings are saved, triggering thumbnail generation.
 				 *
+				 * @since 1.2.0
+				 *
 				 * @param int   $post_id  Post ID.
 				 * @param array $settings PDF settings.
 				 */
-				// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
+				// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Hook uses plugin slug prefix 'pdf_embed_seo_optimize_'.
 				do_action(
-					'pdf_embed_seo_settings_saved',
+					'pdf_embed_seo_optimize_settings_saved',
 					$post_id,
 					array(
 						'pdf_file_id'      => $attachment_id,

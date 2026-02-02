@@ -246,17 +246,20 @@ class PDF_Embed_SEO_Premium_Schema {
 				<div class="pdf-schema-row">
 					<label for="pdf_related_documents"><?php esc_html_e( 'Related PDF Documents', 'pdf-embed-seo-optimize' ); ?></label>
 					<?php
-					// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Admin-only context with limited dataset; excluding current post for UX.
+					// Get all PDF documents except the current one for related documents selection.
+					// Limited to 100 posts and admin-only context to prevent performance issues.
+					// phpcs:disable WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- Admin meta box with capped query (100 posts), single exclusion for UX.
 					$all_pdfs = get_posts(
 						array(
 							'post_type'      => 'pdf_document',
-							'posts_per_page' => 100, // Limit to prevent performance issues.
+							'posts_per_page' => 100,
 							'post_status'    => 'publish',
-							'exclude'        => array( $post->ID ),
+							'post__not_in'   => array( $post->ID ),
 							'orderby'        => 'title',
 							'order'          => 'ASC',
 						)
 					);
+					// phpcs:enable
 					$selected_docs = is_array( $related_docs ) ? $related_docs : array();
 					?>
 					<select id="pdf_related_documents" name="pdf_related_documents[]" multiple style="width: 100%; height: 120px;">

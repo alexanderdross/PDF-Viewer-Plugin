@@ -118,6 +118,20 @@ class PdfDocumentForm extends ContentEntityForm {
    */
   public function save(array $form, FormStateInterface $form_state) {
     $entity = $this->entity;
+
+    // Hash the password if set and not already hashed.
+    $password = $entity->get('password')->value;
+    if (!empty($password)) {
+      // Check if password appears to be unhashed (doesn't start with $).
+      // Drupal hashed passwords start with $ followed by algorithm identifier.
+      if (strpos($password, '$') !== 0) {
+        /** @var \Drupal\Core\Password\PasswordInterface $password_service */
+        $password_service = \Drupal::service('password');
+        $hashed_password = $password_service->hash($password);
+        $entity->set('password', $hashed_password);
+      }
+    }
+
     $status = parent::save($form, $form_state);
 
     switch ($status) {

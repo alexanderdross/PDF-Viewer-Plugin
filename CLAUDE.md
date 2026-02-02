@@ -2,7 +2,7 @@
 
 A comprehensive PDF management solution available for WordPress and Drupal that uses Mozilla's PDF.js library to securely display PDFs with SEO optimization.
 
-**Current Version:** 1.2.5
+**Current Version:** 1.2.7
 **Platforms:** WordPress (Free & Premium), Drupal 10/11
 **License:** GPL v2 or later
 
@@ -399,7 +399,7 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 |------|------------|-------------|
 | `pdf_embed_seo_pdf_viewed` | `$post_id, $count` | PDF was viewed |
 | `pdf_embed_seo_premium_init` | - | Premium features initialized |
-| `pdf_embed_seo_settings_saved` | `$post_id, $settings` | Settings saved |
+| `pdf_embed_seo_optimize_settings_saved` | `$post_id, $settings` | Settings saved (renamed in v1.2.6) |
 
 ### Filters
 
@@ -727,7 +727,37 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 
 ## Changelog
 
-### 1.2.5 (Current)
+### 1.2.7 (Current)
+- Sidebar/Widget Area Removal - PDF pages now display full-width without sidebars
+  - WordPress: Removed `get_sidebar()` from archive and single templates
+  - WordPress: Added CSS to hide sidebars on archive pages (`.post-type-archive-pdf_document`)
+  - Drupal: Added `hook_theme_suggestions_page_alter()` for full-width page templates
+  - Drupal: Added `hook_preprocess_page()` to clear sidebar regions on PDF routes
+  - Drupal: Added `hook_preprocess_html()` to add `.page-pdf` body classes for CSS targeting
+  - Drupal: Added CSS rules to hide common sidebar selectors
+- Unit tests for sidebar removal (WordPress and Drupal)
+- Archive Page Styling Settings (WordPress)
+  - Custom H1 heading for archive page (default: "PDF Documents")
+  - Heading alignment options: left, center (default), right
+  - Custom font color for archive header
+  - Custom background color for archive header
+  - Custom heading also updates 2nd breadcrumb item (HTML and Schema.org BreadcrumbList)
+- Fix "Security check failed" error on cached pages
+  - Switched PDF viewer from AJAX to REST API endpoint (`/documents/{id}/data`)
+  - REST API doesn't require nonces for public read operations, fixing cache compatibility
+  - Updated both single page viewer and shortcode implementations
+
+### 1.2.6
+- WordPress Plugin Check compliance fixes:
+  - Fixed unescaped SQL table name parameters in premium REST API and analytics
+  - Fixed interpolated SQL variables with proper `esc_sql()` sanitization
+  - Updated `get_posts()` to use `post__not_in` instead of deprecated `exclude` parameter
+- Hook renamed: `pdf_embed_seo_settings_saved` → `pdf_embed_seo_optimize_settings_saved`
+- Drupal security fixes:
+  - Implemented proper password hashing using Drupal's password service
+  - Fixed XSS vulnerability in PdfViewerBlock with proper HTML escaping
+
+### 1.2.5
 - Download Tracking - Track PDF downloads separately from views
 - Expiring Access Links - Generate time-limited URLs for PDFs with max usage limits
 - Drupal Premium feature parity with WordPress:

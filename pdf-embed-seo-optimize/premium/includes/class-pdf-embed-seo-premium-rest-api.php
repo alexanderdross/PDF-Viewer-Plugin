@@ -403,7 +403,9 @@ class PDF_Embed_SEO_Premium_REST_API {
 		$period = $request->get_param( 'period' );
 
 		global $wpdb;
-		$table_name = $wpdb->prefix . 'pdf_analytics';
+		// Table name is safely constructed from $wpdb->prefix constant + literal string.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.SchemaChange -- Table name validation only.
+		$table_name = esc_sql( $wpdb->prefix . 'pdf_analytics' );
 
 		// Check if table exists.
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Checking table existence, caching not applicable.
@@ -430,21 +432,22 @@ class PDF_Embed_SEO_Premium_REST_API {
 		$date_range = $this->get_date_range( $period );
 
 		// Get analytics data.
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Custom analytics table, real-time data required.
+		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Custom analytics table, real-time data required.
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Table name is safely escaped via esc_sql() above.
 		$stats = $wpdb->get_row(
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is safely constructed from $wpdb->prefix.
 			$wpdb->prepare(
 				"SELECT
 					COUNT(*) as total_views,
 					COUNT(DISTINCT user_ip) as unique_visitors,
 					AVG(time_spent) as avg_time_spent
-				FROM {$table_name}
+				FROM `{$table_name}`
 				WHERE created_at >= %s AND created_at <= %s",
 				$date_range['start'],
 				$date_range['end']
 			),
 			ARRAY_A
 		);
+		// phpcs:enable
 
 		$data = array(
 			'period'          => $period,

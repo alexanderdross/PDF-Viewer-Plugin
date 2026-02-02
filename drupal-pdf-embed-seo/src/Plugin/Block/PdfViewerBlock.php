@@ -156,7 +156,8 @@ class PdfViewerBlock extends BlockBase implements ContainerFactoryPluginInterfac
       $build['title'] = [
         '#type' => 'html_tag',
         '#tag' => 'h3',
-        '#value' => $pdf_document->label(),
+        // Use #value with Html::escape() to properly escape user content and prevent XSS.
+        '#value' => \Drupal\Component\Utility\Html::escape($pdf_document->label()),
         '#attributes' => ['class' => ['pdf-viewer-block-title']],
       ];
     }

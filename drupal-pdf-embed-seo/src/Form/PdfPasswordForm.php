@@ -76,9 +76,17 @@ class PdfPasswordForm extends FormBase {
       return;
     }
 
-    // Check password.
+    // Check password using Drupal's password hashing service for security.
     $stored_password = $pdf_document->getPassword();
-    if ($password !== $stored_password) {
+    if (!empty($stored_password)) {
+      /** @var \Drupal\Core\Password\PasswordInterface $password_service */
+      $password_service = \Drupal::service('password');
+      if (!$password_service->check($password, $stored_password)) {
+        $form_state->setErrorByName('password', $this->t('Incorrect password.'));
+      }
+    }
+    else {
+      // Fallback for empty passwords (shouldn't happen in normal use).
       $form_state->setErrorByName('password', $this->t('Incorrect password.'));
     }
   }

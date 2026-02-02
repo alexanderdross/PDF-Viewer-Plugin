@@ -1,0 +1,315 @@
+<!--
+  Platform Dropdown Component
+  Updated to include Next.js option
+
+  Location: Header navigation or hero section
+  Purpose: Allow users to select their platform and navigate to relevant page
+-->
+
+<!-- Option 1: Dropdown Menu (for header navigation) -->
+<div class="platform-dropdown">
+  <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+    <span>Choose Platform</span>
+    <svg class="dropdown-icon" width="12" height="12" viewBox="0 0 12 12">
+      <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="2" fill="none"/>
+    </svg>
+  </button>
+
+  <div class="dropdown-menu" role="menu">
+    <a href="/wordpress-pdf-viewer/" class="dropdown-item" role="menuitem">
+      <div class="platform-icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <!-- WordPress icon -->
+          <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="platform-info">
+        <span class="platform-name">WordPress</span>
+        <span class="platform-desc">Plugin for WP 5.8+</span>
+      </div>
+    </a>
+
+    <a href="/drupal-pdf-viewer/" class="dropdown-item" role="menuitem">
+      <div class="platform-icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <!-- Drupal icon -->
+          <path d="M12 2C7.589 2 4 5.589 4 10c0 4.411 3.589 8 8 8s8-3.589 8-8c0-4.411-3.589-8-8-8z" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="platform-info">
+        <span class="platform-name">Drupal</span>
+        <span class="platform-desc">Module for Drupal 10/11</span>
+      </div>
+    </a>
+
+    <!-- NEW: Next.js Option -->
+    <a href="/nextjs-pdf-viewer/" class="dropdown-item dropdown-item-new" role="menuitem">
+      <div class="platform-icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <!-- Next.js icon -->
+          <path d="M12 2L2 19.5h20L12 2zm0 4l6.5 11.5h-13L12 6z" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="platform-info">
+        <span class="platform-name">
+          React / Next.js
+          <span class="badge badge-new">NEW</span>
+        </span>
+        <span class="platform-desc">NPM packages for React 18+</span>
+      </div>
+    </a>
+
+    <div class="dropdown-divider"></div>
+
+    <a href="/documentation/" class="dropdown-item dropdown-item-docs" role="menuitem">
+      <span>View All Documentation →</span>
+    </a>
+  </div>
+</div>
+
+<!-- Option 2: Platform Cards (for hero section) -->
+<div class="platform-selector">
+  <h3 class="platform-selector-title">Choose Your Platform</h3>
+
+  <div class="platform-cards">
+    <a href="/wordpress-pdf-viewer/" class="platform-card">
+      <div class="platform-card-icon wordpress-icon">
+        <svg viewBox="0 0 24 24" width="48" height="48">
+          <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2z" fill="#21759b"/>
+        </svg>
+      </div>
+      <h4 class="platform-card-name">WordPress</h4>
+      <p class="platform-card-desc">Plugin for WordPress 5.8+</p>
+      <span class="platform-card-version">v1.2.7</span>
+    </a>
+
+    <a href="/drupal-pdf-viewer/" class="platform-card">
+      <div class="platform-card-icon drupal-icon">
+        <svg viewBox="0 0 24 24" width="48" height="48">
+          <path d="M12 2C7.589 2 4 5.589 4 10c0 4.411 3.589 8 8 8s8-3.589 8-8c0-4.411-3.589-8-8-8z" fill="#0678be"/>
+        </svg>
+      </div>
+      <h4 class="platform-card-name">Drupal</h4>
+      <p class="platform-card-desc">Module for Drupal 10/11</p>
+      <span class="platform-card-version">v1.2.7</span>
+    </a>
+
+    <!-- NEW: Next.js Card -->
+    <a href="/nextjs-pdf-viewer/" class="platform-card platform-card-featured">
+      <span class="platform-card-badge">NEW</span>
+      <div class="platform-card-icon nextjs-icon">
+        <svg viewBox="0 0 24 24" width="48" height="48">
+          <circle cx="12" cy="12" r="10" fill="#000"/>
+          <path d="M12 6v12M8 10l4-4 4 4M8 14l4 4 4-4" stroke="#fff" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+      <h4 class="platform-card-name">React / Next.js</h4>
+      <p class="platform-card-desc">NPM packages for modern React</p>
+      <span class="platform-card-version">v1.3.0</span>
+    </a>
+  </div>
+</div>
+
+<style>
+/* Dropdown Styles */
+.platform-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.dropdown-toggle:hover {
+  border-color: #0066cc;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+  min-width: 280px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.2s;
+  z-index: 1000;
+}
+
+.dropdown-toggle[aria-expanded="true"] + .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  color: inherit;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.dropdown-item:hover {
+  background: #f5f5f5;
+}
+
+.dropdown-item:first-child {
+  border-radius: 8px 8px 0 0;
+}
+
+.dropdown-item-new {
+  background: linear-gradient(to right, #f0f9ff, #fff);
+}
+
+.platform-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.platform-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.platform-name {
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.platform-desc {
+  font-size: 13px;
+  color: #666;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.badge-new {
+  background: #0066cc;
+  color: #fff;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: #e0e0e0;
+  margin: 8px 0;
+}
+
+.dropdown-item-docs {
+  justify-content: center;
+  font-weight: 500;
+  color: #0066cc;
+}
+
+/* Platform Cards Styles */
+.platform-selector {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.platform-selector-title {
+  margin-bottom: 32px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.platform-cards {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.platform-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 24px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  min-width: 200px;
+  transition: all 0.2s;
+}
+
+.platform-card:hover {
+  border-color: #0066cc;
+  box-shadow: 0 8px 30px rgba(0, 102, 204, 0.15);
+  transform: translateY(-4px);
+}
+
+.platform-card-featured {
+  border-color: #0066cc;
+  background: linear-gradient(to bottom, #f0f9ff, #fff);
+}
+
+.platform-card-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  padding: 4px 12px;
+  background: #0066cc;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+
+.platform-card-icon {
+  margin-bottom: 16px;
+}
+
+.platform-card-name {
+  margin: 0 0 8px 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.platform-card-desc {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.platform-card-version {
+  font-size: 12px;
+  color: #999;
+}
+</style>

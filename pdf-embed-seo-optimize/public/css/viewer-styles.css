@@ -258,21 +258,28 @@
     box-sizing: border-box;
 }
 
-/* Override theme sidebar constraints on PDF pages */
+/* Override theme sidebar constraints on PDF pages (single and archive) */
 .single-pdf_document .site-content,
 .single-pdf_document .content-area,
 .single-pdf_document #primary,
-.single-pdf_document .entry-content {
+.single-pdf_document .entry-content,
+.post-type-archive-pdf_document .site-content,
+.post-type-archive-pdf_document .content-area,
+.post-type-archive-pdf_document #primary,
+.post-type-archive-pdf_document .entry-content {
     width: 100% !important;
     max-width: 100% !important;
     float: none !important;
     margin: 0 auto !important;
 }
 
-/* Hide sidebar on PDF document pages for full-width viewer */
+/* Hide sidebar on PDF document pages for full-width viewer (single and archive) */
 .single-pdf_document .widget-area,
 .single-pdf_document #secondary,
-.single-pdf_document aside.sidebar {
+.single-pdf_document aside.sidebar,
+.post-type-archive-pdf_document .widget-area,
+.post-type-archive-pdf_document #secondary,
+.post-type-archive-pdf_document aside.sidebar {
     display: none !important;
 }
 
@@ -580,18 +587,26 @@
 }
 
 .pdf-embed-seo-optimize-breadcrumb-list {
-    list-style: none;
+    list-style: none !important;
     margin: 0;
     padding: 0;
-    display: flex;
+    display: flex !important;
     flex-wrap: wrap;
     align-items: center;
     gap: 8px;
 }
 
+.pdf-embed-seo-optimize-breadcrumb-list li {
+    display: inline-flex !important;
+    visibility: visible !important;
+    list-style: none !important;
+}
+
 .pdf-embed-seo-optimize-breadcrumb-item {
-    display: flex;
+    display: inline-flex !important;
     align-items: center;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .pdf-embed-seo-optimize-breadcrumb-item:not(:last-child)::after {
@@ -620,6 +635,9 @@
 .pdf-embed-seo-optimize-breadcrumb-current {
     color: #495057;
     font-weight: 500;
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 /* ==========================================================================

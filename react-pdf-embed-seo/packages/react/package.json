@@ -1,0 +1,81 @@
+{
+  "name": "@pdf-embed-seo/react",
+  "version": "1.3.0",
+  "description": "React components for PDF Embed & SEO Optimize",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./nextjs": {
+      "import": "./dist/nextjs/index.mjs",
+      "require": "./dist/nextjs/index.js",
+      "types": "./dist/nextjs/index.d.ts"
+    },
+    "./styles": "./dist/styles/index.css",
+    "./styles/viewer": "./dist/styles/viewer.css",
+    "./styles/archive": "./dist/styles/archive.css",
+    "./styles/dark": "./dist/styles/viewer-dark.css"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup && pnpm build:css",
+    "build:css": "cp -r src/styles dist/",
+    "dev": "tsup --watch",
+    "lint": "eslint src --ext .ts,.tsx",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist node_modules"
+  },
+  "dependencies": {
+    "@pdf-embed-seo/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^14.0.0",
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.0.0"
+  },
+  "peerDependencies": {
+    "next": "^13.0.0 || ^14.0.0 || ^15.0.0",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drossmedia/pdf-embed-seo-optimize.git",
+    "directory": "react-pdf-embed-seo/packages/react"
+  },
+  "keywords": [
+    "pdf",
+    "pdf.js",
+    "react",
+    "nextjs",
+    "seo",
+    "schema.org",
+    "viewer",
+    "typescript"
+  ],
+  "author": "Dross:Media <info@drossmedia.de>",
+  "license": "MIT",
+  "homepage": "https://pdfviewer.drossmedia.de"
+}

@@ -1,7 +1,8 @@
 # QA Test Plan - PDF Embed & SEO Optimize
 
-**Version:** 1.2.5
-**Date:** 2026-01-28
+**Version:** 1.2.7
+**Date:** 2026-02-02
+**Updated:** 2026-02-02 (Archive Styling, REST API Fix)
 **Modules:** WP Free, WP Premium, Drupal Free, Drupal Premium
 
 ---
@@ -475,6 +476,130 @@
 | SEC-005 | Permission Check | Access admin as subscriber | Access denied | ☐ |
 | SEC-006 | Password Hash | Check stored password | bcrypt hashed | ☐ |
 
+### Security Tests v1.2.6
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| SEC-010 | SQL Table Name Escaping | Review analytics queries | Table names use esc_sql() | ☐ |
+| SEC-011 | Prepared Statements | Review DB queries | All params use $wpdb->prepare() | ☐ |
+| SEC-012 | WP Drupal Password Hash | Create PDF with password | Password stored as hash (starts with $) | ☐ |
+| SEC-013 | Drupal Password Verify | Unlock protected PDF | Uses password service check() | ☐ |
+| SEC-014 | Drupal XSS Block Title | Create PDF with <script> in title | Title escaped in block | ☐ |
+| SEC-015 | Drupal Block Html::escape | View PDF viewer block | Title uses Html::escape() | ☐ |
+
+---
+
+## WordPress Plugin Check Compliance Tests (v1.2.6)
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| WPC-001 | Run Plugin Check | Use WP Plugin Check tool | No errors | ☐ |
+| WPC-002 | SQL Escaping Warnings | Check premium REST API | No InterpolatedNotPrepared warnings | ☐ |
+| WPC-003 | SQL Escaping Analytics | Check premium analytics | No DirectDB.UnescapedDBParameter | ☐ |
+| WPC-004 | Hook Naming Prefix | Check all hooks | All start with pdf_embed_seo_ | ☐ |
+| WPC-005 | get_posts Parameters | Check schema.php | Uses post__not_in not exclude | ☐ |
+| WPC-006 | phpcs Compliance | Run phpcs on plugin | All rules pass or suppressed | ☐ |
+
+---
+
+## Hook Migration Tests (v1.2.6)
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| HK-001 | New Hook Fires | Save PDF settings | pdf_embed_seo_optimize_settings_saved fires | ☐ |
+| HK-002 | Hook Parameters | Add listener, save | Receives $post_id and $settings array | ☐ |
+| HK-003 | Thumbnail Listener | Save PDF with file | Thumbnail generator triggered | ☐ |
+| HK-004 | Old Hook Removed | Search codebase | pdf_embed_seo_settings_saved not used | ☐ |
+| HK-005 | Documentation Updated | Check docs-page.php | New hook name documented | ☐ |
+| HK-006 | Custom Code Migration | Test old hook code | Needs update to new hook name | ☐ |
+
+---
+
+## Sidebar Removal Tests (v1.2.7)
+
+### WordPress Sidebar Tests
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| SBW-001 | Archive No Sidebar | Visit /pdf/ archive page | No widget area/sidebar displayed | ☐ |
+| SBW-002 | Single No Sidebar | Visit /pdf/slug/ single page | No widget area/sidebar displayed | ☐ |
+| SBW-003 | Grid View No Sidebar | Set grid display, visit /pdf/ | Full-width grid, no sidebar | ☐ |
+| SBW-004 | List View No Sidebar | Set list display, visit /pdf/ | Full-width list, no sidebar | ☐ |
+| SBW-005 | Theme Compatibility | Test with Twenty Twenty-Four | No sidebar visible | ☐ |
+| SBW-006 | Theme Compatibility 2 | Test with Astra theme | No sidebar visible | ☐ |
+| SBW-007 | CSS Override | Inspect computed styles | width: 100% on content area | ☐ |
+| SBW-008 | Header/Footer Present | Visit /pdf/ | Header and footer still visible | ☐ |
+| SBW-009 | Mobile View | Test on mobile device | Full-width responsive | ☐ |
+| SBW-010 | Template Comment | Check archive-pdf-document.php | Comment about intentional sidebar removal | ☐ |
+
+### Drupal Sidebar Tests
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| SBD-001 | Archive No Sidebar | Visit /pdf archive page | No sidebar regions displayed | ☐ |
+| SBD-002 | Single No Sidebar | Visit /pdf/slug single page | No sidebar regions displayed | ☐ |
+| SBD-003 | Body Class Present | Inspect body tag | .page-pdf class present | ☐ |
+| SBD-004 | Body Class No-Sidebar | Inspect body tag | .page-pdf-no-sidebar class present | ☐ |
+| SBD-005 | Theme Suggestion | Enable twig debug | page--pdf suggestion available | ☐ |
+| SBD-006 | Sidebar First Cleared | Inspect page.html.twig | sidebar_first region empty | ☐ |
+| SBD-007 | Sidebar Second Cleared | Inspect page.html.twig | sidebar_second region empty | ☐ |
+| SBD-008 | Bartik Theme | Test with Bartik theme | No sidebars visible | ☐ |
+| SBD-009 | Olivero Theme | Test with Olivero theme | No sidebars visible | ☐ |
+| SBD-010 | CSS Full Width | Inspect computed styles | Content area 100% width | ☐ |
+
+---
+
+## Archive Styling Settings Tests (v1.2.7)
+
+### WordPress Archive Styling
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| ASW-001 | Custom Heading Setting | Set "Archive Page Heading" to "My PDFs" | Heading displays "My PDFs" on /pdf/ | ☐ |
+| ASW-002 | Default Heading | Leave heading empty | Heading displays "PDF Documents" | ☐ |
+| ASW-003 | Heading in Breadcrumb | Set custom heading | 2nd breadcrumb shows custom heading | ☐ |
+| ASW-004 | Heading in Schema | Set custom heading, view source | BreadcrumbList position 2 has custom name | ☐ |
+| ASW-005 | Alignment Left | Set alignment to "Left" | Header text-align: left | ☐ |
+| ASW-006 | Alignment Center | Set alignment to "Center" | Header text-align: center | ☐ |
+| ASW-007 | Alignment Right | Set alignment to "Right" | Header text-align: right | ☐ |
+| ASW-008 | Font Color | Set font color to #ff0000 | Header color: #ff0000 | ☐ |
+| ASW-009 | Font Color Default | Check "Use theme default" | No inline color style | ☐ |
+| ASW-010 | Background Color | Set background to #f0f0f0 | Header has background-color | ☐ |
+| ASW-011 | Background with Padding | Set background color | Header has padding and border-radius | ☐ |
+| ASW-012 | Single Page Breadcrumb | Visit /pdf/slug/ | 2nd crumb shows custom heading | ☐ |
+| ASW-013 | Single Page Schema | View /pdf/slug/ source | Schema breadcrumb position 2 has custom name | ☐ |
+| ASW-014 | Settings Sanitization | Enter <script> in heading | Tags stripped/escaped | ☐ |
+| ASW-015 | Color Picker Disabled | Check "Use theme default" | Color picker input disabled | ☐ |
+
+---
+
+## REST API Security Fix Tests (v1.2.7)
+
+### PDF Viewer Loading
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| RSF-001 | REST API URL in Page | View page source | pdfEmbedSeo.restUrl present | ☐ |
+| RSF-002 | No AJAX URL | View page source | pdfEmbedSeo.ajaxUrl not present | ☐ |
+| RSF-003 | PDF Loads via REST | Open PDF page | PDF renders without errors | ☐ |
+| RSF-004 | Cached Page Works | Clear cache, wait 24h, view | PDF loads (no nonce expiry) | ☐ |
+| RSF-005 | Console No Errors | Open DevTools Console | No "Security check failed" error | ☐ |
+| RSF-006 | Network Request | Check DevTools Network | GET request to /documents/{id}/data | ☐ |
+| RSF-007 | Response Data | Check API response | Contains pdf_url field | ☐ |
+| RSF-008 | Shortcode Viewer | Embed [pdf_viewer id="X"] | Viewer loads via REST API | ☐ |
+| RSF-009 | Multiple Viewers | Page with 2+ shortcodes | All viewers load correctly | ☐ |
+| RSF-010 | Standalone Mode | View PDF in standalone | PDF loads correctly | ☐ |
+
+### Cache Compatibility
+
+| ID | Test Case | Steps | Expected Result | Status |
+|----|-----------|-------|-----------------|--------|
+| RSF-020 | WP Super Cache | Enable caching, view PDF | PDF works on cached page | ☐ |
+| RSF-021 | W3 Total Cache | Enable caching, view PDF | PDF works on cached page | ☐ |
+| RSF-022 | LiteSpeed Cache | Enable caching, view PDF | PDF works on cached page | ☐ |
+| RSF-023 | Cloudflare CDN | Cache HTML, view PDF | PDF works on CDN-cached page | ☐ |
+| RSF-024 | Browser Cache | Refresh cached page | PDF loads correctly | ☐ |
+
 ---
 
 ## Regression Tests
@@ -500,7 +625,12 @@ Run after each code change:
 - [ ] All DRP tests passed
 - [ ] Cross-platform tests passed
 - [ ] Performance tests passed
-- [ ] Security tests passed
+- [ ] Security tests passed (including v1.2.6 tests)
+- [ ] Plugin Check compliance tests passed (v1.2.6)
+- [ ] Hook migration tests passed (v1.2.6)
+- [ ] Sidebar removal tests passed (v1.2.7)
+- [ ] Archive styling settings tests passed (v1.2.7)
+- [ ] REST API security fix tests passed (v1.2.7)
 - [ ] Regression tests passed
 
 **Sign-off:**
@@ -513,4 +643,4 @@ Run after each code change:
 
 ---
 
-*PDF Embed & SEO Optimize v1.2.5 - QA Test Plan*
+*PDF Embed & SEO Optimize v1.2.7 - QA Test Plan*

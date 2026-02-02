@@ -131,7 +131,7 @@
         },
 
         /**
-         * Load PDF via AJAX
+         * Load PDF via REST API
          */
         loadPDF: function() {
             var self = this;
@@ -147,31 +147,34 @@
 
             console.log('PDF Viewer: Loading PDF for post ID:', postId);
 
-            $.ajax({
-                url: pdfEmbedSeo.ajaxUrl,
-                type: 'POST',
-                data: {
-                    action: 'pdf_embed_seo_get_pdf',
-                    nonce: pdfEmbedSeo.nonce,
-                    post_id: postId
+            // Use REST API endpoint (cache-friendly, no nonce required for public endpoints)
+            var apiUrl = pdfEmbedSeo.restUrl + postId + '/data';
+
+            fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
                 },
-                success: function(response) {
-                    console.log('PDF Viewer: AJAX response:', response);
-                    if (response.success) {
-                        self.pdfUrl = response.data.url;
-                        self.pdfTitle = response.data.title;
-                        console.log('PDF Viewer: PDF URL:', self.pdfUrl);
-                        self.initPDF();
-                    } else {
-                        console.error('PDF Viewer: AJAX error:', response.data.message);
-                        self.showError(response.data.message || pdfEmbedSeo.strings.error);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('PDF Viewer: AJAX request failed:', status, error);
-                    console.error('PDF Viewer: Response:', xhr.responseText);
-                    self.showError(pdfEmbedSeo.strings.error + ' (AJAX failed: ' + status + ')');
+                credentials: 'same-origin'
+            })
+            .then(function(response) {
+                if (!response.ok) {
+                    return response.json().then(function(data) {
+                        throw new Error(data.message || 'HTTP ' + response.status);
+                    });
                 }
+                return response.json();
+            })
+            .then(function(data) {
+                console.log('PDF Viewer: REST API response:', data);
+                self.pdfUrl = data.pdf_url;
+                self.pdfTitle = data.filename ? data.filename.replace('.pdf', '') : 'document';
+                console.log('PDF Viewer: PDF URL:', self.pdfUrl);
+                self.initPDF();
+            })
+            .catch(function(error) {
+                console.error('PDF Viewer: REST API error:', error);
+                self.showError(error.message || pdfEmbedSeo.strings.error);
             });
         },
 

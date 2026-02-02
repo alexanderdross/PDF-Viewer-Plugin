@@ -807,7 +807,7 @@ if ( function_exists( 'do_shortcode' ) ) {
 					<td><?php esc_html_e( 'Fired when premium features are initialized.', 'pdf-embed-seo-optimize' ); ?></td>
 				</tr>
 				<tr>
-					<td><code>pdf_embed_seo_settings_saved</code></td>
+					<td><code>pdf_embed_seo_optimize_settings_saved</code></td>
 					<td><code>$post_id, $settings</code></td>
 					<td><?php esc_html_e( 'Fired when PDF settings are saved.', 'pdf-embed-seo-optimize' ); ?></td>
 				</tr>
