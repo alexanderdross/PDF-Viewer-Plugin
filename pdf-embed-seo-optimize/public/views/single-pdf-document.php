@@ -277,5 +277,5 @@ get_header();
 </div>
 
 <?php
-get_sidebar();
+// Note: get_sidebar() intentionally removed - PDF pages should be full-width.
 get_footer();

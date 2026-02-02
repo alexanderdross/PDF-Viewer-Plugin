@@ -63,6 +63,38 @@
 }
 
 /* ==========================================================================
+   Full-Width Layout - Hide Sidebars
+   PDF pages should display full-width without theme sidebars.
+   ========================================================================== */
+
+/* Force full-width content on PDF pages */
+.page-pdf .layout-content,
+.page-pdf .content-area,
+.page-pdf .region-content,
+.page-pdf main.main-content,
+.page-pdf #main-content,
+.page-pdf .main-container > .row > .col-sm-9,
+.page-pdf .main-container > .row > .col-sm-8 {
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: 0 0 100% !important;
+  float: none !important;
+}
+
+/* Hide sidebars on PDF pages */
+.page-pdf .layout-sidebar-first,
+.page-pdf .layout-sidebar-second,
+.page-pdf .region-sidebar-first,
+.page-pdf .region-sidebar-second,
+.page-pdf aside.sidebar,
+.page-pdf #sidebar-first,
+.page-pdf #sidebar-second,
+.page-pdf .main-container > .row > .col-sm-3,
+.page-pdf .main-container > .row > .col-sm-4 {
+  display: none !important;
+}
+
+/* ==========================================================================
    Archive Container
    ========================================================================== */
 

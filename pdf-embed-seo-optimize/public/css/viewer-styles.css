@@ -258,21 +258,28 @@
     box-sizing: border-box;
 }
 
-/* Override theme sidebar constraints on PDF pages */
+/* Override theme sidebar constraints on PDF pages (single and archive) */
 .single-pdf_document .site-content,
 .single-pdf_document .content-area,
 .single-pdf_document #primary,
-.single-pdf_document .entry-content {
+.single-pdf_document .entry-content,
+.post-type-archive-pdf_document .site-content,
+.post-type-archive-pdf_document .content-area,
+.post-type-archive-pdf_document #primary,
+.post-type-archive-pdf_document .entry-content {
     width: 100% !important;
     max-width: 100% !important;
     float: none !important;
     margin: 0 auto !important;
 }
 
-/* Hide sidebar on PDF document pages for full-width viewer */
+/* Hide sidebar on PDF document pages for full-width viewer (single and archive) */
 .single-pdf_document .widget-area,
 .single-pdf_document #secondary,
-.single-pdf_document aside.sidebar {
+.single-pdf_document aside.sidebar,
+.post-type-archive-pdf_document .widget-area,
+.post-type-archive-pdf_document #secondary,
+.post-type-archive-pdf_document aside.sidebar {
     display: none !important;
 }
 
