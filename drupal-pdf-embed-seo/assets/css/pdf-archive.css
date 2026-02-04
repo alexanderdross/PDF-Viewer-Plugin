@@ -100,11 +100,19 @@
 
 .pdf-embed-seo-archive {
   padding: 20px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Boxed layout - override theme width rules to maintain max-width constraint */
+.page-pdf .pdf-embed-seo-archive:not(.pdf-embed-seo-archive-full-width) {
+  max-width: 1200px !important;
 }
 
 /* Full-width archive layout */
 .pdf-embed-seo-archive-full-width {
-  max-width: none;
+  max-width: none !important;
   width: 100%;
 }
 
@@ -352,6 +360,8 @@
   padding: 16px 20px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   transition: background-color 0.2s;
+  /* Keep icons aligned in a vertical column regardless of parent text-align */
+  text-align: left;
 }
 
 .pdf-embed-seo-list-item:last-child {
