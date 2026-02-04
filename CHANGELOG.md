@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [1.2.8] - 2026-02-02
+## [1.2.8] - 2026-02-04
 
 ### Fixed
 - **WordPress Plugin Check Compliance** - Added direct file access protection to all test files
