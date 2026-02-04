@@ -739,6 +739,13 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
   - Content alignment now applies to entire archive page (header, list, and grid)
   - Font color and background color settings now apply to content items, not just header
   - Added Content Alignment, Font Color, and Background Color settings to Drupal
+- Grid/List view styling enhancements (WordPress and Drupal)
+  - Font color setting now applies to grid card titles, excerpts, and metadata
+  - Item background color setting now applies to individual grid cards (not just container)
+  - Content alignment applies to grid card content
+  - List view inherits font color for links and titles
+  - Updated settings labels and descriptions for clarity
+  - CSS inheritance for custom colors on child elements (links, excerpts, meta)
 
 ### 1.2.7
 - Sidebar/Widget Area Removal - PDF pages now display full-width without sidebars

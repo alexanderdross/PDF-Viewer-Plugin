@@ -225,6 +225,21 @@
   padding: 15px;
 }
 
+/* Card content inherits custom font color when set via inline style */
+.pdf-embed-seo-card-content[style*="color"] .pdf-embed-seo-card-title a {
+  color: inherit;
+}
+
+.pdf-embed-seo-card-content[style*="color"] .pdf-embed-seo-card-excerpt {
+  color: inherit;
+  opacity: 0.85;
+}
+
+.pdf-embed-seo-card-content[style*="color"] .pdf-embed-seo-card-meta {
+  color: inherit;
+  opacity: 0.7;
+}
+
 .pdf-embed-seo-card-title {
   margin: 0 0 10px;
   font-size: 18px;
@@ -304,6 +319,20 @@
 
 .pdf-embed-seo-list-nav {
   margin: 0;
+}
+
+/* List items inherit custom font color when set via inline style */
+.pdf-embed-seo-list-item[style*="color"] .pdf-embed-seo-list-link {
+  color: inherit;
+}
+
+.pdf-embed-seo-list-item[style*="color"] .pdf-embed-seo-list-title {
+  color: inherit;
+}
+
+.pdf-embed-seo-list-item[style*="color"] .pdf-embed-seo-list-meta {
+  color: inherit;
+  opacity: 0.7;
 }
 
 .pdf-embed-seo-list {

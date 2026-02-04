@@ -74,12 +74,22 @@ if ( ! empty( $background_color ) ) {
 }
 $content_style_attr = ! empty( $content_styles ) ? ' style="' . esc_attr( implode( '; ', $content_styles ) ) . '"' : '';
 
-// Build item container style (list/grid background).
-$item_container_styles = array();
+// Build item/card styles for individual grid cards.
+$card_styles = array();
 if ( ! empty( $item_background_color ) ) {
-	$item_container_styles[] = 'background-color: ' . esc_attr( $item_background_color );
+	$card_styles[] = 'background-color: ' . esc_attr( $item_background_color );
 }
-$item_container_style_attr = ! empty( $item_container_styles ) ? ' style="' . esc_attr( implode( '; ', $item_container_styles ) ) . '"' : '';
+$card_style_attr = ! empty( $card_styles ) ? ' style="' . esc_attr( implode( '; ', $card_styles ) ) . '"' : '';
+
+// Build card content styles (text color).
+$card_content_styles = array();
+if ( ! empty( $font_color ) ) {
+	$card_content_styles[] = 'color: ' . esc_attr( $font_color );
+}
+if ( ! empty( $content_alignment ) ) {
+	$card_content_styles[] = 'text-align: ' . esc_attr( $content_alignment );
+}
+$card_content_style_attr = ! empty( $card_content_styles ) ? ' style="' . esc_attr( implode( '; ', $card_content_styles ) ) . '"' : '';
 
 // Archive container classes.
 $archive_classes = array( 'content-area', 'pdf-embed-seo-optimize-archive' );
@@ -157,6 +167,9 @@ get_header();
 				if ( ! empty( $item_background_color ) ) {
 					$list_nav_styles[] = 'background-color: ' . esc_attr( $item_background_color );
 				}
+				if ( ! empty( $font_color ) ) {
+					$list_nav_styles[] = 'color: ' . esc_attr( $font_color );
+				}
 				$list_nav_style_attr = ! empty( $list_nav_styles ) ? ' style="' . esc_attr( implode( '; ', $list_nav_styles ) ) . '"' : '';
 				?>
 				<nav class="pdf-embed-seo-optimize-list-nav"<?php echo $list_nav_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during construction. ?> aria-label="<?php esc_attr_e( 'PDF Documents List', 'pdf-embed-seo-optimize' ); ?>">
@@ -203,11 +216,6 @@ get_header();
 					$grid_justify = 'flex-end';
 				}
 				$grid_styles[] = 'justify-content: ' . esc_attr( $grid_justify );
-				if ( ! empty( $item_background_color ) ) {
-					$grid_styles[] = 'background-color: ' . esc_attr( $item_background_color );
-					$grid_styles[] = 'padding: 20px';
-					$grid_styles[] = 'border-radius: 8px';
-				}
 				$grid_style = ! empty( $grid_styles ) ? ' style="' . esc_attr( implode( '; ', $grid_styles ) ) . '"' : '';
 				?>
 				<section class="pdf-embed-seo-optimize-grid"<?php echo $grid_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during construction. ?> aria-label="<?php esc_attr_e( 'PDF Documents Gallery', 'pdf-embed-seo-optimize' ); ?>">
@@ -231,7 +239,7 @@ get_header();
 						/* translators: %s: PDF document title */
 						$card_thumb_alt = sprintf( __( 'Thumbnail for %s', 'pdf-embed-seo-optimize' ), $pdf_title );
 						?>
-						<article id="post-<?php the_ID(); ?>" <?php post_class( 'pdf-embed-seo-optimize-card' ); ?> itemscope itemtype="https://schema.org/DigitalDocument">
+						<article id="post-<?php the_ID(); ?>" <?php post_class( 'pdf-embed-seo-optimize-card' ); ?><?php echo $card_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during construction. ?> itemscope itemtype="https://schema.org/DigitalDocument">
 							<?php if ( has_post_thumbnail() ) : ?>
 								<div class="pdf-embed-seo-optimize-card-thumbnail">
 									<a href="<?php echo esc_url( $pdf_url ); ?>"
@@ -261,7 +269,7 @@ get_header();
 								</div>
 							<?php endif; ?>
 
-							<div class="pdf-embed-seo-optimize-card-content">
+							<div class="pdf-embed-seo-optimize-card-content"<?php echo $card_content_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during construction. ?>>
 								<h2 class="pdf-embed-seo-optimize-card-title">
 									<a href="<?php echo esc_url( $pdf_url ); ?>"
 									   title="<?php echo esc_attr( $card_view_title ); ?>"

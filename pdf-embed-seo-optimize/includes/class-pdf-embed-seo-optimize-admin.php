@@ -643,13 +643,13 @@ class PDF_Embed_SEO_Admin {
 				'label_for'   => 'archive_font_color',
 				'key'         => 'archive_font_color',
 				'default'     => '',
-				'description' => __( 'Text color for the archive page heading and description. Leave empty to use theme default.', 'pdf-embed-seo-optimize' ),
+				'description' => __( 'Text color for the archive page header and grid/list content (titles, descriptions, meta). Leave empty to use theme default.', 'pdf-embed-seo-optimize' ),
 			)
 		);
 
 		add_settings_field(
 			'archive_background_color',
-			__( 'Archive Background Color', 'pdf-embed-seo-optimize' ),
+			__( 'Archive Header Background Color', 'pdf-embed-seo-optimize' ),
 			array( $this, 'render_color_field' ),
 			'pdf-embed-seo-optimize-settings',
 			'pdf_embed_seo_archive',
@@ -657,13 +657,13 @@ class PDF_Embed_SEO_Admin {
 				'label_for'   => 'archive_background_color',
 				'key'         => 'archive_background_color',
 				'default'     => '',
-				'description' => __( 'Background color for the archive page header section. Leave empty to use theme default.', 'pdf-embed-seo-optimize' ),
+				'description' => __( 'Background color for the archive page header section (title and description). Leave empty to use theme default.', 'pdf-embed-seo-optimize' ),
 			)
 		);
 
 		add_settings_field(
 			'archive_item_background_color',
-			__( 'Item List Background Color', 'pdf-embed-seo-optimize' ),
+			__( 'Grid/List Item Background Color', 'pdf-embed-seo-optimize' ),
 			array( $this, 'render_color_field' ),
 			'pdf-embed-seo-optimize-settings',
 			'pdf_embed_seo_archive',
@@ -671,7 +671,7 @@ class PDF_Embed_SEO_Admin {
 				'label_for'   => 'archive_item_background_color',
 				'key'         => 'archive_item_background_color',
 				'default'     => '',
-				'description' => __( 'Background color for the PDF list/grid container. Leave empty to use white (#ffffff).', 'pdf-embed-seo-optimize' ),
+				'description' => __( 'Background color for individual cards (grid view) or list container (list view). Leave empty to use white (#ffffff).', 'pdf-embed-seo-optimize' ),
 			)
 		);
 

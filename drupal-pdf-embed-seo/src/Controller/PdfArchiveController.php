@@ -89,6 +89,9 @@ class PdfArchiveController extends ControllerBase {
         '#url' => $document->toUrl(),
         '#show_description' => $show_description,
         '#show_view_count' => $show_view_count,
+        '#font_color' => $font_color,
+        '#item_background_color' => $item_background_color,
+        '#content_alignment' => $content_alignment,
       ];
     }
 

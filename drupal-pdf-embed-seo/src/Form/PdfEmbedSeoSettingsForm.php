@@ -172,7 +172,7 @@ class PdfEmbedSeoSettingsForm extends ConfigFormBase {
     $form['archive']['archive_font_color'] = [
       '#type' => 'color',
       '#title' => $this->t('Archive Font Color'),
-      '#description' => $this->t('Text color for the archive page heading, description, and content. Leave empty to use theme default.'),
+      '#description' => $this->t('Text color for the archive page header and grid/list content (titles, descriptions, meta). Leave empty to use theme default.'),
       '#default_value' => $config->get('archive_font_color') ?? '#000000',
     ];
 
@@ -184,8 +184,8 @@ class PdfEmbedSeoSettingsForm extends ConfigFormBase {
 
     $form['archive']['archive_background_color'] = [
       '#type' => 'color',
-      '#title' => $this->t('Archive Background Color'),
-      '#description' => $this->t('Background color for the archive page header and content sections. Leave empty to use theme default.'),
+      '#title' => $this->t('Archive Header Background Color'),
+      '#description' => $this->t('Background color for the archive page header section (title and description). Leave empty to use theme default.'),
       '#default_value' => $config->get('archive_background_color') ?? '#ffffff',
     ];
 
@@ -197,8 +197,8 @@ class PdfEmbedSeoSettingsForm extends ConfigFormBase {
 
     $form['archive']['archive_item_background_color'] = [
       '#type' => 'color',
-      '#title' => $this->t('Item List Background Color'),
-      '#description' => $this->t('Background color for the PDF list/grid container. Leave empty to use white (#ffffff).'),
+      '#title' => $this->t('Grid/List Item Background Color'),
+      '#description' => $this->t('Background color for individual cards (grid view) or list items (list view). Leave empty to use white (#ffffff).'),
       '#default_value' => $config->get('archive_item_background_color') ?? '#ffffff',
     ];
 

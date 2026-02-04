@@ -412,6 +412,21 @@
     padding: 20px;
 }
 
+/* Card content inherits custom font color when set via inline style */
+.pdf-embed-seo-optimize-card-content[style*="color"] .pdf-embed-seo-optimize-card-title a {
+    color: inherit;
+}
+
+.pdf-embed-seo-optimize-card-content[style*="color"] .pdf-embed-seo-optimize-card-excerpt {
+    color: inherit;
+    opacity: 0.85;
+}
+
+.pdf-embed-seo-optimize-card-content[style*="color"] .pdf-embed-seo-optimize-card-meta {
+    color: inherit;
+    opacity: 0.7;
+}
+
 .pdf-embed-seo-optimize-card-title {
     margin: 0 0 10px;
     font-size: 18px;
@@ -655,6 +670,15 @@
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+}
+
+/* List items inherit custom font color when set via inline style */
+.pdf-embed-seo-optimize-list-nav[style*="color"] .pdf-embed-seo-optimize-list-link {
+    color: inherit;
+}
+
+.pdf-embed-seo-optimize-list-nav[style*="color"] .pdf-embed-seo-optimize-list-title {
+    color: inherit;
 }
 
 .pdf-embed-seo-optimize-list {
