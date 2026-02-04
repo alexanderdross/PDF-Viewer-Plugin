@@ -1,9 +1,9 @@
 # User Acceptance Testing (UAT) Plan
 
-## PDF Embed & SEO Optimize - Version 1.2.7
+## PDF Embed & SEO Optimize - Version 1.2.8
 
 **Date:** 2026-02-02
-**Updated:** 2026-02-02 (Archive Styling, Cache Fix)
+**Updated:** 2026-02-04 (Grid/List Styling Enhancements)
 **Modules:** WP Free, WP Premium, Drupal Free, Drupal Premium
 
 ---
@@ -703,6 +703,86 @@ This UAT plan validates that the PDF Embed & SEO Optimize plugin meets business 
 
 ---
 
+## Version 1.2.8 User Stories
+
+### US-GRID-001: Grid View Styling (WordPress & Drupal)
+**As a** site administrator
+**I want to** style the grid view cards with custom colors
+**So that** the PDF archive matches my website design
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | Can set font color for grid card titles | ☐ | ☐ | |
+| 2 | Font color applies to card excerpts | ☐ | ☐ | |
+| 3 | Font color applies to card meta (date, views) | ☐ | ☐ | |
+| 4 | Can set background color for individual cards | ☐ | ☐ | |
+| 5 | Content alignment applies to card content | ☐ | ☐ | |
+| 6 | Styling works on WordPress | ☐ | ☐ | |
+| 7 | Styling works on Drupal | ☐ | ☐ | |
+
+---
+
+### US-GRID-002: List View Styling (WordPress & Drupal)
+**As a** site administrator
+**I want to** style the list view with custom colors
+**So that** it matches my website design when using list display
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | Can set font color for list item titles | ☐ | ☐ | |
+| 2 | Font color applies to list links | ☐ | ☐ | |
+| 3 | Can set background color for list container | ☐ | ☐ | |
+| 4 | Content alignment applies to list items | ☐ | ☐ | |
+| 5 | Styling works on WordPress | ☐ | ☐ | |
+| 6 | Styling works on Drupal | ☐ | ☐ | |
+
+---
+
+### US-GRID-003: Display Style Independence (WordPress & Drupal)
+**As a** site administrator
+**I want** styling settings to work with both grid and list views
+**So that** I can switch display styles without losing my color settings
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | Font color persists when switching grid to list | ☐ | ☐ | |
+| 2 | Font color persists when switching list to grid | ☐ | ☐ | |
+| 3 | Background color applies correctly to grid cards | ☐ | ☐ | |
+| 4 | Background color applies correctly to list container | ☐ | ☐ | |
+| 5 | Alignment works correctly in grid view | ☐ | ☐ | |
+| 6 | Alignment works correctly in list view | ☐ | ☐ | |
+
+---
+
+### US-GRID-004: Layout Width Setting (WordPress & Drupal)
+**As a** site administrator
+**I want to** choose between boxed and full-width layouts
+**So that** the archive page fits my site's layout style
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | Boxed layout constrains content width | ☐ | ☐ | |
+| 2 | Full-width layout spans entire page | ☐ | ☐ | |
+| 3 | Layout setting works with grid view | ☐ | ☐ | |
+| 4 | Layout setting works with list view | ☐ | ☐ | |
+| 5 | Setting saved and retrieved correctly | ☐ | ☐ | |
+
+---
+
+### US-GRID-005: Settings Page Labels (WordPress & Drupal)
+**As a** site administrator
+**I want** clear labels and descriptions for styling settings
+**So that** I understand what each setting affects
+
+| # | Acceptance Criteria | Pass | Fail | Notes |
+|---|---------------------|------|------|-------|
+| 1 | Font color description mentions grid/list content | ☐ | ☐ | |
+| 2 | Item background label says "Grid/List Item" | ☐ | ☐ | |
+| 3 | Header background is separate from item background | ☐ | ☐ | |
+| 4 | Descriptions are consistent between WP and Drupal | ☐ | ☐ | |
+
+---
+
 ### Approval
 
 | Role | Name | Date | Approved |
@@ -719,4 +799,4 @@ This UAT plan validates that the PDF Embed & SEO Optimize plugin meets business 
 
 ---
 
-*PDF Embed & SEO Optimize v1.2.7 - UAT Test Plan*
+*PDF Embed & SEO Optimize v1.2.8 - UAT Test Plan*

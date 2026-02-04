@@ -1,12 +1,14 @@
 <?php
 /**
- * Unit tests for Archive Styling Settings (v1.2.7).
+ * Unit tests for Archive Styling Settings (v1.2.7, v1.2.8).
  *
- * Tests for custom heading, alignment, colors, and REST API viewer loading.
+ * Tests for custom heading, alignment, colors, grid/list styling,
+ * and REST API viewer loading.
  *
  * @package PDF_Embed_SEO
  * @subpackage Tests
  * @since 1.2.7
+ * @updated 1.2.8 - Added grid/list item styling tests
  */
 
 // Prevent direct access.
@@ -328,5 +330,132 @@ class Test_Archive_Styling extends WP_UnitTestCase {
 		$this->assertEquals( 'left', $sanitized['archive_heading_alignment'] );
 		$this->assertEquals( '#333333', $sanitized['archive_font_color'] );
 		$this->assertEquals( '#ffffff', $sanitized['archive_background_color'] );
+	}
+
+	/**
+	 * Test item background color setting for grid/list items (v1.2.8).
+	 */
+	public function test_item_background_color_sanitization() {
+		$admin = new PDF_Embed_SEO_Admin();
+
+		// Valid hex color.
+		$input = array( 'archive_item_background_color' => '#e0e0e0' );
+		$sanitized = $admin->sanitize_settings( $input );
+		$this->assertEquals( '#e0e0e0', $sanitized['archive_item_background_color'] );
+
+		// Invalid color should be sanitized.
+		$input = array( 'archive_item_background_color' => 'not-valid' );
+		$sanitized = $admin->sanitize_settings( $input );
+		$this->assertEmpty( $sanitized['archive_item_background_color'] );
+	}
+
+	/**
+	 * Test layout width setting for archive page (v1.2.8).
+	 */
+	public function test_layout_width_valid_values() {
+		$admin = new PDF_Embed_SEO_Admin();
+
+		$valid_widths = array( 'boxed', 'full-width' );
+
+		foreach ( $valid_widths as $width ) {
+			$input = array( 'archive_layout_width' => $width );
+			$sanitized = $admin->sanitize_settings( $input );
+			$this->assertEquals( $width, $sanitized['archive_layout_width'] );
+		}
+	}
+
+	/**
+	 * Test layout width rejects invalid values.
+	 */
+	public function test_layout_width_invalid_value() {
+		$admin = new PDF_Embed_SEO_Admin();
+
+		$input = array( 'archive_layout_width' => 'invalid_width' );
+		$sanitized = $admin->sanitize_settings( $input );
+
+		// Should fall back to default 'boxed'.
+		$this->assertEquals( 'boxed', $sanitized['archive_layout_width'] );
+	}
+
+	/**
+	 * Test grid/list styling fields are registered (v1.2.8).
+	 */
+	public function test_grid_list_styling_fields_registered() {
+		$admin = new PDF_Embed_SEO_Admin();
+		$admin->register_settings();
+
+		global $wp_settings_fields;
+
+		$section_fields = isset( $wp_settings_fields['pdf-embed-seo-optimize-settings']['pdf_embed_seo_archive'] )
+			? $wp_settings_fields['pdf-embed-seo-optimize-settings']['pdf_embed_seo_archive']
+			: array();
+
+		// Check that grid/list styling fields exist.
+		$this->assertArrayHasKey( 'archive_item_background_color', $section_fields );
+		$this->assertArrayHasKey( 'archive_layout_width', $section_fields );
+	}
+
+	/**
+	 * Test complete grid/list styling sanitization (v1.2.8).
+	 */
+	public function test_complete_grid_list_styling_sanitization() {
+		$admin = new PDF_Embed_SEO_Admin();
+
+		$input = array(
+			'archive_heading'              => 'PDF Library',
+			'archive_heading_alignment'    => 'center',
+			'archive_font_color'           => '#222222',
+			'archive_background_color'     => '#f5f5f5',
+			'archive_item_background_color' => '#ffffff',
+			'archive_layout_width'         => 'full-width',
+			'archive_display_style'        => 'grid',
+		);
+
+		$sanitized = $admin->sanitize_settings( $input );
+
+		$this->assertEquals( 'PDF Library', $sanitized['archive_heading'] );
+		$this->assertEquals( 'center', $sanitized['archive_heading_alignment'] );
+		$this->assertEquals( '#222222', $sanitized['archive_font_color'] );
+		$this->assertEquals( '#f5f5f5', $sanitized['archive_background_color'] );
+		$this->assertEquals( '#ffffff', $sanitized['archive_item_background_color'] );
+		$this->assertEquals( 'full-width', $sanitized['archive_layout_width'] );
+		$this->assertEquals( 'grid', $sanitized['archive_display_style'] );
+	}
+
+	/**
+	 * Test display style accepts grid and list values (v1.2.8).
+	 */
+	public function test_display_style_valid_values() {
+		$admin = new PDF_Embed_SEO_Admin();
+
+		$valid_styles = array( 'grid', 'list' );
+
+		foreach ( $valid_styles as $style ) {
+			$input = array( 'archive_display_style' => $style );
+			$sanitized = $admin->sanitize_settings( $input );
+			$this->assertEquals( $style, $sanitized['archive_display_style'] );
+		}
+	}
+
+	/**
+	 * Test font color applies to both grid and list views.
+	 */
+	public function test_font_color_applies_to_both_views() {
+		$settings = array(
+			'archive_font_color'    => '#ff0000',
+			'archive_display_style' => 'grid',
+		);
+		update_option( 'pdf_embed_seo_settings', $settings );
+
+		$saved = get_option( 'pdf_embed_seo_settings' );
+		$this->assertEquals( '#ff0000', $saved['archive_font_color'] );
+
+		// Change to list view - font color should persist.
+		$settings['archive_display_style'] = 'list';
+		update_option( 'pdf_embed_seo_settings', $settings );
+
+		$saved = get_option( 'pdf_embed_seo_settings' );
+		$this->assertEquals( '#ff0000', $saved['archive_font_color'] );
+		$this->assertEquals( 'list', $saved['archive_display_style'] );
 	}
 }
