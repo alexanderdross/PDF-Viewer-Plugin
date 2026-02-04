@@ -157,6 +157,68 @@ class PdfEmbedSeoSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('show_breadcrumbs') ?? TRUE,
     ];
 
+    $form['archive']['content_alignment'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Content Alignment'),
+      '#description' => $this->t('Change format and position of HTML sitemap at /pdf/'),
+      '#options' => [
+        'center' => $this->t('Center'),
+        'left' => $this->t('Left'),
+        'right' => $this->t('Right'),
+      ],
+      '#default_value' => $config->get('content_alignment') ?? 'center',
+    ];
+
+    $form['archive']['archive_font_color'] = [
+      '#type' => 'color',
+      '#title' => $this->t('Archive Font Color'),
+      '#description' => $this->t('Text color for the archive page header and grid/list content (titles, descriptions, meta). Leave empty to use theme default.'),
+      '#default_value' => $config->get('archive_font_color') ?? '#000000',
+    ];
+
+    $form['archive']['archive_font_color_use_default'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Use theme default font color'),
+      '#default_value' => $config->get('archive_font_color_use_default') ?? TRUE,
+    ];
+
+    $form['archive']['archive_background_color'] = [
+      '#type' => 'color',
+      '#title' => $this->t('Archive Header Background Color'),
+      '#description' => $this->t('Background color for the archive page header section (title and description). Leave empty to use theme default.'),
+      '#default_value' => $config->get('archive_background_color') ?? '#ffffff',
+    ];
+
+    $form['archive']['archive_background_color_use_default'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Use theme default background color'),
+      '#default_value' => $config->get('archive_background_color_use_default') ?? TRUE,
+    ];
+
+    $form['archive']['archive_item_background_color'] = [
+      '#type' => 'color',
+      '#title' => $this->t('Grid/List Item Background Color'),
+      '#description' => $this->t('Background color for individual cards (grid view) or list items (list view). Leave empty to use white (#ffffff).'),
+      '#default_value' => $config->get('archive_item_background_color') ?? '#ffffff',
+    ];
+
+    $form['archive']['archive_item_background_color_use_default'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Use default item background color (white)'),
+      '#default_value' => $config->get('archive_item_background_color_use_default') ?? TRUE,
+    ];
+
+    $form['archive']['archive_layout_width'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Archive Layout Width'),
+      '#description' => $this->t('Choose whether the archive page content uses the site container or spans full width.'),
+      '#options' => [
+        'boxed' => $this->t('Boxed (use site container)'),
+        'full-width' => $this->t('Full Width'),
+      ],
+      '#default_value' => $config->get('archive_layout_width') ?? 'boxed',
+    ];
+
     // SEO settings.
     $form['seo'] = [
       '#type' => 'details',
@@ -294,6 +356,14 @@ class PdfEmbedSeoSettingsForm extends ConfigFormBase {
     $config->set('archive_show_description', $form_state->getValue('archive_show_description'));
     $config->set('archive_show_view_count', $form_state->getValue('archive_show_view_count'));
     $config->set('show_breadcrumbs', $form_state->getValue('show_breadcrumbs'));
+    $config->set('content_alignment', $form_state->getValue('content_alignment'));
+    $config->set('archive_font_color', $form_state->getValue('archive_font_color'));
+    $config->set('archive_font_color_use_default', $form_state->getValue('archive_font_color_use_default'));
+    $config->set('archive_background_color', $form_state->getValue('archive_background_color'));
+    $config->set('archive_background_color_use_default', $form_state->getValue('archive_background_color_use_default'));
+    $config->set('archive_item_background_color', $form_state->getValue('archive_item_background_color'));
+    $config->set('archive_item_background_color_use_default', $form_state->getValue('archive_item_background_color_use_default'));
+    $config->set('archive_layout_width', $form_state->getValue('archive_layout_width'));
 
     // SEO settings.
     $config->set('enable_schema', $form_state->getValue('enable_schema'));

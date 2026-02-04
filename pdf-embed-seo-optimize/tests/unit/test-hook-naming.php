@@ -9,6 +9,11 @@
  * @since 1.2.7
  */
 
+// Prevent direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Test Hook Naming Conventions.
  */

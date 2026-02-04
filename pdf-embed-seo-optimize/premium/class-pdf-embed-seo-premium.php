@@ -30,7 +30,7 @@ final class PDF_Embed_SEO_Premium {
 	 *
 	 * @var string
 	 */
-	const VERSION = '1.2.7';
+	const VERSION = '1.2.8';
 
 	/**
 	 * License status.

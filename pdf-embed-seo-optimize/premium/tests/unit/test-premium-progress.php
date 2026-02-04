@@ -6,6 +6,11 @@
  * @subpackage Tests
  */
 
+// Prevent direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Test Premium Reading Progress functionality.
  */

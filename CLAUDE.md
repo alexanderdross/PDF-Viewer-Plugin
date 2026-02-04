@@ -2,7 +2,7 @@
 
 A comprehensive PDF management solution available for WordPress and Drupal that uses Mozilla's PDF.js library to securely display PDFs with SEO optimization.
 
-**Current Version:** 1.2.7
+**Current Version:** 1.2.8
 **Platforms:** WordPress (Free & Premium), Drupal 10/11
 **License:** GPL v2 or later
 
@@ -727,7 +727,32 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 
 ## Changelog
 
-### 1.2.7 (Current)
+### 1.2.8 (Current)
+- WordPress Premium Sitemap improvements
+  - Changed sitemap URL from `/pdf-sitemap.xml` to `/pdf/sitemap.xml` to match documentation and Drupal
+  - Added 301 redirect from legacy `/pdf-sitemap.xml` to new `/pdf/sitemap.xml` for backwards compatibility
+  - Added automatic redirect to Yoast SEO's `pdf_document-sitemap.xml` when Yoast is active
+  - Custom sitemap renders as fallback when Yoast is not active or pdf_document is set to noindex
+  - Updated UAT test plan with new sitemap test cases
+- Archive Settings improvements (WordPress and Drupal)
+  - Renamed "Heading Alignment" to "Content Alignment" with updated help text
+  - Content alignment now applies to entire archive page (header, list, and grid)
+  - Font color and background color settings now apply to content items, not just header
+  - Added Content Alignment, Font Color, and Background Color settings to Drupal
+- Grid/List view styling enhancements (WordPress and Drupal)
+  - Font color setting now applies to grid card titles, excerpts, and metadata
+  - Item background color setting now applies to individual grid cards (not just container)
+  - Content alignment applies to grid card content
+  - List view inherits font color for links and titles
+  - Updated settings labels and descriptions for clarity
+  - CSS inheritance for custom colors on child elements (links, excerpts, meta)
+- Seamless background color coverage fix (WordPress and Drupal)
+  - Added content wrapper element to apply background color to entire header + content area
+  - Fixed white space gaps between header and list/grid sections when background color is set
+  - Background color now covers the entire archive content area seamlessly
+  - Updated list item borders to use semi-transparent colors for better contrast with custom backgrounds
+
+### 1.2.7
 - Sidebar/Widget Area Removal - PDF pages now display full-width without sidebars
   - WordPress: Removed `get_sidebar()` from archive and single templates
   - WordPress: Added CSS to hide sidebars on archive pages (`.post-type-archive-pdf_document`)

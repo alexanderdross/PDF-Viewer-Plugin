@@ -6,6 +6,11 @@
  * @subpackage Tests
  */
 
+// Prevent direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 // phpcs:disable WordPress.DB.DirectDatabaseQuery -- Test file validating database functionality.
 
 /**

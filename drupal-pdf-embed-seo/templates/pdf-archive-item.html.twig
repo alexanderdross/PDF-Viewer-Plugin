@@ -16,6 +16,9 @@
  * - url: URL to the PDF document.
  * - show_description: Whether to show the description.
  * - show_view_count: Whether to show the view count.
+ * - font_color: Custom font color for the item content.
+ * - item_background_color: Custom background color for the card.
+ * - content_alignment: Content alignment (left, center, right).
  */
 #}
 {% set pdf_title = document.title.value %}
@@ -27,9 +30,36 @@
 {# Check parent display style from attributes #}
 {% set is_list_view = 'pdf-archive--list' in parent_attributes.class|default([]) %}
 
+{# Build card styles #}
+{% set card_styles = [] %}
+{% if item_background_color %}
+  {% set card_styles = card_styles|merge(['background-color: ' ~ item_background_color]) %}
+{% endif %}
+{% set card_style_attr = card_styles ? ' style="' ~ card_styles|join('; ') ~ '"' : '' %}
+
+{# Build card content styles #}
+{% set content_styles = [] %}
+{% if font_color %}
+  {% set content_styles = content_styles|merge(['color: ' ~ font_color]) %}
+{% endif %}
+{% if content_alignment %}
+  {% set content_styles = content_styles|merge(['text-align: ' ~ content_alignment]) %}
+{% endif %}
+{% set content_style_attr = content_styles ? ' style="' ~ content_styles|join('; ') ~ '"' : '' %}
+
+{# Build list item styles #}
+{% set list_styles = [] %}
+{% if font_color %}
+  {% set list_styles = list_styles|merge(['color: ' ~ font_color]) %}
+{% endif %}
+{% if item_background_color %}
+  {% set list_styles = list_styles|merge(['background-color: ' ~ item_background_color]) %}
+{% endif %}
+{% set list_style_attr = list_styles ? ' style="' ~ list_styles|join('; ') ~ '"' : '' %}
+
 {% if is_list_view %}
   {# List View Item #}
-  <li class="pdf-embed-seo-list-item" id="pdf-{{ document.id.value }}">
+  <li class="pdf-embed-seo-list-item" id="pdf-{{ document.id.value }}"{{ list_style_attr|raw }}>
     <article itemscope itemtype="https://schema.org/DigitalDocument">
       <a href="{{ url }}"
          class="pdf-embed-seo-list-link"
@@ -65,7 +95,7 @@
   </li>
 {% else %}
   {# Grid View Item #}
-  <article class="pdf-embed-seo-card" id="post-{{ document.id.value }}" itemscope itemtype="https://schema.org/DigitalDocument">
+  <article class="pdf-embed-seo-card" id="post-{{ document.id.value }}"{{ card_style_attr|raw }} itemscope itemtype="https://schema.org/DigitalDocument">
     {% if thumbnail %}
       <div class="pdf-embed-seo-card-thumbnail">
         <a href="{{ url }}"
@@ -89,7 +119,7 @@
       </div>
     {% endif %}
 
-    <div class="pdf-embed-seo-card-content">
+    <div class="pdf-embed-seo-card-content"{{ content_style_attr|raw }}>
       <h2 class="pdf-embed-seo-card-title">
         <a href="{{ url }}"
            title="{{ 'View %title'|t({'%title': pdf_title}) }}"

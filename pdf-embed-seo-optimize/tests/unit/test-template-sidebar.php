@@ -7,6 +7,11 @@
  * @since 1.2.7
  */
 
+// Prevent direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Tests for sidebar removal in archive and single templates.
  */

@@ -617,7 +617,7 @@ class PDF_Embed_SEO_Admin {
 
 		add_settings_field(
 			'archive_heading_alignment',
-			__( 'Heading Alignment', 'pdf-embed-seo-optimize' ),
+			__( 'Content Alignment', 'pdf-embed-seo-optimize' ),
 			array( $this, 'render_select_field' ),
 			'pdf-embed-seo-optimize-settings',
 			'pdf_embed_seo_archive',
@@ -629,7 +629,7 @@ class PDF_Embed_SEO_Admin {
 					'left'   => __( 'Left', 'pdf-embed-seo-optimize' ),
 					'right'  => __( 'Right', 'pdf-embed-seo-optimize' ),
 				),
-				'description' => __( 'Alignment for the archive page heading and description.', 'pdf-embed-seo-optimize' ),
+				'description' => __( 'Change format and position of HTML sitemap at /pdf/', 'pdf-embed-seo-optimize' ),
 			)
 		);
 
@@ -643,13 +643,13 @@ class PDF_Embed_SEO_Admin {
 				'label_for'   => 'archive_font_color',
 				'key'         => 'archive_font_color',
 				'default'     => '',
-				'description' => __( 'Text color for the archive page heading and description. Leave empty to use theme default.', 'pdf-embed-seo-optimize' ),
+				'description' => __( 'Text color for the archive page header and grid/list content (titles, descriptions, meta). Leave empty to use theme default.', 'pdf-embed-seo-optimize' ),
 			)
 		);
 
 		add_settings_field(
 			'archive_background_color',
-			__( 'Archive Background Color', 'pdf-embed-seo-optimize' ),
+			__( 'Archive Header Background Color', 'pdf-embed-seo-optimize' ),
 			array( $this, 'render_color_field' ),
 			'pdf-embed-seo-optimize-settings',
 			'pdf_embed_seo_archive',
@@ -657,7 +657,38 @@ class PDF_Embed_SEO_Admin {
 				'label_for'   => 'archive_background_color',
 				'key'         => 'archive_background_color',
 				'default'     => '',
-				'description' => __( 'Background color for the archive page header section. Leave empty to use theme default.', 'pdf-embed-seo-optimize' ),
+				'description' => __( 'Background color for the archive page header section (title and description). Leave empty to use theme default.', 'pdf-embed-seo-optimize' ),
+			)
+		);
+
+		add_settings_field(
+			'archive_item_background_color',
+			__( 'Grid/List Item Background Color', 'pdf-embed-seo-optimize' ),
+			array( $this, 'render_color_field' ),
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_archive',
+			array(
+				'label_for'   => 'archive_item_background_color',
+				'key'         => 'archive_item_background_color',
+				'default'     => '',
+				'description' => __( 'Background color for individual cards (grid view) or list container (list view). Leave empty to use white (#ffffff).', 'pdf-embed-seo-optimize' ),
+			)
+		);
+
+		add_settings_field(
+			'archive_layout_width',
+			__( 'Archive Layout Width', 'pdf-embed-seo-optimize' ),
+			array( $this, 'render_select_field' ),
+			'pdf-embed-seo-optimize-settings',
+			'pdf_embed_seo_archive',
+			array(
+				'label_for'   => 'archive_layout_width',
+				'key'         => 'archive_layout_width',
+				'options'     => array(
+					'boxed'      => __( 'Boxed (use site container)', 'pdf-embed-seo-optimize' ),
+					'full-width' => __( 'Full Width', 'pdf-embed-seo-optimize' ),
+				),
+				'description' => __( 'Choose whether the archive page content uses the site container or spans full width.', 'pdf-embed-seo-optimize' ),
 			)
 		);
 
@@ -739,6 +770,12 @@ class PDF_Embed_SEO_Admin {
 		$sanitized['archive_background_color'] = isset( $input['archive_background_color'] )
 			? sanitize_hex_color( $input['archive_background_color'] )
 			: '';
+		$sanitized['archive_item_background_color'] = isset( $input['archive_item_background_color'] )
+			? sanitize_hex_color( $input['archive_item_background_color'] )
+			: '';
+		$sanitized['archive_layout_width'] = isset( $input['archive_layout_width'] ) && in_array( $input['archive_layout_width'], array( 'boxed', 'full-width' ), true )
+			? $input['archive_layout_width']
+			: 'boxed';
 
 		// Branding settings.
 		$sanitized['favicon_url'] = isset( $input['favicon_url'] ) ? esc_url_raw( $input['favicon_url'] ) : '';

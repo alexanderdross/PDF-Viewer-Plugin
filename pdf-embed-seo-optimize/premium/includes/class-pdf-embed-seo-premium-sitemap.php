@@ -19,11 +19,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 class PDF_Embed_SEO_Premium_Sitemap {
 
 	/**
-	 * Sitemap slug.
+	 * Sitemap path (relative to site root).
 	 *
 	 * @var string
 	 */
-	const SITEMAP_SLUG = 'pdf-sitemap.xml';
+	const SITEMAP_PATH = 'pdf/sitemap.xml';
+
+	/**
+	 * Legacy sitemap slug for backwards compatibility.
+	 *
+	 * @var string
+	 */
+	const LEGACY_SITEMAP_SLUG = 'pdf-sitemap.xml';
 
 	/**
 	 * Constructor.
@@ -55,13 +62,22 @@ class PDF_Embed_SEO_Premium_Sitemap {
 	 * @return void
 	 */
 	public function add_rewrite_rules() {
+		// Primary sitemap path: /pdf/sitemap.xml
 		add_rewrite_rule(
-			'^' . self::SITEMAP_SLUG . '$',
+			'^' . self::SITEMAP_PATH . '$',
 			'index.php?pdf_sitemap=1',
 			'top'
 		);
 
+		// Legacy path redirect: /pdf-sitemap.xml -> /pdf/sitemap.xml
+		add_rewrite_rule(
+			'^' . self::LEGACY_SITEMAP_SLUG . '$',
+			'index.php?pdf_sitemap_legacy=1',
+			'top'
+		);
+
 		add_rewrite_tag( '%pdf_sitemap%', '1' );
+		add_rewrite_tag( '%pdf_sitemap_legacy%', '1' );
 	}
 
 	/**
@@ -70,12 +86,60 @@ class PDF_Embed_SEO_Premium_Sitemap {
 	 * @return void
 	 */
 	public function render_sitemap() {
+		// Handle legacy URL redirect.
+		if ( get_query_var( 'pdf_sitemap_legacy' ) ) {
+			wp_safe_redirect( home_url( '/' . self::SITEMAP_PATH ), 301 );
+			exit;
+		}
+
 		if ( ! get_query_var( 'pdf_sitemap' ) ) {
 			return;
 		}
 
+		// If Yoast SEO is active and has sitemap functionality, redirect to Yoast's pdf_document sitemap.
+		if ( $this->should_redirect_to_yoast() ) {
+			$yoast_sitemap_url = $this->get_yoast_sitemap_url();
+			if ( $yoast_sitemap_url ) {
+				wp_safe_redirect( $yoast_sitemap_url, 302 );
+				exit;
+			}
+		}
+
+		// Fallback: render custom sitemap.
 		$this->output_sitemap();
 		exit;
+	}
+
+	/**
+	 * Check if we should redirect to Yoast's sitemap.
+	 *
+	 * @return bool
+	 */
+	private function should_redirect_to_yoast() {
+		// Check if Yoast SEO is active and sitemap functionality is available.
+		if ( ! class_exists( 'WPSEO_Sitemaps' ) ) {
+			return false;
+		}
+
+		// Check if Yoast sitemaps are enabled.
+		$options = get_option( 'wpseo_titles', array() );
+
+		// Check if pdf_document is not excluded from Yoast sitemap.
+		if ( isset( $options['noindex-pdf_document'] ) && $options['noindex-pdf_document'] ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Get Yoast's sitemap URL for pdf_document post type.
+	 *
+	 * @return string|false Yoast sitemap URL or false if not available.
+	 */
+	private function get_yoast_sitemap_url() {
+		// Yoast generates sitemaps at /post_type-sitemap.xml format.
+		return home_url( '/pdf_document-sitemap.xml' );
 	}
 
 	/**
@@ -191,7 +255,7 @@ class PDF_Embed_SEO_Premium_Sitemap {
 	public function add_to_robots( $output, $public ) {
 		if ( $public ) {
 			$output .= "\n# PDF Sitemap\n";
-			$output .= 'Sitemap: ' . home_url( '/' . self::SITEMAP_SLUG ) . "\n";
+			$output .= 'Sitemap: ' . home_url( '/' . self::SITEMAP_PATH ) . "\n";
 		}
 
 		return $output;
@@ -210,7 +274,7 @@ class PDF_Embed_SEO_Premium_Sitemap {
 			return;
 		}
 
-		$sitemap_url = home_url( '/' . self::SITEMAP_SLUG );
+		$sitemap_url = home_url( '/' . self::SITEMAP_PATH );
 
 		// Ping Google.
 		wp_remote_get( 'https://www.google.com/ping?sitemap=' . rawurlencode( $sitemap_url ), array( 'blocking' => false ) );
@@ -235,16 +299,20 @@ class PDF_Embed_SEO_Premium_Sitemap {
 	/**
 	 * Add PDF sitemap to Yoast index.
 	 *
+	 * Note: When Yoast is active, /pdf/sitemap.xml redirects to Yoast's
+	 * pdf_document-sitemap.xml. This hook ensures the sitemap URL appears
+	 * in Yoast's sitemap index for consistency.
+	 *
 	 * @param string $sitemap_index Sitemap index content.
 	 * @return string
 	 */
 	public function add_to_yoast_index( $sitemap_index ) {
-		$sitemap_url = home_url( '/pdf-sitemap.xml' );
+		$sitemap_url = home_url( '/' . self::SITEMAP_PATH );
 		$date        = gmdate( 'c' );
 
 		$sitemap_index .= "<sitemap>\n";
-		$sitemap_index .= "\t<loc>{$sitemap_url}</loc>\n";
-		$sitemap_index .= "\t<lastmod>{$date}</lastmod>\n";
+		$sitemap_index .= "\t<loc>" . esc_url( $sitemap_url ) . "</loc>\n";
+		$sitemap_index .= "\t<lastmod>" . esc_html( $date ) . "</lastmod>\n";
 		$sitemap_index .= "</sitemap>\n";
 
 		return $sitemap_index;
@@ -275,7 +343,7 @@ class PDF_Embed_SEO_Premium_Sitemap {
 	 * @return string
 	 */
 	public static function get_sitemap_url() {
-		return home_url( '/' . self::SITEMAP_SLUG );
+		return home_url( '/' . self::SITEMAP_PATH );
 	}
 
 	/**

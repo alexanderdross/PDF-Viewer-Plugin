@@ -31,6 +31,16 @@ class PdfArchiveController extends ControllerBase {
     $show_view_count = $config->get('archive_show_view_count') ?? TRUE;
     $show_breadcrumbs = $config->get('show_breadcrumbs') ?? TRUE;
 
+    // Styling settings.
+    $content_alignment = $config->get('content_alignment') ?? 'center';
+    $font_color_use_default = $config->get('archive_font_color_use_default') ?? TRUE;
+    $background_color_use_default = $config->get('archive_background_color_use_default') ?? TRUE;
+    $item_background_use_default = $config->get('archive_item_background_color_use_default') ?? TRUE;
+    $font_color = !$font_color_use_default ? $config->get('archive_font_color') : '';
+    $background_color = !$background_color_use_default ? $config->get('archive_background_color') : '';
+    $item_background_color = !$item_background_use_default ? $config->get('archive_item_background_color') : '';
+    $layout_width = $config->get('archive_layout_width') ?? 'boxed';
+
     // Load published PDF documents.
     $storage = $this->entityTypeManager()->getStorage('pdf_document');
 
@@ -79,6 +89,9 @@ class PdfArchiveController extends ControllerBase {
         '#url' => $document->toUrl(),
         '#show_description' => $show_description,
         '#show_view_count' => $show_view_count,
+        '#font_color' => $font_color,
+        '#item_background_color' => $item_background_color,
+        '#content_alignment' => $content_alignment,
       ];
     }
 
@@ -107,6 +120,11 @@ class PdfArchiveController extends ControllerBase {
       '#site_url' => $site_url,
       '#archive_url' => $archive_url,
       '#show_breadcrumbs' => $show_breadcrumbs,
+      '#content_alignment' => $content_alignment,
+      '#font_color' => $font_color,
+      '#background_color' => $background_color,
+      '#item_background_color' => $item_background_color,
+      '#layout_width' => $layout_width,
       '#attached' => [
         'library' => ['pdf_embed_seo/archive'],
       ],

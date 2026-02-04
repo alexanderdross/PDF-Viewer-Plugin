@@ -29,10 +29,12 @@ $show_view_count   = isset( $settings['archive_show_view_count'] ) ? $settings['
 $show_breadcrumbs  = isset( $settings['show_breadcrumbs'] ) ? $settings['show_breadcrumbs'] : true;
 
 // Archive styling settings.
-$custom_heading      = isset( $settings['archive_heading'] ) && ! empty( $settings['archive_heading'] ) ? $settings['archive_heading'] : __( 'PDF Documents', 'pdf-embed-seo-optimize' );
-$heading_alignment   = isset( $settings['archive_heading_alignment'] ) ? $settings['archive_heading_alignment'] : 'center';
-$font_color          = isset( $settings['archive_font_color'] ) ? $settings['archive_font_color'] : '';
-$background_color    = isset( $settings['archive_background_color'] ) ? $settings['archive_background_color'] : '';
+$custom_heading           = isset( $settings['archive_heading'] ) && ! empty( $settings['archive_heading'] ) ? $settings['archive_heading'] : __( 'PDF Documents', 'pdf-embed-seo-optimize' );
+$content_alignment        = isset( $settings['archive_heading_alignment'] ) ? $settings['archive_heading_alignment'] : 'center';
+$font_color               = isset( $settings['archive_font_color'] ) ? $settings['archive_font_color'] : '';
+$background_color         = isset( $settings['archive_background_color'] ) ? $settings['archive_background_color'] : '';
+$item_background_color    = isset( $settings['archive_item_background_color'] ) ? $settings['archive_item_background_color'] : '';
+$layout_width             = isset( $settings['archive_layout_width'] ) ? $settings['archive_layout_width'] : 'boxed';
 
 // Archive info.
 $archive_url   = get_post_type_archive_link( 'pdf_document' );
@@ -41,21 +43,57 @@ $archive_desc  = apply_filters( 'pdf_embed_seo_archive_description', __( 'Browse
 $site_name     = get_bloginfo( 'name' );
 $site_url      = home_url( '/' );
 
-// Build header inline styles.
+// Build wrapper styles (applied to archive-content-wrapper for seamless background).
+$wrapper_styles = array();
+if ( ! empty( $background_color ) ) {
+	$wrapper_styles[] = 'background-color: ' . esc_attr( $background_color );
+	$wrapper_styles[] = 'padding: 20px';
+	$wrapper_styles[] = 'border-radius: 8px';
+}
+$wrapper_style_attr = ! empty( $wrapper_styles ) ? ' style="' . esc_attr( implode( '; ', $wrapper_styles ) ) . '"' : '';
+
+// Build header inline styles (alignment and font color only - background on wrapper).
 $header_styles = array();
-if ( ! empty( $heading_alignment ) ) {
-	$header_styles[] = 'text-align: ' . esc_attr( $heading_alignment );
+if ( ! empty( $content_alignment ) ) {
+	$header_styles[] = 'text-align: ' . esc_attr( $content_alignment );
 }
 if ( ! empty( $font_color ) ) {
 	$header_styles[] = 'color: ' . esc_attr( $font_color );
 }
-if ( ! empty( $background_color ) ) {
-	$header_styles[] = 'background-color: ' . esc_attr( $background_color );
-	$header_styles[] = 'padding: 20px';
-	$header_styles[] = 'border-radius: 8px';
-	$header_styles[] = 'margin-bottom: 20px';
-}
 $header_style_attr = ! empty( $header_styles ) ? ' style="' . esc_attr( implode( '; ', $header_styles ) ) . '"' : '';
+
+// Build content style for list/grid (alignment and font color only - background on wrapper).
+$content_styles = array();
+if ( ! empty( $content_alignment ) ) {
+	$content_styles[] = 'text-align: ' . esc_attr( $content_alignment );
+}
+if ( ! empty( $font_color ) ) {
+	$content_styles[] = 'color: ' . esc_attr( $font_color );
+}
+$content_style_attr = ! empty( $content_styles ) ? ' style="' . esc_attr( implode( '; ', $content_styles ) ) . '"' : '';
+
+// Build item/card styles for individual grid cards.
+$card_styles = array();
+if ( ! empty( $item_background_color ) ) {
+	$card_styles[] = 'background-color: ' . esc_attr( $item_background_color );
+}
+$card_style_attr = ! empty( $card_styles ) ? ' style="' . esc_attr( implode( '; ', $card_styles ) ) . '"' : '';
+
+// Build card content styles (text color).
+$card_content_styles = array();
+if ( ! empty( $font_color ) ) {
+	$card_content_styles[] = 'color: ' . esc_attr( $font_color );
+}
+if ( ! empty( $content_alignment ) ) {
+	$card_content_styles[] = 'text-align: ' . esc_attr( $content_alignment );
+}
+$card_content_style_attr = ! empty( $card_content_styles ) ? ' style="' . esc_attr( implode( '; ', $card_content_styles ) ) . '"' : '';
+
+// Archive container classes.
+$archive_classes = array( 'content-area', 'pdf-embed-seo-optimize-archive' );
+if ( 'full-width' === $layout_width ) {
+	$archive_classes[] = 'pdf-embed-seo-optimize-archive-full-width';
+}
 
 get_header();
 ?>
@@ -82,7 +120,7 @@ get_header();
 }
 </script>
 
-<div id="primary" class="content-area pdf-embed-seo-optimize-archive">
+<div id="primary" class="<?php echo esc_attr( implode( ' ', $archive_classes ) ); ?>">
 	<main id="main" class="site-main" role="main">
 
 		<?php // Visible breadcrumb navigation (JSON-LD schema is always output above for SEO). ?>
@@ -102,23 +140,38 @@ get_header();
 			</nav>
 		<?php endif; ?>
 
-		<header class="page-header pdf-embed-seo-optimize-archive-header"<?php echo $header_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during construction. ?>>
-			<h1 class="page-title pdf-embed-seo-optimize-archive-title">
-				<?php echo esc_html( $archive_title ); ?>
-			</h1>
+		<div class="pdf-embed-seo-optimize-archive-content-wrapper"<?php echo $wrapper_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during construction. ?>>
+			<header class="page-header pdf-embed-seo-optimize-archive-header"<?php echo $header_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during construction. ?>>
+				<h1 class="page-title pdf-embed-seo-optimize-archive-title">
+					<?php echo esc_html( $archive_title ); ?>
+				</h1>
 
-			<?php if ( ! empty( $archive_desc ) ) : ?>
-				<div class="archive-description pdf-embed-seo-optimize-archive-description">
-					<p><?php echo esc_html( $archive_desc ); ?></p>
-				</div>
-			<?php endif; ?>
-		</header>
+				<?php if ( ! empty( $archive_desc ) ) : ?>
+					<div class="archive-description pdf-embed-seo-optimize-archive-description">
+						<p><?php echo esc_html( $archive_desc ); ?></p>
+					</div>
+				<?php endif; ?>
+			</header>
 
 		<?php if ( have_posts() ) : ?>
 
 			<?php if ( 'list' === $display_style ) : ?>
-				<?php // List View - Simple clean list with PDF icon and title only. ?>
-				<nav class="pdf-embed-seo-optimize-list-nav" aria-label="<?php esc_attr_e( 'PDF Documents List', 'pdf-embed-seo-optimize' ); ?>">
+				<?php
+				// List View - Simple clean list with PDF icon and title only.
+				// Build list nav styles.
+				$list_nav_styles = array();
+				if ( ! empty( $content_alignment ) ) {
+					$list_nav_styles[] = 'text-align: ' . esc_attr( $content_alignment );
+				}
+				if ( ! empty( $item_background_color ) ) {
+					$list_nav_styles[] = 'background-color: ' . esc_attr( $item_background_color );
+				}
+				if ( ! empty( $font_color ) ) {
+					$list_nav_styles[] = 'color: ' . esc_attr( $font_color );
+				}
+				$list_nav_style_attr = ! empty( $list_nav_styles ) ? ' style="' . esc_attr( implode( '; ', $list_nav_styles ) ) . '"' : '';
+				?>
+				<nav class="pdf-embed-seo-optimize-list-nav"<?php echo $list_nav_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during construction. ?> aria-label="<?php esc_attr_e( 'PDF Documents List', 'pdf-embed-seo-optimize' ); ?>">
 					<ul class="pdf-embed-seo-optimize-list" role="list">
 						<?php
 						while ( have_posts() ) :
@@ -151,8 +204,20 @@ get_header();
 				</nav>
 
 			<?php else : ?>
-				<?php // Grid View - Card layout with thumbnails. ?>
-				<section class="pdf-embed-seo-optimize-grid" aria-label="<?php esc_attr_e( 'PDF Documents Gallery', 'pdf-embed-seo-optimize' ); ?>">
+				<?php
+				// Grid View - Card layout with thumbnails.
+				// Map text-align to justify-content for grid layout.
+				$grid_styles = array();
+				$grid_justify = 'center';
+				if ( 'left' === $content_alignment ) {
+					$grid_justify = 'flex-start';
+				} elseif ( 'right' === $content_alignment ) {
+					$grid_justify = 'flex-end';
+				}
+				$grid_styles[] = 'justify-content: ' . esc_attr( $grid_justify );
+				$grid_style = ! empty( $grid_styles ) ? ' style="' . esc_attr( implode( '; ', $grid_styles ) ) . '"' : '';
+				?>
+				<section class="pdf-embed-seo-optimize-grid"<?php echo $grid_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during construction. ?> aria-label="<?php esc_attr_e( 'PDF Documents Gallery', 'pdf-embed-seo-optimize' ); ?>">
 					<?php
 					while ( have_posts() ) :
 						the_post();
@@ -173,7 +238,7 @@ get_header();
 						/* translators: %s: PDF document title */
 						$card_thumb_alt = sprintf( __( 'Thumbnail for %s', 'pdf-embed-seo-optimize' ), $pdf_title );
 						?>
-						<article id="post-<?php the_ID(); ?>" <?php post_class( 'pdf-embed-seo-optimize-card' ); ?> itemscope itemtype="https://schema.org/DigitalDocument">
+						<article id="post-<?php the_ID(); ?>" <?php post_class( 'pdf-embed-seo-optimize-card' ); ?><?php echo $card_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during construction. ?> itemscope itemtype="https://schema.org/DigitalDocument">
 							<?php if ( has_post_thumbnail() ) : ?>
 								<div class="pdf-embed-seo-optimize-card-thumbnail">
 									<a href="<?php echo esc_url( $pdf_url ); ?>"
@@ -203,7 +268,7 @@ get_header();
 								</div>
 							<?php endif; ?>
 
-							<div class="pdf-embed-seo-optimize-card-content">
+							<div class="pdf-embed-seo-optimize-card-content"<?php echo $card_content_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during construction. ?>>
 								<h2 class="pdf-embed-seo-optimize-card-title">
 									<a href="<?php echo esc_url( $pdf_url ); ?>"
 									   title="<?php echo esc_attr( $card_view_title ); ?>"
@@ -270,6 +335,7 @@ get_header();
 			</div>
 
 		<?php endif; ?>
+		</div><?php // Close .pdf-embed-seo-optimize-archive-content-wrapper. ?>
 
 	</main>
 </div>
