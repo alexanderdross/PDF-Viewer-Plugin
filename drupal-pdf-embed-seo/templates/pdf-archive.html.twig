@@ -32,7 +32,14 @@
  */
 #}
 
-{# Build inline styles for header and content sections #}
+{# Build wrapper styles (applied to content-wrapper for seamless background) #}
+{% set wrapper_styles = [] %}
+{% if background_color %}
+  {% set wrapper_styles = wrapper_styles|merge(['background-color: ' ~ background_color, 'padding: 20px', 'border-radius: 8px']) %}
+{% endif %}
+{% set wrapper_style_attr = wrapper_styles ? ' style="' ~ wrapper_styles|join('; ') ~ '"' : '' %}
+
+{# Build inline styles for header (alignment and font color only - background on wrapper) #}
 {% set header_styles = [] %}
 {% if content_alignment %}
   {% set header_styles = header_styles|merge(['text-align: ' ~ content_alignment]) %}
@@ -40,15 +47,15 @@
 {% if font_color %}
   {% set header_styles = header_styles|merge(['color: ' ~ font_color]) %}
 {% endif %}
-{% if background_color %}
-  {% set header_styles = header_styles|merge(['background-color: ' ~ background_color, 'padding: 20px', 'border-radius: 8px', 'margin-bottom: 20px']) %}
-{% endif %}
 {% set header_style_attr = header_styles ? ' style="' ~ header_styles|join('; ') ~ '"' : '' %}
 
-{# Build list nav styles #}
+{# Build list nav styles (alignment and font color - item background handled separately) #}
 {% set list_nav_styles = [] %}
 {% if content_alignment %}
   {% set list_nav_styles = list_nav_styles|merge(['text-align: ' ~ content_alignment]) %}
+{% endif %}
+{% if font_color %}
+  {% set list_nav_styles = list_nav_styles|merge(['color: ' ~ font_color]) %}
 {% endif %}
 {% if item_background_color %}
   {% set list_nav_styles = list_nav_styles|merge(['background-color: ' ~ item_background_color]) %}
@@ -63,9 +70,6 @@
   {% set grid_justify = 'flex-end' %}
 {% endif %}
 {% set grid_styles = ['justify-content: ' ~ grid_justify] %}
-{% if item_background_color %}
-  {% set grid_styles = grid_styles|merge(['background-color: ' ~ item_background_color, 'padding: 20px', 'border-radius: 8px']) %}
-{% endif %}
 {% set grid_style_attr = grid_styles ? ' style="' ~ grid_styles|join('; ') ~ '"' : '' %}
 
 {# Container classes #}
@@ -113,48 +117,50 @@
     </nav>
   {% endif %}
 
-  <header class="pdf-embed-seo-archive-header"{{ header_style_attr|raw }}>
-    <h1 class="pdf-embed-seo-archive-title">{{ archive_title }}</h1>
-    {% if archive_description %}
-      <div class="pdf-embed-seo-archive-description">
-        <p>{{ archive_description }}</p>
+  <div class="pdf-embed-seo-archive-content-wrapper"{{ wrapper_style_attr|raw }}>
+    <header class="pdf-embed-seo-archive-header"{{ header_style_attr|raw }}>
+      <h1 class="pdf-embed-seo-archive-title">{{ archive_title }}</h1>
+      {% if archive_description %}
+        <div class="pdf-embed-seo-archive-description">
+          <p>{{ archive_description }}</p>
+        </div>
+      {% endif %}
+    </header>
+
+    {% if filters is defined and filters %}
+      <div class="pdf-embed-seo-filters-wrapper">
+        {{ filters }}
       </div>
     {% endif %}
-  </header>
 
-  {% if filters is defined and filters %}
-    <div class="pdf-embed-seo-filters-wrapper">
-      {{ filters }}
-    </div>
-  {% endif %}
-
-  {% if documents %}
-    {% if display_style == 'list' %}
-      {# List View - Simple accessible list #}
-      <nav class="pdf-embed-seo-list-nav"{{ list_nav_style_attr|raw }} aria-label="{{ 'PDF Documents List'|t }}">
-        <ul class="pdf-embed-seo-list" role="list">
+    {% if documents %}
+      {% if display_style == 'list' %}
+        {# List View - Simple accessible list #}
+        <nav class="pdf-embed-seo-list-nav"{{ list_nav_style_attr|raw }} aria-label="{{ 'PDF Documents List'|t }}">
+          <ul class="pdf-embed-seo-list" role="list">
+            {% for item in documents %}
+              {{ item }}
+            {% endfor %}
+          </ul>
+        </nav>
+      {% else %}
+        {# Grid View - Card layout with thumbnails #}
+        <section class="pdf-embed-seo-grid"{{ grid_style_attr|raw }} aria-label="{{ 'PDF Documents Gallery'|t }}">
           {% for item in documents %}
             {{ item }}
           {% endfor %}
-        </ul>
-      </nav>
-    {% else %}
-      {# Grid View - Card layout with thumbnails #}
-      <section class="pdf-embed-seo-grid"{{ grid_style_attr|raw }} aria-label="{{ 'PDF Documents Gallery'|t }}">
-        {% for item in documents %}
-          {{ item }}
-        {% endfor %}
-      </section>
-    {% endif %}
+        </section>
+      {% endif %}
 
-    {% if pager %}
-      <nav class="pdf-embed-seo-pagination" aria-label="{{ 'PDF Documents pagination'|t }}">
-        {{ pager }}
-      </nav>
+      {% if pager %}
+        <nav class="pdf-embed-seo-pagination" aria-label="{{ 'PDF Documents pagination'|t }}">
+          {{ pager }}
+        </nav>
+      {% endif %}
+    {% else %}
+      <div class="pdf-embed-seo-no-results" role="status">
+        <p>{{ 'No PDF documents have been published yet.'|t }}</p>
+      </div>
     {% endif %}
-  {% else %}
-    <div class="pdf-embed-seo-no-results" role="status">
-      <p>{{ 'No PDF documents have been published yet.'|t }}</p>
-    </div>
-  {% endif %}
+  </div>{# End .pdf-embed-seo-archive-content-wrapper #}
 </div>

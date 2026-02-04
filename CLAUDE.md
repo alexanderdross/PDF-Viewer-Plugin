@@ -746,6 +746,11 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
   - List view inherits font color for links and titles
   - Updated settings labels and descriptions for clarity
   - CSS inheritance for custom colors on child elements (links, excerpts, meta)
+- Seamless background color coverage fix (WordPress and Drupal)
+  - Added content wrapper element to apply background color to entire header + content area
+  - Fixed white space gaps between header and list/grid sections when background color is set
+  - Background color now covers the entire archive content area seamlessly
+  - Updated list item borders to use semi-transparent colors for better contrast with custom backgrounds
 
 ### 1.2.7
 - Sidebar/Widget Area Removal - PDF pages now display full-width without sidebars

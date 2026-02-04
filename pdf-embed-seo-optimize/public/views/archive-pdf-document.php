@@ -43,7 +43,16 @@ $archive_desc  = apply_filters( 'pdf_embed_seo_archive_description', __( 'Browse
 $site_name     = get_bloginfo( 'name' );
 $site_url      = home_url( '/' );
 
-// Build header inline styles.
+// Build wrapper styles (applied to archive-content-wrapper for seamless background).
+$wrapper_styles = array();
+if ( ! empty( $background_color ) ) {
+	$wrapper_styles[] = 'background-color: ' . esc_attr( $background_color );
+	$wrapper_styles[] = 'padding: 20px';
+	$wrapper_styles[] = 'border-radius: 8px';
+}
+$wrapper_style_attr = ! empty( $wrapper_styles ) ? ' style="' . esc_attr( implode( '; ', $wrapper_styles ) ) . '"' : '';
+
+// Build header inline styles (alignment and font color only - background on wrapper).
 $header_styles = array();
 if ( ! empty( $content_alignment ) ) {
 	$header_styles[] = 'text-align: ' . esc_attr( $content_alignment );
@@ -51,26 +60,15 @@ if ( ! empty( $content_alignment ) ) {
 if ( ! empty( $font_color ) ) {
 	$header_styles[] = 'color: ' . esc_attr( $font_color );
 }
-if ( ! empty( $background_color ) ) {
-	$header_styles[] = 'background-color: ' . esc_attr( $background_color );
-	$header_styles[] = 'padding: 20px';
-	$header_styles[] = 'border-radius: 8px';
-	$header_styles[] = 'margin-bottom: 20px';
-}
 $header_style_attr = ! empty( $header_styles ) ? ' style="' . esc_attr( implode( '; ', $header_styles ) ) . '"' : '';
 
-// Build content style for list/grid (alignment, font color, background color).
+// Build content style for list/grid (alignment and font color only - background on wrapper).
 $content_styles = array();
 if ( ! empty( $content_alignment ) ) {
 	$content_styles[] = 'text-align: ' . esc_attr( $content_alignment );
 }
 if ( ! empty( $font_color ) ) {
 	$content_styles[] = 'color: ' . esc_attr( $font_color );
-}
-if ( ! empty( $background_color ) ) {
-	$content_styles[] = 'background-color: ' . esc_attr( $background_color );
-	$content_styles[] = 'padding: 20px';
-	$content_styles[] = 'border-radius: 8px';
 }
 $content_style_attr = ! empty( $content_styles ) ? ' style="' . esc_attr( implode( '; ', $content_styles ) ) . '"' : '';
 
@@ -142,17 +140,18 @@ get_header();
 			</nav>
 		<?php endif; ?>
 
-		<header class="page-header pdf-embed-seo-optimize-archive-header"<?php echo $header_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during construction. ?>>
-			<h1 class="page-title pdf-embed-seo-optimize-archive-title">
-				<?php echo esc_html( $archive_title ); ?>
-			</h1>
+		<div class="pdf-embed-seo-optimize-archive-content-wrapper"<?php echo $wrapper_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during construction. ?>>
+			<header class="page-header pdf-embed-seo-optimize-archive-header"<?php echo $header_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during construction. ?>>
+				<h1 class="page-title pdf-embed-seo-optimize-archive-title">
+					<?php echo esc_html( $archive_title ); ?>
+				</h1>
 
-			<?php if ( ! empty( $archive_desc ) ) : ?>
-				<div class="archive-description pdf-embed-seo-optimize-archive-description">
-					<p><?php echo esc_html( $archive_desc ); ?></p>
-				</div>
-			<?php endif; ?>
-		</header>
+				<?php if ( ! empty( $archive_desc ) ) : ?>
+					<div class="archive-description pdf-embed-seo-optimize-archive-description">
+						<p><?php echo esc_html( $archive_desc ); ?></p>
+					</div>
+				<?php endif; ?>
+			</header>
 
 		<?php if ( have_posts() ) : ?>
 
@@ -336,6 +335,7 @@ get_header();
 			</div>
 
 		<?php endif; ?>
+		</div><?php // Close .pdf-embed-seo-optimize-archive-content-wrapper. ?>
 
 	</main>
 </div>

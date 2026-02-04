@@ -341,8 +341,13 @@
     width: 100%;
 }
 
+/* Archive content wrapper - applies background color seamlessly to header + content */
+.pdf-embed-seo-optimize-archive-content-wrapper {
+    /* Default: no background, wrapper is transparent */
+}
+
 .pdf-embed-seo-optimize-archive-header {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     text-align: center;
 }
 
@@ -666,10 +671,14 @@
    ========================================================================== */
 
 .pdf-embed-seo-optimize-list-nav {
-    background: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+}
+
+/* Only apply default white background and shadow when no custom background is set */
+.pdf-embed-seo-optimize-archive-content-wrapper:not([style*="background"]) .pdf-embed-seo-optimize-list-nav {
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* List items inherit custom font color when set via inline style */
@@ -688,7 +697,7 @@
 }
 
 .pdf-embed-seo-optimize-list-item {
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     transition: background-color 0.2s;
     padding: 12px 20px;
 }
@@ -698,7 +707,7 @@
 }
 
 .pdf-embed-seo-optimize-list-item:hover {
-    background-color: #f8f9fa;
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 .pdf-embed-seo-optimize-list-link {
