@@ -49,11 +49,19 @@
 {% endif %}
 {% set header_style_attr = header_styles ? ' style="' ~ header_styles|join('; ') ~ '"' : '' %}
 
-{# Build list nav styles (alignment and font color - item background handled separately) #}
-{% set list_nav_styles = [] %}
-{% if content_alignment %}
-  {% set list_nav_styles = list_nav_styles|merge(['text-align: ' ~ content_alignment]) %}
+{# Build list wrapper styles for alignment (uses flexbox to position the list block) #}
+{% set list_wrapper_styles = [] %}
+{% set list_justify = 'center' %}
+{% if content_alignment == 'left' %}
+  {% set list_justify = 'flex-start' %}
+{% elseif content_alignment == 'right' %}
+  {% set list_justify = 'flex-end' %}
 {% endif %}
+{% set list_wrapper_styles = list_wrapper_styles|merge(['justify-content: ' ~ list_justify]) %}
+{% set list_wrapper_style_attr = list_wrapper_styles ? ' style="' ~ list_wrapper_styles|join('; ') ~ '"' : '' %}
+
+{# Build list nav styles (colors only - alignment handled by wrapper) #}
+{% set list_nav_styles = [] %}
 {% if font_color %}
   {% set list_nav_styles = list_nav_styles|merge(['color: ' ~ font_color]) %}
 {% endif %}
@@ -136,13 +144,15 @@
     {% if documents %}
       {% if display_style == 'list' %}
         {# List View - Simple accessible list #}
-        <nav class="pdf-embed-seo-list-nav"{{ list_nav_style_attr|raw }} aria-label="{{ 'PDF Documents List'|t }}">
-          <ul class="pdf-embed-seo-list" role="list">
-            {% for item in documents %}
-              {{ item }}
-            {% endfor %}
-          </ul>
-        </nav>
+        <div class="pdf-embed-seo-list-wrapper"{{ list_wrapper_style_attr|raw }}>
+          <nav class="pdf-embed-seo-list-nav"{{ list_nav_style_attr|raw }} aria-label="{{ 'PDF Documents List'|t }}">
+            <ul class="pdf-embed-seo-list" role="list">
+              {% for item in documents %}
+                {{ item }}
+              {% endfor %}
+            </ul>
+          </nav>
+        </div>{# End .pdf-embed-seo-list-wrapper #}
       {% else %}
         {# Grid View - Card layout with thumbnails #}
         <section class="pdf-embed-seo-grid"{{ grid_style_attr|raw }} aria-label="{{ 'PDF Documents Gallery'|t }}">
