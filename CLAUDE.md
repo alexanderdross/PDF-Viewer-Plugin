@@ -2,7 +2,7 @@
 
 A comprehensive PDF management solution available for WordPress and Drupal that uses Mozilla's PDF.js library to securely display PDFs with SEO optimization.
 
-**Current Version:** 1.2.8
+**Current Version:** 1.2.9
 **Platforms:** WordPress (Free & Premium), Drupal 10/11
 **License:** GPL v2 or later
 
@@ -727,7 +727,19 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 
 ## Changelog
 
-### 1.2.8 (Current)
+### 1.2.9 (Current)
+- **Drupal Module Critical Fixes (Code Review)**
+  - Performance: Removed entity saves during page views - views now tracked directly in analytics table
+  - Performance: Added cache tag invalidation for lists via entity insert/update/delete hooks
+  - Performance: Added cache metadata to PdfViewerBlock with tags, contexts, and max-age
+  - Security: Fixed Pathauto service dependency with graceful fallback
+  - Privacy: Added IP anonymization setting for GDPR compliance (enabled by default)
+- Archive page list view icon alignment fix
+  - Changed list links from `inline-flex` to `flex` so PDF icons align vertically
+- Boxed layout fix for grid and list views
+  - Added explicit width and box-sizing to content wrapper, grid, and list nav
+
+### 1.2.8
 - WordPress Premium Sitemap improvements
   - Changed sitemap URL from `/pdf-sitemap.xml` to `/pdf/sitemap.xml` to match documentation and Drupal
   - Added 301 redirect from legacy `/pdf-sitemap.xml` to new `/pdf/sitemap.xml` for backwards compatibility

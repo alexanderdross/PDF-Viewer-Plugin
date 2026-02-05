@@ -75,7 +75,17 @@ class PdfDocument extends ContentEntityBase implements PdfDocumentInterface {
 
     // Generate path alias from title if not set.
     if ($this->isNew() && !$this->get('path')->alias) {
-      $alias = '/pdf/' . \Drupal::service('pathauto.alias_cleaner')->cleanString($this->label());
+      // Use Pathauto's alias cleaner if available, otherwise use basic sanitization.
+      if (\Drupal::hasService('pathauto.alias_cleaner')) {
+        $clean_title = \Drupal::service('pathauto.alias_cleaner')->cleanString($this->label());
+      }
+      else {
+        // Fallback: basic URL-safe string generation.
+        $clean_title = preg_replace('/[^a-z0-9\-]/', '-', strtolower($this->label()));
+        $clean_title = preg_replace('/-+/', '-', $clean_title);
+        $clean_title = trim($clean_title, '-');
+      }
+      $alias = '/pdf/' . $clean_title;
       $this->get('path')->alias = $alias;
     }
   }

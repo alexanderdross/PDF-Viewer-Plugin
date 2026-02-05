@@ -96,24 +96,28 @@ class PdfApiController extends ControllerBase {
    *   JSON response.
    */
   public function trackView(PdfDocumentInterface $pdf_document, Request $request) {
-    // Increment view count.
-    $current_count = (int) $pdf_document->get('view_count')->value;
-    $new_count = $current_count + 1;
-    $pdf_document->set('view_count', $new_count);
-    $pdf_document->save();
+    // Track view in analytics table without entity save (performance optimization).
+    // Entity saves invalidate cache and cause performance issues under load.
+    $view_count = 0;
 
-    // Track in analytics table if available.
     if (\Drupal::database()->schema()->tableExists('pdf_embed_seo_analytics')) {
       try {
         \Drupal::database()->insert('pdf_embed_seo_analytics')
           ->fields([
             'pdf_id' => $pdf_document->id(),
-            'ip_address' => $request->getClientIp(),
-            'user_agent' => $request->headers->get('User-Agent'),
-            'referrer' => $request->headers->get('Referer'),
+            'ip_address' => _pdf_embed_seo_anonymize_ip($request->getClientIp()),
+            'user_agent' => substr($request->headers->get('User-Agent', ''), 0, 255),
+            'referrer' => substr($request->headers->get('Referer', ''), 0, 255),
             'created' => \Drupal::time()->getRequestTime(),
           ])
           ->execute();
+
+        // Get view count from analytics table.
+        $view_count = (int) \Drupal::database()->select('pdf_embed_seo_analytics', 'a')
+          ->condition('pdf_id', $pdf_document->id())
+          ->countQuery()
+          ->execute()
+          ->fetchField();
       }
       catch (\Exception $e) {
         // Log but don't fail.
@@ -124,11 +128,11 @@ class PdfApiController extends ControllerBase {
     }
 
     // Invoke hook for other modules.
-    \Drupal::moduleHandler()->invokeAll('pdf_embed_seo_view_tracked', [$pdf_document, $new_count]);
+    \Drupal::moduleHandler()->invokeAll('pdf_embed_seo_view_tracked', [$pdf_document, $view_count]);
 
     return new JsonResponse([
       'success' => TRUE,
-      'views' => $new_count,
+      'views' => $view_count,
     ]);
   }
 

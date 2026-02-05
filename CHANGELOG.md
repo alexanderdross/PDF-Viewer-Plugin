@@ -8,6 +8,24 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.2.9] - 2026-02-05
+
+### Fixed (Drupal Module - Critical Code Review Items)
+- **Performance: Removed entity saves during page views** - View tracking no longer saves the entity, preventing cache invalidation on every page view. Views are now tracked directly in the analytics table for optimal performance under load.
+- **Performance: Added cache tag invalidation for lists** - Implemented `hook_ENTITY_TYPE_insert/update/delete` to properly invalidate the `pdf_document_list` cache tag when documents are created, updated, or deleted.
+- **Performance: Added cache metadata to PdfViewerBlock** - Block now includes proper `#cache` configuration with tags, contexts, and max-age for intelligent caching decisions.
+- **Security: Fixed Pathauto service dependency** - Module now gracefully handles missing Pathauto service with a fallback URL-safe string generator, preventing fatal errors on sites without Pathauto installed.
+- **Privacy: Added IP anonymization for GDPR compliance** - New setting to anonymize IP addresses by zeroing the last octet (IPv4) or last 80 bits (IPv6). Enabled by default for GDPR compliance.
+
+### Changed
+- Version bump to 1.2.9 across all modules (WordPress Free, WordPress Premium, Drupal Free, Drupal Premium)
+
+### Added
+- **GDPR IP Anonymization Setting** - New checkbox in Drupal settings form to enable/disable IP anonymization for analytics tracking
+- **Cache Tag Invalidation Hooks** - `pdf_embed_seo_pdf_document_insert()`, `pdf_embed_seo_pdf_document_update()`, `pdf_embed_seo_pdf_document_delete()` hooks for proper cache management
+
+---
+
 ## [1.2.8] - 2026-02-04
 
 ### Fixed

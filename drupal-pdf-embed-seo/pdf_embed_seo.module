@@ -123,15 +123,29 @@ function pdf_embed_seo_entity_extra_field_info() {
  * Implements hook_ENTITY_TYPE_view() for pdf_document entities.
  */
 function pdf_embed_seo_pdf_document_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
-  // Increment view count.
+  // Track view asynchronously to avoid entity saves during rendering.
+  // This prevents cache invalidation on every page view.
   if ($view_mode === 'full') {
-    $view_count = $entity->get('view_count')->value ?? 0;
-    $entity->set('view_count', $view_count + 1);
-    $entity->save();
-
-    // Track analytics if premium is enabled.
-    if (\Drupal::moduleHandler()->moduleExists('pdf_embed_seo_premium')) {
-      \Drupal::service('pdf_embed_seo.analytics_tracker')->trackView($entity);
+    // Queue view tracking instead of saving entity directly.
+    // The view count is tracked in the analytics table for performance.
+    if (\Drupal::database()->schema()->tableExists('pdf_embed_seo_analytics')) {
+      try {
+        \Drupal::database()->insert('pdf_embed_seo_analytics')
+          ->fields([
+            'pdf_id' => $entity->id(),
+            'ip_address' => _pdf_embed_seo_anonymize_ip(\Drupal::request()->getClientIp()),
+            'user_agent' => substr(\Drupal::request()->headers->get('User-Agent', ''), 0, 255),
+            'referrer' => substr(\Drupal::request()->headers->get('Referer', ''), 0, 255),
+            'created' => \Drupal::time()->getRequestTime(),
+          ])
+          ->execute();
+      }
+      catch (\Exception $e) {
+        // Log but don't fail - analytics should not break page rendering.
+        \Drupal::logger('pdf_embed_seo')->warning('Failed to track view: @message', [
+          '@message' => $e->getMessage(),
+        ]);
+      }
     }
   }
 
@@ -524,4 +538,64 @@ function template_preprocess_pdf_viewer(array &$variables) {
   $variables['attributes']['data-pdf-url'] = $variables['pdf_url'];
   $variables['attributes']['data-allow-download'] = $variables['allow_download'] ? 'true' : 'false';
   $variables['attributes']['data-allow-print'] = $variables['allow_print'] ? 'true' : 'false';
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert() for pdf_document entities.
+ */
+function pdf_embed_seo_pdf_document_insert(EntityInterface $entity) {
+  // Invalidate archive page cache when a new document is created.
+  \Drupal\Core\Cache\Cache::invalidateTags(['pdf_document_list']);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update() for pdf_document entities.
+ */
+function pdf_embed_seo_pdf_document_update(EntityInterface $entity) {
+  // Invalidate archive page cache when a document is updated.
+  \Drupal\Core\Cache\Cache::invalidateTags(['pdf_document_list']);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete() for pdf_document entities.
+ */
+function pdf_embed_seo_pdf_document_delete(EntityInterface $entity) {
+  // Invalidate archive page cache when a document is deleted.
+  \Drupal\Core\Cache\Cache::invalidateTags(['pdf_document_list']);
+}
+
+/**
+ * Anonymize IP address for GDPR compliance.
+ *
+ * @param string $ip
+ *   The IP address to anonymize.
+ *
+ * @return string
+ *   The anonymized IP address.
+ */
+function _pdf_embed_seo_anonymize_ip($ip) {
+  $config = \Drupal::config('pdf_embed_seo.settings');
+  $anonymize = $config->get('anonymize_ip') ?? TRUE;
+
+  if (!$anonymize || empty($ip)) {
+    return $ip;
+  }
+
+  // Check if IPv6.
+  if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+    // Zero out last 80 bits (keep first 48 bits).
+    $parts = explode(':', $ip);
+    if (count($parts) >= 3) {
+      return $parts[0] . ':' . $parts[1] . ':' . $parts[2] . ':0:0:0:0:0';
+    }
+  }
+
+  // IPv4: Zero out last octet.
+  $parts = explode('.', $ip);
+  if (count($parts) === 4) {
+    $parts[3] = '0';
+    return implode('.', $parts);
+  }
+
+  return $ip;
 }

@@ -51,6 +51,13 @@ class PdfEmbedSeoSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('default_allow_print') ?? FALSE,
     ];
 
+    $form['general']['anonymize_ip'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Anonymize IP addresses (GDPR compliance)'),
+      '#description' => $this->t('Anonymize IP addresses in analytics by zeroing the last octet (IPv4) or last 80 bits (IPv6). Recommended for GDPR compliance.'),
+      '#default_value' => $config->get('anonymize_ip') ?? TRUE,
+    ];
+
     // Viewer settings.
     $form['viewer'] = [
       '#type' => 'details',
@@ -340,6 +347,7 @@ class PdfEmbedSeoSettingsForm extends ConfigFormBase {
     // General settings.
     $config->set('default_allow_download', $form_state->getValue('default_allow_download'));
     $config->set('default_allow_print', $form_state->getValue('default_allow_print'));
+    $config->set('anonymize_ip', $form_state->getValue('anonymize_ip'));
 
     // Viewer settings.
     $config->set('viewer_theme', $form_state->getValue('viewer_theme'));

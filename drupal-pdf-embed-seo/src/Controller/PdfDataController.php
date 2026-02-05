@@ -51,15 +51,25 @@ class PdfDataController extends ControllerBase {
       throw new NotFoundHttpException('PDF file not accessible.');
     }
 
-    // Increment view count.
-    $pdf_document->incrementViewCount();
-    $pdf_document->save();
-
-    // Track analytics if premium is enabled.
-    if ($this->moduleHandler()->moduleExists('pdf_embed_seo_premium')) {
-      $config = $this->config('pdf_embed_seo.settings');
-      if ($config->get('enable_analytics')) {
-        \Drupal::service('pdf_embed_seo.analytics_tracker')->trackView($pdf_document);
+    // Track view in analytics table without entity save (performance optimization).
+    // Entity saves invalidate cache and cause performance issues under load.
+    if (\Drupal::database()->schema()->tableExists('pdf_embed_seo_analytics')) {
+      try {
+        \Drupal::database()->insert('pdf_embed_seo_analytics')
+          ->fields([
+            'pdf_id' => $pdf_document->id(),
+            'ip_address' => _pdf_embed_seo_anonymize_ip(\Drupal::request()->getClientIp()),
+            'user_agent' => substr(\Drupal::request()->headers->get('User-Agent', ''), 0, 255),
+            'referrer' => substr(\Drupal::request()->headers->get('Referer', ''), 0, 255),
+            'created' => \Drupal::time()->getRequestTime(),
+          ])
+          ->execute();
+      }
+      catch (\Exception $e) {
+        // Log but don't fail.
+        \Drupal::logger('pdf_embed_seo')->warning('Failed to track analytics: @message', [
+          '@message' => $e->getMessage(),
+        ]);
       }
     }
 

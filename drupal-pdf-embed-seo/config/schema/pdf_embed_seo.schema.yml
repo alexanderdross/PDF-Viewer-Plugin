@@ -10,6 +10,9 @@ pdf_embed_seo.settings:
     default_allow_print:
       type: boolean
       label: 'Allow printing by default'
+    anonymize_ip:
+      type: boolean
+      label: 'Anonymize IP addresses for GDPR compliance'
     auto_generate_thumbnails:
       type: boolean
       label: 'Auto-generate thumbnails'
