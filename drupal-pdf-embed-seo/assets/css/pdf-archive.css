@@ -119,6 +119,8 @@
 /* Archive content wrapper - applies background color seamlessly to header + content */
 .pdf-embed-seo-archive-content-wrapper {
   /* Default: no background, wrapper is transparent */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .pdf-embed-seo-archive-header {
@@ -172,6 +174,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 30px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Card Styles */
@@ -334,6 +338,8 @@
   margin: 0;
   border-radius: 8px;
   overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* List items inherit custom font color when set via inline style on nav */
@@ -379,7 +385,7 @@
 }
 
 .pdf-embed-seo-list-link {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 8px;
   color: #0066cc;
