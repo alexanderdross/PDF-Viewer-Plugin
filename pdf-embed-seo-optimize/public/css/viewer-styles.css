@@ -336,9 +336,12 @@
     box-sizing: border-box;
 }
 
-/* Boxed layout - override sidebar width rules to maintain max-width constraint */
-.post-type-archive-pdf_document .pdf-embed-seo-optimize-archive:not(.pdf-embed-seo-optimize-archive-full-width) {
+/* Boxed layout - use ID+class selector to override sidebar width rules and maintain max-width constraint */
+.post-type-archive-pdf_document #primary.pdf-embed-seo-optimize-archive:not(.pdf-embed-seo-optimize-archive-full-width),
+.post-type-archive-pdf_document .content-area.pdf-embed-seo-optimize-archive:not(.pdf-embed-seo-optimize-archive-full-width) {
     max-width: 1200px !important;
+    width: 100%;
+    margin: 0 auto !important;
 }
 
 /* Full-width archive layout */
@@ -680,10 +683,18 @@
    List View (Archive)
    ========================================================================== */
 
+/* Wrapper for positioning the list block (left, center, right) */
+.pdf-embed-seo-optimize-list-wrapper {
+    display: flex;
+    width: 100%;
+    /* justify-content set via inline style: flex-start, center, or flex-end */
+}
+
 .pdf-embed-seo-optimize-list-nav {
     border-radius: 8px;
     overflow: hidden;
     width: 100%;
+    max-width: 800px; /* Constrain width so list can be positioned within wrapper */
     box-sizing: border-box;
 }
 

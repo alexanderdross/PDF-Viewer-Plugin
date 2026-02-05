@@ -158,11 +158,19 @@ get_header();
 			<?php if ( 'list' === $display_style ) : ?>
 				<?php
 				// List View - Simple clean list with PDF icon and title only.
-				// Build list nav styles.
-				$list_nav_styles = array();
-				if ( ! empty( $content_alignment ) ) {
-					$list_nav_styles[] = 'text-align: ' . esc_attr( $content_alignment );
+				// Build list wrapper styles for alignment (uses flexbox to position the list block).
+				$list_wrapper_styles = array();
+				$list_justify        = 'center';
+				if ( 'left' === $content_alignment ) {
+					$list_justify = 'flex-start';
+				} elseif ( 'right' === $content_alignment ) {
+					$list_justify = 'flex-end';
 				}
+				$list_wrapper_styles[]   = 'justify-content: ' . esc_attr( $list_justify );
+				$list_wrapper_style_attr = ' style="' . esc_attr( implode( '; ', $list_wrapper_styles ) ) . '"';
+
+				// Build list nav styles (colors only - alignment handled by wrapper).
+				$list_nav_styles = array();
 				if ( ! empty( $item_background_color ) ) {
 					$list_nav_styles[] = 'background-color: ' . esc_attr( $item_background_color );
 				}
@@ -171,6 +179,7 @@ get_header();
 				}
 				$list_nav_style_attr = ! empty( $list_nav_styles ) ? ' style="' . esc_attr( implode( '; ', $list_nav_styles ) ) . '"' : '';
 				?>
+				<div class="pdf-embed-seo-optimize-list-wrapper"<?php echo $list_wrapper_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during construction. ?>>
 				<nav class="pdf-embed-seo-optimize-list-nav"<?php echo $list_nav_style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during construction. ?> aria-label="<?php esc_attr_e( 'PDF Documents List', 'pdf-embed-seo-optimize' ); ?>">
 					<ul class="pdf-embed-seo-optimize-list" role="list">
 						<?php
@@ -202,6 +211,7 @@ get_header();
 						<?php endwhile; ?>
 					</ul>
 				</nav>
+				</div><?php // Close .pdf-embed-seo-optimize-list-wrapper. ?>
 
 			<?php else : ?>
 				<?php
