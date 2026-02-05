@@ -694,8 +694,12 @@
     border-radius: 8px;
     overflow: hidden;
     width: 100%;
-    max-width: 800px; /* Constrain width so list can be positioned within wrapper */
     box-sizing: border-box;
+}
+
+/* In full-width layout, constrain list width for readability */
+.pdf-embed-seo-optimize-archive-full-width .pdf-embed-seo-optimize-list-nav {
+    max-width: 800px;
 }
 
 /* Only apply default white background and shadow when no custom background is set */
