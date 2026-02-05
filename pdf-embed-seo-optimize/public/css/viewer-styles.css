@@ -683,10 +683,18 @@
    List View (Archive)
    ========================================================================== */
 
+/* Wrapper for positioning the list block (left, center, right) */
+.pdf-embed-seo-optimize-list-wrapper {
+    display: flex;
+    width: 100%;
+    /* justify-content set via inline style: flex-start, center, or flex-end */
+}
+
 .pdf-embed-seo-optimize-list-nav {
     border-radius: 8px;
     overflow: hidden;
     width: 100%;
+    max-width: 800px; /* Constrain width so list can be positioned within wrapper */
     box-sizing: border-box;
 }
 
