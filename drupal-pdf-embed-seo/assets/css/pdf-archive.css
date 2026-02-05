@@ -346,8 +346,12 @@
   border-radius: 8px;
   overflow: hidden;
   width: 100%;
-  max-width: 800px; /* Constrain width so list can be positioned within wrapper */
   box-sizing: border-box;
+}
+
+/* In full-width layout, constrain list width for readability */
+.pdf-embed-seo-archive-full-width .pdf-embed-seo-list-nav {
+  max-width: 800px;
 }
 
 /* List items inherit custom font color when set via inline style on nav */
