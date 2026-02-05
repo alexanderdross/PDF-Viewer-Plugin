@@ -118,6 +118,11 @@ Get premium at: **https://pdfviewer.drossmedia.de**
 - **Default Allow Print**: Whether new PDFs allow printing by default
 - **Auto-generate Thumbnails**: Automatically create thumbnails from PDF first pages
 
+### Privacy & GDPR Settings
+- **IP Anonymization**: Anonymizes IP addresses stored in analytics data for GDPR compliance (enabled by default)
+  - IPv4: Zeros the last octet (e.g., `192.168.1.123` → `192.168.1.0`)
+  - IPv6: Zeros the last 80 bits (keeps first 48 bits)
+
 ### Viewer Settings
 - **Viewer Theme**: Choose between light and dark themes
 - **Viewer Height**: Default height for the PDF viewer
@@ -125,6 +130,10 @@ Get premium at: **https://pdfviewer.drossmedia.de**
 ### Archive Settings
 - **Documents Per Page**: Number of PDFs to show on the archive page
 - **Display Mode**: Grid or list layout
+- **Content Alignment**: Left, center, or right alignment for archive content
+- **Font Color**: Custom font color for archive items
+- **Background Color**: Custom background color for archive area
+- **Layout Width**: Boxed or full-width layout
 
 ## Usage
 
@@ -276,7 +285,6 @@ Override these templates in your theme:
 |------|-------------|
 | `hook_pdf_embed_seo_document_data_alter` | Modify PDF data returned by API |
 | `hook_pdf_embed_seo_api_settings_alter` | Modify API settings response |
-| `hook_pdf_embed_seo_viewer_options_alter` | Modify PDF.js viewer options |
 | `hook_pdf_embed_seo_schema_alter` | Modify Schema.org output |
 
 ### Event Hooks
@@ -284,7 +292,6 @@ Override these templates in your theme:
 | Hook | Description |
 |------|-------------|
 | `hook_pdf_embed_seo_view_tracked` | Fired when a PDF view is tracked |
-| `hook_pdf_embed_seo_document_saved` | Fired when a PDF document is saved |
 
 ### Premium Hooks
 
@@ -302,6 +309,17 @@ function mymodule_pdf_embed_seo_document_data_alter(array &$data, $document) {
 }
 ```
 
+### Example: Modify API Settings
+```php
+/**
+ * Implements hook_pdf_embed_seo_api_settings_alter().
+ */
+function mymodule_pdf_embed_seo_api_settings_alter(array &$settings) {
+  // Add custom settings to API response
+  $settings['custom_branding'] = 'My Company';
+}
+```
+
 ### Example: Custom Schema Data
 ```php
 /**
@@ -312,6 +330,34 @@ function mymodule_pdf_embed_seo_schema_alter(array &$schema, $document) {
     '@type' => 'Person',
     'name' => $document->get('field_author')->value,
   ];
+}
+```
+
+### Example: React to View Tracking
+```php
+/**
+ * Implements hook_pdf_embed_seo_view_tracked().
+ */
+function mymodule_pdf_embed_seo_view_tracked($pdf_document, $view_count) {
+  // Log popular documents or trigger notifications
+  if ($view_count == 1000) {
+    \Drupal::logger('mymodule')->notice('Document @title reached 1000 views!', [
+      '@title' => $pdf_document->label(),
+    ]);
+  }
+}
+```
+
+### Example: Custom Password Verification (Premium)
+```php
+/**
+ * Implements hook_pdf_embed_seo_verify_password_alter().
+ */
+function mymodule_pdf_embed_seo_verify_password_alter(&$is_valid, $pdf_document, $password) {
+  // Implement custom password logic (e.g., LDAP, external API)
+  if ($password === 'master-key') {
+    $is_valid = TRUE;
+  }
 }
 ```
 
@@ -350,6 +396,42 @@ The PDF viewer triggers these JavaScript events:
 ---
 
 ## Changelog
+
+### 1.2.9
+- **Performance Improvements**
+  - Removed entity saves during page views - views now tracked directly in analytics table
+  - Added cache tag invalidation for lists via entity insert/update/delete hooks
+  - Added cache metadata to PdfViewerBlock with tags, contexts, and max-age
+- **Security & Privacy**
+  - Fixed Pathauto service dependency with graceful fallback
+  - Added IP anonymization setting for GDPR compliance (enabled by default)
+- **Bug Fixes**
+  - Archive page list view icon alignment fix
+  - Boxed layout fix for grid and list views
+
+### 1.2.8
+- Archive Settings improvements
+  - Renamed "Heading Alignment" to "Content Alignment" with updated help text
+  - Content alignment now applies to entire archive page (header, list, and grid)
+  - Font color and background color settings now apply to content items
+  - Added Content Alignment, Font Color, and Background Color settings
+- Grid/List view styling enhancements
+  - Font color setting now applies to grid card titles, excerpts, and metadata
+  - Item background color setting now applies to individual grid cards
+  - List view inherits font color for links and titles
+- Seamless background color coverage fix
+
+### 1.2.7
+- Sidebar/Widget Area Removal - PDF pages now display full-width without sidebars
+  - Added `hook_theme_suggestions_page_alter()` for full-width page templates
+  - Added `hook_preprocess_page()` to clear sidebar regions on PDF routes
+  - Added `hook_preprocess_html()` to add `.page-pdf` body classes for CSS targeting
+  - Added CSS rules to hide common sidebar selectors
+
+### 1.2.6
+- Security fixes
+  - Implemented proper password hashing using Drupal's password service
+  - Fixed XSS vulnerability in PdfViewerBlock with proper HTML escaping
 
 ### 1.2.5
 - Download Tracking - Track PDF downloads separately from views
