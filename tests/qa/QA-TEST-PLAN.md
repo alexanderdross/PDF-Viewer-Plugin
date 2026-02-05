@@ -1,6 +1,6 @@
 # QA Test Plan - PDF Embed & SEO Optimize
 
-**Version:** 1.2.8
+**Version:** 1.2.9
 **Date:** 2026-02-02
 **Updated:** 2026-02-02 (Direct File Access Protection, Archive Styling, REST API Fix)
 **Modules:** WP Free, WP Premium, Drupal Free, Drupal Premium
@@ -515,7 +515,7 @@
 
 ---
 
-## Direct File Access Protection Tests (v1.2.8)
+## Direct File Access Protection Tests (v1.2.9)
 
 | ID | Test Case | Steps | Expected Result | Status |
 |----|-----------|-------|-----------------|--------|
@@ -643,7 +643,7 @@ Run after each code change:
 - [ ] Sidebar removal tests passed (v1.2.7)
 - [ ] Archive styling settings tests passed (v1.2.7)
 - [ ] REST API security fix tests passed (v1.2.7)
-- [ ] Direct file access protection tests passed (v1.2.8)
+- [ ] Direct file access protection tests passed (v1.2.9)
 - [ ] Regression tests passed
 
 **Sign-off:**
@@ -656,4 +656,4 @@ Run after each code change:
 
 ---
 
-*PDF Embed & SEO Optimize v1.2.8 - QA Test Plan*
+*PDF Embed & SEO Optimize v1.2.9 - QA Test Plan*

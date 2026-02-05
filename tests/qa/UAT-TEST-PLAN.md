@@ -1,6 +1,6 @@
 # User Acceptance Testing (UAT) Plan
 
-## PDF Embed & SEO Optimize - Version 1.2.8
+## PDF Embed & SEO Optimize - Version 1.2.9
 
 **Date:** 2026-02-02
 **Updated:** 2026-02-04 (Grid/List Styling Enhancements)
@@ -703,7 +703,7 @@ This UAT plan validates that the PDF Embed & SEO Optimize plugin meets business 
 
 ---
 
-## Version 1.2.8 User Stories
+## Version 1.2.9 User Stories
 
 ### US-GRID-001: Grid View Styling (WordPress & Drupal)
 **As a** site administrator
@@ -799,4 +799,4 @@ This UAT plan validates that the PDF Embed & SEO Optimize plugin meets business 
 
 ---
 
-*PDF Embed & SEO Optimize v1.2.8 - UAT Test Plan*
+*PDF Embed & SEO Optimize v1.2.9 - UAT Test Plan*
