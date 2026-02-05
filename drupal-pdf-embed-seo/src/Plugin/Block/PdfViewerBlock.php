@@ -188,6 +188,13 @@ class PdfViewerBlock extends BlockBase implements ContainerFactoryPluginInterfac
       ],
     ];
 
+    // Add cache metadata for proper caching behavior.
+    $build['#cache'] = [
+      'tags' => $pdf_document->getCacheTags(),
+      'contexts' => ['user.permissions', 'session'],
+      'max-age' => 3600,
+    ];
+
     return $build;
   }
 

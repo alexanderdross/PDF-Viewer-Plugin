@@ -2,7 +2,7 @@
 
 A comprehensive PDF management solution available for WordPress, Drupal, and React/Next.js that uses Mozilla's PDF.js library to securely display PDFs with SEO optimization.
 
-**Current Version:** 1.2.7 (WP/Drupal), 1.3.0 (React - Planned)
+**Current Version:** 1.2.8 (WP/Drupal), 1.3.0 (React - Planned)
 **Platforms:** WordPress (Free & Premium), Drupal 10/11, React/Next.js
 **License:** GPL v2 or later (WP/Drupal), MIT (React Free), Commercial (React Premium)
 
@@ -737,7 +737,10 @@ interface PdfProviderProps {
 - API clients for WordPress and Drupal backends
 - Standalone mode (no backend required)
 
-### 1.2.7 (Current - WP/Drupal)
+### 1.2.8 (Current - WP/Drupal)
+- Version bump to 1.2.8 across all modules
+
+### 1.2.7
 - Sidebar/Widget Area Removal - PDF pages now display full-width
 - Archive Page Styling Settings (WordPress)
 - Fix "Security check failed" error on cached pages

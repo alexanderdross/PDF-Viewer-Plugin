@@ -350,6 +350,8 @@
 /* Archive content wrapper - applies background color seamlessly to header + content */
 .pdf-embed-seo-optimize-archive-content-wrapper {
     /* Default: no background, wrapper is transparent */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .pdf-embed-seo-optimize-archive-header {
@@ -372,6 +374,8 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 25px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* Card */
@@ -679,6 +683,8 @@
 .pdf-embed-seo-optimize-list-nav {
     border-radius: 8px;
     overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* Only apply default white background and shadow when no custom background is set */
@@ -719,7 +725,7 @@
 }
 
 .pdf-embed-seo-optimize-list-link {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 10px;
     color: #333;
