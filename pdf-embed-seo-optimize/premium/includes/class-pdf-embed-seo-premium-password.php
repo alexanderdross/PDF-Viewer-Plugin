@@ -293,6 +293,16 @@ class PDF_Embed_SEO_Premium_Password {
 	 * @return string
 	 */
 	public static function get_password_form( $post_id ) {
+		// Enqueue premium styles for password form.
+		if ( defined( 'PDF_EMBED_SEO_PREMIUM_URL' ) && defined( 'PDF_EMBED_SEO_PREMIUM_VERSION' ) ) {
+			wp_enqueue_style(
+				'pdf-embed-seo-premium-viewer',
+				PDF_EMBED_SEO_PREMIUM_URL . 'assets/css/premium-viewer.css',
+				array(),
+				PDF_EMBED_SEO_PREMIUM_VERSION
+			);
+		}
+
 		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
 		$error = apply_filters( 'pdf_embed_seo_password_error', false );
 

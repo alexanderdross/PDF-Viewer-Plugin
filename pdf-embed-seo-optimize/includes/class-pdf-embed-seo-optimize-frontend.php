@@ -288,6 +288,13 @@ class PDF_Embed_SEO_Frontend {
 	 * @return string
 	 */
 	public static function get_viewer_html( $post_id ) {
+		// Check password protection (Premium feature).
+		if ( class_exists( 'PDF_Embed_SEO_Premium_Password' ) ) {
+			if ( PDF_Embed_SEO_Premium_Password::is_protected( $post_id ) && ! PDF_Embed_SEO_Premium_Password::has_access( $post_id ) ) {
+				return PDF_Embed_SEO_Premium_Password::get_password_form( $post_id );
+			}
+		}
+
 		$allow_download = PDF_Embed_SEO_Post_Type::is_download_allowed( $post_id );
 		$allow_print    = PDF_Embed_SEO_Post_Type::is_print_allowed( $post_id );
 		$viewer_theme   = PDF_Embed_SEO::get_setting( 'viewer_theme', 'light' );

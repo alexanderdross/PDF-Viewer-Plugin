@@ -638,7 +638,8 @@ class PDF_Embed_SEO_Premium_REST_API {
 		}
 
 		// Check if password protection is enabled.
-		$is_protected    = get_post_meta( $post_id, '_pdf_password_protected', true );
+		// Use the same meta keys as PDF_Embed_SEO_Premium_Password class.
+		$is_protected    = get_post_meta( $post_id, '_pdf_password_enabled', true );
 		$stored_password = get_post_meta( $post_id, '_pdf_password', true );
 
 		if ( ! $is_protected ) {

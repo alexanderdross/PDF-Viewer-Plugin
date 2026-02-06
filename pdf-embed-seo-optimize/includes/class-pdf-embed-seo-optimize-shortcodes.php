@@ -66,6 +66,22 @@ class PDF_Embed_SEO_Shortcodes {
 			return '<p class="pdf-embed-seo-optimize-error">' . esc_html__( 'No PDF file attached to this document.', 'pdf-embed-seo-optimize' ) . '</p>';
 		}
 
+		// Check password protection (Premium feature) - show form instead of viewer.
+		if ( class_exists( 'PDF_Embed_SEO_Premium_Password' ) ) {
+			if ( PDF_Embed_SEO_Premium_Password::is_protected( $post_id ) && ! PDF_Embed_SEO_Premium_Password::has_access( $post_id ) ) {
+				// Enqueue premium styles for password form.
+				if ( defined( 'PDF_EMBED_SEO_PREMIUM_URL' ) && defined( 'PDF_EMBED_SEO_PREMIUM_VERSION' ) ) {
+					wp_enqueue_style(
+						'pdf-embed-seo-premium-viewer',
+						PDF_EMBED_SEO_PREMIUM_URL . 'assets/css/premium-viewer.css',
+						array(),
+						PDF_EMBED_SEO_PREMIUM_VERSION
+					);
+				}
+				return PDF_Embed_SEO_Premium_Password::get_password_form( $post_id );
+			}
+		}
+
 		// Enqueue scripts.
 		$this->enqueue_viewer_scripts( $post_id );
 
