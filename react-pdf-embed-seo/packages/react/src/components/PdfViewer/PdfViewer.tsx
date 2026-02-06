@@ -307,10 +307,32 @@ export const PdfViewer = forwardRef<HTMLDivElement, PdfViewerProps>(
     }, [src, allowDownload, apiClient, isPremium]);
 
     // Print handler
+    // Opens the PDF in a new window for native browser printing.
+    // This provides better quality on iOS/Safari and all platforms
+    // compared to printing the canvas element directly.
     const handlePrint = useCallback(() => {
       if (!allowPrint) return;
-      window.print();
-    }, [allowPrint]);
+
+      const url = typeof src === 'string' ? src : src.pdfUrl;
+      if (!url) {
+        console.warn('PDF URL not available for printing');
+        return;
+      }
+
+      // Open PDF in new window for native printing (better quality, especially on iOS)
+      const printWindow = window.open(url, '_blank');
+      if (printWindow) {
+        printWindow.addEventListener('load', () => {
+          // Delay for Safari/iOS compatibility
+          setTimeout(() => {
+            printWindow.print();
+          }, 500);
+        });
+      } else {
+        // Fallback if popup blocked - try direct print
+        window.print();
+      }
+    }, [allowPrint, src]);
 
     // CSS classes
     const themeClass =
