@@ -46,18 +46,23 @@
 .pdf-embed-seo-optimize-toolbar-left,
 .pdf-embed-seo-optimize-toolbar-center,
 .pdf-embed-seo-optimize-toolbar-right {
-    display: flex;
+    display: flex !important;
+    visibility: visible !important;
     align-items: center;
     gap: 8px;
 }
 
 /* Toolbar Buttons */
 .pdf-embed-seo-optimize-btn {
-    display: inline-flex;
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
     align-items: center;
     justify-content: center;
     width: 32px;
     height: 32px;
+    min-width: 32px;
+    min-height: 32px;
     padding: 0;
     border: none;
     border-radius: 4px;
@@ -87,9 +92,12 @@
 }
 
 .pdf-embed-seo-optimize-btn .dashicons {
+    display: inline-block !important;
+    visibility: visible !important;
     font-size: 20px;
     width: 20px;
     height: 20px;
+    line-height: 1;
 }
 
 /* Page Navigation */
@@ -566,6 +574,7 @@
 @media screen and (max-width: 768px) {
     .pdf-embed-seo-optimize-toolbar {
         padding: 10px;
+        justify-content: center;
     }
 
     .pdf-embed-seo-optimize-toolbar-left,
@@ -595,6 +604,91 @@
 
     .pdf-embed-seo-optimize-title {
         font-size: 22px;
+    }
+}
+
+/* Small mobile - compact toolbar to fit all buttons */
+@media screen and (max-width: 480px) {
+    .pdf-embed-seo-optimize-toolbar {
+        padding: 8px;
+        gap: 6px;
+    }
+
+    .pdf-embed-seo-optimize-toolbar-left,
+    .pdf-embed-seo-optimize-toolbar-center,
+    .pdf-embed-seo-optimize-toolbar-right {
+        gap: 4px;
+    }
+
+    /* Smaller buttons on mobile */
+    .pdf-embed-seo-optimize-btn {
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+        min-height: 28px;
+    }
+
+    .pdf-embed-seo-optimize-btn .dashicons {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+    }
+
+    /* Smaller page input */
+    .pdf-embed-seo-optimize-page-input {
+        width: 40px;
+        height: 24px;
+        padding: 2px 4px;
+        font-size: 12px;
+    }
+
+    .pdf-embed-seo-optimize-page-info,
+    .pdf-embed-seo-optimize-zoom-level {
+        font-size: 12px;
+    }
+}
+
+/* Extra small mobile - ensure buttons are always visible */
+@media screen and (max-width: 360px) {
+    .pdf-embed-seo-optimize-toolbar {
+        padding: 6px;
+        gap: 4px;
+    }
+
+    .pdf-embed-seo-optimize-toolbar-left,
+    .pdf-embed-seo-optimize-toolbar-center,
+    .pdf-embed-seo-optimize-toolbar-right {
+        gap: 2px;
+    }
+
+    /* Even smaller buttons for very small screens */
+    .pdf-embed-seo-optimize-btn {
+        width: 26px;
+        height: 26px;
+        min-width: 26px;
+        min-height: 26px;
+    }
+
+    .pdf-embed-seo-optimize-btn .dashicons {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+    }
+
+    /* Hide zoom level text to save space */
+    .pdf-embed-seo-optimize-zoom-level {
+        display: none;
+    }
+
+    /* Smaller page input */
+    .pdf-embed-seo-optimize-page-input {
+        width: 36px;
+        height: 22px;
+        font-size: 11px;
+    }
+
+    .pdf-embed-seo-optimize-page-info {
+        font-size: 11px;
     }
 }
 
