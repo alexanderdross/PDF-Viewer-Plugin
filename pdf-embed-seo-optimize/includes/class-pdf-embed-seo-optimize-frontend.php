@@ -90,11 +90,14 @@ class PDF_Embed_SEO_Frontend {
 			'pdfjsLib.GlobalWorkerOptions.workerSrc = "' . esc_js( PDF_EMBED_SEO_PLUGIN_URL . 'assets/pdfjs/pdf.worker.min.js' ) . '";'
 		);
 
+		// Enqueue dashicons on frontend (required for toolbar button icons).
+		wp_enqueue_style( 'dashicons' );
+
 		// Viewer styles.
 		wp_enqueue_style(
 			'pdf-embed-seo-optimize-viewer',
 			PDF_EMBED_SEO_PLUGIN_URL . 'public/css/viewer-styles.css',
-			array(),
+			array( 'dashicons' ),
 			PDF_EMBED_SEO_VERSION
 		);
 
