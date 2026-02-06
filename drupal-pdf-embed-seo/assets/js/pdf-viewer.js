@@ -375,13 +375,35 @@
 
   /**
    * Print the PDF.
+   *
+   * Opens the PDF in a new window for native browser printing.
+   * This provides better quality on iOS/Safari and all platforms
+   * compared to printing the canvas element directly.
    */
   Drupal.pdfEmbedSeo.Viewer.prototype.printPdf = function () {
     if (!this.options.allowPrint) {
       return;
     }
 
-    window.print();
+    var pdfUrl = this.options.pdfUrl;
+    if (!pdfUrl) {
+      console.warn('PDF URL not available for printing');
+      return;
+    }
+
+    // Open PDF in new window for native printing (better quality, especially on iOS)
+    var printWindow = window.open(pdfUrl, '_blank');
+    if (printWindow) {
+      printWindow.addEventListener('load', function () {
+        // Delay for Safari/iOS compatibility
+        setTimeout(function () {
+          printWindow.print();
+        }, 500);
+      });
+    } else {
+      // Fallback if popup blocked - try direct print
+      window.print();
+    }
   };
 
   /**

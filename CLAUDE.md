@@ -2,7 +2,7 @@
 
 A comprehensive PDF management solution available for WordPress and Drupal that uses Mozilla's PDF.js library to securely display PDFs with SEO optimization.
 
-**Current Version:** 1.2.9
+**Current Version:** 1.2.10
 **Platforms:** WordPress (Free & Premium), Drupal 10/11
 **License:** GPL v2 or later
 
@@ -727,7 +727,23 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 
 ## Changelog
 
-### 1.2.9 (Current)
+### 1.2.10 (Current)
+- **iOS Print Support Improvements**
+  - Drupal: Changed print implementation to open PDF in new window for native browser printing (matches WordPress approach)
+  - React/Next.js: Changed print implementation to open PDF in new window for native browser printing
+  - Added 500ms delay for Safari/iOS compatibility before triggering print dialog
+  - Added fallback to canvas print if popup is blocked
+- **Comprehensive Print CSS (All Platforms)**
+  - Added `@page` rules for proper A4 portrait sizing and margins
+  - Added `-webkit-print-color-adjust` and `print-color-adjust` for proper color printing
+  - Added `page-break-inside: avoid` and `break-inside: avoid` for canvas elements
+  - Hide all toolbar, control, loading, and error elements in print output
+  - Remove decorative styles (borders, shadows, backgrounds) for clean print output
+  - WordPress: Enhanced existing print CSS with canvas optimization and page-break handling
+  - Drupal: Added comprehensive print media queries (previously missing)
+  - React: Added comprehensive print media queries (previously missing)
+
+### 1.2.9
 - **Drupal Module Critical Fixes (Code Review)**
   - Performance: Removed entity saves during page views - views now tracked directly in analytics table
   - Performance: Added cache tag invalidation for lists via entity insert/update/delete hooks

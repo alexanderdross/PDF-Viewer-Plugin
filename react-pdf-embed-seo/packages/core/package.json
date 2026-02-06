@@ -1,6 +1,6 @@
 {
   "name": "@pdf-embed-seo/core",
-  "version": "1.2.9",
+  "version": "1.2.10",
   "description": "Core utilities and types for PDF Embed & SEO Optimize",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

@@ -8,6 +8,30 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.2.10] - 2026-02-05
+
+### Added
+- **iOS Print Support Improvements** - Enhanced print functionality for Safari/iOS
+  - Drupal: Changed print implementation to open PDF in new window for native browser printing (matches WordPress approach)
+  - React/Next.js: Changed print implementation to open PDF in new window for native browser printing
+  - Added 500ms delay for Safari/iOS compatibility before triggering print dialog
+  - Added fallback to canvas print if popup is blocked
+
+- **Comprehensive Print CSS (All Platforms)** - Professional print output across WordPress, Drupal, and React
+  - Added `@page` rules for proper A4 portrait sizing and margins
+  - Added `-webkit-print-color-adjust` and `print-color-adjust` for proper color printing
+  - Added `page-break-inside: avoid` and `break-inside: avoid` for canvas elements
+  - Hide all toolbar, control, loading, and error elements in print output
+  - Remove decorative styles (borders, shadows, backgrounds) for clean print output
+  - WordPress: Enhanced existing print CSS with canvas optimization and page-break handling
+  - Drupal: Added comprehensive print media queries (previously missing)
+  - React: Added comprehensive print media queries (previously missing)
+
+### Changed
+- Version bump to 1.2.10 across all modules (WordPress Free, WordPress Premium, Drupal Free, Drupal Premium, React)
+
+---
+
 ## [1.2.9] - 2026-02-05
 
 ### Fixed (Drupal Module - Critical Code Review Items)

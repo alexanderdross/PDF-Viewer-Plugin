@@ -237,3 +237,53 @@
     padding: 10px;
   }
 }
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+  /* Page setup for proper scaling */
+  @page {
+    margin: 1cm;
+    size: A4 portrait;
+  }
+
+  /* Hide all toolbar and control elements */
+  .pdf-viewer-toolbar,
+  .pdf-viewer-btn,
+  .pdf-viewer-search-panel,
+  .pdf-viewer-progress-bar,
+  .pdf-viewer-loading,
+  .pdf-viewer-error {
+    display: none !important;
+  }
+
+  /* Remove decorative styles from container */
+  .pdf-viewer-wrapper {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    overflow: visible !important;
+  }
+
+  .pdf-viewer-container {
+    overflow: visible !important;
+    background: transparent !important;
+  }
+
+  /* Canvas print optimization */
+  .pdf-viewer-canvas {
+    max-width: 100% !important;
+    height: auto !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .pdf-viewer-canvas-wrapper {
+    padding: 0 !important;
+  }
+}

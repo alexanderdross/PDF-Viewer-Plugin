@@ -229,3 +229,53 @@
 .pdf-viewer-wrapper:fullscreen .pdf-viewer-container {
   background-color: #333;
 }
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+  /* Page setup for proper scaling */
+  @page {
+    margin: 1cm;
+    size: A4 portrait;
+  }
+
+  /* Hide all toolbar and control elements */
+  .pdf-viewer-toolbar,
+  .pdf-toolbar-button,
+  .pdf-viewer-controls,
+  .pdf-page-nav,
+  .pdf-zoom-controls,
+  .pdf-viewer-loading,
+  .pdf-viewer-error,
+  .pdf-viewer-spinner {
+    display: none !important;
+  }
+
+  /* Remove decorative styles from container */
+  .pdf-viewer-wrapper {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  .pdf-viewer-container {
+    overflow: visible !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+
+  /* Canvas print optimization */
+  .pdf-viewer-canvas {
+    max-width: 100% !important;
+    height: auto !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
