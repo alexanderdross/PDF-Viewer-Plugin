@@ -291,6 +291,40 @@ class PDF_Embed_SEO_REST_API {
 			);
 		}
 
+		// Check password protection (Premium feature).
+		if ( class_exists( 'PDF_Embed_SEO_Premium_Password' ) ) {
+			if ( PDF_Embed_SEO_Premium_Password::is_protected( $post_id ) && ! PDF_Embed_SEO_Premium_Password::has_access( $post_id ) ) {
+				return new WP_Error(
+					'rest_password_required',
+					__( 'This PDF is password protected.', 'pdf-embed-seo-optimize' ),
+					array(
+						'status'             => 403,
+						'password_required'  => true,
+						'document_id'        => $post_id,
+					)
+				);
+			}
+		}
+
+		/**
+		 * Filter whether user can access PDF data.
+		 *
+		 * @since 1.2.0
+		 *
+		 * @param bool $can_access Whether user can access.
+		 * @param int  $post_id    Post ID.
+		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Established public API hook.
+		$can_access = apply_filters( 'pdf_embed_seo_can_access_pdf', true, $post_id );
+
+		if ( ! $can_access ) {
+			return new WP_Error(
+				'rest_access_denied',
+				__( 'You do not have permission to access this PDF.', 'pdf-embed-seo-optimize' ),
+				array( 'status' => 403 )
+			);
+		}
+
 		$pdf_file_id = get_post_meta( $post_id, '_pdf_file_id', true );
 
 		if ( ! $pdf_file_id ) {
