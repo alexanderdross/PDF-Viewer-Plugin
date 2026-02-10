@@ -192,10 +192,14 @@ class PdfDocument extends ContentEntityBase implements PdfDocumentInterface {
       ])
       ->setDisplayConfigurable('form', TRUE);
 
+    // View count is now a computed field that reads from the analytics table.
+    // This avoids entity saves on each page view (performance optimization).
     $fields['view_count'] = BaseFieldDefinition::create('integer')
       ->setLabel(t('View Count'))
-      ->setDescription(t('Number of times this PDF has been viewed.'))
+      ->setDescription(t('Number of times this PDF has been viewed (computed from analytics).'))
       ->setDefaultValue(0)
+      ->setComputed(TRUE)
+      ->setClass('\Drupal\pdf_embed_seo\Field\ComputedViewCount')
       ->setDisplayOptions('view', [
         'label' => 'inline',
         'type' => 'number_integer',

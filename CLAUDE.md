@@ -2,7 +2,7 @@
 
 A comprehensive PDF management solution available for WordPress and Drupal that uses Mozilla's PDF.js library to securely display PDFs with SEO optimization.
 
-**Current Version:** 1.2.10
+**Current Version:** 1.2.11
 **Platforms:** WordPress (Free & Premium), Drupal 10/11
 **License:** GPL v2 or later
 
@@ -727,7 +727,30 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 
 ## Changelog
 
-### 1.2.10 (Current)
+### 1.2.11 (Current)
+- **Drupal Code Review Fixes - Complete Resolution**
+  - **Security: CSRF Protection** - Added `_csrf_token: 'TRUE'` to all POST API endpoints (track_view, track_download, progress, verify_password)
+  - **Security: Rate Limiting** - Added brute force protection for password verification (5 attempts per 5 minutes, 15 minute block)
+  - **Security: Session Cache Context** - Added session cache context to password-protected PDF routes to prevent cross-session cache leaks
+  - **Performance: Computed View Count** - Converted view_count entity field to computed field that reads from analytics table (no more entity saves)
+  - **Scalability: Token Storage Migration** - Replaced State API token storage with dedicated database table (`pdf_embed_seo_access_tokens`) with automatic cleanup
+  - **Scalability: Rate Limit Table** - Added `pdf_embed_seo_rate_limit` table for brute force tracking with cron cleanup
+- **Media Library Integration**
+  - Added Drupal Media module as a dependency
+  - Created `PdfDocument` MediaSource plugin for PDF files
+  - Created `PdfViewerFormatter` field formatter for displaying PDFs in Media entities
+  - PDFs can now be managed via Media Library alongside other media types
+- **New Services (Premium)**
+  - `pdf_embed_seo.rate_limiter` - Rate limiting service for brute force protection
+  - `pdf_embed_seo.access_token_storage` - Token storage with database backend and automatic cleanup
+- **Database Updates**
+  - Update hook `pdf_embed_seo_premium_update_9001()` creates new tables and migrates State API tokens
+  - Cron hook cleans up expired tokens and old rate limit records
+- **Architecture Improvements**
+  - Backwards-compatible: Falls back to State API if new tables don't exist
+  - Graceful service checks using `\Drupal::hasService()`
+
+### 1.2.10
 - **iOS Print Support Improvements**
   - Drupal: Changed print implementation to open PDF in new window for native browser printing (matches WordPress approach)
   - React/Next.js: Changed print implementation to open PDF in new window for native browser printing

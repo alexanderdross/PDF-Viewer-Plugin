@@ -46,3 +46,20 @@ services:
       - '@current_user'
       - '@file_system'
       - '@?file.repository'
+
+  # Rate limiter service for brute force protection.
+  pdf_embed_seo.rate_limiter:
+    class: Drupal\pdf_embed_seo_premium\Service\RateLimiter
+    arguments:
+      - '@database'
+      - '@datetime.time'
+      - '@logger.channel.pdf_embed_seo'
+
+  # Access token storage service (replaces State API).
+  pdf_embed_seo.access_token_storage:
+    class: Drupal\pdf_embed_seo_premium\Service\AccessTokenStorage
+    arguments:
+      - '@database'
+      - '@datetime.time'
+      - '@current_user'
+      - '@logger.channel.pdf_embed_seo'

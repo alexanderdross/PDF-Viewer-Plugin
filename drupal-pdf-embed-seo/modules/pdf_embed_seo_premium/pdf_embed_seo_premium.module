@@ -255,3 +255,45 @@ function pdf_embed_seo_premium_settings_form_submit(&$form, &$form_state) {
   $config->set('analytics_retention_days', $form_state->getValue('analytics_retention_days'));
   $config->save();
 }
+
+/**
+ * Implements hook_cron().
+ */
+function pdf_embed_seo_premium_cron() {
+  // Clean up expired access tokens.
+  if (\Drupal::hasService('pdf_embed_seo.access_token_storage')) {
+    /** @var \Drupal\pdf_embed_seo_premium\Service\AccessTokenStorage $token_storage */
+    $token_storage = \Drupal::service('pdf_embed_seo.access_token_storage');
+    $token_storage->cleanupExpired();
+  }
+
+  // Clean up old rate limit records (older than 24 hours).
+  if (\Drupal::hasService('pdf_embed_seo.rate_limiter')) {
+    /** @var \Drupal\pdf_embed_seo_premium\Service\RateLimiter $rate_limiter */
+    $rate_limiter = \Drupal::service('pdf_embed_seo.rate_limiter');
+    $rate_limiter->cleanup(86400);
+  }
+
+  // Clean up old analytics data based on retention setting.
+  $config = \Drupal::config('pdf_embed_seo_premium.settings');
+  $retention_days = $config->get('analytics_retention_days') ?? 365;
+
+  if ($retention_days > 0) {
+    $threshold = \Drupal::time()->getRequestTime() - ($retention_days * 86400);
+    $database = \Drupal::database();
+
+    // Clean analytics table.
+    if ($database->schema()->tableExists('pdf_embed_seo_analytics')) {
+      $deleted = $database->delete('pdf_embed_seo_analytics')
+        ->condition('created', $threshold, '<')
+        ->execute();
+
+      if ($deleted > 0) {
+        \Drupal::logger('pdf_embed_seo_premium')->info('Cleaned up @count old analytics records (older than @days days).', [
+          '@count' => $deleted,
+          '@days' => $retention_days,
+        ]);
+      }
+    }
+  }
+}

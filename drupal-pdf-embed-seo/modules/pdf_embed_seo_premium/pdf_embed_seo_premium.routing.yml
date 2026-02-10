@@ -144,6 +144,7 @@ pdf_embed_seo_premium.api.track_download:
     _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfPremiumApiController::trackDownload'
   requirements:
     _access: 'TRUE'
+    _csrf_token: 'TRUE'
   methods: [POST]
   options:
     parameters:
@@ -196,6 +197,7 @@ pdf_embed_seo_premium.api.progress.post:
     _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfPremiumApiController::saveProgress'
   requirements:
     _access: 'TRUE'
+    _csrf_token: 'TRUE'
   methods: [POST]
   options:
     parameters:
@@ -209,6 +211,7 @@ pdf_embed_seo_premium.api.verify_password:
     _controller: '\Drupal\pdf_embed_seo_premium\Controller\PdfPremiumApiController::verifyPassword'
   requirements:
     _access: 'TRUE'
+    _csrf_token: 'TRUE'
   methods: [POST]
   options:
     parameters:

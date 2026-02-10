@@ -27,9 +27,18 @@ class PdfViewController extends ControllerBase {
       throw new NotFoundHttpException();
     }
 
+    // Determine cache contexts - add 'session' for password-protected PDFs.
+    $cache_contexts = ['user.permissions'];
+    $is_password_protected = $pdf_document->hasPassword();
+
+    if ($is_password_protected) {
+      // Add session context so password unlock state is properly cached per session.
+      $cache_contexts[] = 'session';
+    }
+
     // Check for password protection (premium feature).
-    if ($pdf_document->hasPassword() && !$this->isPasswordUnlocked($pdf_document)) {
-      return $this->passwordForm($pdf_document);
+    if ($is_password_protected && !$this->isPasswordUnlocked($pdf_document)) {
+      return $this->passwordForm($pdf_document, $cache_contexts);
     }
 
     $config = $this->config('pdf_embed_seo.settings');
@@ -66,7 +75,7 @@ class PdfViewController extends ControllerBase {
       ],
       '#cache' => [
         'tags' => $pdf_document->getCacheTags(),
-        'contexts' => ['user.permissions'],
+        'contexts' => $cache_contexts,
       ],
     ];
 
@@ -112,12 +121,19 @@ class PdfViewController extends ControllerBase {
    *
    * @param \Drupal\pdf_embed_seo\Entity\PdfDocumentInterface $pdf_document
    *   The PDF document entity.
+   * @param array $cache_contexts
+   *   Cache contexts to apply.
    *
    * @return array
    *   A render array.
    */
-  protected function passwordForm(PdfDocumentInterface $pdf_document) {
+  protected function passwordForm(PdfDocumentInterface $pdf_document, array $cache_contexts = []) {
     $form = $this->formBuilder()->getForm('Drupal\pdf_embed_seo\Form\PdfPasswordForm', $pdf_document);
+
+    // Default cache contexts if not provided.
+    if (empty($cache_contexts)) {
+      $cache_contexts = ['user.permissions', 'session'];
+    }
 
     return [
       '#theme' => 'pdf_password_form',
@@ -125,6 +141,11 @@ class PdfViewController extends ControllerBase {
       '#form' => $form,
       '#attached' => [
         'library' => ['pdf_embed_seo/premium-password'],
+      ],
+      '#cache' => [
+        'tags' => $pdf_document->getCacheTags(),
+        'contexts' => $cache_contexts,
+        'max-age' => 0, // Don't cache password forms to ensure fresh session checks.
       ],
     ];
   }

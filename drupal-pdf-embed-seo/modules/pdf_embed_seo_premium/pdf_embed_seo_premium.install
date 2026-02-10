@@ -158,6 +158,139 @@ function pdf_embed_seo_premium_schema() {
     ],
   ];
 
+  // Access tokens table (replaces State API for better scalability and cleanup).
+  $schema['pdf_embed_seo_access_tokens'] = [
+    'description' => 'Stores expiring PDF access tokens.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary key.',
+      ],
+      'token' => [
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+        'description' => 'The access token.',
+      ],
+      'pdf_document_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'The PDF document entity ID.',
+      ],
+      'created_by' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'User ID who created the token.',
+      ],
+      'expires' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Unix timestamp when token expires.',
+      ],
+      'max_uses' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Maximum number of uses (0 = unlimited).',
+      ],
+      'use_count' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Current number of uses.',
+      ],
+      'created' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Unix timestamp when token was created.',
+      ],
+    ],
+    'primary key' => ['id'],
+    'unique keys' => [
+      'token' => ['token'],
+    ],
+    'indexes' => [
+      'pdf_document_id' => ['pdf_document_id'],
+      'expires' => ['expires'],
+    ],
+  ];
+
+  // Rate limiting table for brute force protection.
+  $schema['pdf_embed_seo_rate_limit'] = [
+    'description' => 'Stores rate limiting data for brute force protection.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary key.',
+      ],
+      'identifier' => [
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+        'description' => 'Unique identifier (IP + action + target).',
+      ],
+      'action' => [
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+        'description' => 'The action being rate limited.',
+      ],
+      'target_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Target entity ID (e.g., PDF document ID).',
+      ],
+      'ip_address' => [
+        'type' => 'varchar',
+        'length' => 45,
+        'not null' => TRUE,
+        'description' => 'Client IP address.',
+      ],
+      'attempts' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Number of attempts.',
+      ],
+      'window_start' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Unix timestamp of rate limit window start.',
+      ],
+      'blocked_until' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Unix timestamp until which the identifier is blocked.',
+      ],
+    ],
+    'primary key' => ['id'],
+    'unique keys' => [
+      'identifier' => ['identifier'],
+    ],
+    'indexes' => [
+      'action' => ['action'],
+      'ip_address' => ['ip_address'],
+      'blocked_until' => ['blocked_until'],
+    ],
+  ];
+
   return $schema;
 }
 
@@ -183,5 +316,211 @@ function pdf_embed_seo_premium_uninstall() {
   // Delete configuration.
   \Drupal::configFactory()->getEditable('pdf_embed_seo_premium.settings')->delete();
 
+  // Clean up any State API tokens (legacy).
+  $state = \Drupal::state();
+  $state_keys = \Drupal::database()->select('key_value', 'kv')
+    ->fields('kv', ['name'])
+    ->condition('collection', 'state')
+    ->condition('name', 'pdf_access_token_%', 'LIKE')
+    ->execute()
+    ->fetchCol();
+  foreach ($state_keys as $key) {
+    $state->delete($key);
+  }
+
   \Drupal::messenger()->addMessage(t('PDF Embed & SEO Optimize Premium has been uninstalled. Premium features are no longer available.'));
+}
+
+/**
+ * Add access tokens and rate limiting tables.
+ */
+function pdf_embed_seo_premium_update_9001() {
+  $schema = \Drupal::database()->schema();
+
+  // Create access tokens table.
+  if (!$schema->tableExists('pdf_embed_seo_access_tokens')) {
+    $schema->createTable('pdf_embed_seo_access_tokens', [
+      'description' => 'Stores expiring PDF access tokens.',
+      'fields' => [
+        'id' => [
+          'type' => 'serial',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+          'description' => 'Primary key.',
+        ],
+        'token' => [
+          'type' => 'varchar',
+          'length' => 64,
+          'not null' => TRUE,
+          'description' => 'The access token.',
+        ],
+        'pdf_document_id' => [
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+          'description' => 'The PDF document entity ID.',
+        ],
+        'created_by' => [
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+          'default' => 0,
+          'description' => 'User ID who created the token.',
+        ],
+        'expires' => [
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+          'description' => 'Unix timestamp when token expires.',
+        ],
+        'max_uses' => [
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+          'default' => 0,
+          'description' => 'Maximum number of uses (0 = unlimited).',
+        ],
+        'use_count' => [
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+          'default' => 0,
+          'description' => 'Current number of uses.',
+        ],
+        'created' => [
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+          'description' => 'Unix timestamp when token was created.',
+        ],
+      ],
+      'primary key' => ['id'],
+      'unique keys' => [
+        'token' => ['token'],
+      ],
+      'indexes' => [
+        'pdf_document_id' => ['pdf_document_id'],
+        'expires' => ['expires'],
+      ],
+    ]);
+  }
+
+  // Create rate limiting table.
+  if (!$schema->tableExists('pdf_embed_seo_rate_limit')) {
+    $schema->createTable('pdf_embed_seo_rate_limit', [
+      'description' => 'Stores rate limiting data for brute force protection.',
+      'fields' => [
+        'id' => [
+          'type' => 'serial',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+          'description' => 'Primary key.',
+        ],
+        'identifier' => [
+          'type' => 'varchar',
+          'length' => 128,
+          'not null' => TRUE,
+          'description' => 'Unique identifier (IP + action + target).',
+        ],
+        'action' => [
+          'type' => 'varchar',
+          'length' => 64,
+          'not null' => TRUE,
+          'description' => 'The action being rate limited.',
+        ],
+        'target_id' => [
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+          'default' => 0,
+          'description' => 'Target entity ID (e.g., PDF document ID).',
+        ],
+        'ip_address' => [
+          'type' => 'varchar',
+          'length' => 45,
+          'not null' => TRUE,
+          'description' => 'Client IP address.',
+        ],
+        'attempts' => [
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+          'default' => 0,
+          'description' => 'Number of attempts.',
+        ],
+        'window_start' => [
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+          'description' => 'Unix timestamp of rate limit window start.',
+        ],
+        'blocked_until' => [
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+          'default' => 0,
+          'description' => 'Unix timestamp until which the identifier is blocked.',
+        ],
+      ],
+      'primary key' => ['id'],
+      'unique keys' => [
+        'identifier' => ['identifier'],
+      ],
+      'indexes' => [
+        'action' => ['action'],
+        'ip_address' => ['ip_address'],
+        'blocked_until' => ['blocked_until'],
+      ],
+    ]);
+  }
+
+  // Migrate existing tokens from State API to database.
+  _pdf_embed_seo_premium_migrate_state_tokens();
+
+  return t('Added access tokens and rate limiting tables for improved security and scalability.');
+}
+
+/**
+ * Helper function to migrate State API tokens to database.
+ */
+function _pdf_embed_seo_premium_migrate_state_tokens() {
+  $database = \Drupal::database();
+  $state = \Drupal::state();
+
+  // Find all existing State API tokens.
+  $result = $database->select('key_value', 'kv')
+    ->fields('kv', ['name', 'value'])
+    ->condition('collection', 'state')
+    ->condition('name', 'pdf_access_token_%', 'LIKE')
+    ->execute();
+
+  foreach ($result as $row) {
+    $token_data = unserialize($row->value);
+    if (is_array($token_data) && isset($token_data['pdf_id'])) {
+      $token = str_replace('pdf_access_token_', '', $row->name);
+
+      // Insert into new table if not expired.
+      if (isset($token_data['expires']) && $token_data['expires'] > \Drupal::time()->getRequestTime()) {
+        try {
+          $database->insert('pdf_embed_seo_access_tokens')
+            ->fields([
+              'token' => $token,
+              'pdf_document_id' => $token_data['pdf_id'],
+              'created_by' => $token_data['created_by'] ?? 0,
+              'expires' => $token_data['expires'],
+              'max_uses' => $token_data['max_uses'] ?? 0,
+              'use_count' => $token_data['uses'] ?? 0,
+              'created' => $token_data['created'] ?? \Drupal::time()->getRequestTime(),
+            ])
+            ->execute();
+        }
+        catch (\Exception $e) {
+          // Token may already exist, skip.
+        }
+      }
+
+      // Delete from State API.
+      $state->delete($row->name);
+    }
+  }
 }
