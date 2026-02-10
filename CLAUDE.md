@@ -755,6 +755,82 @@ react-pdf-embed-seo/
 
 ---
 
+## React Hooks Reference
+
+### Core Hooks (`@pdf-embed-seo/react`)
+
+| Hook | Parameters | Returns | Description |
+|------|------------|---------|-------------|
+| `usePdf` | `documentId: string \| number` | `{ document, loading, error, refetch }` | Fetch single PDF document |
+| `usePdfList` | `options?: DocumentListParams` | `{ documents, pagination, loading, error, fetchPage }` | Fetch paginated document list |
+| `usePdfViewer` | `documentId: string \| number` | `{ viewerState, setPage, setZoom, setTheme }` | Viewer state management |
+| `useProgress` | `documentId: string \| number` | `{ progress, saveProgress, loading }` | Reading progress (requires premium backend) |
+| `usePdfSettings` | - | `{ settings, loading }` | Get public settings from backend |
+| `usePdfContext` | - | `PdfContextValue` | Access provider context |
+
+### Premium Hooks (`@pdf-embed-seo/react-premium`)
+
+| Hook | Parameters | Returns | Description |
+|------|------------|---------|-------------|
+| `useAnalytics` | `documentId?: string` | `{ analytics, trackView, trackDownload }` | Analytics tracking |
+| `usePassword` | `documentId: string` | `{ isProtected, isUnlocked, verify, error }` | Password verification |
+| `useSearch` | `pdfDocument: PDFDocumentProxy` | `{ results, search, clearResults }` | In-document text search |
+| `useBookmarks` | `pdfDocument: PDFDocumentProxy` | `{ bookmarks, goToBookmark }` | PDF bookmark navigation |
+
+### Hook Usage Examples
+
+```tsx
+// Fetch and display a document
+function PdfPage({ id }) {
+  const { document, loading, error } = usePdf(id);
+
+  if (loading) return <Spinner />;
+  if (error) return <Error message={error.message} />;
+
+  return (
+    <div>
+      <h1>{document.title}</h1>
+      <PdfViewer documentId={id} />
+    </div>
+  );
+}
+
+// Paginated document list
+function ArchivePage() {
+  const { documents, pagination, fetchPage, loading } = usePdfList({
+    perPage: 10,
+    orderBy: 'date',
+    order: 'desc',
+  });
+
+  return (
+    <div>
+      {documents.map(doc => (
+        <PdfCard key={doc.id} document={doc} />
+      ))}
+      <Pagination
+        current={pagination.page}
+        total={pagination.totalPages}
+        onChange={fetchPage}
+      />
+    </div>
+  );
+}
+
+// Password-protected document (Premium)
+function ProtectedPdf({ id }) {
+  const { isProtected, isUnlocked, verify, error } = usePassword(id);
+
+  if (isProtected && !isUnlocked) {
+    return <PdfPasswordModal onSubmit={verify} error={error} />;
+  }
+
+  return <PdfViewer documentId={id} />;
+}
+```
+
+---
+
 ## Data Models
 
 ### WordPress Post Meta
@@ -829,6 +905,8 @@ react-pdf-embed-seo/
 
 ## Feature Matrix
 
+**Note:** Features apply to all platforms (WordPress, Drupal, React/Next.js) unless noted with platform-specific tags: (WP), (Drupal), (React).
+
 ### Viewer & Display
 
 | Feature | Free | Premium |
@@ -842,7 +920,9 @@ react-pdf-embed-seo/
 | Configurable Viewer Height | ✓ | ✓ |
 | Gutenberg Block (WP) | ✓ | ✓ |
 | PDF Viewer Block (Drupal) | ✓ | ✓ |
+| PdfViewer Component (React) | ✓ | ✓ |
 | Shortcodes (WP) | ✓ | ✓ |
+| React Hooks API (React) | ✓ | ✓ |
 | Text Search in Viewer | - | ✓ |
 | Bookmark Navigation | - | ✓ |
 
@@ -871,9 +951,10 @@ react-pdf-embed-seo/
 | Feature | Free | Premium |
 |---------|:----:|:-------:|
 | Clean URL Structure (`/pdf/slug/`) | ✓ | ✓ |
-| Auto Path/Slug Generation | ✓ | ✓ |
+| Auto Path/Slug Generation (WP/Drupal) | ✓ | ✓ |
 | Schema.org DigitalDocument | ✓ | ✓ |
 | Schema.org CollectionPage | ✓ | ✓ |
+| PdfSeo Component (React) | ✓ | ✓ |
 | Yoast SEO Integration (WP) | ✓ | ✓ |
 | OpenGraph Meta Tags | ✓ | ✓ |
 | Twitter Card Support | ✓ | ✓ |
@@ -906,10 +987,12 @@ react-pdf-embed-seo/
 | Feature | Free | Premium |
 |---------|:----:|:-------:|
 | Archive Page (`/pdf`) | ✓ | ✓ |
+| PdfArchive Component (React) | ✓ | ✓ |
 | Pagination Support | ✓ | ✓ |
 | Grid/List Display Modes | ✓ | ✓ |
 | Sorting Options | ✓ | ✓ |
 | Search Filtering | ✓ | ✓ |
+| usePdfList Hook (React) | ✓ | ✓ |
 | Category Filter | - | ✓ |
 | Tag Filter | - | ✓ |
 
@@ -986,10 +1069,14 @@ react-pdf-embed-seo/
 |---------|:----:|:-------:|
 | WordPress Hooks (actions/filters) | ✓ | ✓ |
 | Drupal Hooks (alter/events) | ✓ | ✓ |
+| React Hooks API (React) | ✓ | ✓ |
+| TypeScript Support (React) | ✓ | ✓ |
+| Next.js Integration (React) | ✓ | ✓ |
 | Template Overrides | ✓ | ✓ |
 | CSS Classes for Styling | ✓ | ✓ |
 | JavaScript Events | ✓ | ✓ |
-| Cache Tags & Contexts | ✓ | ✓ |
+| Cache Tags & Contexts (WP/Drupal) | ✓ | ✓ |
+| PdfProvider Context (React) | ✓ | ✓ |
 | Analytics Tracker Service | - | ✓ |
 | Progress Tracker Service | - | ✓ |
 | Priority Support | - | ✓ |
@@ -1010,6 +1097,14 @@ react-pdf-embed-seo/
 - PHP 8.1+
 - Core modules: node, file, taxonomy, path, path_alias
 - Optional: ImageMagick or Ghostscript (thumbnails)
+
+### React/Next.js
+- Node.js 18+
+- React 18+ or React 19+
+- Optional: Next.js 13, 14, or 15
+- Mozilla PDF.js (bundled via pdfjs-dist)
+- TypeScript 5+ (recommended)
+- Backend: WordPress or Drupal with PDF Embed SEO plugin installed
 
 ---
 
