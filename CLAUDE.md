@@ -6,6 +6,13 @@ A comprehensive PDF management solution available for WordPress, Drupal, and Rea
 **Platforms:** WordPress (Free & Premium), Drupal 10/11, React/Next.js
 **License:** GPL v2 or later (WordPress/Drupal), MIT (React Free), Commercial (React Premium)
 
+### Quick Links
+
+- **[Full Changelog](CHANGELOG.md)** - Complete version history
+- **[Download Complete Package](dist/pdf-embed-seo-complete-v1.2.11.zip)** - All modules (WP + Drupal + React)
+- **[Download WordPress Only](dist/pdf-embed-seo-all-modules-v1.2.11.zip)** - WordPress Free + Premium
+- **[Download Drupal Only](dist/drupal-pdf-embed-seo-v1.2.11.zip)** - Drupal Free + Premium
+
 ---
 
 ## Project Overview
@@ -1123,6 +1130,18 @@ function ProtectedPdf({ id }) {
 ## Premium Purchase URL
 
 **https://pdfviewer.drossmedia.de**
+
+---
+
+## Downloads & Resources
+
+| Resource | Link |
+|----------|------|
+| Complete Package (WP + Drupal + React) | [pdf-embed-seo-complete-v1.2.11.zip](dist/pdf-embed-seo-complete-v1.2.11.zip) |
+| WordPress Only (Free + Premium) | [pdf-embed-seo-all-modules-v1.2.11.zip](dist/pdf-embed-seo-all-modules-v1.2.11.zip) |
+| Drupal Only (Free + Premium) | [drupal-pdf-embed-seo-v1.2.11.zip](dist/drupal-pdf-embed-seo-v1.2.11.zip) |
+| Full Changelog | [CHANGELOG.md](CHANGELOG.md) |
+| React Module Documentation | [CLAUDE-REACT.md](CLAUDE-REACT.md) |
 
 ---
 
