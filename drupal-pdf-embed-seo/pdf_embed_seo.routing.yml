@@ -109,6 +109,7 @@ pdf_embed_seo.api.track_view:
     _controller: '\Drupal\pdf_embed_seo\Controller\PdfApiController::trackView'
   requirements:
     _access: 'TRUE'
+    _csrf_token: 'TRUE'
   methods: [POST]
   options:
     parameters:

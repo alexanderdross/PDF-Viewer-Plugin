@@ -477,20 +477,37 @@ class PdfPremiumApiController extends ControllerBase {
     $expires_in = (int) ($content['expires_in'] ?? 3600); // Default 1 hour.
     $max_uses = (int) ($content['max_uses'] ?? 0); // 0 = unlimited.
 
-    // Generate token.
-    $token = bin2hex(random_bytes(32));
-    $expires_at = time() + $expires_in;
+    // Use the new AccessTokenStorage service.
+    if (\Drupal::hasService('pdf_embed_seo.access_token_storage')) {
+      /** @var \Drupal\pdf_embed_seo_premium\Service\AccessTokenStorage $token_storage */
+      $token_storage = \Drupal::service('pdf_embed_seo.access_token_storage');
+      $token_data = $token_storage->createToken($pdf_document->id(), $expires_in, $max_uses);
 
-    // Store token.
-    $token_data = [
-      'document_id' => $pdf_document->id(),
-      'expires_at' => $expires_at,
-      'max_uses' => $max_uses,
-      'uses' => 0,
-      'created_by' => $this->currentUser()->id(),
-      'created_at' => time(),
-    ];
-    \Drupal::state()->set('pdf_access_token_' . $token, $token_data);
+      if (!$token_data) {
+        return new JsonResponse([
+          'success' => FALSE,
+          'message' => 'Failed to create access token.',
+        ], 500);
+      }
+
+      $token = $token_data['token'];
+      $expires_at = $token_data['expires'];
+    }
+    else {
+      // Fallback to State API (legacy).
+      $token = bin2hex(random_bytes(32));
+      $expires_at = time() + $expires_in;
+
+      $token_data = [
+        'pdf_id' => $pdf_document->id(),
+        'expires' => $expires_at,
+        'max_uses' => $max_uses,
+        'uses' => 0,
+        'created_by' => $this->currentUser()->id(),
+        'created' => time(),
+      ];
+      \Drupal::state()->set('pdf_access_token_' . $token, $token_data);
+    }
 
     // Generate URL.
     $access_url = Url::fromRoute('pdf_embed_seo_premium.expiring_access', [
@@ -523,6 +540,28 @@ class PdfPremiumApiController extends ControllerBase {
    *   JSON response with validation result.
    */
   public function validateExpiringLink(PdfDocumentInterface $pdf_document, $token, Request $request) {
+    // Try the new AccessTokenStorage service first.
+    if (\Drupal::hasService('pdf_embed_seo.access_token_storage')) {
+      /** @var \Drupal\pdf_embed_seo_premium\Service\AccessTokenStorage $token_storage */
+      $token_storage = \Drupal::service('pdf_embed_seo.access_token_storage');
+      $result = $token_storage->validateToken($token, (int) $pdf_document->id());
+
+      if (!$result['valid']) {
+        return new JsonResponse([
+          'valid' => FALSE,
+          'message' => $result['message'],
+        ], 403);
+      }
+
+      return new JsonResponse([
+        'valid' => TRUE,
+        'document_id' => (int) $pdf_document->id(),
+        'uses_remaining' => $result['data']['remaining_uses'] ?? NULL,
+        'expires_at' => date('c', $result['data']['expires']),
+      ]);
+    }
+
+    // Fallback to State API (legacy).
     $token_data = \Drupal::state()->get('pdf_access_token_' . $token);
 
     if (!$token_data) {
@@ -532,16 +571,18 @@ class PdfPremiumApiController extends ControllerBase {
       ], 403);
     }
 
-    // Check document ID.
-    if ($token_data['document_id'] != $pdf_document->id()) {
+    // Check document ID (handle both old and new key formats).
+    $doc_id = $token_data['document_id'] ?? $token_data['pdf_id'] ?? NULL;
+    if ($doc_id != $pdf_document->id()) {
       return new JsonResponse([
         'valid' => FALSE,
         'message' => 'Invalid access link for this document.',
       ], 403);
     }
 
-    // Check expiration.
-    if (time() > $token_data['expires_at']) {
+    // Check expiration (handle both old and new key formats).
+    $expires = $token_data['expires_at'] ?? $token_data['expires'] ?? 0;
+    if (time() > $expires) {
       \Drupal::state()->delete('pdf_access_token_' . $token);
       return new JsonResponse([
         'valid' => FALSE,
@@ -550,7 +591,9 @@ class PdfPremiumApiController extends ControllerBase {
     }
 
     // Check max uses.
-    if ($token_data['max_uses'] > 0 && $token_data['uses'] >= $token_data['max_uses']) {
+    $max_uses = $token_data['max_uses'] ?? 0;
+    $uses = $token_data['uses'] ?? $token_data['use_count'] ?? 0;
+    if ($max_uses > 0 && $uses >= $max_uses) {
       \Drupal::state()->delete('pdf_access_token_' . $token);
       return new JsonResponse([
         'valid' => FALSE,
@@ -559,14 +602,14 @@ class PdfPremiumApiController extends ControllerBase {
     }
 
     // Increment uses.
-    $token_data['uses']++;
+    $token_data['uses'] = ($token_data['uses'] ?? 0) + 1;
     \Drupal::state()->set('pdf_access_token_' . $token, $token_data);
 
     return new JsonResponse([
       'valid' => TRUE,
       'document_id' => (int) $pdf_document->id(),
-      'uses_remaining' => $token_data['max_uses'] > 0 ? $token_data['max_uses'] - $token_data['uses'] : NULL,
-      'expires_at' => date('c', $token_data['expires_at']),
+      'uses_remaining' => $max_uses > 0 ? $max_uses - $token_data['uses'] : NULL,
+      'expires_at' => date('c', $expires),
     ]);
   }
 
@@ -631,6 +674,23 @@ class PdfPremiumApiController extends ControllerBase {
    *   JSON response.
    */
   public function verifyPassword(PdfDocumentInterface $pdf_document, Request $request) {
+    $ip_address = $request->getClientIp();
+
+    // Check rate limiting to prevent brute force attacks.
+    if (\Drupal::hasService('pdf_embed_seo.rate_limiter')) {
+      /** @var \Drupal\pdf_embed_seo_premium\Service\RateLimiter $rate_limiter */
+      $rate_limiter = \Drupal::service('pdf_embed_seo.rate_limiter');
+      $limit_check = $rate_limiter->checkLimit('password_verify', $ip_address, (int) $pdf_document->id());
+
+      if (!$limit_check['allowed']) {
+        return new JsonResponse([
+          'success' => FALSE,
+          'message' => $limit_check['message'] ?? $this->t('Too many attempts. Please try again later.'),
+          'retry_after' => $limit_check['retry_after'] ?? 300,
+        ], 429);
+      }
+    }
+
     $content = json_decode($request->getContent(), TRUE);
     $password = $content['password'] ?? '';
 
@@ -651,6 +711,13 @@ class PdfPremiumApiController extends ControllerBase {
 
     // Allow other modules to alter verification.
     \Drupal::moduleHandler()->alter('pdf_embed_seo_verify_password', $is_valid, $pdf_document, $password);
+
+    // Record the attempt for rate limiting.
+    if (\Drupal::hasService('pdf_embed_seo.rate_limiter')) {
+      /** @var \Drupal\pdf_embed_seo_premium\Service\RateLimiter $rate_limiter */
+      $rate_limiter = \Drupal::service('pdf_embed_seo.rate_limiter');
+      $rate_limiter->recordAttempt('password_verify', $ip_address, (int) $pdf_document->id(), $is_valid);
+    }
 
     if ($is_valid) {
       // Generate access token.

@@ -1,7 +1,7 @@
 name: 'PDF Embed & SEO Optimize (Free Version)'
-version: '1.2.10'
+version: '1.2.11'
 type: module
-description: 'A powerful Drupal module that integrates Mozilla PDF.js viewer to display PDFs with clean URLs, SEO optimization, and access controls.'
+description: 'A powerful Drupal module that integrates Mozilla PDF.js viewer to display PDFs with clean URLs, SEO optimization, and access controls. Includes Media Library integration.'
 package: 'Content'
 core_version_requirement: ^10 || ^11
 php: 8.1
@@ -12,6 +12,7 @@ dependencies:
   - drupal:taxonomy
   - drupal:path
   - drupal:path_alias
+  - drupal:media
 
 configure: pdf_embed_seo.settings
 
