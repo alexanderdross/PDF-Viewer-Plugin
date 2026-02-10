@@ -9,6 +9,9 @@ A comprehensive PDF management solution available for WordPress, Drupal, and Rea
 ### Quick Links
 
 - **[Full Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG.md)** - Complete version history
+- **[WordPress Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-WORDPRESS.md)** - WordPress-specific changes
+- **[Drupal Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-DRUPAL.md)** - Drupal-specific changes
+- **[React/Next.js Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-REACT.md)** - React-specific changes
 - **[Download Complete Package](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-complete-v1.2.11.zip)** - All modules (WP + Drupal + React)
 - **[Download WordPress Only](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-all-modules-v1.2.11.zip)** - WordPress Free + Premium
 - **[Download Drupal Only](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/drupal-pdf-embed-seo-v1.2.11.zip)** - Drupal Free + Premium
@@ -1141,6 +1144,9 @@ function ProtectedPdf({ id }) {
 | WordPress Only (Free + Premium) | [pdf-embed-seo-all-modules-v1.2.11.zip](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-all-modules-v1.2.11.zip) |
 | Drupal Only (Free + Premium) | [drupal-pdf-embed-seo-v1.2.11.zip](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/drupal-pdf-embed-seo-v1.2.11.zip) |
 | Full Changelog | [CHANGELOG.md](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG.md) |
+| WordPress Changelog | [CHANGELOG-WORDPRESS.md](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-WORDPRESS.md) |
+| Drupal Changelog | [CHANGELOG-DRUPAL.md](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-DRUPAL.md) |
+| React/Next.js Changelog | [CHANGELOG-REACT.md](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-REACT.md) |
 | React Module Documentation | [CLAUDE-REACT.md](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CLAUDE-REACT.md) |
 
 ---
