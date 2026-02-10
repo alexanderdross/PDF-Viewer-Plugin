@@ -1,16 +1,26 @@
 # PDF Embed & SEO Optimize - Multi-Platform Documentation
 
-A comprehensive PDF management solution available for WordPress and Drupal that uses Mozilla's PDF.js library to securely display PDFs with SEO optimization.
+A comprehensive PDF management solution available for WordPress, Drupal, and React/Next.js that uses Mozilla's PDF.js library to securely display PDFs with SEO optimization.
 
 **Current Version:** 1.2.11
-**Platforms:** WordPress (Free & Premium), Drupal 10/11
-**License:** GPL v2 or later
+**Platforms:** WordPress (Free & Premium), Drupal 10/11, React/Next.js
+**License:** GPL v2 or later (WordPress/Drupal), MIT (React Free), Commercial (React Premium)
+
+### Quick Links
+
+- **[Full Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG.md)** - Complete version history
+- **[WordPress Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-WORDPRESS.md)** - WordPress-specific changes
+- **[Drupal Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-DRUPAL.md)** - Drupal-specific changes
+- **[React/Next.js Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-REACT.md)** - React-specific changes
+- **[Download Complete Package](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-complete-v1.2.11.zip)** - All modules (WP + Drupal + React)
+- **[Download WordPress Only](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-all-modules-v1.2.11.zip)** - WordPress Free + Premium
+- **[Download Drupal Only](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/drupal-pdf-embed-seo-v1.2.11.zip)** - Drupal Free + Premium
 
 ---
 
 ## Project Overview
 
-This project provides four modules:
+This project provides six modules across three platforms:
 
 | Module | Directory | Platform | Features |
 |--------|-----------|----------|----------|
@@ -18,6 +28,16 @@ This project provides four modules:
 | WP Premium | `pdf-embed-seo-optimize/premium/` | WordPress 5.8+ | Analytics, passwords, progress, sitemap |
 | Drupal Free | `drupal-pdf-embed-seo/` | Drupal 10/11 | Core PDF viewer, SEO, REST API |
 | Drupal Premium | `drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/` | Drupal 10/11 | Analytics, passwords, progress, sitemap |
+| React Free | `react-pdf-embed-seo/packages/react/` | React 18+/Next.js 13+ | Components, hooks, SEO, API client |
+| React Premium | `react-pdf-embed-seo/packages/react-premium/` | React 18+/Next.js 13+ | Analytics, passwords, progress, search |
+
+### NPM Packages (React/Next.js)
+
+| Package | Version | License | Description |
+|---------|---------|---------|-------------|
+| `@pdf-embed-seo/core` | 1.2.10 | MIT | Core types, utilities, API client |
+| `@pdf-embed-seo/react` | 1.2.10 | MIT | Free React components |
+| `@pdf-embed-seo/react-premium` | 1.2.10 | Commercial | Premium React components |
 
 ---
 
@@ -90,6 +110,167 @@ Use shortcodes to embed an **existing PDF Document** into any page, post, or wid
 
 ---
 
+## User Guide (React/Next.js)
+
+### Installation
+
+```bash
+# Install free package
+npm install @pdf-embed-seo/react
+# or
+pnpm add @pdf-embed-seo/react
+
+# Install premium package (requires license)
+npm install @pdf-embed-seo/react-premium
+```
+
+### Basic Setup
+
+#### 1. Configure the Provider
+
+Wrap your app with `PdfProvider` to configure the backend connection:
+
+```tsx
+// app/layout.tsx (Next.js App Router)
+import { PdfProvider } from '@pdf-embed-seo/react';
+import '@pdf-embed-seo/react/styles';
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        <PdfProvider
+          config={{
+            apiBaseUrl: 'https://your-site.com/wp-json/pdf-embed-seo/v1',
+            backendType: 'wordpress', // or 'drupal'
+          }}
+        >
+          {children}
+        </PdfProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+#### 2. Display a PDF Viewer
+
+```tsx
+import { PdfViewer } from '@pdf-embed-seo/react';
+
+export default function PdfPage({ params }) {
+  return (
+    <PdfViewer
+      documentId={params.id}
+      height="800px"
+      theme="light"
+      allowDownload={true}
+      allowPrint={true}
+    />
+  );
+}
+```
+
+#### 3. Display PDF Archive
+
+```tsx
+import { PdfArchive } from '@pdf-embed-seo/react';
+
+export default function ArchivePage() {
+  return (
+    <PdfArchive
+      displayMode="grid"
+      perPage={12}
+      showSearch={true}
+      showPagination={true}
+    />
+  );
+}
+```
+
+#### 4. Add SEO Schema
+
+```tsx
+import { PdfSeo } from '@pdf-embed-seo/react';
+
+export default function PdfPage({ document }) {
+  return (
+    <>
+      <PdfSeo document={document} />
+      <PdfViewer documentId={document.id} />
+    </>
+  );
+}
+```
+
+### Using Hooks
+
+```tsx
+import { usePdf, usePdfList, useProgress } from '@pdf-embed-seo/react';
+
+// Fetch single document
+const { document, loading, error } = usePdf(documentId);
+
+// Fetch document list
+const { documents, pagination, fetchPage } = usePdfList({
+  page: 1,
+  perPage: 10,
+  orderBy: 'date',
+});
+
+// Track reading progress (requires premium backend)
+const { progress, saveProgress } = useProgress(documentId);
+```
+
+### Next.js Specific Imports
+
+For Next.js applications, use the optimized exports:
+
+```tsx
+import { PdfViewer, PdfArchive, PdfPage } from '@pdf-embed-seo/react/nextjs';
+```
+
+### Premium Components
+
+```tsx
+import {
+  PdfPasswordModal,
+  PdfProgressBar,
+  PdfSearch,
+  PdfBookmarks,
+  PdfAnalytics,
+} from '@pdf-embed-seo/react-premium';
+import '@pdf-embed-seo/react-premium/styles';
+
+// Password-protected PDF
+<PdfViewer documentId={id}>
+  <PdfPasswordModal />
+</PdfViewer>
+
+// With progress bar and search
+<PdfViewer documentId={id}>
+  <PdfProgressBar />
+  <PdfSearch />
+  <PdfBookmarks />
+</PdfViewer>
+```
+
+### TypeScript Types
+
+All types are exported from the core package:
+
+```tsx
+import type {
+  PdfDocument,
+  PdfDocumentInfo,
+  ViewerOptions,
+  ArchiveOptions,
+  PdfProviderConfig,
+} from '@pdf-embed-seo/react';
+```
+
+---
+
 ## Architecture Overview
 
 ### WordPress Plugin Architecture
@@ -145,6 +326,45 @@ Use shortcodes to embed an **existing PDF Document** into any page, post, or wid
 │  │ Analytics │ │ Password  │ │  Reading  │ │   Premium   │ │
 │  │ Dashboard │ │ Protection│ │  Progress │ │  REST API   │ │
 │  └───────────┘ └───────────┘ └───────────┘ └─────────────┘ │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### React/Next.js Package Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│              @pdf-embed-seo/core (Shared)                    │
+├─────────────────────────────────────────────────────────────┤
+│  ┌─────────────────┐  ┌─────────────────┐                   │
+│  │    TypeScript   │  │   API Client    │                   │
+│  │     Types       │  │  (REST/Fetch)   │                   │
+│  └─────────────────┘  └─────────────────┘                   │
+│  ┌─────────────────┐  ┌─────────────────┐                   │
+│  │    Utilities    │  │    PDF.js       │                   │
+│  │  (helpers)      │  │   Integration   │                   │
+│  └─────────────────┘  └─────────────────┘                   │
+├─────────────────────────────────────────────────────────────┤
+│                @pdf-embed-seo/react (Free)                   │
+├─────────────────────────────────────────────────────────────┤
+│  ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌─────────────┐ │
+│  │PdfViewer  │ │PdfArchive │ │ PdfSeo    │ │ PdfProvider │ │
+│  │ Component │ │ Component │ │ Component │ │  Context    │ │
+│  └───────────┘ └───────────┘ └───────────┘ └─────────────┘ │
+│  ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌─────────────┐ │
+│  │usePdf     │ │usePdfList │ │useProgress│ │ Next.js     │ │
+│  │  Hook     │ │   Hook    │ │   Hook    │ │  Exports    │ │
+│  └───────────┘ └───────────┘ └───────────┘ └─────────────┘ │
+├─────────────────────────────────────────────────────────────┤
+│            @pdf-embed-seo/react-premium (Optional)           │
+├─────────────────────────────────────────────────────────────┤
+│  ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌─────────────┐ │
+│  │  Pdf      │ │  Pdf      │ │ PdfSearch │ │ PdfProgress │ │
+│  │ Analytics │ │ Password  │ │ Component │ │    Bar      │ │
+│  └───────────┘ └───────────┘ └───────────┘ └─────────────┘ │
+│  ┌───────────┐                                              │
+│  │  Pdf      │                                              │
+│  │ Bookmarks │                                              │
+│  └───────────┘                                              │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -322,6 +542,99 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
     └── pdf-password-form.html.twig
 ```
 
+### React/Next.js Monorepo
+
+```
+react-pdf-embed-seo/
+├── package.json                         # Monorepo root (pnpm workspaces)
+├── pnpm-workspace.yaml                  # Workspace configuration
+├── turbo.json                           # Turborepo configuration
+├── tsconfig.base.json                   # Shared TypeScript config
+│
+├── packages/
+│   ├── core/                            # @pdf-embed-seo/core
+│   │   ├── package.json                 # MIT license
+│   │   ├── tsconfig.json
+│   │   └── src/
+│   │       ├── index.ts                 # Main exports
+│   │       ├── types/                   # TypeScript interfaces
+│   │       │   ├── document.ts          # PdfDocument, PdfDocumentInfo
+│   │       │   ├── settings.ts          # PdfSettings, ViewerOptions
+│   │       │   └── api.ts               # API response types
+│   │       ├── api/                     # API client
+│   │       │   ├── client.ts            # REST API client
+│   │       │   └── endpoints.ts         # Endpoint definitions
+│   │       └── utils/                   # Utility functions
+│   │           ├── pdf.ts               # PDF.js helpers
+│   │           └── schema.ts            # Schema.org generators
+│   │
+│   ├── react/                           # @pdf-embed-seo/react
+│   │   ├── package.json                 # MIT license
+│   │   ├── tsconfig.json
+│   │   └── src/
+│   │       ├── index.ts                 # Main exports
+│   │       ├── components/
+│   │       │   ├── PdfViewer/           # PDF viewer component
+│   │       │   │   ├── PdfViewer.tsx
+│   │       │   │   ├── PdfViewer.test.tsx
+│   │       │   │   └── index.ts
+│   │       │   ├── PdfArchive/          # Archive listing component
+│   │       │   │   ├── PdfArchive.tsx
+│   │       │   │   └── index.ts
+│   │       │   ├── PdfSeo/              # SEO schema component
+│   │       │   │   ├── PdfSeo.tsx
+│   │       │   │   └── index.ts
+│   │       │   └── PdfProvider/         # Context provider
+│   │       │       ├── PdfProvider.tsx
+│   │       │       └── index.ts
+│   │       ├── hooks/
+│   │       │   ├── usePdf.ts            # Single document hook
+│   │       │   ├── usePdfList.ts        # Document list hook
+│   │       │   ├── usePdfViewer.ts      # Viewer state hook
+│   │       │   └── useProgress.ts       # Reading progress hook
+│   │       ├── nextjs/                  # Next.js specific exports
+│   │       │   ├── index.ts
+│   │       │   └── PdfPage.tsx          # Next.js page component
+│   │       └── styles/
+│   │           ├── viewer.css           # Viewer styles
+│   │           ├── viewer-dark.css      # Dark theme
+│   │           ├── archive.css          # Archive styles
+│   │           └── index.css            # Combined styles
+│   │
+│   └── react-premium/                   # @pdf-embed-seo/react-premium
+│       ├── package.json                 # Commercial license
+│       ├── tsconfig.json
+│       └── src/
+│           ├── index.ts                 # Main exports
+│           ├── components/
+│           │   ├── PdfAnalytics/        # Analytics dashboard
+│           │   ├── PdfPasswordModal/    # Password protection modal
+│           │   ├── PdfProgressBar/      # Reading progress bar
+│           │   ├── PdfSearch/           # In-document search
+│           │   └── PdfBookmarks/        # Bookmark navigation
+│           ├── hooks/
+│           │   ├── useAnalytics.ts      # Analytics tracking hook
+│           │   └── usePassword.ts       # Password verification hook
+│           ├── nextjs/                  # Next.js specific exports
+│           └── styles/
+│               └── premium.css          # Premium component styles
+│
+├── apps/
+│   └── demo-nextjs/                     # Demo Next.js application
+│       ├── package.json
+│       ├── next.config.js
+│       └── src/
+│           ├── app/                     # App router pages
+│           └── components/              # Demo components
+│
+└── tests/
+    ├── setup.ts                         # Test setup
+    ├── vitest.config.ts                 # Vitest configuration
+    ├── unit/                            # Unit tests
+    ├── uat/                             # User acceptance tests
+    └── qa/                              # QA test plans
+```
+
 ---
 
 ## REST API Reference
@@ -332,6 +645,9 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 |----------|----------|
 | WordPress | `/wp-json/pdf-embed-seo/v1/` |
 | Drupal | `/api/pdf-embed-seo/v1/` |
+| React/Next.js | Configurable via `PdfProvider` (connects to WP or Drupal backend) |
+
+**Note:** The React/Next.js package is a frontend library that connects to either a WordPress or Drupal backend API. Configure the base URL when initializing the `PdfProvider`.
 
 ### Public Endpoints (Free)
 
@@ -449,6 +765,82 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 
 ---
 
+## React Hooks Reference
+
+### Core Hooks (`@pdf-embed-seo/react`)
+
+| Hook | Parameters | Returns | Description |
+|------|------------|---------|-------------|
+| `usePdf` | `documentId: string \| number` | `{ document, loading, error, refetch }` | Fetch single PDF document |
+| `usePdfList` | `options?: DocumentListParams` | `{ documents, pagination, loading, error, fetchPage }` | Fetch paginated document list |
+| `usePdfViewer` | `documentId: string \| number` | `{ viewerState, setPage, setZoom, setTheme }` | Viewer state management |
+| `useProgress` | `documentId: string \| number` | `{ progress, saveProgress, loading }` | Reading progress (requires premium backend) |
+| `usePdfSettings` | - | `{ settings, loading }` | Get public settings from backend |
+| `usePdfContext` | - | `PdfContextValue` | Access provider context |
+
+### Premium Hooks (`@pdf-embed-seo/react-premium`)
+
+| Hook | Parameters | Returns | Description |
+|------|------------|---------|-------------|
+| `useAnalytics` | `documentId?: string` | `{ analytics, trackView, trackDownload }` | Analytics tracking |
+| `usePassword` | `documentId: string` | `{ isProtected, isUnlocked, verify, error }` | Password verification |
+| `useSearch` | `pdfDocument: PDFDocumentProxy` | `{ results, search, clearResults }` | In-document text search |
+| `useBookmarks` | `pdfDocument: PDFDocumentProxy` | `{ bookmarks, goToBookmark }` | PDF bookmark navigation |
+
+### Hook Usage Examples
+
+```tsx
+// Fetch and display a document
+function PdfPage({ id }) {
+  const { document, loading, error } = usePdf(id);
+
+  if (loading) return <Spinner />;
+  if (error) return <Error message={error.message} />;
+
+  return (
+    <div>
+      <h1>{document.title}</h1>
+      <PdfViewer documentId={id} />
+    </div>
+  );
+}
+
+// Paginated document list
+function ArchivePage() {
+  const { documents, pagination, fetchPage, loading } = usePdfList({
+    perPage: 10,
+    orderBy: 'date',
+    order: 'desc',
+  });
+
+  return (
+    <div>
+      {documents.map(doc => (
+        <PdfCard key={doc.id} document={doc} />
+      ))}
+      <Pagination
+        current={pagination.page}
+        total={pagination.totalPages}
+        onChange={fetchPage}
+      />
+    </div>
+  );
+}
+
+// Password-protected document (Premium)
+function ProtectedPdf({ id }) {
+  const { isProtected, isUnlocked, verify, error } = usePassword(id);
+
+  if (isProtected && !isUnlocked) {
+    return <PdfPasswordModal onSubmit={verify} error={error} />;
+  }
+
+  return <PdfViewer documentId={id} />;
+}
+```
+
+---
+
 ## Data Models
 
 ### WordPress Post Meta
@@ -523,6 +915,8 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 
 ## Feature Matrix
 
+**Note:** Features apply to all platforms (WordPress, Drupal, React/Next.js) unless noted with platform-specific tags: (WP), (Drupal), (React).
+
 ### Viewer & Display
 
 | Feature | Free | Premium |
@@ -536,7 +930,9 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 | Configurable Viewer Height | ✓ | ✓ |
 | Gutenberg Block (WP) | ✓ | ✓ |
 | PDF Viewer Block (Drupal) | ✓ | ✓ |
+| PdfViewer Component (React) | ✓ | ✓ |
 | Shortcodes (WP) | ✓ | ✓ |
+| React Hooks API (React) | ✓ | ✓ |
 | Text Search in Viewer | - | ✓ |
 | Bookmark Navigation | - | ✓ |
 
@@ -565,9 +961,10 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 | Feature | Free | Premium |
 |---------|:----:|:-------:|
 | Clean URL Structure (`/pdf/slug/`) | ✓ | ✓ |
-| Auto Path/Slug Generation | ✓ | ✓ |
+| Auto Path/Slug Generation (WP/Drupal) | ✓ | ✓ |
 | Schema.org DigitalDocument | ✓ | ✓ |
 | Schema.org CollectionPage | ✓ | ✓ |
+| PdfSeo Component (React) | ✓ | ✓ |
 | Yoast SEO Integration (WP) | ✓ | ✓ |
 | OpenGraph Meta Tags | ✓ | ✓ |
 | Twitter Card Support | ✓ | ✓ |
@@ -600,10 +997,12 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 | Feature | Free | Premium |
 |---------|:----:|:-------:|
 | Archive Page (`/pdf`) | ✓ | ✓ |
+| PdfArchive Component (React) | ✓ | ✓ |
 | Pagination Support | ✓ | ✓ |
 | Grid/List Display Modes | ✓ | ✓ |
 | Sorting Options | ✓ | ✓ |
 | Search Filtering | ✓ | ✓ |
+| usePdfList Hook (React) | ✓ | ✓ |
 | Category Filter | - | ✓ |
 | Tag Filter | - | ✓ |
 
@@ -680,10 +1079,14 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 |---------|:----:|:-------:|
 | WordPress Hooks (actions/filters) | ✓ | ✓ |
 | Drupal Hooks (alter/events) | ✓ | ✓ |
+| React Hooks API (React) | ✓ | ✓ |
+| TypeScript Support (React) | ✓ | ✓ |
+| Next.js Integration (React) | ✓ | ✓ |
 | Template Overrides | ✓ | ✓ |
 | CSS Classes for Styling | ✓ | ✓ |
 | JavaScript Events | ✓ | ✓ |
-| Cache Tags & Contexts | ✓ | ✓ |
+| Cache Tags & Contexts (WP/Drupal) | ✓ | ✓ |
+| PdfProvider Context (React) | ✓ | ✓ |
 | Analytics Tracker Service | - | ✓ |
 | Progress Tracker Service | - | ✓ |
 | Priority Support | - | ✓ |
@@ -705,6 +1108,14 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 - Core modules: node, file, taxonomy, path, path_alias
 - Optional: ImageMagick or Ghostscript (thumbnails)
 
+### React/Next.js
+- Node.js 18+
+- React 18+ or React 19+
+- Optional: Next.js 13, 14, or 15
+- Mozilla PDF.js (bundled via pdfjs-dist)
+- TypeScript 5+ (recommended)
+- Backend: WordPress or Drupal with PDF Embed SEO plugin installed
+
 ---
 
 ## Security Measures
@@ -722,6 +1133,21 @@ drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/
 ## Premium Purchase URL
 
 **https://pdfviewer.drossmedia.de**
+
+---
+
+## Downloads & Resources
+
+| Resource | Link |
+|----------|------|
+| Complete Package (WP + Drupal + React) | [pdf-embed-seo-complete-v1.2.11.zip](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-complete-v1.2.11.zip) |
+| WordPress Only (Free + Premium) | [pdf-embed-seo-all-modules-v1.2.11.zip](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-all-modules-v1.2.11.zip) |
+| Drupal Only (Free + Premium) | [drupal-pdf-embed-seo-v1.2.11.zip](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/drupal-pdf-embed-seo-v1.2.11.zip) |
+| Full Changelog | [CHANGELOG.md](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG.md) |
+| WordPress Changelog | [CHANGELOG-WORDPRESS.md](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-WORDPRESS.md) |
+| Drupal Changelog | [CHANGELOG-DRUPAL.md](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-DRUPAL.md) |
+| React/Next.js Changelog | [CHANGELOG-REACT.md](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-REACT.md) |
+| React Module Documentation | [CLAUDE-REACT.md](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CLAUDE-REACT.md) |
 
 ---
 
