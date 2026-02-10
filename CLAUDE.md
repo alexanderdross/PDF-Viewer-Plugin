@@ -8,10 +8,10 @@ A comprehensive PDF management solution available for WordPress, Drupal, and Rea
 
 ### Quick Links
 
-- **[Full Changelog](https://www.github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG.md)** - Complete version history
-- **[Download Complete Package](https://www.github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-complete-v1.2.11.zip)** - All modules (WP + Drupal + React)
-- **[Download WordPress Only](https://www.github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-all-modules-v1.2.11.zip)** - WordPress Free + Premium
-- **[Download Drupal Only](https://www.github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/drupal-pdf-embed-seo-v1.2.11.zip)** - Drupal Free + Premium
+- **[Full Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG.md)** - Complete version history
+- **[Download Complete Package](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-complete-v1.2.11.zip)** - All modules (WP + Drupal + React)
+- **[Download WordPress Only](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-all-modules-v1.2.11.zip)** - WordPress Free + Premium
+- **[Download Drupal Only](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/drupal-pdf-embed-seo-v1.2.11.zip)** - Drupal Free + Premium
 
 ---
 
@@ -1137,11 +1137,11 @@ function ProtectedPdf({ id }) {
 
 | Resource | Link |
 |----------|------|
-| Complete Package (WP + Drupal + React) | [pdf-embed-seo-complete-v1.2.11.zip](https://www.github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-complete-v1.2.11.zip) |
-| WordPress Only (Free + Premium) | [pdf-embed-seo-all-modules-v1.2.11.zip](https://www.github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-all-modules-v1.2.11.zip) |
-| Drupal Only (Free + Premium) | [drupal-pdf-embed-seo-v1.2.11.zip](https://www.github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/drupal-pdf-embed-seo-v1.2.11.zip) |
-| Full Changelog | [CHANGELOG.md](https://www.github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG.md) |
-| React Module Documentation | [CLAUDE-REACT.md](https://www.github.com/alexanderdross/PDF-Viewer-2026/blob/main/CLAUDE-REACT.md) |
+| Complete Package (WP + Drupal + React) | [pdf-embed-seo-complete-v1.2.11.zip](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-complete-v1.2.11.zip) |
+| WordPress Only (Free + Premium) | [pdf-embed-seo-all-modules-v1.2.11.zip](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-all-modules-v1.2.11.zip) |
+| Drupal Only (Free + Premium) | [drupal-pdf-embed-seo-v1.2.11.zip](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/drupal-pdf-embed-seo-v1.2.11.zip) |
+| Full Changelog | [CHANGELOG.md](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG.md) |
+| React Module Documentation | [CLAUDE-REACT.md](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CLAUDE-REACT.md) |
 
 ---
 
