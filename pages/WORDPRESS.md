@@ -212,7 +212,7 @@ Display a list of all PDF documents.
 | `GET/POST` | `/documents/{id}/progress` | Progress (Premium) | None |
 | `POST` | `/documents/{id}/verify-password` | Verify password (Premium) | None |
 
-See [full API documentation](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/DOCUMENTATION.md#rest-api-reference) for details.
+See [full API documentation](https://github.com/alexanderdross/PDF-Viewer-Plugin/blob/main/DOCUMENTATION.md#rest-api-reference) for details.
 
 ---
 
@@ -261,7 +261,7 @@ add_filter('pdf_embed_seo_rest_document', function($data, $post, $detailed) {
 }, 10, 3);
 ```
 
-See [full hooks reference](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/DOCUMENTATION.md#wordpress-hooks) for all available hooks.
+See [full hooks reference](https://github.com/alexanderdross/PDF-Viewer-Plugin/blob/main/DOCUMENTATION.md#wordpress-hooks) for all available hooks.
 
 ---
 
@@ -333,18 +333,18 @@ pdf-embed-seo-optimize/
 
 | Package | Link |
 |---------|------|
-| WordPress Free + Premium | [pdf-embed-seo-all-modules-v1.2.11.zip](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-all-modules-v1.2.11.zip) |
-| Complete Package (All Platforms) | [pdf-embed-seo-complete-v1.2.11.zip](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-complete-v1.2.11.zip) |
+| WordPress Free + Premium | [pdf-embed-seo-all-modules-v1.2.11.zip](https://github.com/alexanderdross/PDF-Viewer-Plugin/raw/main/dist/pdf-embed-seo-all-modules-v1.2.11.zip) |
+| Complete Package (All Platforms) | [pdf-embed-seo-complete-v1.2.11.zip](https://github.com/alexanderdross/PDF-Viewer-Plugin/raw/main/dist/pdf-embed-seo-complete-v1.2.11.zip) |
 
 ---
 
 ## Related Documentation
 
-- [Pro Features](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/PRO.md)
-- [Complete Feature Matrix](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/FEATURES.md)
-- [Full Documentation](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/DOCUMENTATION.md)
-- [WordPress Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-WORDPRESS.md)
-- [Free vs Premium Comparison](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/COMPARISON.md)
+- [Pro Features](https://github.com/alexanderdross/PDF-Viewer-Plugin/blob/main/PRO.md)
+- [Complete Feature Matrix](https://github.com/alexanderdross/PDF-Viewer-Plugin/blob/main/FEATURES.md)
+- [Full Documentation](https://github.com/alexanderdross/PDF-Viewer-Plugin/blob/main/DOCUMENTATION.md)
+- [WordPress Changelog](https://github.com/alexanderdross/PDF-Viewer-Plugin/blob/main/CHANGELOG-WORDPRESS.md)
+- [Free vs Premium Comparison](https://github.com/alexanderdross/PDF-Viewer-Plugin/blob/main/COMPARISON.md)
 
 ---
 

@@ -11,9 +11,9 @@
 
 <p align="center">
   <a href="https://pdfviewer.drossmedia.de">Website</a> •
-  <a href="https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/DOCUMENTATION.md">Documentation</a> •
-  <a href="https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/PRO.md">Get Premium</a> •
-  <a href="https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/FEATURES.md">Features</a>
+  <a href="https://github.com/alexanderdross/PDF-Viewer-Plugin/blob/main/DOCUMENTATION.md">Documentation</a> •
+  <a href="https://github.com/alexanderdross/PDF-Viewer-Plugin/blob/main/PRO.md">Get Premium</a> •
+  <a href="https://github.com/alexanderdross/PDF-Viewer-Plugin/blob/main/FEATURES.md">Features</a>
 </p>
 
 **Current Version:** 1.2.11 | **Platforms:** WordPress, Drupal, React/Next.js
@@ -190,9 +190,9 @@ Upgrade to Premium for advanced features:
 - **GDPR Compliance** - IP anonymization setting (enabled by default)
 - **Cache Improvements** - Proper cache tag invalidation
 
-See [CHANGELOG.md](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG.md) for complete version history.
+See [CHANGELOG.md](https://github.com/alexanderdross/PDF-Viewer-Plugin/blob/main/CHANGELOG.md) for complete version history.
 
 ### Platform-Specific Changelogs
-- [WordPress Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-WORDPRESS.md)
-- [Drupal Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-DRUPAL.md)
-- [React/Next.js Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-REACT.md)
+- [WordPress Changelog](https://github.com/alexanderdross/PDF-Viewer-Plugin/blob/main/CHANGELOG-WORDPRESS.md)
+- [Drupal Changelog](https://github.com/alexanderdross/PDF-Viewer-Plugin/blob/main/CHANGELOG-DRUPAL.md)
+- [React/Next.js Changelog](https://github.com/alexanderdross/PDF-Viewer-Plugin/blob/main/CHANGELOG-REACT.md)

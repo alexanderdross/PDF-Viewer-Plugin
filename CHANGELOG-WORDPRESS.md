@@ -6,13 +6,13 @@
 
 WordPress-specific changes for PDF Embed & SEO Optimize plugin.
 
-For the complete unified changelog, see [CHANGELOG.md](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG.md).
+For the complete unified changelog, see [CHANGELOG.md](https://github.com/alexanderdross/PDF-Viewer-Plugin/blob/main/CHANGELOG.md).
 
 ---
 
 ## [1.2.11] - 2026-02-10
 
-No WordPress-specific changes in this release. See [Drupal changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-DRUPAL.md) for platform-specific updates.
+No WordPress-specific changes in this release. See [Drupal changelog](https://github.com/alexanderdross/PDF-Viewer-Plugin/blob/main/CHANGELOG-DRUPAL.md) for platform-specific updates.
 
 ---
 

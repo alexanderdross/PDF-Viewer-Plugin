@@ -183,10 +183,10 @@ Need more than what our standard plans offer?
 
 ## Related Links
 
-- [Pro Features Overview](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/PRO.md)
-- [Complete Feature Matrix](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/FEATURES.md)
-- [Free vs Premium Comparison](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/COMPARISON.md)
-- [Documentation](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/DOCUMENTATION.md)
+- [Pro Features Overview](https://github.com/alexanderdross/PDF-Viewer-Plugin/blob/main/PRO.md)
+- [Complete Feature Matrix](https://github.com/alexanderdross/PDF-Viewer-Plugin/blob/main/FEATURES.md)
+- [Free vs Premium Comparison](https://github.com/alexanderdross/PDF-Viewer-Plugin/blob/main/COMPARISON.md)
+- [Documentation](https://github.com/alexanderdross/PDF-Viewer-Plugin/blob/main/DOCUMENTATION.md)
 
 ---
 
