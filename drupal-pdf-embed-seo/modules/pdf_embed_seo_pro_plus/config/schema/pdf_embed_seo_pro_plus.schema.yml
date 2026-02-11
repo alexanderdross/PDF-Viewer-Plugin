@@ -1,0 +1,108 @@
+pdf_embed_seo_pro_plus.settings:
+  type: config_object
+  label: 'PDF Embed SEO Pro+ settings'
+  mapping:
+    license_key:
+      type: string
+      label: 'License key'
+    license_status:
+      type: string
+      label: 'License status'
+    license_expires:
+      type: string
+      label: 'License expiration date'
+      nullable: true
+    settings:
+      type: mapping
+      label: 'Pro+ settings'
+      mapping:
+        enable_advanced_analytics:
+          type: boolean
+          label: 'Enable advanced analytics'
+        enable_security:
+          type: boolean
+          label: 'Enable security features'
+        enable_webhooks:
+          type: boolean
+          label: 'Enable webhooks'
+        enable_versioning:
+          type: boolean
+          label: 'Enable versioning'
+        enable_annotations:
+          type: boolean
+          label: 'Enable annotations'
+        enable_compliance:
+          type: boolean
+          label: 'Enable compliance'
+        enable_white_label:
+          type: boolean
+          label: 'Enable white label'
+        heatmaps_enabled:
+          type: boolean
+          label: 'Enable heatmaps'
+        engagement_scoring:
+          type: boolean
+          label: 'Enable engagement scoring'
+        geographic_tracking:
+          type: boolean
+          label: 'Enable geographic tracking'
+        device_analytics:
+          type: boolean
+          label: 'Enable device analytics'
+        two_factor_enabled:
+          type: boolean
+          label: 'Enable two-factor authentication'
+        ip_whitelist:
+          type: string
+          label: 'IP whitelist'
+        audit_log_retention:
+          type: integer
+          label: 'Audit log retention days'
+        max_failed_attempts:
+          type: integer
+          label: 'Max failed login attempts'
+        webhook_url:
+          type: string
+          label: 'Webhook URL'
+        webhook_secret:
+          type: string
+          label: 'Webhook secret'
+        webhook_events:
+          type: sequence
+          label: 'Webhook events'
+          sequence:
+            type: string
+            label: 'Event'
+        keep_versions:
+          type: integer
+          label: 'Number of versions to keep'
+        auto_version:
+          type: boolean
+          label: 'Auto-create versions'
+        allow_user_annotations:
+          type: boolean
+          label: 'Allow user annotations'
+        signature_enabled:
+          type: boolean
+          label: 'Enable signatures'
+        gdpr_mode:
+          type: boolean
+          label: 'GDPR mode'
+        hipaa_mode:
+          type: boolean
+          label: 'HIPAA mode'
+        data_retention_days:
+          type: integer
+          label: 'Data retention days'
+        custom_branding:
+          type: boolean
+          label: 'Custom branding'
+        hide_powered_by:
+          type: boolean
+          label: 'Hide powered by'
+        custom_logo_url:
+          type: string
+          label: 'Custom logo URL'
+        custom_css:
+          type: string
+          label: 'Custom CSS'

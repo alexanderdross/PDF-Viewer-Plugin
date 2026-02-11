@@ -1,0 +1,52 @@
+license_key: ''
+license_status: 'inactive'
+license_expires: null
+
+settings:
+  # Feature toggles
+  enable_advanced_analytics: true
+  enable_security: true
+  enable_webhooks: true
+  enable_versioning: true
+  enable_annotations: true
+  enable_compliance: true
+  enable_white_label: true
+
+  # Advanced Analytics
+  heatmaps_enabled: true
+  engagement_scoring: true
+  geographic_tracking: true
+  device_analytics: true
+
+  # Security
+  two_factor_enabled: false
+  ip_whitelist: ''
+  audit_log_retention: 90
+  max_failed_attempts: 5
+
+  # Webhooks
+  webhook_url: ''
+  webhook_secret: ''
+  webhook_events:
+    - view
+    - download
+    - password_attempt
+
+  # Versioning
+  keep_versions: 10
+  auto_version: true
+
+  # Annotations
+  allow_user_annotations: false
+  signature_enabled: false
+
+  # Compliance
+  gdpr_mode: true
+  hipaa_mode: false
+  data_retention_days: 365
+
+  # White Label
+  custom_branding: false
+  hide_powered_by: false
+  custom_logo_url: ''
+  custom_css: ''

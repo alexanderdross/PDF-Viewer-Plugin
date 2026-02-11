@@ -1,0 +1,54 @@
+view pdf audit log:
+  title: 'View PDF audit log'
+  description: 'View the PDF document audit log entries.'
+  restrict access: TRUE
+
+manage pdf webhooks:
+  title: 'Manage PDF webhooks'
+  description: 'Create, edit, and delete PDF webhooks.'
+  restrict access: TRUE
+
+manage pdf versions:
+  title: 'Manage PDF versions'
+  description: 'Create and restore PDF document versions.'
+  restrict access: TRUE
+
+view pdf versions:
+  title: 'View PDF versions'
+  description: 'View PDF document version history.'
+
+create pdf annotations:
+  title: 'Create PDF annotations'
+  description: 'Add annotations to PDF documents.'
+
+edit own pdf annotations:
+  title: 'Edit own PDF annotations'
+  description: 'Edit annotations created by the user.'
+
+delete own pdf annotations:
+  title: 'Delete own PDF annotations'
+  description: 'Delete annotations created by the user.'
+
+edit any pdf annotations:
+  title: 'Edit any PDF annotations'
+  description: 'Edit any PDF annotation.'
+  restrict access: TRUE
+
+delete any pdf annotations:
+  title: 'Delete any PDF annotations'
+  description: 'Delete any PDF annotation.'
+  restrict access: TRUE
+
+configure pdf compliance:
+  title: 'Configure PDF compliance'
+  description: 'Configure GDPR and HIPAA compliance settings.'
+  restrict access: TRUE
+
+configure pdf white label:
+  title: 'Configure PDF white label'
+  description: 'Configure white label branding options.'
+  restrict access: TRUE
+
+use pdf 2fa:
+  title: 'Use PDF 2FA'
+  description: 'Access PDF documents protected by two-factor authentication.'

@@ -1,0 +1,36 @@
+services:
+  pdf_embed_seo_pro_plus.version_manager:
+    class: Drupal\pdf_embed_seo_pro_plus\Service\VersionManager
+    arguments: ['@database', '@entity_type.manager', '@current_user']
+
+  pdf_embed_seo_pro_plus.annotation_manager:
+    class: Drupal\pdf_embed_seo_pro_plus\Service\AnnotationManager
+    arguments: ['@database', '@current_user', '@uuid']
+
+  pdf_embed_seo_pro_plus.audit_logger:
+    class: Drupal\pdf_embed_seo_pro_plus\Service\AuditLogger
+    arguments: ['@database', '@current_user', '@request_stack']
+
+  pdf_embed_seo_pro_plus.webhook_dispatcher:
+    class: Drupal\pdf_embed_seo_pro_plus\Service\WebhookDispatcher
+    arguments: ['@database', '@http_client', '@logger.factory']
+
+  pdf_embed_seo_pro_plus.advanced_analytics:
+    class: Drupal\pdf_embed_seo_pro_plus\Service\AdvancedAnalytics
+    arguments: ['@database', '@config.factory']
+
+  pdf_embed_seo_pro_plus.compliance_manager:
+    class: Drupal\pdf_embed_seo_pro_plus\Service\ComplianceManager
+    arguments: ['@database', '@config.factory', '@current_user']
+
+  pdf_embed_seo_pro_plus.two_factor_auth:
+    class: Drupal\pdf_embed_seo_pro_plus\Service\TwoFactorAuth
+    arguments: ['@database', '@current_user', '@password']
+
+  pdf_embed_seo_pro_plus.white_label:
+    class: Drupal\pdf_embed_seo_pro_plus\Service\WhiteLabel
+    arguments: ['@config.factory']
+
+  pdf_embed_seo_pro_plus.license_validator:
+    class: Drupal\pdf_embed_seo_pro_plus\Service\LicenseValidator
+    arguments: ['@config.factory', '@state']
