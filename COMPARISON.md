@@ -15,7 +15,7 @@ A detailed comparison of features available in the Free and Premium versions.
 | | Free | Premium |
 |---|:---:|:---:|
 | **Price** | $0 | From $49/year |
-| **Platforms** | WordPress & Drupal | WordPress & Drupal |
+| **Platforms** | WordPress, Drupal & React | WordPress, Drupal & React |
 | **Support** | Community | Priority Email/Chat |
 | **Updates** | Lifetime | 1 Year |
 
