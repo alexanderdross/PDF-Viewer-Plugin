@@ -189,7 +189,7 @@ Your PDF is now available at `/pdf/your-document-slug`
 
 **Note:** POST endpoints require CSRF token for security.
 
-See [full API documentation](../DOCUMENTATION.md#rest-api-reference) for details.
+See [full API documentation](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/DOCUMENTATION.md#rest-api-reference) for details.
 
 ---
 
@@ -417,11 +417,11 @@ Passwords use Drupal's password service (bcrypt) - never stored in plain text.
 
 ## Related Documentation
 
-- [Pro Features](../PRO.md)
-- [Complete Feature Matrix](../FEATURES.md)
-- [Full Documentation](../DOCUMENTATION.md)
-- [Drupal Changelog](../CHANGELOG-DRUPAL.md)
-- [Free vs Premium Comparison](../COMPARISON.md)
+- [Pro Features](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/PRO.md)
+- [Complete Feature Matrix](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/FEATURES.md)
+- [Full Documentation](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/DOCUMENTATION.md)
+- [Drupal Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-DRUPAL.md)
+- [Free vs Premium Comparison](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/COMPARISON.md)
 
 ---
 

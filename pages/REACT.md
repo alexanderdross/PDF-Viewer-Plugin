@@ -692,11 +692,11 @@ npm install @pdf-embed-seo/react-premium
 
 ## Related Documentation
 
-- [Pro Features](../PRO.md)
-- [Complete Feature Matrix](../FEATURES.md)
-- [React/Next.js Guide](../CLAUDE-REACT.md)
-- [React Changelog](../CHANGELOG-REACT.md)
-- [Full Documentation](../DOCUMENTATION.md)
+- [Pro Features](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/PRO.md)
+- [Complete Feature Matrix](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/FEATURES.md)
+- [React/Next.js Guide](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CLAUDE-REACT.md)
+- [React Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-REACT.md)
+- [Full Documentation](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/DOCUMENTATION.md)
 
 ---
 

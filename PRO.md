@@ -13,7 +13,7 @@
   <a href="https://pdfviewer.drossmedia.de">Get Premium</a> |
   <a href="#pricing">Pricing</a> |
   <a href="#features">Features</a> |
-  <a href="./DOCUMENTATION.md">Documentation</a>
+  <a href="https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/DOCUMENTATION.md">Documentation</a>
 </p>
 
 ---
@@ -411,11 +411,11 @@ Yes! Development and staging environments don't count toward your site limit.
 
 ## Related Documentation
 
-- [Free vs Premium Comparison](./COMPARISON.md)
-- [Full Feature Matrix](./FEATURES.md)
-- [Complete Documentation](./DOCUMENTATION.md)
-- [Changelog](./CHANGELOG.md)
-- [React/Next.js Guide](./CLAUDE-REACT.md)
+- [Free vs Premium Comparison](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/COMPARISON.md)
+- [Full Feature Matrix](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/FEATURES.md)
+- [Complete Documentation](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/DOCUMENTATION.md)
+- [Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG.md)
+- [React/Next.js Guide](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CLAUDE-REACT.md)
 
 ---
 

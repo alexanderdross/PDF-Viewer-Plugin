@@ -6,7 +6,7 @@
 
 Drupal-specific changes for PDF Embed & SEO module.
 
-For the complete unified changelog, see [CHANGELOG.md](./CHANGELOG.md).
+For the complete unified changelog, see [CHANGELOG.md](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG.md).
 
 ---
 

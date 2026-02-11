@@ -6,7 +6,7 @@
 
 A comprehensive PDF management solution for WordPress, Drupal, and React/Next.js.
 
-**Current Version:** 1.2.11 | **[Get Premium](https://pdfviewer.drossmedia.de)** | **[Documentation](./DOCUMENTATION.md)**
+**Current Version:** 1.2.11 | **[Get Premium](https://pdfviewer.drossmedia.de)** | **[Documentation](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/DOCUMENTATION.md)**
 
 ---
 
@@ -356,14 +356,14 @@ A comprehensive PDF management solution for WordPress, Drupal, and React/Next.js
 
 ## Related Documentation
 
-- [Pro Features Overview](./PRO.md)
-- [Free vs Premium Comparison](./COMPARISON.md)
-- [Complete Documentation](./DOCUMENTATION.md)
-- [React/Next.js Guide](./CLAUDE-REACT.md)
-- [Changelog](./CHANGELOG.md)
-- [WordPress Changelog](./CHANGELOG-WORDPRESS.md)
-- [Drupal Changelog](./CHANGELOG-DRUPAL.md)
-- [React Changelog](./CHANGELOG-REACT.md)
+- [Pro Features Overview](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/PRO.md)
+- [Free vs Premium Comparison](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/COMPARISON.md)
+- [Complete Documentation](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/DOCUMENTATION.md)
+- [React/Next.js Guide](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CLAUDE-REACT.md)
+- [Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG.md)
+- [WordPress Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-WORDPRESS.md)
+- [Drupal Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-DRUPAL.md)
+- [React Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-REACT.md)
 
 ---
 
