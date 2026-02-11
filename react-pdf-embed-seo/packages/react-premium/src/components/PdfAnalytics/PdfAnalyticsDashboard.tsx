@@ -61,7 +61,7 @@ export function PdfAnalyticsDashboard({
   showExport = true,
   data: propData,
   className = '',
-}: PdfAnalyticsDashboardProps): React.ReactElement {
+}: PdfAnalyticsDashboardProps): React.ReactElement | null {
   const { apiClient } = usePdfContext();
 
   const [selectedPeriod, setSelectedPeriod] = useState(period);
@@ -79,6 +79,8 @@ export function PdfAnalyticsDashboard({
     if (!apiClient) return;
 
     async function fetchAnalytics() {
+      if (!apiClient) return;
+
       setIsLoading(true);
       setError(null);
 

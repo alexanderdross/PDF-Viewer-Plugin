@@ -3,7 +3,7 @@
  * Displays document version history with restore capabilities
  */
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useVersions } from '../hooks/useVersions';
 import type { DocumentVersion, VersionHistoryProps } from '../types';
 
@@ -49,7 +49,8 @@ export const PdfVersionHistory: React.FC<VersionHistoryProps> = ({
   showChangelog = true,
   showRestore = true,
 }) => {
-  const { versions, loading, error, restoreVersion, isRestoring } = useVersions(documentId);
+  const { versions, loading, error, restoreVersion } = useVersions({ documentId });
+  const [isRestoring, setIsRestoring] = useState(false);
 
   const sortedVersions = useMemo(() => {
     return [...versions].sort((a, b) =>
@@ -58,11 +59,14 @@ export const PdfVersionHistory: React.FC<VersionHistoryProps> = ({
   }, [versions]);
 
   const handleRestore = async (version: DocumentVersion) => {
-    if (version.isCurrent) return;
+    if (version.isCurrent || isRestoring) return;
 
-    const success = await restoreVersion(version.id);
-    if (success && onVersionRestore) {
-      onVersionRestore(version);
+    setIsRestoring(true);
+    try {
+      await restoreVersion(version.id);
+      onVersionRestore?.(version);
+    } finally {
+      setIsRestoring(false);
     }
   };
 

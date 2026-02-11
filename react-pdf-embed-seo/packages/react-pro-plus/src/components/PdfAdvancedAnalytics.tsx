@@ -24,7 +24,7 @@ export const PdfAdvancedAnalytics: React.FC<PdfAdvancedAnalyticsProps> = ({
   showGeoData = true,
   onExport,
 }) => {
-  const { analytics, loading, error, refresh } = useAdvancedAnalytics(documentId, period);
+  const { analytics, loading, error, loadAnalytics } = useAdvancedAnalytics({ documentId });
 
   const engagementLevel = useMemo(() => {
     if (!analytics) return 'N/A';
@@ -59,7 +59,7 @@ export const PdfAdvancedAnalytics: React.FC<PdfAdvancedAnalyticsProps> = ({
     return (
       <div className="pdf-analytics pdf-analytics-error">
         <span>Failed to load analytics: {error.message}</span>
-        <button onClick={refresh}>Retry</button>
+        <button onClick={() => loadAnalytics()}>Retry</button>
       </div>
     );
   }

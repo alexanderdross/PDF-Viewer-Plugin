@@ -91,7 +91,7 @@ export function generateDigitalDocumentSchema(
   }
 
   // Add potential actions
-  schema.potentialAction = [
+  const potentialActions: Array<{ '@type': string; target: string }> = [
     {
       '@type': 'ReadAction',
       target: document.url || `${options.siteUrl}/pdf/${document.slug}/`,
@@ -99,11 +99,13 @@ export function generateDigitalDocumentSchema(
   ];
 
   if (document.allowDownload) {
-    schema.potentialAction.push({
+    potentialActions.push({
       '@type': 'DownloadAction',
       target: document.pdfUrl || `${options.siteUrl}/pdf/${document.slug}/download/`,
     });
   }
+
+  schema.potentialAction = potentialActions;
 
   // Premium: Add reading time
   if (document.readingTime) {

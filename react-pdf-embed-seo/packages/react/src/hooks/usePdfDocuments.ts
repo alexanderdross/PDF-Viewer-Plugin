@@ -121,7 +121,7 @@ export function usePdfDocuments(
   const [total, setTotal] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [search, setSearch] = useState(initialSearch);
-  const [sortBy, setSortBy] = useState(initialSort);
+  const [sortBy, setSortBy] = useState<string>(initialSort);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>(initialOrder);
 
   // Pagination state

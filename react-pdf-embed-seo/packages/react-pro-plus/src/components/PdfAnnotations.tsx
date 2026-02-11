@@ -33,7 +33,7 @@ export const PdfAnnotations: React.FC<PdfAnnotationsProps> = ({
   showAuthor = true,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { annotations, loading, createAnnotation, updateAnnotation, deleteAnnotation } = useAnnotations(documentId, page);
+  const { annotations, loading, createAnnotation, updateAnnotation, deleteAnnotation } = useAnnotations({ documentId });
 
   const handleAnnotationClick = useCallback((annotation: Annotation) => {
     onAnnotationClick?.(annotation);
@@ -56,11 +56,8 @@ export const PdfAnnotations: React.FC<PdfAnnotationsProps> = ({
   }, [updateAnnotation, onAnnotationUpdate]);
 
   const handleDelete = useCallback(async (id: string) => {
-    const success = await deleteAnnotation(id);
-    if (success) {
-      onAnnotationDelete?.(id);
-    }
-    return success;
+    await deleteAnnotation(id);
+    onAnnotationDelete?.(id);
   }, [deleteAnnotation, onAnnotationDelete]);
 
   const getAnnotationStyle = (annotation: Annotation): React.CSSProperties => {
