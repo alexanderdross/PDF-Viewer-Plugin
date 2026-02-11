@@ -5,15 +5,18 @@
 </p>
 
 <p align="center">
-  <strong>A powerful PDF management solution for WordPress and Drupal</strong><br>
+  <strong>A powerful PDF management solution for WordPress, Drupal, and React/Next.js</strong><br>
   Display PDFs with Mozilla's PDF.js viewer, SEO optimization, and full control over print/download permissions.
 </p>
 
 <p align="center">
   <a href="https://pdfviewer.drossmedia.de">Website</a> •
-  <a href="https://pdfviewer.drossmedia.de/documentation/">Documentation</a> •
-  <a href="https://pdfviewer.drossmedia.de/pro/">Get Premium</a>
+  <a href="https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/DOCUMENTATION.md">Documentation</a> •
+  <a href="https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/PRO.md">Get Premium</a> •
+  <a href="https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/FEATURES.md">Features</a>
 </p>
+
+**Current Version:** 1.2.11 | **Platforms:** WordPress, Drupal, React/Next.js
 
 ---
 
@@ -172,30 +175,24 @@ Upgrade to Premium for advanced features:
 
 ## Changelog
 
-### 1.2.5 (Current)
-- Download Tracking - Track PDF downloads separately from views
-- Expiring Access Links - Generate time-limited URLs with max usage limits
-- Drupal Premium feature parity with WordPress
-- Extended REST API with 14+ endpoints
+### 1.2.11 (Current)
+- **Drupal Code Review Fixes** - CSRF protection, rate limiting, session cache context
+- **Media Library Integration** - PDFs managed via Drupal's Media Library
+- **New Services** - Rate limiter and access token storage with database backend
+- **Database Migration** - Scalable token storage with automatic cleanup
 
-### 1.2.4
-- Premium AI & Schema Optimization meta box for GEO/AEO/LLM optimization
-- AI Summary, FAQ Schema, Table of Contents, Reading Time, Difficulty Level
+### 1.2.10
+- **iOS Print Support** - Enhanced print functionality for Safari/iOS
+- **Comprehensive Print CSS** - Professional print output across all platforms
 
-### 1.2.0
-- REST API endpoints for all platforms
-- Reading progress tracking (Premium)
-- XML Sitemap at `/pdf/sitemap.xml` (Premium)
-- Analytics dashboard (Premium)
+### 1.2.9
+- **Drupal Performance** - Removed entity saves during page views
+- **GDPR Compliance** - IP anonymization setting (enabled by default)
+- **Cache Improvements** - Proper cache tag invalidation
 
-### 1.0.0
-- Initial release
-- Custom post type for PDF documents
-- Mozilla PDF.js viewer integration (bundled locally - no external CDN)
-- Gutenberg block for embedding PDFs in the block editor
-- Auto-generate thumbnails from PDF first pages (requires ImageMagick or Ghostscript)
-- Yoast SEO compatibility
-- Print/download permission controls
-- View statistics tracking
-- Shortcode support
-- Schema markup (DigitalDocument and CollectionPage)
+See [CHANGELOG.md](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG.md) for complete version history.
+
+### Platform-Specific Changelogs
+- [WordPress Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-WORDPRESS.md)
+- [Drupal Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-DRUPAL.md)
+- [React/Next.js Changelog](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-REACT.md)
