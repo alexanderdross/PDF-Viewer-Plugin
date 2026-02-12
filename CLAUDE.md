@@ -4,7 +4,7 @@ A comprehensive PDF management solution available for WordPress, Drupal, and Rea
 
 **Current Version:** 1.3.0 (Pro+ Enterprise), 1.2.11 (Free & Premium)
 **Platforms:** WordPress (Free, Premium & Pro+), Drupal 10/11 (Free, Premium & Pro+), React/Next.js
-**License:** GPL v2 or later (WordPress/Drupal), MIT (React Free), Commercial (React Premium/Pro+)
+**License:** GPL v2 or later (WordPress/Drupal), MIT (React Free), Commercial (React Pro/Pro+)
 
 ### Quick Links
 
@@ -32,7 +32,7 @@ This project provides nine modules across three platforms:
 | Drupal Premium | `drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/` | Drupal 10/11 | Analytics, passwords, progress, sitemap |
 | Drupal Pro+ | `drupal-pdf-embed-seo/modules/pdf_embed_seo_pro_plus/` | Drupal 10/11 | Advanced analytics, annotations, versioning, webhooks, 2FA, compliance |
 | React Free | `react-pdf-embed-seo/packages/react/` | React 18+/Next.js 13+ | Components, hooks, SEO, API client |
-| React Premium | `react-pdf-embed-seo/packages/react-premium/` | React 18+/Next.js 13+ | Analytics, passwords, progress, search |
+| React Pro | `react-pdf-embed-seo/packages/react-premium/` | React 18+/Next.js 13+ | Analytics, passwords, progress, search |
 | React Pro+ | `react-pdf-embed-seo/packages/react-pro-plus/` | React 18+/Next.js 13+ | Heatmaps, annotations, versioning, webhooks, 2FA, compliance |
 
 ### NPM Packages (React/Next.js)
@@ -41,7 +41,7 @@ This project provides nine modules across three platforms:
 |---------|---------|---------|-------------|
 | `@pdf-embed-seo/core` | 1.2.10 | MIT | Core types, utilities, API client |
 | `@pdf-embed-seo/react` | 1.2.10 | MIT | Free React components |
-| `@pdf-embed-seo/react-premium` | 1.2.10 | Commercial | Premium React components |
+| `@pdf-embed-seo/react-premium` | 1.2.10 | Commercial | Pro React components |
 | `@pdf-embed-seo/react-pro-plus` | 1.3.0 | Commercial | Pro+ Enterprise components (heatmaps, annotations, versioning, compliance) |
 
 ---
@@ -125,7 +125,7 @@ npm install @pdf-embed-seo/react
 # or
 pnpm add @pdf-embed-seo/react
 
-# Install premium package (requires license)
+# Install pro package (requires license)
 npm install @pdf-embed-seo/react-premium
 ```
 
@@ -235,7 +235,7 @@ For Next.js applications, use the optimized exports:
 import { PdfViewer, PdfArchive, PdfPage } from '@pdf-embed-seo/react/nextjs';
 ```
 
-### Premium Components
+### Pro Components
 
 ```tsx
 import {
@@ -360,7 +360,7 @@ import type {
 │  │  Hook     │ │   Hook    │ │   Hook    │ │  Exports    │ │
 │  └───────────┘ └───────────┘ └───────────┘ └─────────────┘ │
 ├─────────────────────────────────────────────────────────────┤
-│            @pdf-embed-seo/react-premium (Optional)           │
+│            @pdf-embed-seo/react-premium (React Pro)          │
 ├─────────────────────────────────────────────────────────────┤
 │  ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌─────────────┐ │
 │  │  Pdf      │ │  Pdf      │ │ PdfSearch │ │ PdfProgress │ │
@@ -606,7 +606,7 @@ react-pdf-embed-seo/
 │   │           ├── archive.css          # Archive styles
 │   │           └── index.css            # Combined styles
 │   │
-│   └── react-premium/                   # @pdf-embed-seo/react-premium
+│   └── react-premium/                   # @pdf-embed-seo/react-premium (React Pro)
 │       ├── package.json                 # Commercial license
 │       ├── tsconfig.json
 │       └── src/
@@ -783,7 +783,7 @@ react-pdf-embed-seo/
 | `usePdfSettings` | - | `{ settings, loading }` | Get public settings from backend |
 | `usePdfContext` | - | `PdfContextValue` | Access provider context |
 
-### Premium Hooks (`@pdf-embed-seo/react-premium`)
+### Pro Hooks (`@pdf-embed-seo/react-premium`)
 
 | Hook | Parameters | Returns | Description |
 |------|------------|---------|-------------|
@@ -832,7 +832,7 @@ function ArchivePage() {
   );
 }
 
-// Password-protected document (Premium)
+// Password-protected document (Pro)
 function ProtectedPdf({ id }) {
   const { isProtected, isUnlocked, verify, error } = usePassword(id);
 

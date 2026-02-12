@@ -374,7 +374,7 @@ packages/react/
 └── dist/
 ```
 
-### 3.3 React Premium Package
+### 3.3 React Pro Package
 
 ```
 packages/react-premium/

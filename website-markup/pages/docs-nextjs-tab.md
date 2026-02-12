@@ -8,7 +8,7 @@
 4. [Hooks](#hooks)
 5. [Next.js Integration](#nextjs-integration)
 6. [Backend Integration](#backend-integration)
-7. [Premium Features](#premium-features)
+7. [Pro Features](#pro-features)
 8. [API Reference](#api-reference)
 
 ---
@@ -28,7 +28,7 @@ yarn add @pdf-embed-seo/react
 pnpm add @pdf-embed-seo/react
 ```
 
-### Premium Package
+### Pro Package
 
 ```bash
 npm install @pdf-embed-seo/react-premium

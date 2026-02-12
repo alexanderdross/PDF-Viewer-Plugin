@@ -1,6 +1,6 @@
 /**
  * @pdf-embed-seo/react-premium
- * Premium React components for PDF Embed & SEO Optimize
+ * Pro React components for PDF Embed & SEO Optimize
  *
  * @packageDocumentation
  */

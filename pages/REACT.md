@@ -13,7 +13,7 @@
 
 **Current Version:** 1.2.11
 **Requires:** React 18+ | Node.js 18+ | TypeScript 5+ (recommended)
-**License:** MIT (Free), Commercial (Premium)
+**License:** MIT (Free), Commercial (Pro)
 
 ---
 
@@ -29,7 +29,7 @@ pnpm add @pdf-embed-seo/react
 # or
 yarn add @pdf-embed-seo/react
 
-# Premium package (requires license)
+# Pro package (requires license)
 npm install @pdf-embed-seo/react-premium
 ```
 
@@ -84,7 +84,7 @@ export default function PdfPage({ params }) {
 |---------|---------|---------|-------------|
 | `@pdf-embed-seo/core` | 1.2.11 | MIT | Core types, utilities, API client |
 | `@pdf-embed-seo/react` | 1.2.11 | MIT | Free React components |
-| `@pdf-embed-seo/react-premium` | 1.2.11 | Commercial | Premium React components |
+| `@pdf-embed-seo/react-premium` | 1.2.11 | Commercial | Pro React components |
 
 ---
 
@@ -381,7 +381,7 @@ function ProgressTracker({ documentId }) {
 
 ---
 
-## Premium Components
+## Pro Components
 
 ### PdfPasswordModal
 
@@ -455,7 +455,7 @@ import { PdfAnalytics } from '@pdf-embed-seo/react-premium';
 
 ---
 
-## Premium Hooks
+## Pro Hooks
 
 ### useAnalytics
 
@@ -651,11 +651,11 @@ react-pdf-embed-seo/
 │   │       ├── nextjs/             # Next.js exports
 │   │       └── styles/             # CSS styles
 │   │
-│   └── react-premium/              # @pdf-embed-seo/react-premium
+│   └── react-premium/              # @pdf-embed-seo/react-premium (Pro)
 │       └── src/
-│           ├── components/         # Premium components
-│           ├── hooks/              # Premium hooks
-│           └── styles/             # Premium styles
+│           ├── components/         # Pro components
+│           ├── hooks/              # Pro hooks
+│           └── styles/             # Pro styles
 │
 └── apps/
     └── demo-nextjs/                # Demo application
@@ -671,7 +671,7 @@ react-pdf-embed-seo/
 # Free packages
 npm install @pdf-embed-seo/core @pdf-embed-seo/react
 
-# Premium package
+# Pro package
 npm install @pdf-embed-seo/react-premium
 ```
 

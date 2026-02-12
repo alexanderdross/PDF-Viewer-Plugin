@@ -244,7 +244,7 @@ A comprehensive PDF management solution for WordPress, Drupal, and React/Next.js
 |---------|---------|---------|-------------|
 | `@pdf-embed-seo/core` | 1.2.11 | MIT | Core types, utilities, API client |
 | `@pdf-embed-seo/react` | 1.2.11 | MIT | Free React components |
-| `@pdf-embed-seo/react-premium` | 1.2.11 | Commercial | Premium React components |
+| `@pdf-embed-seo/react-premium` | 1.2.11 | Commercial | Pro React components |
 
 ### Free Components
 
@@ -266,7 +266,7 @@ A comprehensive PDF management solution for WordPress, Drupal, and React/Next.js
 | `usePdfSettings` | Get public settings |
 | `usePdfContext` | Access provider context |
 
-### Premium Components
+### Pro Components
 
 | Component | Description |
 |-----------|-------------|
@@ -276,7 +276,7 @@ A comprehensive PDF management solution for WordPress, Drupal, and React/Next.js
 | `PdfBookmarks` | Bookmark navigation |
 | `PdfAnalytics` | Analytics dashboard |
 
-### Premium Hooks
+### Pro Hooks
 
 | Hook | Description |
 |------|-------------|

@@ -4,7 +4,7 @@ A comprehensive PDF management solution available for WordPress, Drupal, and Rea
 
 **Current Version:** 1.2.8 (WP/Drupal), 1.3.0 (React - Planned)
 **Platforms:** WordPress (Free & Premium), Drupal 10/11, React/Next.js
-**License:** GPL v2 or later (WP/Drupal), MIT (React Free), Commercial (React Premium)
+**License:** GPL v2 or later (WP/Drupal), MIT (React Free), Commercial (React Pro)
 
 ---
 
@@ -19,7 +19,7 @@ This project provides six modules across three platforms:
 | Drupal Free | `drupal-pdf-embed-seo/` | Drupal 10/11 | Core PDF viewer, SEO, REST API |
 | Drupal Premium | `drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/` | Drupal 10/11 | Analytics, passwords, progress, sitemap |
 | React Free | `@pdf-embed-seo/react` | React 18+, Next.js 13+ | Components, hooks, SEO, API client |
-| React Premium | `@pdf-embed-seo/react-premium` | React 18+, Next.js 13+ | Analytics, passwords, progress, sitemap |
+| React Pro | `@pdf-embed-seo/react-premium` | React 18+, Next.js 13+ | Analytics, passwords, progress, sitemap |
 
 ---
 
@@ -97,7 +97,7 @@ Use shortcodes to embed an **existing PDF Document** into any page, post, or wid
 # Free version
 npm install @pdf-embed-seo/react
 
-# Premium version (requires license)
+# Pro version (requires license)
 npm install @pdf-embed-seo/react @pdf-embed-seo/react-premium
 ```
 
@@ -311,7 +311,7 @@ const { jsonLd, metaTags } = usePdfSeo(document);
 │  │   (usePdf...)   │  │   (WP/Drupal)   │                   │
 │  └─────────────────┘  └─────────────────┘                   │
 ├─────────────────────────────────────────────────────────────┤
-│           @pdf-embed-seo/react-premium (Optional)            │
+│           @pdf-embed-seo/react-premium (React Pro)           │
 ├─────────────────────────────────────────────────────────────┤
 │  ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌─────────────┐ │
 │  │ Analytics │ │ Password  │ │  Reading  │ │  Enhanced   │ │
@@ -411,7 +411,7 @@ react-pdf-embed-seo/
 │   │   │   └── styles/
 │   │   └── package.json
 │   │
-│   └── react-premium/                   # @pdf-embed-seo/react-premium
+│   └── react-premium/                   # @pdf-embed-seo/react-premium (React Pro)
 │       ├── src/
 │       │   ├── components/
 │       │   │   ├── PdfPasswordModal/
@@ -650,7 +650,7 @@ interface PdfProviderProps {
 
 ## Feature Matrix
 
-| Feature | WP Free | WP Prem | Drupal Free | Drupal Prem | React Free | React Prem |
+| Feature | WP Free | WP Prem | Drupal Free | Drupal Prem | React Free | React Pro |
 |---------|:-------:|:-------:|:-----------:|:-----------:|:----------:|:----------:|
 | PDF.js Viewer | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Light/Dark Theme | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -727,7 +727,7 @@ interface PdfProviderProps {
 ### 1.3.0 (Planned - React Module)
 - Initial React/Next.js module release
 - `@pdf-embed-seo/react` npm package (free)
-- `@pdf-embed-seo/react-premium` npm package (premium)
+- `@pdf-embed-seo/react-premium` npm package (pro)
 - React components: PdfViewer, PdfArchive, PdfSeo, PdfProvider
 - React hooks: usePdfDocument, usePdfDocuments, usePdfViewer, usePdfSeo
 - Next.js App Router integration
@@ -769,4 +769,4 @@ Made with ♥ by [Dross:Media](https://dross.net/media/)
 **License:**
 - WordPress/Drupal: GPL v2 or later
 - React Free: MIT
-- React Premium: Commercial
+- React Pro: Commercial
