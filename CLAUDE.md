@@ -2,9 +2,9 @@
 
 A comprehensive PDF management solution available for WordPress, Drupal, and React/Next.js that uses Mozilla's PDF.js library to securely display PDFs with SEO optimization.
 
-**Current Version:** 1.2.11
-**Platforms:** WordPress (Free & Premium), Drupal 10/11, React/Next.js
-**License:** GPL v2 or later (WordPress/Drupal), MIT (React Free), Commercial (React Premium)
+**Current Version:** 1.3.0 (Pro+ Enterprise), 1.2.11 (Free & Premium)
+**Platforms:** WordPress (Free, Premium & Pro+), Drupal 10/11 (Free, Premium & Pro+), React/Next.js
+**License:** GPL v2 or later (WordPress/Drupal), MIT (React Free), Commercial (React Premium/Pro+)
 
 ### Quick Links
 
@@ -15,21 +15,25 @@ A comprehensive PDF management solution available for WordPress, Drupal, and Rea
 - **[Download Complete Package](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-complete-v1.2.11.zip)** - All modules (WP + Drupal + React)
 - **[Download WordPress Only](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-all-modules-v1.2.11.zip)** - WordPress Free + Premium
 - **[Download Drupal Only](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/drupal-pdf-embed-seo-v1.2.11.zip)** - Drupal Free + Premium
+- **[Download Pro+ Enterprise](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-pro-plus-v1.3.0.zip)** - Pro+ Enterprise (WP + Drupal + React)
 
 ---
 
 ## Project Overview
 
-This project provides six modules across three platforms:
+This project provides nine modules across three platforms:
 
 | Module | Directory | Platform | Features |
 |--------|-----------|----------|----------|
 | WP Free | `pdf-embed-seo-optimize/` | WordPress 5.8+ | Core PDF viewer, SEO, REST API |
 | WP Premium | `pdf-embed-seo-optimize/premium/` | WordPress 5.8+ | Analytics, passwords, progress, sitemap |
+| WP Pro+ | `pdf-embed-seo-optimize/pro-plus/` | WordPress 5.8+ | Advanced analytics, annotations, versioning, webhooks, 2FA, compliance |
 | Drupal Free | `drupal-pdf-embed-seo/` | Drupal 10/11 | Core PDF viewer, SEO, REST API |
 | Drupal Premium | `drupal-pdf-embed-seo/modules/pdf_embed_seo_premium/` | Drupal 10/11 | Analytics, passwords, progress, sitemap |
+| Drupal Pro+ | `drupal-pdf-embed-seo/modules/pdf_embed_seo_pro_plus/` | Drupal 10/11 | Advanced analytics, annotations, versioning, webhooks, 2FA, compliance |
 | React Free | `react-pdf-embed-seo/packages/react/` | React 18+/Next.js 13+ | Components, hooks, SEO, API client |
 | React Premium | `react-pdf-embed-seo/packages/react-premium/` | React 18+/Next.js 13+ | Analytics, passwords, progress, search |
+| React Pro+ | `react-pdf-embed-seo/packages/react-pro-plus/` | React 18+/Next.js 13+ | Heatmaps, annotations, versioning, webhooks, 2FA, compliance |
 
 ### NPM Packages (React/Next.js)
 
@@ -38,6 +42,7 @@ This project provides six modules across three platforms:
 | `@pdf-embed-seo/core` | 1.2.10 | MIT | Core types, utilities, API client |
 | `@pdf-embed-seo/react` | 1.2.10 | MIT | Free React components |
 | `@pdf-embed-seo/react-premium` | 1.2.10 | Commercial | Premium React components |
+| `@pdf-embed-seo/react-pro-plus` | 1.3.0 | Commercial | Pro+ Enterprise components (heatmaps, annotations, versioning, compliance) |
 
 ---
 
@@ -1143,7 +1148,9 @@ function ProtectedPdf({ id }) {
 | Complete Package (WP + Drupal + React) | [pdf-embed-seo-complete-v1.2.11.zip](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-complete-v1.2.11.zip) |
 | WordPress Only (Free + Premium) | [pdf-embed-seo-all-modules-v1.2.11.zip](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-all-modules-v1.2.11.zip) |
 | Drupal Only (Free + Premium) | [drupal-pdf-embed-seo-v1.2.11.zip](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/drupal-pdf-embed-seo-v1.2.11.zip) |
+| Pro+ Enterprise (WP + Drupal + React) | [pdf-embed-seo-pro-plus-v1.3.0.zip](https://github.com/alexanderdross/PDF-Viewer-2026/raw/main/dist/pdf-embed-seo-pro-plus-v1.3.0.zip) |
 | Full Changelog | [CHANGELOG.md](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG.md) |
+| v1.3.0 Pro+ Changelog | [CHANGELOG-v1.3.0.md](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-v1.3.0.md) |
 | WordPress Changelog | [CHANGELOG-WORDPRESS.md](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-WORDPRESS.md) |
 | Drupal Changelog | [CHANGELOG-DRUPAL.md](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-DRUPAL.md) |
 | React/Next.js Changelog | [CHANGELOG-REACT.md](https://github.com/alexanderdross/PDF-Viewer-2026/blob/main/CHANGELOG-REACT.md) |

@@ -1,0 +1,79 @@
+pdf_embed_seo_pro_plus.settings:
+  path: '/admin/config/content/pdf-embed-seo/pro-plus'
+  defaults:
+    _form: '\Drupal\pdf_embed_seo_pro_plus\Form\ProPlusSettingsForm'
+    _title: 'Pro+ Enterprise Settings'
+  requirements:
+    _permission: 'administer pdf embed seo'
+
+pdf_embed_seo_pro_plus.analytics:
+  path: '/admin/reports/pdf-analytics/advanced'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_pro_plus\Controller\AdvancedAnalyticsController::dashboard'
+    _title: 'Advanced PDF Analytics'
+  requirements:
+    _permission: 'view pdf analytics'
+
+pdf_embed_seo_pro_plus.audit_log:
+  path: '/admin/reports/pdf-audit-log'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_pro_plus\Controller\AuditLogController::list'
+    _title: 'PDF Audit Log'
+  requirements:
+    _permission: 'view pdf audit log'
+
+pdf_embed_seo_pro_plus.webhooks:
+  path: '/admin/config/content/pdf-embed-seo/webhooks'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_pro_plus\Controller\WebhooksController::list'
+    _title: 'Webhook Management'
+  requirements:
+    _permission: 'manage pdf webhooks'
+
+pdf_embed_seo_pro_plus.versions:
+  path: '/pdf/{pdf_document}/versions'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_pro_plus\Controller\VersionsController::list'
+    _title: 'Document Versions'
+  requirements:
+    _permission: 'view pdf versions'
+
+pdf_embed_seo_pro_plus.annotations.api:
+  path: '/api/pdf-embed-seo/v1/documents/{document_id}/annotations'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_pro_plus\Controller\AnnotationsApiController::handle'
+  methods: [GET, POST, PATCH, DELETE]
+  requirements:
+    _access: 'TRUE'
+
+pdf_embed_seo_pro_plus.webhooks.api:
+  path: '/api/pdf-embed-seo/v1/webhooks'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_pro_plus\Controller\WebhooksApiController::handle'
+  methods: [GET, POST, DELETE]
+  requirements:
+    _permission: 'manage pdf webhooks'
+
+pdf_embed_seo_pro_plus.versions.api:
+  path: '/api/pdf-embed-seo/v1/documents/{document_id}/versions'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_pro_plus\Controller\VersionsApiController::handle'
+  methods: [GET, POST]
+  requirements:
+    _permission: 'manage pdf versions'
+
+pdf_embed_seo_pro_plus.audit_log.api:
+  path: '/api/pdf-embed-seo/v1/audit-log'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_pro_plus\Controller\AuditLogApiController::list'
+  methods: [GET]
+  requirements:
+    _permission: 'view pdf audit log'
+
+pdf_embed_seo_pro_plus.analytics.advanced.api:
+  path: '/api/pdf-embed-seo/v1/analytics/advanced'
+  defaults:
+    _controller: '\Drupal\pdf_embed_seo_pro_plus\Controller\AdvancedAnalyticsApiController::get'
+  methods: [GET]
+  requirements:
+    _permission: 'view pdf analytics'

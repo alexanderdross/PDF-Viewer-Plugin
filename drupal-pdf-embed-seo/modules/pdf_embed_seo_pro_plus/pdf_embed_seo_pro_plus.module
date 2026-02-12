@@ -1,0 +1,129 @@
+<?php
+
+/**
+ * @file
+ * PDF Embed SEO Pro+ Enterprise module.
+ *
+ * Provides enterprise features including advanced analytics, 2FA,
+ * webhooks, document versioning, annotations, and compliance tools.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function pdf_embed_seo_pro_plus_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.pdf_embed_seo_pro_plus':
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('PDF Embed SEO Pro+ Enterprise provides advanced features for enterprise deployments including:') . '</p>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('Advanced Analytics with heatmaps and engagement scoring') . '</li>';
+      $output .= '<li>' . t('Two-Factor Authentication (2FA) for enhanced security') . '</li>';
+      $output .= '<li>' . t('Webhook integrations for external systems') . '</li>';
+      $output .= '<li>' . t('Document versioning with rollback capability') . '</li>';
+      $output .= '<li>' . t('PDF annotations and signatures') . '</li>';
+      $output .= '<li>' . t('GDPR and HIPAA compliance tools') . '</li>';
+      $output .= '<li>' . t('White label branding options') . '</li>';
+      $output .= '</ul>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function pdf_embed_seo_pro_plus_theme() {
+  return [
+    'pdf_annotations_toolbar' => [
+      'variables' => [
+        'document_id' => NULL,
+        'annotations' => [],
+        'can_annotate' => FALSE,
+      ],
+    ],
+    'pdf_version_history' => [
+      'variables' => [
+        'document_id' => NULL,
+        'versions' => [],
+        'current_version' => NULL,
+      ],
+    ],
+    'pdf_advanced_analytics' => [
+      'variables' => [
+        'document_id' => NULL,
+        'analytics' => [],
+        'period' => '30days',
+      ],
+    ],
+    'pdf_compliance_consent' => [
+      'variables' => [
+        'mode' => 'gdpr',
+        'settings' => [],
+      ],
+    ],
+  ];
+}
+
+/**
+ * Check if Pro+ license is valid.
+ *
+ * @return bool
+ *   TRUE if license is valid.
+ */
+function pdf_embed_seo_is_pro_plus() {
+  $config = \Drupal::config('pdf_embed_seo_pro_plus.settings');
+  $license_key = $config->get('license_key');
+  $license_status = $config->get('license_status');
+
+  if (empty($license_key)) {
+    return FALSE;
+  }
+
+  // Valid statuses.
+  return in_array($license_status, ['valid', 'grace_period'], TRUE);
+}
+
+/**
+ * Get Pro+ settings.
+ *
+ * @return array
+ *   Pro+ settings array.
+ */
+function pdf_embed_seo_pro_plus_get_settings() {
+  $config = \Drupal::config('pdf_embed_seo_pro_plus.settings');
+
+  $defaults = [
+    'enable_advanced_analytics' => TRUE,
+    'enable_security' => TRUE,
+    'enable_webhooks' => TRUE,
+    'enable_versioning' => TRUE,
+    'enable_annotations' => TRUE,
+    'enable_compliance' => TRUE,
+    'enable_white_label' => TRUE,
+    // Advanced Analytics.
+    'heatmaps_enabled' => TRUE,
+    'engagement_scoring' => TRUE,
+    'geographic_tracking' => TRUE,
+    // Security.
+    'two_factor_enabled' => FALSE,
+    'ip_whitelist' => '',
+    'audit_log_retention' => 90,
+    // Webhooks.
+    'webhook_url' => '',
+    'webhook_secret' => '',
+    'webhook_events' => ['view', 'download'],
+    // Versioning.
+    'keep_versions' => 10,
+    'auto_version' => TRUE,
+    // Compliance.
+    'gdpr_mode' => TRUE,
+    'hipaa_mode' => FALSE,
+    'data_retention_days' => 365,
+  ];
+
+  $settings = $config->get('settings') ?: [];
+
+  return array_merge($defaults, $settings);
+}

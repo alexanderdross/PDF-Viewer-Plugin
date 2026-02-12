@@ -390,3 +390,19 @@ add_action( 'plugins_loaded', 'pdf_embed_seo_load_premium', 15 );
 function pdf_embed_seo_is_premium() {
 	return defined( 'PDF_EMBED_SEO_IS_PREMIUM' ) && PDF_EMBED_SEO_IS_PREMIUM;
 }
+
+/**
+ * Load Pro+ Enterprise features if available.
+ *
+ * Pro+ features are loaded from the /pro-plus/ directory.
+ * Requires Premium to be active first.
+ */
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Part of established public API.
+function pdf_embed_seo_load_pro_plus() {
+	$pro_plus_file = PDF_EMBED_SEO_PLUGIN_DIR . 'pro-plus/class-pdf-embed-seo-pro-plus.php';
+
+	if ( file_exists( $pro_plus_file ) ) {
+		require_once $pro_plus_file;
+	}
+}
+add_action( 'plugins_loaded', 'pdf_embed_seo_load_pro_plus', 20 );

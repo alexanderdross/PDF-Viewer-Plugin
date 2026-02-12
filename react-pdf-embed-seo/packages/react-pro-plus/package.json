@@ -1,0 +1,71 @@
+{
+  "name": "@pdf-embed-seo/react-pro-plus",
+  "version": "1.3.0",
+  "description": "Pro+ Enterprise React components for PDF Embed SEO - Advanced analytics, annotations, versioning, webhooks, and compliance features",
+  "author": "Dross:Media <info@dross.net>",
+  "license": "Commercial",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./styles": "./dist/styles.css",
+    "./nextjs": {
+      "import": "./dist/nextjs/index.mjs",
+      "require": "./dist/nextjs/index.js",
+      "types": "./dist/nextjs/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint src --ext .ts,.tsx",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@pdf-embed-seo/core": "^1.2.0",
+    "@pdf-embed-seo/react": "^1.2.0",
+    "@pdf-embed-seo/react-premium": "^1.2.0",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^14.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0"
+  },
+  "keywords": [
+    "pdf",
+    "viewer",
+    "react",
+    "enterprise",
+    "pro-plus",
+    "annotations",
+    "versioning",
+    "webhooks",
+    "compliance",
+    "gdpr",
+    "hipaa"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexanderdross/PDF-Viewer-2026.git",
+    "directory": "react-pdf-embed-seo/packages/react-pro-plus"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  }
+}

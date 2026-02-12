@@ -1,0 +1,13 @@
+name: 'PDF Embed SEO Pro+ Enterprise'
+type: module
+description: 'Enterprise features for PDF Embed SEO including advanced analytics, 2FA, webhooks, versioning, annotations, and compliance.'
+package: 'PDF Embed SEO'
+core_version_requirement: ^10 || ^11
+version: '1.3.0'
+
+dependencies:
+  - pdf_embed_seo:pdf_embed_seo
+  - pdf_embed_seo:pdf_embed_seo_premium
+  - drupal:user
+
+configure: pdf_embed_seo_pro_plus.settings
